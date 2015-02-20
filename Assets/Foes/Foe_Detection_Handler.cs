@@ -8,6 +8,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	//For haphazard use:
 	private Vector3 displacement;
 	private float visualDetectionValue, audialDetectionValue;
+	
+	public GameObject alertObject1, alertObject2;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +18,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		GetCurrentRoom();
 		displacement = player.transform.position - transform.position;
 		CalculateVisualDetection();
 		CalculateAudialDetection();
@@ -49,7 +52,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
 		if (visualDetectionValue >= 2f) {
-			print ("ALERT!!!!");
+			alertObject1.renderer.enabled = true;
+			alertObject2.renderer.enabled = true;
+		} else {
+			alertObject1.renderer.enabled = false;
+			alertObject2.renderer.enabled = false;
 		}
 	}
 	
@@ -64,7 +71,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 					(vertex - transform.position),
 					out hitInfo,
 					(vertex - transform.position).magnitude,
-					(1 << Layerdefs.solid)
+					((1 << Layerdefs.wall) + (1 << Layerdefs.floor))
 			);
 			if (!raycastHit) {
 				++visibleVertices;
@@ -74,5 +81,10 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			}
 		}
 		return visibleVertices;
+	}
+	
+	void GetCurrentRoom() {
+		currentRoom = Room_Floor_Designation.GetCurrentRoom(transform.position);
+		Foe_Alert_Status.currentRoom = currentRoom;
 	}
 }
