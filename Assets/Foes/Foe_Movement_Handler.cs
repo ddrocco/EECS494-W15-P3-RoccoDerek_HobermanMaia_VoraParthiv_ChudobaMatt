@@ -12,18 +12,26 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	float speed = 1.0f;
 	
 	public enum alertState{
-		patroling,
-		attentive,
-		investigating,
+		patrolling,	//Nominal, walking around
+		attentive,	//Still walking around; glances about more often.
+		investigating,	//Moves to a location, then goes back to patrolling.
 		attacking
 	};	
-	public alertState state = alertState.patroling;
+	public alertState state = alertState.patrolling;
 	
+	//Patrolling variables
 	bool isRotating = true;
 	
+	//Investigating variables
+	Vector3 locationToInvestigate;
+	public GameObject objectToInvestigate;
+	
 	void FixedUpdate() {
-		if (state == alertState.patroling) {
+		if (state == alertState.patrolling) {
 			Patrol ();
+		} else if (state == alertState.investigating) {
+			locationToInvestigate = objectToInvestigate.transform.position;
+			Investigate();
 		}
 	}
 	
@@ -57,5 +65,19 @@ public class Foe_Movement_Handler : MonoBehaviour {
 			horizVelocity = horizVelocity.normalized * speed;
 		}
 		rigidbody.velocity = new Vector3(horizVelocity.x, rigidbody.velocity.y, horizVelocity.z);	
+	}
+	
+	void Investigate() {
+		Quaternion targetRotation = Quaternion.LookRotation(locationToInvestigate - transform.position);
+		transform.rotation = targetRotation;//Quaternion.Slerp(transform.rotation, targetRotation, 0.1f);
+		Vector3 sideDisplacement = transform.rotation * Vector3.right * transform.lossyScale.x / 2;
+		
+		Vector3 investigationDisplacement = locationToInvestigate - transform.position;
+		
+		Debug.DrawRay(transform.position + sideDisplacement,
+				transform.rotation * Vector3.forward * investigationDisplacement.magnitude, Color.white);
+		Debug.DrawRay(transform.position - sideDisplacement,
+				transform.rotation * Vector3.forward * investigationDisplacement.magnitude, Color.white);
+		Debug.DrawRay(transform.position, investigationDisplacement, Color.blue);
 	}
 }
