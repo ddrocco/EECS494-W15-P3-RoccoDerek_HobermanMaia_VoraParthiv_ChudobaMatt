@@ -25,10 +25,14 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	Foe_Glance_Command foeGlanceCommand;
 	Foe_Detection_Handler foeDetectionHandler;
 	
+	public float speed;
+	
+	public bool stayFrozenOnLook = false;
 	
 	void Start() {
 		foeGlanceCommand = GetComponentInChildren<Foe_Glance_Command>();
 		foeDetectionHandler = GetComponentInChildren<Foe_Detection_Handler>();
+		speed = GetComponent<NavMeshAgent>().speed;
 	
 		if (state == alertState.patrolling){
 			UpdateDestination();
@@ -38,8 +42,15 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		if (stayFrozenOnLook) {
+			GetComponent<NavMeshAgent>().speed = 0;
+			if (!foeGlanceCommand.isLookingAround) {
+				stayFrozenOnLook = false;
+				GetComponent<NavMeshAgent>().speed = speed;
+			}
+		}
 		if ((new Vector3(transform.position.x, 0, transform.position.z)
-				- new Vector3(currentDestination.x, 0, currentDestination.z)).magnitude < 0.1f) {
+		     - new Vector3(currentDestination.x, 0, currentDestination.z)).magnitude < 0.1f) {
 			UpdateDestination();
 		}
 	}
@@ -90,7 +101,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		currentDestination = player.transform.position;
 		GetComponent<NavMeshAgent>().destination = currentDestination;
 		isReturning = false;
-		//transform.LookAt(new Vector3(currentDestination.x, transform.position.y, currentDestination.z));
 		state = alertState.investigating;
 	}
 }

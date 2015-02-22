@@ -23,7 +23,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void Update () {
-		GetCurrentRoom();
+		//GetCurrentRoom();
 		displacement = player.transform.position - transform.position;
 		CalculateVisualDetection();
 		CalculateAudialDetection();
@@ -79,7 +79,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 					(vertex - transform.position),
 					out hitInfo,
 					(vertex - transform.position).magnitude,
-					((1 << Layerdefs.wall) + (1 << Layerdefs.floor))
+					((1 << Layerdefs.wall) + (1 << Layerdefs.floor) + (1 << Layerdefs.door))
 			);
 			if (!raycastHit) {
 				++visibleVertices;
@@ -91,8 +91,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		return visibleVertices;
 	}
 	
-	void GetCurrentRoom() {
+	/*void GetCurrentRoom() {
 		currentRoom = Room_Floor_Designation.GetCurrentRoom(transform.position);
 		Debug_Foe_Alert_Status.currentRoom = currentRoom;
-	}
+	}*/
 }
