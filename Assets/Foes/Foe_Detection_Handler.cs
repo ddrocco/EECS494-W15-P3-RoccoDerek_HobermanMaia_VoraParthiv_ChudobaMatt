@@ -9,6 +9,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	private Vector3 displacement;
 	private float visualDetectionValue, audialDetectionValue;
 	
+	//Exclamation points:
 	public GameObject alertObject1, alertObject2;
 
 	// Use this for initialization
