@@ -8,16 +8,20 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	//For haphazard use:
 	private Vector3 displacement;
 	private float visualDetectionValue, audialDetectionValue;
+	public static float audioMultiplier = 0f;
 	
 	//Exclamation points:
+	bool isAttentive = false;
 	public GameObject alertObject1, alertObject2;
+	
+	Foe_Movement_Handler movementHandler;
 
-	// Use this for initialization
 	void Start () {
-		
+		alertObject1.renderer.enabled = false;
+		alertObject2.renderer.enabled = false;
+		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		GetCurrentRoom();
 		displacement = player.transform.position - transform.position;
@@ -45,19 +49,22 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void CalculateAudialDetection() {
-		audialDetectionValue = 1f / Mathf.Pow (displacement.magnitude, 2);
+		audialDetectionValue = audioMultiplier / Mathf.Pow (displacement.magnitude, 2);
 	}
 	
 	void React() {
 		Foe_Alert_Status.visualDetectionValue = visualDetectionValue;
 		Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
-		if (visualDetectionValue >= 2f) {
+		if (audialDetectionValue >= 0.5f) {
+			isAttentive = true;
 			alertObject1.renderer.enabled = true;
 			alertObject2.renderer.enabled = true;
-		} else {
-			alertObject1.renderer.enabled = false;
-			alertObject2.renderer.enabled = false;
+			movementHandler.StartInvestigation();
+		}
+		
+		if (visualDetectionValue >= 2f) {
+			print ("GAME OVER");
 		}
 	}
 	

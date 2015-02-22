@@ -13,9 +13,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	
 	public enum alertState{
 		patrolling,	//Nominal, walking around
-		attentive,	//Still walking around; glances about more often.
 		investigating,	//Moves to a location, then goes back to patrolling.
-		attacking
 	};	
 	public alertState state = alertState.patrolling;
 	
@@ -23,7 +21,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	bool isRotating = true;
 	
 	//Investigating variables
-	public GameObject objectToInvestigate;
+	public GameObject player;
 	Vector3 destinationLocation;
 	Vector3 originLocation;
 	bool isReturning;
@@ -42,23 +40,26 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		}
 	}
 	
-	void StartInvestigation() {
+	public void StartInvestigation() {
 		originLocation = transform.position;
-		destinationLocation = objectToInvestigate.transform.position;
+		destinationLocation = player.transform.position;
 		GetComponent<NavMeshAgent>().destination = destinationLocation;
 		GetComponent<NavMeshAgent>().enabled = true;
 		isReturning = false;
 		rigidbody.isKinematic = true;
 		rigidbody.useGravity = false;
+		transform.LookAt(new Vector3(destinationLocation.x, transform.position.y, destinationLocation.z));
+		state = alertState.investigating;
 	}
 	
 	void CheckInvestigationState() {
-		print (destinationLocation);
+		print (GetComponent<NavMeshAgent>().destination);
 		if (!isReturning) {
 			if ((new Vector3(transform.position.x, 0, transform.position.z)
 					- new Vector3(destinationLocation.x, 0, destinationLocation.z)).magnitude < 0.1f) {
 				isReturning = true;
-				GetComponent<NavMeshAgent>().destination = originLocation;	
+				GetComponent<NavMeshAgent>().destination = originLocation;
+				transform.LookAt(new Vector3(originLocation.x, transform.position.y, originLocation.z));
 			}
 		} else {
 			if ((new Vector3(transform.position.x, 0, transform.position.z)
@@ -66,6 +67,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 				GetComponent<NavMeshAgent>().enabled = false;
 				rigidbody.isKinematic = false;
 				rigidbody.useGravity = true;
+				state = alertState.investigating;
 			}
 		}
 	}
