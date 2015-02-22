@@ -30,8 +30,8 @@ public class Laser_Deadly : MonoBehaviour {
 			if (hitInfo.transform.gameObject.layer == Layerdefs.player) {
 				print ("Game over!");
 			}
-			print (hitInfo.distance);
-			print (hitInfo.collider.gameObject.layer);
+//			print (hitInfo.distance);
+//			print (hitInfo.collider.gameObject.layer);
 			transform.localScale = new Vector3(
 				transform.localScale.x,
 				hitInfo.distance / 2f,
