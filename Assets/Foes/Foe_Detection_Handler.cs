@@ -11,7 +11,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public static float audioMultiplier = 0f;
 	
 	//Exclamation points:
-	bool isAttentive = false;
+	public bool isAttentive = false;
 	public GameObject alertObject1, alertObject2;
 	
 	Foe_Movement_Handler movementHandler;

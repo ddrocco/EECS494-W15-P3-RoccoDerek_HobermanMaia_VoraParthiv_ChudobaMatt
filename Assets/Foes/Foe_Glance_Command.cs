@@ -6,23 +6,27 @@ public class Foe_Glance_Command : MonoBehaviour {
 	public float angleMin, angleMax, totalAngle;
 	public float startPauseOne, endPauseOne, startPauseTwo, endPauseTwo, fullDuration;
 	
-	public bool isActive;
+	public bool shouldLookAround = false;
+	public bool isLookingAround = false;
+	public bool lookIsStationary = false;
 	
-	//remove later
-	public bool recvCmd = false;
+	public bool prepareToLook;
+	public float waitToLook;
 
 	void Start () {
-		isActive = false;
+		isLookingAround = false;
 	}
 	
 	void Update () {
-		//remove later
-		if (recvCmd) {
-			recvCmd = false;
-			ReceiveGlanceCommand(4f, 1f, -40f, 40f);
+		if (prepareToLook) {
+			waitToLook -= Time.deltaTime;
+			if (waitToLook < 0 && !isLookingAround) {
+				ReceiveGlanceCommand(4f, 1f, -40f, 40f);
+				prepareToLook = false;
+			}
 		}
 	
-		if (!isActive) {
+		if (!isLookingAround) {
 			return;
 		}
 		
@@ -41,7 +45,7 @@ public class Foe_Glance_Command : MonoBehaviour {
 			angle = angleMax * (fullDuration - timer) / (fullDuration - endPauseTwo);
 		} else {
 			angle = 0;
-			isActive = false;
+			isLookingAround = false;
 		}
 		
 		transform.localEulerAngles = new Vector3(0, angle, 0);
@@ -52,7 +56,7 @@ public class Foe_Glance_Command : MonoBehaviour {
 			float pauseDuration,
 			float leftAngle,
 			float rightAngle) {
-		isActive = true;
+		isLookingAround = true;
 		timer = 0;
 		
 		angleMin = leftAngle;
