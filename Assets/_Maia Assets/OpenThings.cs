@@ -8,7 +8,7 @@ public class OpenThings : MonoBehaviour {
 		anim = GetComponent<Animator>();
 	}
 		
-	public void openThing () {
+	public void Interact () {
 		//print("registered click");
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 	}
