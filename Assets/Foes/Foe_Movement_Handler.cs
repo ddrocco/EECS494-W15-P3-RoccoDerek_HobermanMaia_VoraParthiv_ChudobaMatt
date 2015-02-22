@@ -23,24 +23,58 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	bool isRotating = true;
 	
 	//Investigating variables
-	Vector3 locationToInvestigate;
 	public GameObject objectToInvestigate;
+	Vector3 destinationLocation;
+	Vector3 originLocation;
+	bool isReturning;
 	
+	void Start() {
+		if (state == alertState.investigating) {
+			StartInvestigation();
+		}
+	}
+
 	void FixedUpdate() {
 		if (state == alertState.patrolling) {
 			Patrol ();
 		} else if (state == alertState.investigating) {
-			locationToInvestigate = objectToInvestigate.transform.position;
-			Investigate();
+			CheckInvestigationState();
 		}
 	}
 	
+	void StartInvestigation() {
+		originLocation = transform.position;
+		destinationLocation = objectToInvestigate.transform.position;
+		GetComponent<NavMeshAgent>().destination = destinationLocation;
+		GetComponent<NavMeshAgent>().enabled = true;
+		isReturning = false;
+		rigidbody.isKinematic = true;
+		rigidbody.useGravity = false;
+	}
+	
+	void CheckInvestigationState() {
+		print (destinationLocation);
+		if (!isReturning) {
+			if ((new Vector3(transform.position.x, 0, transform.position.z)
+					- new Vector3(destinationLocation.x, 0, destinationLocation.z)).magnitude < 0.1f) {
+				isReturning = true;
+				GetComponent<NavMeshAgent>().destination = originLocation;	
+			}
+		} else {
+			if ((new Vector3(transform.position.x, 0, transform.position.z)
+			     - new Vector3(originLocation.x, 0, originLocation.z)).magnitude < 0.1f) {
+				GetComponent<NavMeshAgent>().enabled = false;
+				rigidbody.isKinematic = false;
+				rigidbody.useGravity = true;
+			}
+		}
+	}
 	
 	void Patrol() {
-		Vector3 nodePos = Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
-		nodePos += Vector3.up * (transform.position.y - nodePos.y);
+		Vector3 destination = Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
+		destination += Vector3.up * (transform.position.y - destination.y);
 		
-		if ((nodePos - transform.position).magnitude < .1f) {
+		if ((destination - transform.position).magnitude < .1f) {
 			isRotating = true;
 			currentPathNode += 1;
 			if (currentPathNode >= defaultPath.Count) {
@@ -49,7 +83,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		}
 		
 		Vector3 horizVelocity = new Vector3(rigidbody.velocity.x, 0, rigidbody.velocity.z);
-		Quaternion targetRotation = Quaternion.LookRotation(nodePos - transform.position);
+		
+		Quaternion targetRotation = Quaternion.LookRotation(destination - transform.position);
 		transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 0.1f);
 		
 		if (isRotating) {
@@ -64,20 +99,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		if (horizVelocity.magnitude > speed) {
 			horizVelocity = horizVelocity.normalized * speed;
 		}
-		rigidbody.velocity = new Vector3(horizVelocity.x, rigidbody.velocity.y, horizVelocity.z);	
-	}
-	
-	void Investigate() {
-		Quaternion targetRotation = Quaternion.LookRotation(locationToInvestigate - transform.position);
-		transform.rotation = targetRotation;//Quaternion.Slerp(transform.rotation, targetRotation, 0.1f);
-		Vector3 sideDisplacement = transform.rotation * Vector3.right * transform.lossyScale.x / 2;
-		
-		Vector3 investigationDisplacement = locationToInvestigate - transform.position;
-		
-		Debug.DrawRay(transform.position + sideDisplacement,
-				transform.rotation * Vector3.forward * investigationDisplacement.magnitude, Color.white);
-		Debug.DrawRay(transform.position - sideDisplacement,
-				transform.rotation * Vector3.forward * investigationDisplacement.magnitude, Color.white);
-		Debug.DrawRay(transform.position, investigationDisplacement, Color.blue);
+		rigidbody.velocity = new Vector3(horizVelocity.x, rigidbody.velocity.y, horizVelocity.z);
 	}
 }
