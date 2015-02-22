@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using InControl;
 
 public class PlayerController : MonoBehaviour
@@ -23,7 +24,6 @@ public class PlayerController : MonoBehaviour
 	private InputDevice device;
 	private CharacterController controller;
 	private Camera headCamera;
-	private Animator anim;
 
 	// Movement variables
 	private float currentSpeed;
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
 	private Vector3 normalScale;
 	private Vector3 crouchScale;
 	private float crouchFactor = 0.66f;
+	private float crouchLerpVal = 1f;
 
 	// Rotation variables
 	private Vector3 moveDirection = Vector3.zero;
@@ -43,10 +44,13 @@ public class PlayerController : MonoBehaviour
 	public float walkSpeed;
 	public float sprintSpeed;
 	public float crouchSpeed;
+	public float crouchAnimationSpeed;
 	public float acceleration;
 	public float rotateSpeed;
 	public float minimumY = -60f;
 	public float maximumY = 60f;
+
+	// Public variables accessible by other classes
 	[HideInInspector]
 	public bool canInteract = false;
 	[HideInInspector]
@@ -57,7 +61,6 @@ public class PlayerController : MonoBehaviour
 		device = InputManager.ActiveDevice;
 		controller = GetComponent<CharacterController>();
 		headCamera = GetComponentInChildren<Camera>();
-		anim = GetComponentInChildren<Animator>();
 
 		state = State.walking;
 		currentSpeed = walkSpeed;
@@ -98,6 +101,7 @@ public class PlayerController : MonoBehaviour
 		float dt = Time.fixedDeltaTime;
 		Move(dt);
 		Look(dt);
+		Crouch(dt);
 	}
 
 	// Sets the player's movement direction based on controller left stick input
@@ -186,7 +190,6 @@ public class PlayerController : MonoBehaviour
 			currentSpeed = walkSpeed;
 			targetSpeed = crouchSpeed;
 			acceleration = Mathf.Abs(acceleration) * -1f;
-			Crouch();
 		}
 		else if (state == State.sprinting && newState == State.walking)
 		{
@@ -198,36 +201,53 @@ public class PlayerController : MonoBehaviour
 			currentSpeed = walkSpeed;
 			targetSpeed = crouchSpeed;
 			acceleration = Mathf.Abs(acceleration) * -1f;
-			Crouch();
 		}
 		else if (state == State.crouching && newState == State.walking)
 		{
 			targetSpeed = walkSpeed;
 			acceleration = Mathf.Abs(acceleration);
-			Crouch();
 		}
 		else if (state == State.crouching && newState == State.sprinting)
 		{
 			currentSpeed = (walkSpeed + crouchSpeed) / 2f;
 			targetSpeed = sprintSpeed;
 			acceleration = Mathf.Abs(acceleration);
-			Crouch();
 		}
 		else
 			Debug.LogError("Invalid player state change");
 	}
 
-	void Crouch()
+	void Crouch(float dt)
 	{
-		if (anim.GetBool("Crouching"))
+		Vector3 scaleBefore = transform.localScale;
+		Vector3 scaleAfter;
+		if (state == State.crouching) // lerp from standing to crouching
 		{
-			anim.CrossFade("PlayerStand", 0.25f);
-			anim.SetBool("Crouching", false);
+			crouchLerpVal = Mathf.Clamp(crouchLerpVal - (dt * crouchAnimationSpeed), 0f, 1f);
+			transform.localScale = Vector3.Lerp(crouchScale, normalScale, crouchLerpVal);
+			scaleAfter = transform.localScale;
+
+			if (scaleBefore != scaleAfter)
+			{
+				float delta = scaleBefore.y - scaleAfter.y;
+				Vector3 pos = transform.position;
+				pos.y -= delta;
+				transform.position = pos;
+			}
 		}
-		else
+		else // lerp from crouching to standing
 		{
-			anim.CrossFade("PlayerCrouch", 0.25f);
-			anim.SetBool("Crouching", true);
+			crouchLerpVal = Mathf.Clamp(crouchLerpVal + (dt * crouchAnimationSpeed), 0f, 1f);
+			transform.localScale = Vector3.Lerp(crouchScale, normalScale, crouchLerpVal);
+			scaleAfter = transform.localScale;
+
+			if (scaleBefore != scaleAfter)
+			{
+				float delta = scaleAfter.y - scaleBefore.y;
+				Vector3 pos = transform.position;
+				pos.y += delta;
+				transform.position = pos;
+			}
 		}
 	}
 
