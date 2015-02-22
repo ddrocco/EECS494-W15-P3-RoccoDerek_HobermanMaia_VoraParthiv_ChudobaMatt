@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-public class Foe_Alert_Status : MonoBehaviour {
+public class Debug_Foe_Alert_Status : MonoBehaviour {
 	public static float visualDetectionValue, audialDetectionValue;
 	public static int currentRoom;
 

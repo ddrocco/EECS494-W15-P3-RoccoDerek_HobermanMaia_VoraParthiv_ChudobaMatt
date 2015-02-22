@@ -53,8 +53,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void React() {
-		Foe_Alert_Status.visualDetectionValue = visualDetectionValue;
-		Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
+		Debug_Foe_Alert_Status.visualDetectionValue = visualDetectionValue;
+		Debug_Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
 		if (audialDetectionValue >= 0.5f) {
 			isAttentive = true;
@@ -93,6 +93,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	void GetCurrentRoom() {
 		currentRoom = Room_Floor_Designation.GetCurrentRoom(transform.position);
-		Foe_Alert_Status.currentRoom = currentRoom;
+		Debug_Foe_Alert_Status.currentRoom = currentRoom;
 	}
 }

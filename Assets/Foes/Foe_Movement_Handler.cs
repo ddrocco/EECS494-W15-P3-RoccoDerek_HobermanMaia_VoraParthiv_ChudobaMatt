@@ -3,38 +3,37 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Foe_Movement_Handler : MonoBehaviour {
-	public List<int> defaultPath;
-	public int currentPathNode = 0;
-	
 	public enum alertState{
 		patrolling,	//Nominal, walking around
 		investigating,	//Moves to a location, then goes back to patrolling.
 	};	
 	public alertState state = alertState.patrolling;
 	
+	public GameObject player;
 	public Vector3 currentDestination;
 	
-	//Patrolling variables
-	bool isRotating = true;
+	//Patrolling variables:
+	public List<int> defaultPath;
+	public int currentPathNode = 0;
 	
-	//Investigating variables
-	public GameObject player;
-	//Vector3 soundLocation;
+	//Investigating variables:
 	public Vector3 originLocation;
 	bool originIsValid = false;
 	bool isReturning;
 	
+	//Child classes:
 	Foe_Glance_Command foeGlanceCommand;
 	Foe_Detection_Handler foeDetectionHandler;
+	
 	
 	void Start() {
 		foeGlanceCommand = GetComponentInChildren<Foe_Glance_Command>();
 		foeDetectionHandler = GetComponentInChildren<Foe_Detection_Handler>();
 	
-		if (state == alertState.investigating) {
-			StartInvestigation();
-		} else {
+		if (state == alertState.patrolling){
 			UpdateDestination();
+		} else if (state == alertState.investigating) {
+			StartInvestigation();
 		}
 	}
 
@@ -47,7 +46,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	
 	void UpdateDestination() {
 		if (state == alertState.patrolling) {
-			currentDestination = Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
+			currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
 			
 			currentPathNode += 1;
 			if (currentPathNode >= defaultPath.Count) {
@@ -74,7 +73,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 				}
 			} else if (isReturning) {
 				state = alertState.patrolling;
-				currentDestination = Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
+				currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
 				originIsValid = false;
 				
 			}
