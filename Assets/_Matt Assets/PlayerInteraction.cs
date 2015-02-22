@@ -5,6 +5,9 @@ public class PlayerInteraction : MonoBehaviour
 {
 	private Camera cam;
 	private GameObject reticle;
+	private Renderer reticleRender;
+	private Color reticleNormal;
+	private Color reticleInteract;
 	private PlayerController player;
 
 	public float detectionDistance;
@@ -14,6 +17,10 @@ public class PlayerInteraction : MonoBehaviour
 		cam = GetComponent<Camera>();
 		reticle = GameObject.Find("Reticle");
 		player = GetComponentInParent<PlayerController>();
+
+		reticleRender = reticle.GetComponent<Renderer>();
+		reticleNormal = reticleRender.material.color;
+		reticleInteract = Color.red;
 	}
 
 	void Update()
@@ -44,15 +51,18 @@ public class PlayerInteraction : MonoBehaviour
 			{
 				player.canInteract = true;
 				player.interactiveObj = hitInfo.transform.gameObject;
+				reticleRender.material.color = reticleInteract;
 			}
 			else
 			{
 				player.canInteract = false;
+				reticleRender.material.color = reticleNormal;
 			}
 		}
 		else
 		{
 			player.canInteract = false;
+			reticleRender.material.color = reticleNormal;
 		}
 	}
 }
