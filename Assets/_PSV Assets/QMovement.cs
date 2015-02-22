@@ -4,13 +4,13 @@ using System.Collections;
 public class QMovement : MonoBehaviour {
 
 	public QPan qpan;
-	public MouseLook qlook;
+	public QMouseLook qlook;
 	public SmoothFollow qsnap;
 
 	// Use this for initialization
 	void Start () {
 		qpan = this.GetComponent<QPan> ();
-		qlook = this.GetComponent<MouseLook> ();
+		qlook = this.GetComponent<QMouseLook> ();
 		qsnap = this.GetComponent<SmoothFollow> ();
 
 		qpan.enabled = true;
