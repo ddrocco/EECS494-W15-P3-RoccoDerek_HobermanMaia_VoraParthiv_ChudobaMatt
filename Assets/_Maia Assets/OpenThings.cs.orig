@@ -3,10 +3,15 @@ using System.Collections;
 
 public class OpenThings : MonoBehaviour {
 	public Animator anim;
-	public GameObject foeDoorOpenerPrefab;	public bool willKill;
+<<<<<<< HEAD
+	public GameObject foeDoorOpenerPrefab;
+=======
+	public bool willKill;
 	public bool holdsPasscard;
 	public bool needsPasscard;
-	public bool playerGotPasscard = false;	
+	public bool playerGotPasscard = false;
+>>>>>>> 78f6c332639acb428407e47ca6ee7e8937636544
+	
 	void Awake () {
 		anim = GetComponent<Animator>();
 		if (foeDoorOpenerPrefab != null) {

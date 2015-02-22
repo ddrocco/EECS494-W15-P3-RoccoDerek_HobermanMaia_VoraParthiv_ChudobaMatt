@@ -8,9 +8,10 @@ public class Laser_Deadly_Static : MonoBehaviour {
 		GetComponent<MeshRenderer>().material.color = color;
 	}
 	
-	void OnCollisionEnter(Collision other) {
+	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.layer == Layerdefs.player) {
-			print ("GAME OVER");
+			GameController.PlayerDead = true;
+			GameController.GameOverMessage = "You were killed by a laser!\nPress A to restart the level";
 		}
 	}
 }

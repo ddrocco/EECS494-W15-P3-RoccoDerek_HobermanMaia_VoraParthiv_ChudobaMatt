@@ -63,4 +63,11 @@ public class Laser_Deadly : MonoBehaviour {
 		direction = startDirection * (0.5f + 0.5f * Mathf.Cos (ratio * 2 * Mathf.PI))
 				+ endDirection * (0.5f - 0.5f * Mathf.Cos (ratio * 2 * Mathf.PI));
 	}
+
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject.layer == Layerdefs.player) {
+			GameController.PlayerDead = true;
+			GameController.GameOverMessage = "You were killed by a laser!\nPress A to restart the level";
+		}
+	}
 }
