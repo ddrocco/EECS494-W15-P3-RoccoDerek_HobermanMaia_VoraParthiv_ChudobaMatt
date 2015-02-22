@@ -16,9 +16,12 @@ public class QCameraControl : MonoBehaviour {
 	
 	public float UDrotation, LRrotation, distance;
 	
-	public float rotationSpeed = 2f;
+	public float rotationSpeed = 200f;
+	public float panSpeed = 50f;
 	public float distanceMin = 10f;
 	public float distanceMax = 50f;
+
+	float radconv = Mathf.PI / 180f;
 	
 	// Use this for initialization
 	void Start () {
@@ -30,16 +33,20 @@ public class QCameraControl : MonoBehaviour {
 		audioSource = GetComponent<AudioSource>();
 		audioSource.enabled = false;
 		*/
+		pivotPoint = player.transform.position;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		GetCameraInput();		
 		UpdateCameraPosition();
-		UpdateSounds();
+		//UpdateSounds();
 	}
 	
 	void GetCameraInput() {
+
+		//rotate
 		//isPanning = false;
 		if (Input.GetKey(KeyCode.D)) {
 			LRrotation -= rotationSpeed * Time.deltaTime;
@@ -57,18 +64,49 @@ public class QCameraControl : MonoBehaviour {
 			UDrotation -= rotationSpeed * Time.deltaTime;
 			//isPanning = true;
 		}
-		
-		if (Input.GetKey(KeyCode.Q)) {
+
+		//zoom
+		if (Input.GetKey(KeyCode.E)) {
 			distance -= rotationSpeed * Time.deltaTime;
 			//isPanning = true;
 		}
-		if (Input.GetKey(KeyCode.E)) {
+		if (Input.GetKey(KeyCode.Q)) {
 			distance += rotationSpeed * Time.deltaTime;
 			//isPanning = true;
 		}
-		
+
+		//pan
+		if (Input.GetKey(KeyCode.L)) {
+			pivotPoint.z -= panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
+			pivotPoint.x += panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
+		}
+		if (Input.GetKey(KeyCode.J)) {
+			pivotPoint.z += panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
+			pivotPoint.x -= panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
+		}
+		if (Input.GetKey(KeyCode.I)) {
+			pivotPoint.z += panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
+			pivotPoint.x += panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
+		}
+		if (Input.GetKey(KeyCode.K)) {
+			pivotPoint.z -= panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
+			pivotPoint.x -= panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
+		}
+		if (Input.GetKey(KeyCode.O)) {
+			pivotPoint.y += panSpeed * Time.deltaTime;
+		}
+		if (Input.GetKey(KeyCode.U)) {
+			pivotPoint.y -= panSpeed * Time.deltaTime;
+		}
+
+		//snap
 		if (Input.GetKey(KeyCode.Space)) {
-			pivotPoint = player.transform.position;
+			Vector3 displacement = player.transform.position - pivotPoint;
+			if(displacement.magnitude < rotationSpeed * Time.deltaTime){
+				pivotPoint = player.transform.position;
+			} else {
+				pivotPoint += displacement.normalized * rotationSpeed * Time.deltaTime;
+			}
 		}
 	}
 	

@@ -8,7 +8,8 @@ public class OpenThings : MonoBehaviour {
 		anim = GetComponent<Animator>();
 	}
 		
-	void OnMouseDown () {
+	public void openThing () {
+		//print("registered click");
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 	}
 }
