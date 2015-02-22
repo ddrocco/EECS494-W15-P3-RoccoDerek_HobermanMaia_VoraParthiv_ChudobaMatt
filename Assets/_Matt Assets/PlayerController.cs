@@ -235,8 +235,18 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!canInteract) return;
 
-		Renderer rend = interactiveObj.GetComponent<Renderer>();
-		rend.material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+		OpenThings obj;
+		if (interactiveObj.name.Contains("Door"))
+			obj = interactiveObj.GetComponent<OpenThings>();
+		else if (interactiveObj.name.Contains("Box"))
+			obj = interactiveObj.GetComponentInChildren<OpenThings>();
+		else
+		{
+			Debug.LogError("Interactive object does not have OpenThings component");
+			return;
+		}
+
+		obj.Interact();
 	}
 
 	float IncrementTowards(float current, float target, float accel)
