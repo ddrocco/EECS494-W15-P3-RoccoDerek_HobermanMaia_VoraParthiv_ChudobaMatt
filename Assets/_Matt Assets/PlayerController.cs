@@ -47,6 +47,10 @@ public class PlayerController : MonoBehaviour
 	public float rotateSpeed;
 	public float minimumY = -60f;
 	public float maximumY = 60f;
+	[HideInInspector]
+	public bool canInteract = false;
+	[HideInInspector]
+	public GameObject interactiveObj;
 	
 	void Awake()
 	{
@@ -70,13 +74,22 @@ public class PlayerController : MonoBehaviour
 
 		// Change states based on controller input
 		if (device.LeftStickButton.WasPressed)
-			state = State.sprinting;
+		{
+			if (state == State.sprinting)
+				state = State.walking;
+			else
+				state = State.sprinting;
+		}
 		if (device.Action2.WasPressed)
 		{
 			if (state == State.crouching)
 				state = State.walking;
 			else
 				state = State.crouching;
+		}
+		if (device.Action1.WasPressed)
+		{
+			Interact();
 		}
 	}
 
@@ -208,16 +221,22 @@ public class PlayerController : MonoBehaviour
 	{
 		if (anim.GetBool("Crouching"))
 		{
-			//anim.Play("PlayerStand");
 			anim.CrossFade("PlayerStand", 0.25f);
 			anim.SetBool("Crouching", false);
 		}
 		else
 		{
-			//anim.Play("PlayerCrouch");
 			anim.CrossFade("PlayerCrouch", 0.25f);
 			anim.SetBool("Crouching", true);
 		}
+	}
+
+	void Interact()
+	{
+		if (!canInteract) return;
+
+		Renderer rend = interactiveObj.GetComponent<Renderer>();
+		rend.material.color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 	}
 
 	float IncrementTowards(float current, float target, float accel)
