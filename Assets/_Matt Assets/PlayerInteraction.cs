@@ -16,7 +16,7 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		cam = GetComponent<Camera>();
 		reticle = GameObject.Find("Reticle");
-		player = GetComponentInParent<PlayerController>();
+		player = GameObject.Find("Player").GetComponent<PlayerController>();
 
 		reticleRender = reticle.GetComponent<Renderer>();
 		reticleNormal = reticleRender.material.color;

@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
 	public float rotateSpeed;
 	public float minimumY = -60f;
 	public float maximumY = 60f;
+	public GameObject camPrefab;
 
 	// Public variables accessible by other classes
 	[HideInInspector]
@@ -58,9 +59,13 @@ public class PlayerController : MonoBehaviour
 	
 	void Awake()
 	{
+		GameObject cam = GameObject.Find("PlayerCamera");
+		if (cam == null)
+			cam = Instantiate(camPrefab, transform.position, Quaternion.identity) as GameObject;
+		headCamera = cam.GetComponent<Camera>();
+
 		device = InputManager.ActiveDevice;
 		controller = GetComponent<CharacterController>();
-		headCamera = GetComponentInChildren<Camera>();
 
 		state = State.walking;
 		currentSpeed = walkSpeed;
@@ -72,6 +77,8 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		if (GameController.PlayerDead) return;
+
 		SetMoveDirection();
 		SetLookDirection();
 
@@ -98,6 +105,8 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		if (GameController.PlayerDead) return;
+
 		float dt = Time.fixedDeltaTime;
 		Move(dt);
 		Look(dt);
@@ -165,11 +174,11 @@ public class PlayerController : MonoBehaviour
 		rotationY += rotationYDelta * dt;
 		rotationY = Mathf.Clamp(rotationY, minimumY, maximumY);
 		yRotation.x = -rotationY;
-		yRotation.y = headCamera.transform.localEulerAngles.y;
+		yRotation.y = headCamera.transform.eulerAngles.y;
 
 		// Set player x rotation and camera y rotation
 		transform.Rotate(xRotation);
-		headCamera.transform.localEulerAngles = yRotation;
+		headCamera.transform.eulerAngles = yRotation;
 	}
 
 	// Called whenever the player's "state" variable gets changed
@@ -262,7 +271,7 @@ public class PlayerController : MonoBehaviour
 			obj = interactiveObj.GetComponentInChildren<OpenThings>();
 		else
 		{
-			Debug.LogError("Interactive object does not have OpenThings component");
+			Debug.LogError("Interactive object is not a Door or Box");
 			return;
 		}
 
