@@ -9,6 +9,9 @@ public class GameController : MonoBehaviour
 	private string levelName = "_Final_Prototype_Map";
 	private Text playerGameOverText;
 	private Text playerGameOverMessageText;
+	private Text playerMessageText;
+	private static string messageText;
+	private static float messageTime;
 
 	private static bool _dead;
 	public static bool PlayerDead
@@ -29,13 +32,16 @@ public class GameController : MonoBehaviour
 
 		playerGameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
 		playerGameOverMessageText = GameObject.Find("GameOverMessageText").GetComponent<Text>();
+		playerMessageText = GameObject.Find("PlayerMessageText").GetComponent<Text>();
 
 		playerGameOverText.enabled = false;
 		playerGameOverMessageText.enabled = false;
+		playerMessageText.enabled = false;
 	}
 
 	void Update()
 	{
+		DisplayPlayerMessage();
 		if (!PlayerDead) return;
 
 		EnableText();
@@ -47,12 +53,34 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	void DisplayPlayerMessage()
+	{
+		if (messageTime > 0)
+		{
+			messageTime -= Time.deltaTime;
+			playerMessageText.enabled = true;
+			playerMessageText.text = messageText;
+		}
+		else
+		{
+			playerMessageText.text = "";
+			playerMessageText.enabled = false;
+		}
+	}
+
 	void EnableText()
 	{
 		playerGameOverText.enabled = true;
 		playerGameOverMessageText.enabled = true;
+		playerMessageText.enabled = false;
 		playerGameOverText.text = "Game Over";
 		playerGameOverMessageText.text = GameOverMessage;
+	}
+
+	public static void SendPlayerMessage(string message, float time)
+	{
+		messageText = message;
+		messageTime = time;
 	}
 
 	private static void GameOver()
