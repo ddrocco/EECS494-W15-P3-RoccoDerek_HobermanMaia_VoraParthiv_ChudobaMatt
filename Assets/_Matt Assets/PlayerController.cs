@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
 	public bool canInteract = false;
 	[HideInInspector]
 	public GameObject interactiveObj;
+	[HideInInspector]
+	public bool debugControls = false;
 	
 	void Awake()
 	{
@@ -74,11 +76,20 @@ public class PlayerController : MonoBehaviour
 		normalScale = transform.localScale;
 		crouchScale = normalScale;
 		crouchScale.y *= crouchFactor;
+
+		if (InputManager.Devices.Count == 0) debugControls = true;
 	}
 
 	void Update()
 	{
 		if (GameController.PlayerDead) return;
+		if (debugControls)
+		{
+			SetMoveDirectionDebug();
+			SetLookDirectionDebug();
+			CheckDebugStates();
+			return;
+		}
 
 		SetMoveDirection();
 		SetLookDirection();
@@ -112,6 +123,28 @@ public class PlayerController : MonoBehaviour
 		Move(dt);
 		Look(dt);
 		Crouch(dt);
+	}
+
+	void CheckDebugStates()
+	{
+		if (Input.GetKeyDown(KeyCode.Mouse0)) // Interact
+		{
+			Interact();
+		}
+		if (Input.GetKeyDown(KeyCode.Mouse1)) // Crouch
+		{
+			if (state == State.crouching)
+				state = State.walking;
+			else
+				state = State.crouching;
+		}
+		if (Input.GetKeyDown(KeyCode.RightControl)) // Sprint
+		{
+			if (state == State.sprinting)
+				state = State.walking;
+			else
+				state = State.sprinting;
+		}
 	}
 
 	// Sets the player's movement direction based on controller left stick input
@@ -148,6 +181,37 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void SetMoveDirectionDebug()
+	{
+		moveDirection.x = Input.GetAxis("Horizontal");
+		moveDirection.z = Input.GetAxis("Vertical");
+
+		moveDirection = transform.TransformDirection(moveDirection);
+
+		if (moveDirection != Vector3.zero)
+		{
+			// Get the length of the direction vector and then normalize it
+			// Dividing by the length is cheaper than normalizing
+			float directionLength = moveDirection.magnitude;
+			moveDirection = moveDirection / directionLength;
+			
+			// Make sure the length is no bigger than 1
+			directionLength = Mathf.Min(1, directionLength);
+			
+			// Make the input vector more sensitive towards the extremes and less sensitive in the middle
+			// This makes it easier to control slow speeds when using analog sticks
+			directionLength = directionLength * directionLength;
+			
+			// Multiply the normalized direction vector by the modified length
+			moveDirection = moveDirection * directionLength;
+		}
+		else
+		{
+			if (state == State.sprinting)
+				state = State.walking;
+		}
+	}
+
 	// Sets the direction for the player to look in, based on the controller's right stick
 	void SetLookDirection()
 	{
@@ -156,6 +220,13 @@ public class PlayerController : MonoBehaviour
 
 		// Increment y rotation by right stick input
 		rotationYDelta = device.RightStickY.Value * rotateSpeed;
+	}
+
+	void SetLookDirectionDebug()
+	{
+		xRotation.y += Input.GetAxis("Mouse X") * rotateSpeed;
+
+		rotationYDelta = Input.GetAxis("Mouse Y") * rotateSpeed * 2f;
 	}
 
 	// Moves the player on a fixed interval
