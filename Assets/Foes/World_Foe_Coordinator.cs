@@ -22,6 +22,8 @@ public class World_Foe_Coordinator : MonoBehaviour {
 	}
 	
 	void OnTriggerExit(Collider other) {
-		foesInCollision.Remove(other.gameObject);
+		if (other.gameObject.tag == "FoeBody") {
+			foesInCollision.Remove(other.gameObject);
+		}
 	}
 }
