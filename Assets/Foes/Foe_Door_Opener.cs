@@ -6,14 +6,18 @@ public class Foe_Door_Opener : MonoBehaviour {
 	int objectsColliding = 0;
 	
 	void OnTriggerEnter(Collider other) {
-		++objectsColliding;
-		parentDoorAnimator.SetBool("isOpen", true);
+		if (other.gameObject.layer == Layerdefs.foe) {
+			++objectsColliding;
+			parentDoorAnimator.SetBool("isOpen", true);
+		}
 	}
 	
 	void OnTriggerExit(Collider other) {
-		--objectsColliding;
-		if (objectsColliding == 0) {
-			parentDoorAnimator.SetBool("isOpen", false);
+		if (other.gameObject.layer == Layerdefs.foe) {
+			--objectsColliding;
+			if (objectsColliding == 0) {
+				parentDoorAnimator.SetBool("isOpen", false);
+			}
 		}
 	}
 }
