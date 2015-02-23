@@ -3,10 +3,13 @@ using System.Collections;
 
 public class OpenThings : MonoBehaviour {
 	public Animator anim;
-	public GameObject foeDoorOpenerPrefab;	public bool willKill;
+	public GameObject foeDoorOpenerPrefab;
+	public bool willKill;
 	public bool holdsPasscard;
 	public bool needsPasscard;
-	public bool playerGotPasscard = false;	
+	public bool playerGotPasscard = false;
+	public GameObject QCamera;
+		
 	void Awake () {
 		anim = GetComponent<Animator>();
 		if (foeDoorOpenerPrefab != null) {
@@ -17,14 +20,21 @@ public class OpenThings : MonoBehaviour {
 	}
 		
 	public void Interact () {
-		if (willKill) {/*do stuff*/}
+		if (willKill) {
+			GameController.PlayerDead = true;
+			GameController.GameOverMessage =
+				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
+			QCamera.GetComponent<QUI>().showCamera(false);
+			QCamera.GetComponent<QUI>().setText("GAME OVER\nYour partner just opened a bomb. GET BETTER.");
+		}
 		if (needsPasscard && !playerGotPasscard) {
-			//play sound
+			gameObject.GetComponent<AudioSource>().Play();
 			return;
 		}
 		if (holdsPasscard) {
 			playerGotPasscard = true;
 			//UI stuff??
+			QCamera.GetComponent<QUI>().appendText("Next Objective: Get to the Elevator.");
 		}
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 	}

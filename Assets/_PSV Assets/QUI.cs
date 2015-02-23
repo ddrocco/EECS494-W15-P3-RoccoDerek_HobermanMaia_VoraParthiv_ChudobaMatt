@@ -27,6 +27,14 @@ public class QUI : MonoBehaviour {
 		textoutput.text = newtext;
 	}
 
+	public void appendText(string newtext){
+		textoutput.text += "\n" + newtext;
+	}
+
+	public void clearText(){
+		textoutput.text = "";
+	}
+
 	public void showCamera(bool visible){
 		if(visible){
 			blank.enabled = false;

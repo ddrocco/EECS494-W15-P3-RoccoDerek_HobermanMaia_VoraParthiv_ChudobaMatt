@@ -44,7 +44,7 @@ public class PlayerInteraction : MonoBehaviour
 		Ray ray = new Ray(transform.position, transform.forward);
 		Debug.DrawRay(ray.origin, ray.direction + transform.forward * (detectionDistance - 1f));
 		RaycastHit hitInfo;
-
+		
 		if (Physics.Raycast(ray, out hitInfo, detectionDistance))
 		{
 			if (hitInfo.transform.tag == "Interactive")
