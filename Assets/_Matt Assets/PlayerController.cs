@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 	public float minimumY = -60f;
 	public float maximumY = 60f;
 	public GameObject camPrefab;
+	public GameObject QCamera;
 
 	// Public variables accessible by other classes
 	[HideInInspector]
@@ -266,7 +267,9 @@ public class PlayerController : MonoBehaviour
 
 		OpenThings obj;
 		if(interactiveObj.name == "InitialComputer"){
-			obj = null;
+			QCamera.GetComponent<QUI>().showCamera(true);
+			QCamera.GetComponent<QUI>().setText("CONTROLS\nWASD: Rotate\nQE: Zoom\nUIOJKL: Pan\nSpacebar: Snap to Agent");
+			return;
 		}
 		else if (interactiveObj.name.Contains("Door"))
 			obj = interactiveObj.GetComponent<OpenThings>();
