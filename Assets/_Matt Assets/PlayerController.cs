@@ -265,7 +265,10 @@ public class PlayerController : MonoBehaviour
 		if (!canInteract) return;
 
 		OpenThings obj;
-		if (interactiveObj.name.Contains("Door"))
+		if(interactiveObj.name == "InitialComputer"){
+			obj = null;
+		}
+		else if (interactiveObj.name.Contains("Door"))
 			obj = interactiveObj.GetComponent<OpenThings>();
 		else if (interactiveObj.name.Contains("Box"))
 			obj = interactiveObj.GetComponentInChildren<OpenThings>();
