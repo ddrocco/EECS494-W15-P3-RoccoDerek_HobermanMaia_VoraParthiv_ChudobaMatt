@@ -33,7 +33,7 @@ public class OpenThings : MonoBehaviour {
 		}
 		if (holdsPasscard) {
 			playerGotPasscard = true;
-			//UI stuff??
+			GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
 			QCamera.GetComponent<QUI>().appendText("Next Objective: Get to the Elevator.");
 		}
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));

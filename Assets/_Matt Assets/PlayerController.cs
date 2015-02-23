@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour
 			else
 				state = State.crouching;
 		}
-		if (Input.GetKeyDown(KeyCode.RightControl)) // Sprint
+		if (Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.RightApple)) // Sprint
 		{
 			if (state == State.sprinting)
 				state = State.walking;
