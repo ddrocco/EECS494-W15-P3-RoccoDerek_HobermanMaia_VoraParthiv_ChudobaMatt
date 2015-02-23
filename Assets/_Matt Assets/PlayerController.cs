@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public GameObject interactiveObj;
 	[HideInInspector]
-	public bool debugControls = false;
+	public static bool debugControls = false;
 	
 	void Awake()
 	{
