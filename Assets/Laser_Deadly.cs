@@ -65,7 +65,7 @@ public class Laser_Deadly : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.layer == Layerdefs.player) {
+		if (other.gameObject.layer == Layerdefs.player && other.tag == "Player") {
 			GameController.PlayerDead = true;
 			GameController.GameOverMessage = "You were killed by a laser!\nPress A to restart the level";
 		}
