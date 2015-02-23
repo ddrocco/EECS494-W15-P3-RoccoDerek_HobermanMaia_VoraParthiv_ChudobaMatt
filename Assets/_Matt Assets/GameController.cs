@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
 
 		EnableText();
 
-		if (Input.GetKeyDown(KeyCode.Escape) || device.Action1.WasPressed)
+		if (Input.GetKeyDown(KeyCode.Escape) || device.Action1.WasPressed || Input.GetKeyDown(KeyCode.Mouse0))
 		{
 			PlayerDead = false;
 			Application.LoadLevel(levelName);
