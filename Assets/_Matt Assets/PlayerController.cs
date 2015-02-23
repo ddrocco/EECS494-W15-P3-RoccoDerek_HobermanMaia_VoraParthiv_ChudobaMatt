@@ -173,11 +173,14 @@ public class PlayerController : MonoBehaviour
 			
 			// Multiply the normalized direction vector by the modified length
 			moveDirection = moveDirection * directionLength;
+			
+			AdjustSoundConstants();
 		}
 		else
 		{
 			if (state == State.sprinting)
 				state = State.walking;
+			Foe_Detection_Handler.audioMultiplier = 1f;
 		}
 	}
 
@@ -366,6 +369,16 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			return Mathf.Clamp(current + accel, target, current);
+		}
+	}
+	
+	void AdjustSoundConstants() {
+		if (state == State.crouching) {
+			Foe_Detection_Handler.audioMultiplier = 3f;
+		} else if (state == State.walking) {
+			Foe_Detection_Handler.audioMultiplier = 6f;
+		} else if (state == State.sprinting) {
+			Foe_Detection_Handler.audioMultiplier = 15f;
 		}
 	}
 }

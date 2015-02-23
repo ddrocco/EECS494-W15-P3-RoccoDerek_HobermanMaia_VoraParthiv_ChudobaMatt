@@ -9,6 +9,7 @@ public class Generate_Wireframe : MonoBehaviour {
 		GameObject wireframe = Instantiate(wireframePrefab, transform.position, Quaternion.identity) as GameObject;
 		wireframe.transform.parent = transform;
 		wireframe.transform.localScale = Vector3.one;
+		wireframe.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 		if (type == 1) { //dangerous
 			wireframe.renderer.material.color = Color.red;
 		} else if (type == 2) { //good

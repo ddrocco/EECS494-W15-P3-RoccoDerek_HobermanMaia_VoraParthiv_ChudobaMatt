@@ -64,7 +64,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		}
 		
 		if (visualDetectionValue >= 2f) {
-			print ("GAME OVER");
+			PlayerDetected();
 		}
 	}
 	
@@ -89,6 +89,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			}
 		}
 		return visibleVertices;
+	}
+	
+	void PlayerDetected() {
+		GameController.PlayerDead = true;
+		GameController.GameOverMessage = "You were spotted by a guard!\nPress A to restart the level";
 	}
 	
 	/*void GetCurrentRoom() {

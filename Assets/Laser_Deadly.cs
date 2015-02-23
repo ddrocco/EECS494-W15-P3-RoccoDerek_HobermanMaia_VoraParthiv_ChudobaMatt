@@ -26,12 +26,11 @@ public class Laser_Deadly : MonoBehaviour {
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.parent.position,
 		                    direction, out hitInfo, 100f, (1 << Layerdefs.wall)
-		                    + (1 << Layerdefs.floor))) {
+		                    + (1 << Layerdefs.floor) + (1 << Layerdefs.player))) {
 			if (hitInfo.transform.gameObject.layer == Layerdefs.player) {
-				print ("Game over!");
+				GameController.PlayerDead = true;
+				GameController.GameOverMessage = "You were killed by a laser!\nPress A to restart the level";
 			}
-//			print (hitInfo.distance);
-//			print (hitInfo.collider.gameObject.layer);
 			transform.localScale = new Vector3(
 				transform.localScale.x,
 				hitInfo.distance / 2f,
@@ -62,12 +61,5 @@ public class Laser_Deadly : MonoBehaviour {
 		
 		direction = startDirection * (0.5f + 0.5f * Mathf.Cos (ratio * 2 * Mathf.PI))
 				+ endDirection * (0.5f - 0.5f * Mathf.Cos (ratio * 2 * Mathf.PI));
-	}
-
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.layer == Layerdefs.player && other.tag == "Player") {
-			GameController.PlayerDead = true;
-			GameController.GameOverMessage = "You were killed by a laser!\nPress A to restart the level";
-		}
 	}
 }
