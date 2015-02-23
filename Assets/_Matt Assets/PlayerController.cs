@@ -77,7 +77,11 @@ public class PlayerController : MonoBehaviour
 		crouchScale = normalScale;
 		crouchScale.y *= crouchFactor;
 
-		if (InputManager.Devices.Count == 0) debugControls = true;
+		if (InputManager.Devices.Count == 0)
+		{
+			debugControls = true;
+			Screen.lockCursor = true;
+		}
 	}
 
 	void Update()
