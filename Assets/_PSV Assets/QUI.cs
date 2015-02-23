@@ -5,17 +5,20 @@ using System.Collections;
 public class QUI : MonoBehaviour {
 	static string textcontents;
 	
-	public Image blank;
 	public Text nosignal;
 	public Text textoutput;
 	public QCameraControl qcc;
 	public GameObject player;
+	
+	int frameVisibleMask = (1 << 5) + (1 << Layerdefs.q_visible);
+	int frameInvisibleMask = (1 << 5);
 
 
 	// Use this for initialization
 	void Start () {
 		qcc = GetComponent<QCameraControl> ();
 		textcontents = textoutput.text;
+		GetComponent<Camera>().cullingMask = frameInvisibleMask;
 	}
 	
 	// Update is called once per frame
@@ -40,13 +43,13 @@ public class QUI : MonoBehaviour {
 
 	public void showCamera(bool visible){
 		if(visible){
-			blank.enabled = false;
 			nosignal.enabled = false;
 			qcc.enabled = true;
+			GetComponent<Camera>().cullingMask = frameVisibleMask;
 		} else {
-			blank.enabled = true;
 			nosignal.enabled = true;
 			qcc.enabled = false;
+			GetComponent<Camera>().cullingMask = frameInvisibleMask;
 		}
 	}
 }

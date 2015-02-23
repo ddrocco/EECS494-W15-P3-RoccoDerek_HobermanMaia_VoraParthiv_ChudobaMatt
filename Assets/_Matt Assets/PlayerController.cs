@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
 
 	// Object references
 	private InputDevice device;
-	private CharacterController controller;
 	private Camera headCamera;
 
 	// Movement variables
@@ -68,7 +67,6 @@ public class PlayerController : MonoBehaviour
 		headCamera = cam.GetComponent<Camera>();
 
 		device = InputManager.ActiveDevice;
-		controller = GetComponent<CharacterController>();
 
 		state = State.walking;
 		currentSpeed = walkSpeed;
@@ -240,7 +238,7 @@ public class PlayerController : MonoBehaviour
 	void Move(float dt)
 	{
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
-		controller.SimpleMove(moveDirection * currentSpeed * dt);
+		rigidbody.velocity = (moveDirection * currentSpeed * dt);
 	}
 
 	// Rotates the player and camera on a fixed interval
