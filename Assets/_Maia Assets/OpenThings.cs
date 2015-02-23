@@ -25,7 +25,7 @@ public class OpenThings : MonoBehaviour {
 			GameController.GameOverMessage =
 				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QCamera.GetComponent<QUI>().setText("GAME OVER\nYour partner just opened a bomb. GET BETTER.");
+			QUI.setText("GAME OVER\nYour partner just opened a bomb. GET BETTER.");
 		}
 		if (needsPasscard && !playerGotPasscard) {
 			gameObject.GetComponent<AudioSource>().Play();
@@ -34,7 +34,7 @@ public class OpenThings : MonoBehaviour {
 		if (holdsPasscard) {
 			playerGotPasscard = true;
 			GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
-			QCamera.GetComponent<QUI>().appendText("Next Objective: Get to the Elevator.");
+			QUI.appendText("Next Objective: Get to the Elevator.");
 		}
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 	}

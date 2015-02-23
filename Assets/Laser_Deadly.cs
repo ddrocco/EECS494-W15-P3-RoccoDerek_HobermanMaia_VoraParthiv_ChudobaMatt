@@ -29,7 +29,9 @@ public class Laser_Deadly : MonoBehaviour {
 		                    + (1 << Layerdefs.floor) + (1 << Layerdefs.player))) {
 			if (hitInfo.transform.gameObject.layer == Layerdefs.player) {
 				GameController.PlayerDead = true;
-				GameController.GameOverMessage = "You were killed by a laser!\nPress A to restart the level";
+				string restartControl = "A";
+				if (PlayerController.debugControls) restartControl = "Left Click";
+				GameController.GameOverMessage = "You were killed by a laser!\nPress " + restartControl + " to restart the level";
 			}
 			transform.localScale = new Vector3(
 				transform.localScale.x,

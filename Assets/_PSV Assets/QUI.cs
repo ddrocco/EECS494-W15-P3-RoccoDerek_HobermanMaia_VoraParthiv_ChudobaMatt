@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class QUI : MonoBehaviour {
-
+	static string textcontents;
+	
 	public Image blank;
 	public Text nosignal;
 	public Text textoutput;
@@ -14,6 +15,7 @@ public class QUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		qcc = GetComponent<QCameraControl> ();
+		textcontents = textoutput.text;
 	}
 	
 	// Update is called once per frame
@@ -21,18 +23,19 @@ public class QUI : MonoBehaviour {
 		if(!qcc.enabled){
 			qcc.pivotPoint = player.transform.position;
 		}
+		textoutput.text = textcontents;
 	}
 
-	public void setText(string newtext){
-		textoutput.text = newtext;
+	public static void setText(string newtext){
+		textcontents = newtext;
 	}
 
-	public void appendText(string newtext){
-		textoutput.text += "\n" + newtext;
+	public static void appendText(string newtext){
+		textcontents += "\n" + newtext;
 	}
 
-	public void clearText(){
-		textoutput.text = "";
+	public static void clearText(){
+		textcontents = "";
 	}
 
 	public void showCamera(bool visible){

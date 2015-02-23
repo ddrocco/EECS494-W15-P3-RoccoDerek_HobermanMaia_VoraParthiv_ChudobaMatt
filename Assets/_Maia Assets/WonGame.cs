@@ -6,7 +6,7 @@ public class WonGame : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if  (other.gameObject.layer == Layerdefs.player) {
-			QCamera.GetComponent<QUI>().setText("Level complete. Good teamwork!");
+			QUI.setText("Level complete. Good teamwork!");
 			GameController.SendPlayerMessage("Level complete. Good teamwork!", 15);
 		}
 	}

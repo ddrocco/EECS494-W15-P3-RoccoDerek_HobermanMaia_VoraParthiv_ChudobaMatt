@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public GameObject interactiveObj;
 	[HideInInspector]
-	public bool debugControls = false;
+	public static bool debugControls = false;
 	
 	void Awake()
 	{
@@ -77,7 +77,11 @@ public class PlayerController : MonoBehaviour
 		crouchScale = normalScale;
 		crouchScale.y *= crouchFactor;
 
-		if (InputManager.Devices.Count == 0) debugControls = true;
+		if (InputManager.Devices.Count == 0)
+		{
+			debugControls = true;
+			Screen.lockCursor = true;
+		}
 	}
 
 	void Update()
@@ -342,7 +346,7 @@ public class PlayerController : MonoBehaviour
 		OpenThings obj;
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			QCamera.GetComponent<QUI>().setText("CONTROLS\nWASD: Rotate\nQE: Zoom\nUIOJKL: Pan\nSpacebar: Snap to Agent");
+			QUI.setText("CONTROLS\nWASD: Rotate\nQE: Zoom\nUIOJKL: Pan\nSpacebar: Snap to Agent");
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door"))
