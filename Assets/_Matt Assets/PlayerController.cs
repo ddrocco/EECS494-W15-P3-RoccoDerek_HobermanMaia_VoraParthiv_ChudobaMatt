@@ -84,7 +84,11 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		if (GameController.PlayerDead) return;
+		if (GameController.PlayerDead)
+		{
+			rigidbody.velocity = Vector3.zero;
+			return;
+		}
 		if (debugControls)
 		{
 			SetMoveDirectionDebug();
@@ -119,7 +123,11 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		if (GameController.PlayerDead) return;
+		if (GameController.PlayerDead)
+		{
+			rigidbody.velocity = Vector3.zero;
+			return;
+		}
 
 		float dt = Time.fixedDeltaTime;
 		Move(dt);
