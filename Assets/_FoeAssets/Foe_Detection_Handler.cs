@@ -15,8 +15,12 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public GameObject alertObject1, alertObject2;
 	
 	Foe_Movement_Handler movementHandler;
+	
+	int cullingMask;
 
 	void Start () {
+		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
+				+ (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
 		alertObject1.renderer.enabled = false;
 		alertObject2.renderer.enabled = false;
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
@@ -79,8 +83,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 					(vertex - transform.position),
 					out hitInfo,
 					(vertex - transform.position).magnitude,
-					((1 << Layerdefs.wall) + (1 << Layerdefs.floor) + (1 << Layerdefs.door))
-			);
+					cullingMask);
 			if (!raycastHit) {
 				++visibleVertices;
 				Debug.DrawRay (transform.position, (vertex - transform.position), Color.green);

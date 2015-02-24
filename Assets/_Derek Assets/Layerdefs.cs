@@ -9,7 +9,7 @@ public class Layerdefs : MonoBehaviour {
 	public static int invisible = 12;
 	public static int door = 13;
 	public static int q_visible = 14;
-	/*public static int  = 15;
-	public static int  = 16;
+	public static int interactable = 15;
+	/*public static int  = 16;
 	public static int  = 17;*/
 }
