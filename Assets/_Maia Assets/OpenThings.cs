@@ -7,7 +7,7 @@ public class OpenThings : MonoBehaviour {
 	public bool willKill;
 	public bool holdsPasscard;
 	public bool needsPasscard;
-	public bool playerGotPasscard = false;
+	public static bool playerGotPasscard = false;
 	public GameObject QCamera;
 		
 	void Awake () {
