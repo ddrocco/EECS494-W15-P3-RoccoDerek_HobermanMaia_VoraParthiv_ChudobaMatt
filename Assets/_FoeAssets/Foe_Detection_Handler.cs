@@ -9,6 +9,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	private Vector3 displacement;
 	private float visualDetectionValue, audialDetectionValue;
 	public static float audioMultiplier = 0f;
+	public float visionWidth = 75f;
 	
 	//Exclamation points:
 	public bool isAttentive = false;
@@ -41,7 +42,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		
 		int visualMultiplier = GetPlayerRaycasts();
 		
-		if (visualMultiplier == 0 || visualAngle > 90f) {
+		if (visualMultiplier == 0 || visualAngle > visionWidth) {
 			visualDetectionValue = 0;
 		} else {
 			float lightFactor = 0.25f; //When it's brightly lit.

@@ -25,10 +25,17 @@ public class OpenThings : MonoBehaviour {
 			GameController.GameOverMessage =
 				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("GAME OVER\nYour partner just opened a bomb. GET BETTER.");
+			QUI.setText("GAME OVER\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
 		}
 		if (needsPasscard && !playerGotPasscard) {
 			gameObject.GetComponent<AudioSource>().Play();
+			return;
+		} else if (needsPasscard && playerGotPasscard) {
+			GameController.PlayerDead = true;
+			GameController.GameOverMessage =
+				"You won!  Congratulations!";
+			QCamera.GetComponent<QUI>().showCamera(false);
+			QUI.setText("WELL DONE\nYour partner survived. EXCELLENT WORK.");
 			return;
 		}
 		if (holdsPasscard) {
