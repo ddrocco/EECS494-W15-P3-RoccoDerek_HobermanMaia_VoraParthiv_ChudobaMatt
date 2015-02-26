@@ -9,6 +9,11 @@ public class OpenThings : MonoBehaviour {
 	public bool needsPasscard;
 	public static bool playerGotPasscard = false;
 	public GameObject QCamera;
+	
+	//Close behind player, etc
+	private Transform player;
+	private float closeDistance;
+	private bool isOpen = false;
 		
 	void Awake () {
 		anim = GetComponent<Animator>();
@@ -17,6 +22,10 @@ public class OpenThings : MonoBehaviour {
            			transform.position, Quaternion.identity) as GameObject;
 			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoorAnimator = anim;
 		}
+	}
+	
+	void Start() {
+		player = PlayerController.player.transform;
 	}
 		
 	public void Interact () {
@@ -43,6 +52,22 @@ public class OpenThings : MonoBehaviour {
 			GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
 			QUI.appendText("Next Objective: Get to the Elevator.");
 		}
-		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
+		if (!isOpen) {
+			anim.SetBool("isOpen", true);
+			isOpen = true;
+			closeDistance = Vector3.Distance(transform.position, player.position) + 1f;
+		} else {
+			anim.SetBool("isOpen", false);
+			isOpen = false;
+		}
+	}
+	
+	void Update() {
+		if (isOpen) {
+			if (Vector3.Distance(transform.position, player.position) > closeDistance) {
+				isOpen = false;
+				anim.SetBool("isOpen", false);
+			}
+		}
 	}
 }

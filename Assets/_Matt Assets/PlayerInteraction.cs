@@ -1,16 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerInteraction : MonoBehaviour
 {
 	private Camera cam;
 	private GameObject reticle;
-	private Renderer reticleRender;
+	private Image reticleRender;
 	private Color reticleNormal;
 	private Color reticleInteract;
 	private PlayerController player;
 
 	public float detectionDistance;
+	private int cullingMask;
 
 	void Awake()
 	{
@@ -18,9 +20,13 @@ public class PlayerInteraction : MonoBehaviour
 		reticle = GameObject.Find("Reticle");
 		player = GameObject.Find("Player").GetComponent<PlayerController>();
 
-		reticleRender = reticle.GetComponent<Renderer>();
-		reticleNormal = reticleRender.material.color;
+		reticleRender = reticle.GetComponent<Image>();
+		reticleNormal = Color.black;
+		reticleNormal.a = 0.5f;
 		reticleInteract = Color.red;
+		reticleInteract.a = 0.5f;
+		
+		cullingMask = (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
 	}
 
 	void Update()
@@ -45,24 +51,24 @@ public class PlayerInteraction : MonoBehaviour
 		Debug.DrawRay(ray.origin, ray.direction + transform.forward * (detectionDistance - 1f));
 		RaycastHit hitInfo;
 		
-		if (Physics.Raycast(ray, out hitInfo, detectionDistance))
+		if (Physics.Raycast(ray, out hitInfo, detectionDistance, cullingMask))
 		{
 			if (hitInfo.transform.tag == "Interactive")
 			{
 				player.canInteract = true;
 				player.interactiveObj = hitInfo.transform.gameObject;
-				reticleRender.material.color = reticleInteract;
+				reticleRender.color = reticleInteract;
 			}
 			else
 			{
 				player.canInteract = false;
-				reticleRender.material.color = reticleNormal;
+				reticleRender.color = reticleNormal;
 			}
 		}
 		else
 		{
 			player.canInteract = false;
-			reticleRender.material.color = reticleNormal;
+			reticleRender.color = reticleNormal;
 		}
 	}
 }

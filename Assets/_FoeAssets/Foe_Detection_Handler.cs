@@ -87,9 +87,9 @@ public class Foe_Detection_Handler : MonoBehaviour {
 					cullingMask);
 			if (!raycastHit) {
 				++visibleVertices;
-				Debug.DrawRay (transform.position, (vertex - transform.position), Color.green);
+				//Debug.DrawRay (transform.position, (vertex - transform.position), Color.green);
 			} else {
-				Debug.DrawRay (transform.position, (vertex - transform.position), Color.magenta);
+				//Debug.DrawRay (transform.position, (vertex - transform.position), Color.magenta);
 			}
 		}
 		return visibleVertices;
