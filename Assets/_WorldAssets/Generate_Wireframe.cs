@@ -11,9 +11,9 @@ public class Generate_Wireframe : MonoBehaviour {
 		wireframe.transform.localScale = Vector3.one;
 		wireframe.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 		if (type == 1) { //dangerous
-			wireframe.renderer.material.color = Color.red;
+			wireframe.GetComponent<Renderer>().material.color = Color.red;
 		} else if (type == 2) { //good
-			wireframe.renderer.material.color = Color.cyan;
+			wireframe.GetComponent<Renderer>().material.color = Color.cyan;
 		}
 	}
 }

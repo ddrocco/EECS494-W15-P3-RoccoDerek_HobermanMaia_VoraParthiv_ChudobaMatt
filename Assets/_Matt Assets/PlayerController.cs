@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (GameController.PlayerDead)
 		{
-			rigidbody.velocity = Vector3.zero;
+			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			return;
 		}
 		if (debugControls)
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (GameController.PlayerDead)
 		{
-			rigidbody.velocity = Vector3.zero;
+			GetComponent<Rigidbody>().velocity = Vector3.zero;
 			return;
 		}
 
@@ -249,7 +249,7 @@ public class PlayerController : MonoBehaviour
 	void Move(float dt)
 	{
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
-		rigidbody.velocity = (moveDirection * currentSpeed * dt);
+		GetComponent<Rigidbody>().velocity = (moveDirection * currentSpeed * dt);
 	}
 
 	// Rotates the player and camera on a fixed interval

@@ -1,0 +1,69 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{052138D9-2D23-2B2B-E2A6-69EF39C420D9}") = "EECS494-W15-P3-RoccoDerek_HobermanMaia_VoraParthiv_ChudobaMatt", "Assembly-CSharp.csproj", "{489BBF74-BBE2-12F3-2049-F11D3355B005}"
+EndProject
+Project("{052138D9-2D23-2B2B-E2A6-69EF39C420D9}") = "EECS494-W15-P3-RoccoDerek_HobermanMaia_VoraParthiv_ChudobaMatt", "Assembly-CSharp-Editor.csproj", "{A75ED1CE-C357-06A4-B418-52EE1A682D88}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{489BBF74-BBE2-12F3-2049-F11D3355B005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{489BBF74-BBE2-12F3-2049-F11D3355B005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{489BBF74-BBE2-12F3-2049-F11D3355B005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{489BBF74-BBE2-12F3-2049-F11D3355B005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A75ED1CE-C357-06A4-B418-52EE1A682D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A75ED1CE-C357-06A4-B418-52EE1A682D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A75ED1CE-C357-06A4-B418-52EE1A682D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A75ED1CE-C357-06A4-B418-52EE1A682D88}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+																					GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.TabsToSpaces = False
+		$1.EolMarker = Unix
+		$1.inheritsSet = VisualStudio
+		$1.inheritsScope = text/plain
+		$1.scope = text/x-csharp
+		$0.CSharpFormattingPolicy = $2
+		$2.AnonymousMethodBraceStyle = NextLine
+		$2.PropertyBraceStyle = NextLine
+		$2.PropertyGetBraceStyle = NextLine
+		$2.PropertySetBraceStyle = NextLine
+		$2.EventBraceStyle = NextLine
+		$2.EventAddBraceStyle = NextLine
+		$2.EventRemoveBraceStyle = NextLine
+		$2.StatementBraceStyle = NextLine
+		$2.ElseNewLinePlacement = NewLine
+		$2.ElseIfNewLinePlacement = SameLine
+		$2.CatchNewLinePlacement = NewLine
+		$2.FinallyNewLinePlacement = NewLine
+		$2.WhileNewLinePlacement = NewLine
+		$2.BeforeMethodDeclarationParentheses = False
+		$2.BeforeMethodCallParentheses = False
+		$2.BeforeConstructorDeclarationParentheses = False
+		$2.BeforeIndexerDeclarationBracket = False
+		$2.BeforeDelegateDeclarationParentheses = False
+		$2.NewParentheses = False
+		$2.SpacesBeforeBrackets = False
+		$2.inheritsSet = Mono
+		$2.inheritsScope = text/x-csharp
+		$2.scope = text/x-csharp
+		$0.TextStylePolicy = $3
+		$3.FileWidth = 120
+		$3.TabsToSpaces = False
+		$3.EolMarker = Unix
+		$3.inheritsSet = VisualStudio
+		$3.inheritsScope = text/plain
+		$3.scope = text/plain
+	EndGlobalSection
+
+EndGlobal

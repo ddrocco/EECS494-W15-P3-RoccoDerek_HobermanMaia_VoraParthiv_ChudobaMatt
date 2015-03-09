@@ -15,10 +15,10 @@ public class Room_Floor_Designation : MonoBehaviour {
 	
 	bool isInRoom(Vector3 location) {
 		if (
-				location.x < transform.position.x + collider.bounds.extents.x
-		    	&& location.x > transform.position.x - collider.bounds.extents.x
-				&& location.z < transform.position.z + collider.bounds.extents.z
-				&& location.z > transform.position.z - collider.bounds.extents.z
+				location.x < transform.position.x + GetComponent<Collider>().bounds.extents.x
+		    	&& location.x > transform.position.x - GetComponent<Collider>().bounds.extents.x
+				&& location.z < transform.position.z + GetComponent<Collider>().bounds.extents.z
+				&& location.z > transform.position.z - GetComponent<Collider>().bounds.extents.z
 		) {
 			return true;
 		} else {
@@ -37,10 +37,10 @@ public class Room_Floor_Designation : MonoBehaviour {
 			}
 		}
 		if (
-				location.x < floorList[minLocation].transform.position.x + floorList[minLocation].collider.bounds.extents.x
-				&& location.x > floorList[minLocation].transform.position.x - floorList[minLocation].collider.bounds.extents.x
-				&& location.z < floorList[minLocation].transform.position.z + floorList[minLocation].collider.bounds.extents.z
-				&& location.z > floorList[minLocation].transform.position.z - floorList[minLocation].collider.bounds.extents.z
+				location.x < floorList[minLocation].transform.position.x + floorList[minLocation].GetComponent<Collider>().bounds.extents.x
+				&& location.x > floorList[minLocation].transform.position.x - floorList[minLocation].GetComponent<Collider>().bounds.extents.x
+				&& location.z < floorList[minLocation].transform.position.z + floorList[minLocation].GetComponent<Collider>().bounds.extents.z
+				&& location.z > floorList[minLocation].transform.position.z - floorList[minLocation].GetComponent<Collider>().bounds.extents.z
 		) {
 			return minLocation;
 		} else {

@@ -22,8 +22,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	void Start () {
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
 				+ (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
-		alertObject1.renderer.enabled = false;
-		alertObject2.renderer.enabled = false;
+		alertObject1.GetComponent<Renderer>().enabled = false;
+		alertObject2.GetComponent<Renderer>().enabled = false;
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 	}
 	
@@ -63,8 +63,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		
 		if (audialDetectionValue >= 0.5f) {
 			isAttentive = true;
-			alertObject1.renderer.enabled = true;
-			alertObject2.renderer.enabled = true;
+			alertObject1.GetComponent<Renderer>().enabled = true;
+			alertObject2.GetComponent<Renderer>().enabled = true;
 			movementHandler.StartInvestigation();
 		}
 		

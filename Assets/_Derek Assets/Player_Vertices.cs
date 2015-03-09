@@ -4,9 +4,9 @@ using System.Collections;
 public class Player_Vertices : MonoBehaviour {
 	public Vector3[] GetVertices() {
 		Vector3[] vertices = new Vector3[14];
-		float xExtents = collider.bounds.extents.x;
-		float yExtents = collider.bounds.extents.y;
-		float zExtents = collider.bounds.extents.z;
+		float xExtents = GetComponent<Collider>().bounds.extents.x;
+		float yExtents = GetComponent<Collider>().bounds.extents.y;
+		float zExtents = GetComponent<Collider>().bounds.extents.z;
 		
 		//Corners:
 		vertices[0] = transform.position + new Vector3(xExtents, yExtents, -zExtents);
