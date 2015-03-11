@@ -21,6 +21,7 @@ public class QCameraControl : MonoBehaviour
 	public float zoomMin = 10f;
 	public float zoomMax = 50f;
 	public Text cameraDesc;
+	public GameObject mapLabels;
 
 	[HideInInspector]
 	public int camCount;
@@ -28,6 +29,7 @@ public class QCameraControl : MonoBehaviour
 	private Camera cam;
 	private QCameraLocation currentCam;
 	private List<QCameraLocation> cameras;
+	private QCameraOverview camOverview;
 
 	// Use this for initialization
 	void Awake()
@@ -43,6 +45,7 @@ public class QCameraControl : MonoBehaviour
 		pivotPoint = player.transform.position;
 		cam = GetComponent<Camera>();
 		cameras = new List<QCameraLocation>();
+		camOverview = GameObject.Find("CamOverview").GetComponent<QCameraOverview>();
 
 		GameObject[] objs = GameObject.FindGameObjectsWithTag("CameraLocation");
 		foreach (GameObject obj in objs)
@@ -73,11 +76,16 @@ public class QCameraControl : MonoBehaviour
 		GetCameraInput();		
 		UpdateCameraPosition();
 		ChangeCamera();
+		ToggleControlText();
 		//UpdateSounds();
 	}
 	
 	void GetCameraInput()
 	{
+		if (currentCam == camOverview)
+		{
+			return;
+		}
 
 		//rotate
 		if (Input.GetKey(KeyCode.A))
@@ -102,6 +110,11 @@ public class QCameraControl : MonoBehaviour
 	
 	void UpdateCameraPosition()
 	{
+		if (currentCam == camOverview)
+		{
+			return;
+		}
+
 		if (LR_rotation > 360f)
 		{
 			LR_rotation -= 360f;
@@ -132,6 +145,11 @@ public class QCameraControl : MonoBehaviour
 	void ChangeCamera()
 	{
 		bool cameraChanged = false;
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			currentCam = camOverview;
+			cameraChanged = true;
+		}
 		if (Input.GetKeyDown(KeyCode.Alpha1) && camCount >= 1)
 		{
 			currentCam = cameras[0];
@@ -184,6 +202,17 @@ public class QCameraControl : MonoBehaviour
 		}
 		if (!cameraChanged) return;
 
+		if (currentCam == camOverview)
+		{
+			cam.orthographic = true;
+			mapLabels.SetActive(true);
+		}
+		else
+		{
+			cam.orthographic = false;
+			mapLabels.SetActive(false);
+		}
+
 		transform.position = currentCam.transform.position;
 		transform.rotation = currentCam.transform.rotation;
 		UD_rotation = currentCam.transform.eulerAngles.x;
@@ -191,6 +220,18 @@ public class QCameraControl : MonoBehaviour
 		zoom = currentCam.zoom;
 
 		cameraDesc.text = "Camera " + currentCam.cameraNumber + "\n" + currentCam.description;
+	}
+
+	void ToggleControlText()
+	{
+		if (Input.GetKey(KeyCode.E))
+		{
+			QUI.setText("WASD: Rotate and Zoom\n1-" + camCount + ": Change Camera\nSPACE: Map Overview");
+		}
+		else
+		{
+			QUI.setText("Hold E to View Controls");
+		}
 	}
 
 	/*

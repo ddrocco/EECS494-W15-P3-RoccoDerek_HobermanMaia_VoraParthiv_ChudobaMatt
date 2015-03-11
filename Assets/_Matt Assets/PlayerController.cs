@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour
 		if (InputManager.Devices.Count == 0)
 		{
 			debugControls = true;
-			Screen.lockCursor = true;
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
 		}
 	}
 
@@ -356,7 +357,7 @@ public class PlayerController : MonoBehaviour
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
 			int camControl = QCamera.GetComponent<QCameraControl>().camCount;
-			QUI.setText("CONTROLS\nWASD: Rotate and Zoom\n1-" + camControl + ": Change Camera");
+			QUI.setText("");
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door"))
