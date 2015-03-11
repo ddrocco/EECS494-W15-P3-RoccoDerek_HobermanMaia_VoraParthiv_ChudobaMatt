@@ -39,7 +39,7 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		Vector3 scale = reticle.transform.localScale;
 		
-		scale.x = 50f / (cam.pixelWidth);
+		scale.x = 40f / (cam.pixelWidth);
 		scale.y = scale.x;
 		
 		reticle.transform.localScale = scale;

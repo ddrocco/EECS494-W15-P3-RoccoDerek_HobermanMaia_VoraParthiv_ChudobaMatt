@@ -355,7 +355,8 @@ public class PlayerController : MonoBehaviour
 		OpenThings obj;
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			QUI.setText("CONTROLS\nWASD: Rotate\nQE: Zoom\nUIOJKL: Pan\nSpacebar: Snap to Agent");
+			int camControl = QCamera.GetComponent<QCameraControl>().camCount;
+			QUI.setText("CONTROLS\nWASD: Rotate and Zoom\n1-" + camControl + ": Change Camera");
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door"))

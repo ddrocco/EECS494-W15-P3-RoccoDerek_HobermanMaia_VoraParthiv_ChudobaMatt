@@ -7,6 +7,7 @@ public class QUI : MonoBehaviour {
 	
 	public Text nosignal;
 	public Text textoutput;
+	public Text cameraDesc;
 	public QCameraControl qcc;
 	public GameObject player;
 	
@@ -45,10 +46,12 @@ public class QUI : MonoBehaviour {
 		if(visible){
 			nosignal.enabled = false;
 			qcc.enabled = true;
+			cameraDesc.enabled = true;
 			GetComponent<Camera>().cullingMask = frameVisibleMask;
 		} else {
 			nosignal.enabled = true;
 			qcc.enabled = false;
+			cameraDesc.enabled = false;
 			GetComponent<Camera>().cullingMask = frameInvisibleMask;
 		}
 	}

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class QCameraControl : MonoBehaviour {
+public class QCameraControl : MonoBehaviour
+{
 	//Sound things:
 	/*
 	public List<AudioClip> steps;
@@ -13,18 +15,23 @@ public class QCameraControl : MonoBehaviour {
 	
 	public GameObject player;
 	public Vector3 pivotPoint;
-	
-	public float UDrotation, LRrotation, distance;
-	
+	public float UD_rotation, LR_rotation, zoom;
 	public float rotationSpeed = 200f;
-	public float panSpeed = 50f;
-	public float distanceMin = 10f;
-	public float distanceMax = 50f;
+	public float zoomSpeed = 50f;
+	public float zoomMin = 10f;
+	public float zoomMax = 50f;
+	public Text cameraDesc;
 
-	float radconv = Mathf.PI / 180f;
-	
+	[HideInInspector]
+	public int camCount;
+
+	private Camera cam;
+	private QCameraLocation currentCam;
+	private List<QCameraLocation> cameras;
+
 	// Use this for initialization
-	void Start () {
+	void Awake()
+	{
 		//Sound stuff:
 		/*
 		source = GetComponent<AudioSource>();
@@ -34,107 +41,158 @@ public class QCameraControl : MonoBehaviour {
 		audioSource.enabled = false;
 		*/
 		pivotPoint = player.transform.position;
+		cam = GetComponent<Camera>();
+		cameras = new List<QCameraLocation>();
 
+		GameObject[] objs = GameObject.FindGameObjectsWithTag("CameraLocation");
+		foreach (GameObject obj in objs)
+		{
+			cameras.Add(obj.GetComponent<QCameraLocation>());
+		}
+		CameraComp comp = new CameraComp();
+		cameras.Sort(comp);
+		camCount = cameras.Count;
+
+		// Internal numbering of cameras
+		for (int i = 0; i < camCount; i++)
+			cameras[i].cameraNumber = i + 1;
+
+		currentCam = cameras[0];
+		transform.position = currentCam.transform.position;
+		transform.rotation = currentCam.transform.rotation;
+		UD_rotation = currentCam.transform.eulerAngles.x;
+		LR_rotation = currentCam.transform.eulerAngles.y;
+		currentCam.zoom = zoom;
+
+		cameraDesc.text = "Camera 1\n" + currentCam.description;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update()
+	{
 		GetCameraInput();		
 		UpdateCameraPosition();
+		ChangeCamera();
 		//UpdateSounds();
 	}
 	
-	void GetCameraInput() {
+	void GetCameraInput()
+	{
 
 		//rotate
-		//isPanning = false;
-		if (Input.GetKey(KeyCode.D)) {
-			LRrotation -= rotationSpeed * Time.deltaTime;
-			//isPanning = true;
+		if (Input.GetKey(KeyCode.A))
+		{
+			LR_rotation -= rotationSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.A)) {
-			LRrotation += rotationSpeed * Time.deltaTime;
-			//isPanning = true;
-		}
-		if (Input.GetKey(KeyCode.W)) {
-			UDrotation += rotationSpeed * Time.deltaTime;
-			//isPanning = true;
-		}
-		if (Input.GetKey(KeyCode.S)) {
-			UDrotation -= rotationSpeed * Time.deltaTime;
-			//isPanning = true;
+		if (Input.GetKey(KeyCode.D))
+		{
+			LR_rotation += rotationSpeed * Time.deltaTime;
 		}
 
 		//zoom
-		if (Input.GetKey(KeyCode.E)) {
-			distance -= rotationSpeed * Time.deltaTime;
-			//isPanning = true;
+		if (Input.GetKey(KeyCode.W))
+		{
+			zoom -= zoomSpeed * Time.deltaTime;
 		}
-		if (Input.GetKey(KeyCode.Q)) {
-			distance += rotationSpeed * Time.deltaTime;
-			//isPanning = true;
-		}
-
-		//pan
-		if (Input.GetKey(KeyCode.L)) {
-			pivotPoint.z -= panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
-			pivotPoint.x += panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
-		}
-		if (Input.GetKey(KeyCode.J)) {
-			pivotPoint.z += panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
-			pivotPoint.x -= panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
-		}
-		if (Input.GetKey(KeyCode.I)) {
-			pivotPoint.z += panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
-			pivotPoint.x += panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
-		}
-		if (Input.GetKey(KeyCode.K)) {
-			pivotPoint.z -= panSpeed * Time.deltaTime * Mathf.Cos(LRrotation * radconv);
-			pivotPoint.x -= panSpeed * Time.deltaTime * Mathf.Sin(LRrotation * radconv);
-		}
-		if (Input.GetKey(KeyCode.O)) {
-			pivotPoint.y += panSpeed * Time.deltaTime;
-		}
-		if (Input.GetKey(KeyCode.U)) {
-			pivotPoint.y -= panSpeed * Time.deltaTime;
-		}
-
-		//snap
-		if (Input.GetKey(KeyCode.Space)) {
-			Vector3 displacement = player.transform.position - pivotPoint;
-			if(displacement.magnitude < rotationSpeed * Time.deltaTime){
-				pivotPoint = player.transform.position;
-			} else {
-				pivotPoint += displacement.normalized * rotationSpeed * Time.deltaTime;
-			}
+		if (Input.GetKey(KeyCode.S))
+		{
+			zoom += zoomSpeed * Time.deltaTime;
 		}
 	}
 	
-	void UpdateCameraPosition() {
-		if (UDrotation > 90f) {
-			UDrotation = 90f;
+	void UpdateCameraPosition()
+	{
+		if (LR_rotation > 360f)
+		{
+			LR_rotation -= 360f;
 		}
-		if (UDrotation < -90f) {
-			UDrotation = -90f;
+		if (LR_rotation < 0f)
+		{
+			LR_rotation += 360f;
 		}
-		if (LRrotation > 360f) {
-			LRrotation -= 360f;
-		}
-		if (LRrotation < 0f) {
-			LRrotation += 360f;
-		}
+
+		if (LR_rotation > currentCam.maxRotation) LR_rotation = currentCam.maxRotation;
+		if (LR_rotation < currentCam.minRotation) LR_rotation = currentCam.minRotation;
 		
-		if (distance < distanceMin) {
-			distance = distanceMin;
+		if (zoom < zoomMin)
+		{
+			zoom = zoomMin;
 		}
-		if (distance > distanceMax) {
-			distance = distanceMax;
+		if (zoom > zoomMax)
+		{
+			zoom = zoomMax;
 		}
-		
-		transform.rotation = Quaternion.Euler (new Vector3(UDrotation, LRrotation, 0));
-		transform.position = pivotPoint + transform.rotation * Vector3.back * distance;
+
+		currentCam.transform.rotation = Quaternion.Euler(new Vector3(UD_rotation, LR_rotation, 0));
+		transform.rotation = currentCam.transform.rotation;
+		currentCam.zoom = zoom;
+		cam.fieldOfView = zoom;
 	}
-	
+
+	void ChangeCamera()
+	{
+		bool cameraChanged = false;
+		if (Input.GetKeyDown(KeyCode.Alpha1) && camCount >= 1)
+		{
+			currentCam = cameras[0];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha2) && camCount >= 2)
+		{
+			currentCam = cameras[1];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha3) && camCount >= 3)
+		{
+			currentCam = cameras[2];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha4) && camCount >= 4)
+		{
+			currentCam = cameras[3];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha5) && camCount >= 5)
+		{
+			currentCam = cameras[4];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha6) && camCount >= 6)
+		{
+			currentCam = cameras[5];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha7) && camCount >= 7)
+		{
+			currentCam = cameras[6];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha8) && camCount >= 8)
+		{
+			currentCam = cameras[7];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha9) && camCount >= 9)
+		{
+			currentCam = cameras[8];
+			cameraChanged = true;
+		}
+		if (Input.GetKeyDown(KeyCode.Alpha0) && camCount >= 10)
+		{
+			currentCam = cameras[9];
+			cameraChanged = true;
+		}
+		if (!cameraChanged) return;
+
+		transform.position = currentCam.transform.position;
+		transform.rotation = currentCam.transform.rotation;
+		UD_rotation = currentCam.transform.eulerAngles.x;
+		LR_rotation = currentCam.transform.eulerAngles.y;
+		zoom = currentCam.zoom;
+
+		cameraDesc.text = "Camera " + currentCam.cameraNumber + "\n" + currentCam.description;
+	}
+
 	/*
 	void UpdateSounds() {
 		if (isPanning) {
