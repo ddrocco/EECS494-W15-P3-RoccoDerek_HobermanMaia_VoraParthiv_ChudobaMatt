@@ -28,6 +28,7 @@ public class QCameraControl : MonoBehaviour
 
 	private Camera cam;
 	private QCameraLocation currentCam;
+	private QCameraLocation lastUsedCam;
 	private List<QCameraLocation> cameras;
 	private QCameraOverview camOverview;
 
@@ -147,7 +148,13 @@ public class QCameraControl : MonoBehaviour
 		bool cameraChanged = false;
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-			currentCam = camOverview;
+			if (currentCam == camOverview) {
+				currentCam = lastUsedCam;
+			}
+			else {
+				lastUsedCam = currentCam;
+				currentCam = camOverview;
+			}
 			cameraChanged = true;
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha1) && camCount >= 1)
