@@ -356,7 +356,6 @@ public class PlayerController : MonoBehaviour
 		OpenThings obj;
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			int camControl = QCamera.GetComponent<QCameraControl>().camCount;
 			QUI.setText("");
 			return;
 		}
