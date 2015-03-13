@@ -29,7 +29,7 @@ public class OpenThings : MonoBehaviour {
 	}
 		
 	public void Interact () {
-		if (willKill) {
+		if (willKill) { //no insta-death
 			GameController.PlayerDead = true;
 			GameController.GameOverMessage =
 				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
@@ -39,7 +39,7 @@ public class OpenThings : MonoBehaviour {
 		if (needsPasscard && !playerGotPasscard) {
 			gameObject.GetComponent<AudioSource>().Play();
 			return;
-		} else if (needsPasscard && playerGotPasscard) {
+		} else if (needsPasscard && playerGotPasscard) { //This needs reworking
 			GameController.PlayerDead = true;
 			GameController.GameOverMessage =
 				"You won!  Congratulations!";
@@ -53,6 +53,21 @@ public class OpenThings : MonoBehaviour {
 			QUI.appendText("Next Objective: Get to the Elevator.");
 		}
 		if (!isOpen) {
+			if (gameObject.layer == Layerdefs.door) {
+				if (transform.rotation.y == 0) {
+					if (player.position.x < transform.position.x) { //Open south
+						anim.SetBool("openSouth", true);
+					} else { //Open north
+						anim.SetBool("openSouth", false);
+					}
+				} else {
+					if (player.position.z < transform.position.z) { //Open south
+						anim.SetBool("openEast", true);
+					} else { //Open north
+						anim.SetBool("openEast", false);
+					}
+				}
+			}
 			anim.SetBool("isOpen", true);
 			isOpen = true;
 			closeDistance = Vector3.Distance(transform.position, player.position) + 1f;
