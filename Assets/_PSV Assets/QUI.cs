@@ -48,11 +48,13 @@ public class QUI : MonoBehaviour {
 			qcc.enabled = true;
 			cameraDesc.enabled = true;
 			GetComponent<Camera>().cullingMask = frameVisibleMask;
+			FindObjectOfType<QPowerBar>().Enabled(true);
 		} else {
 			nosignal.enabled = true;
 			qcc.enabled = false;
 			cameraDesc.enabled = false;
 			GetComponent<Camera>().cullingMask = frameInvisibleMask;
+			FindObjectOfType<QPowerBar>().Enabled(false);
 		}
 	}
 }
