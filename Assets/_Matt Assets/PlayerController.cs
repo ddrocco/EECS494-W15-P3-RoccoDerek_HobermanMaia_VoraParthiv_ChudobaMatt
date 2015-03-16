@@ -359,8 +359,11 @@ public class PlayerController : MonoBehaviour
 			QUI.setText("");
 			return;
 		}
-		else if (interactiveObj.name.Contains("Door"))
-			obj = interactiveObj.GetComponent<OpenThings>();
+		else if (interactiveObj.name.Contains("Door")) {
+			Door_Control doorObj = interactiveObj.GetComponent<Door_Control>();
+			doorObj.Interact();
+			return;
+		}
 		else if (interactiveObj.name.Contains("Box"))
 			obj = interactiveObj.GetComponentInChildren<OpenThings>();
 		else

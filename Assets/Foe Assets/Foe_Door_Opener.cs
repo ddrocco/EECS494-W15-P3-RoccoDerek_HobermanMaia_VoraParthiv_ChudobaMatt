@@ -8,6 +8,11 @@ public class Foe_Door_Opener : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.layer == Layerdefs.foe) {
 			++objectsColliding;
+			if (other.transform.position.z < transform.position.z) { //Open east
+				parentDoorAnimator.SetBool("openEast", true);
+			} else { //Open west
+				parentDoorAnimator.SetBool("openEast", false);
+			}
 			parentDoorAnimator.SetBool("isOpen", true);
 		}
 	}
