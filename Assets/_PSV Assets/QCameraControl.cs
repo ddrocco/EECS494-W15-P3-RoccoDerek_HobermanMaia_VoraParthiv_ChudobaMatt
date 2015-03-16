@@ -21,7 +21,6 @@ public class QCameraControl : MonoBehaviour
 	public float zoomMin = 10f;
 	public float zoomMax = 50f;
 	public Text cameraDesc;
-	public GameObject mapLabels;
 
 	[HideInInspector]
 	public int camCount;
@@ -47,6 +46,7 @@ public class QCameraControl : MonoBehaviour
 		cam = GetComponent<Camera>();
 		cameras = new List<QCameraLocation>();
 		camOverview = GameObject.Find("CamOverview").GetComponent<QCameraOverview>();
+		camOverview.camActive = false;
 
 		GameObject[] objs = GameObject.FindGameObjectsWithTag("CameraLocation");
 		foreach (GameObject obj in objs)
@@ -212,12 +212,12 @@ public class QCameraControl : MonoBehaviour
 		if (currentCam == camOverview)
 		{
 			cam.orthographic = true;
-			mapLabels.SetActive(true);
+			camOverview.camActive = true;
 		}
 		else
 		{
 			cam.orthographic = false;
-			mapLabels.SetActive(false);
+			camOverview.camActive = false;
 		}
 
 		transform.position = currentCam.transform.position;
@@ -233,7 +233,10 @@ public class QCameraControl : MonoBehaviour
 	{
 		if (Input.GetKey(KeyCode.E))
 		{
-			QUI.setText("WASD: Rotate and Zoom\n1-" + camCount + ": Change Camera\nSPACE: Map Overview");
+			if (currentCam == camOverview)
+				QUI.setText("WASD: Pan\nScroll Wheel: Zoom\n1-" + camCount + ": Change Camera");
+			else
+				QUI.setText("WASD: Rotate and Zoom\n1-" + camCount + ": Change Camera\nSPACE: Map Overview");
 		}
 		else
 		{

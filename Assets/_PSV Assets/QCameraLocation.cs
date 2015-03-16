@@ -9,15 +9,9 @@ public class QCameraLocation : MonoBehaviour
 	public float maxRotation;
 	public string description;
 
-	[HideInInspector]
 	public float zoom;
 	[HideInInspector]
 	public int cameraNumber;
-
-	void Awake()
-	{
-		zoom = 60f;
-	}
 }
 
 public class CameraComp : IComparer<QCameraLocation>
