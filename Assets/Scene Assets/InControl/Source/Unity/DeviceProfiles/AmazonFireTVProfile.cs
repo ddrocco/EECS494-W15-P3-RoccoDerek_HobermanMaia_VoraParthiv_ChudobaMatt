@@ -1,23 +1,24 @@
-using System;
+﻿using System;
 
 
 namespace InControl
 {
 	// @cond nodoc
 	[AutoDiscover]
-	public class GenericAndroidProfile : UnityInputDeviceProfile
+	public class AmazonFireTVProfile : UnityInputDeviceProfile
 	{
-		public GenericAndroidProfile()
+		public AmazonFireTVProfile()
 		{
-			Name = "Generic Controller";
-			Meta = "Generic Controller on Android";
+			Name = "Amazon Fire Controller";
+			Meta = "Amazon Fire Controller on Amazon Fire TV";
 
 			SupportedPlatforms = new[] {
-				"Android",
+				"Amazon AFTB",
+				"Android"
 			};
 
 			JoystickNames = new[] {
-				"Broadcom Bluetooth HID",
+				"Amazon Fire Game Controller",
 			};
 
 			ButtonMappings = new[] {
@@ -64,12 +65,7 @@ namespace InControl
 				new InputControlMapping {
 					Handle = "Back",
 					Target = InputControlType.Select,
-					Source = Button11
-				},
-				new InputControlMapping {
-					Handle = "Start",
-					Target = InputControlType.Start,
-					Source = Button10
+					Source = KeyCodeButton( UnityEngine.KeyCode.Escape )
 				}
 			};
 
