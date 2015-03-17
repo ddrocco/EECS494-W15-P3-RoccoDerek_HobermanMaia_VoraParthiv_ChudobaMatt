@@ -61,14 +61,18 @@ public class QCameraControl : MonoBehaviour
 		for (int i = 0; i < camCount; i++)
 			cameras[i].cameraNumber = i + 1;
 
-		currentCam = cameras[0];
-		transform.position = currentCam.transform.position;
+		//currentCam = cameras[0];
+		/*transform.position = currentCam.transform.position;
 		transform.rotation = currentCam.transform.rotation;
 		UD_rotation = currentCam.transform.eulerAngles.x;
 		LR_rotation = currentCam.transform.eulerAngles.y;
-		currentCam.zoom = zoom;
+		currentCam.zoom = zoom;*/
 
-		cameraDesc.text = "Camera 1\n" + currentCam.description;
+		currentCam = camOverview;
+		lastUsedCam = cameras[0];
+		cam.orthographic = true;
+		camOverview.camActive = true;
+		cameraDesc.text = "Camera 0\n" + currentCam.description;
 	}
 	
 	// Update is called once per frame
