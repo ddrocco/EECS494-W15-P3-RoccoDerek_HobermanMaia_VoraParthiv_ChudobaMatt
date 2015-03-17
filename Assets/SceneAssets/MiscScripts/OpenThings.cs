@@ -10,7 +10,7 @@ public class OpenThings : MonoBehaviour {
 	public GameObject QCamera;
 	public int timeTillDeath = 100;
 	public float distFromBomb = 3;
-	private bool isOpen = false;
+//	private bool isOpen = false;
 	private int deathTimer = 0;
 	private bool timerSet = false;
 	private Transform player;

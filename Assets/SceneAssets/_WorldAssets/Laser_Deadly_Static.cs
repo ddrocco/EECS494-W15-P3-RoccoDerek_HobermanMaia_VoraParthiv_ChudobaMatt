@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Laser_Deadly_Static : MonoBehaviour {
@@ -9,7 +9,7 @@ public class Laser_Deadly_Static : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.layer == Layerdefs.player) {
+		if (other.gameObject.layer == Layerdefs.stan) {
 			GameController.PlayerDead = true;
 			string restartControl = "A";
 			if (PlayerController.debugControls) restartControl = "Left Click";

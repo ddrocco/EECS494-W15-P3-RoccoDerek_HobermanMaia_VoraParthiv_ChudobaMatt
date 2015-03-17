@@ -97,6 +97,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		if (!originIsValid) {
 			originLocation = transform.position;
 		}
+		stayFrozenOnLook = false;
 		originIsValid = true;
 		currentDestination = destination;
 		GetComponent<NavMeshAgent>().destination = destination;

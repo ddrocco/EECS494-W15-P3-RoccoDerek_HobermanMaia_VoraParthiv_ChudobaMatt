@@ -17,7 +17,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public bool isAttentive = false;
 	public GameObject alertObject1, alertObject2;
 	
-	Foe_Movement_Handler movementHandler;
+	public Foe_Movement_Handler movementHandler;
 	
 	int cullingMask;
 	
@@ -26,7 +26,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	float timeSincePlayerSpotted = 0f;
 	float timeUntilPlayerLost = 1f;
 	float baseSpeed;
-	public float sprintMultiplier;
+	public float sprintMultiplier = 5f;
 	
 	//Communicate findings:
 	bool hasSeenPlayer = false;
@@ -35,15 +35,18 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	float timeToCommunicate = 5f;
 
 	void Start () {
+		FoeAlertSystem.foeList.Add(this);
+	
 		taser = Instantiate(taserPrefab) as GameObject;
 		taser.SetActive(false);
 		taser.transform.parent = transform;
 		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
 		
 		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;
-		player = FindObjectOfType<PlayerController>().gameObject;
+		player = PlayerController.player.gameObject;
+		
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
-				+ (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
+				+ (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door);
 		alertObject1.GetComponent<Renderer>().enabled = false;
 		alertObject2.GetComponent<Renderer>().enabled = false;
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
@@ -131,7 +134,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
 	}
 	
-	void MoveToPlayer() {
+	public void MoveToPlayer() {
 		isAttentive = true;
 		alertObject1.GetComponent<Renderer>().enabled = true;
 		alertObject2.GetComponent<Renderer>().enabled = true;

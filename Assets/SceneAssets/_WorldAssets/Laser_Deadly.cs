@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Laser_Deadly : MonoBehaviour {
@@ -26,8 +26,8 @@ public class Laser_Deadly : MonoBehaviour {
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.parent.position,
 		                    direction, out hitInfo, 100f, (1 << Layerdefs.wall)
-		                    + (1 << Layerdefs.floor) + (1 << Layerdefs.player))) {
-			if (hitInfo.transform.gameObject.layer == Layerdefs.player) {
+		                    + (1 << Layerdefs.floor) + (1 << Layerdefs.stan))) {
+			if (hitInfo.transform.gameObject.layer == Layerdefs.stan) {
 				GameController.PlayerDead = true;
 				string restartControl = "A";
 				if (PlayerController.debugControls) restartControl = "Left Click";

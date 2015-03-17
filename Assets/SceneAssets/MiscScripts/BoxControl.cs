@@ -11,14 +11,14 @@ public class BoxControl : MonoBehaviour {
 	public string message;
 	private int deathTimer = 0;
 	private bool timerSet = false;
-	private Transform player;
+//	private Transform player;
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
 	}
 	
 	void Start() {
-		player = PlayerController.player.transform;
+//		player = PlayerController.player.transform;
 	}
 	
 	public void Interact () {

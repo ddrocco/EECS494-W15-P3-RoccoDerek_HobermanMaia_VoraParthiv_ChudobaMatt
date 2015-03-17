@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
@@ -29,7 +29,7 @@ public class PlayerInteraction : MonoBehaviour
 		reticleTag = new Color(0f, 1, 1, 0.5f);
 		reticleTag = Color.red; // TEMPORARY until tagging is working 
 
-		cullingMask = (1 << Layerdefs.interactable) + (1 << Layerdefs.door) + (1 << Layerdefs.camera);
+		cullingMask = (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door) + (1 << Layerdefs.env_camera);
 	}
 
 	void Update()
