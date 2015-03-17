@@ -26,10 +26,10 @@ public class PlayerInteraction : MonoBehaviour
 		reticleNormal.a = 0.5f;
 		reticleInteract = Color.red;
 		reticleInteract.a = 0.5f;
-		reticleTag = Color.blue;
-		reticleTag.a = 0.5f;
-		
-		cullingMask = (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
+		reticleTag = new Color(0f, 1, 1, 0.5f);
+		reticleTag = Color.red; // TEMPORARY until tagging is working 
+
+		cullingMask = (1 << Layerdefs.interactable) + (1 << Layerdefs.door) + (1 << Layerdefs.camera);
 	}
 
 	void Update()
