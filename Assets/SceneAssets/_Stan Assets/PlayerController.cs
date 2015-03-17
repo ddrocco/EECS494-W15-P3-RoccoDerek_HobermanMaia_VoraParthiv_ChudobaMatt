@@ -368,7 +368,7 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door")) {
-			Door_Control doorObj = interactiveObj.GetComponent<Door_Control>();
+			DoorControl doorObj = interactiveObj.GetComponent<DoorControl>();
 			doorObj.Interact();
 			return;
 		}

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Door_Control : MonoBehaviour {
+public class DoorControl : MonoBehaviour {
 	public Animator anim;
 	public GameObject foeDoorOpenerPrefab;
 	public GameObject QCamera;
