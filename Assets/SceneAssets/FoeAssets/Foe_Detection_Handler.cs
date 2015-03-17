@@ -4,6 +4,8 @@ using System.Collections;
 public class Foe_Detection_Handler : MonoBehaviour {
 	public GameObject player;
 	public int currentRoom;
+	public GameObject taserPrefab;
+	GameObject taser;
 	
 	//For haphazard use:
 	private Vector3 displacement;
@@ -20,10 +22,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	int cullingMask;
 	
 	//Player spotted:
-	bool isTrackingPlayer = false;
 	bool isAggressive = false;
-	float timeSincePlayerDetected = 0f;
+	float timeSincePlayerSpotted = 0f;
 	float timeUntilPlayerLost = 1f;
+	float baseSpeed;
+	public float sprintMultiplier;
 	
 	//Communicate findings:
 	bool hasSeenPlayer = false;
@@ -32,6 +35,13 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	float timeToCommunicate = 5f;
 
 	void Start () {
+		taser = Instantiate(taserPrefab) as GameObject;
+		taser.SetActive(false);
+		taser.transform.parent = transform;
+		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
+		
+		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;
+		player = FindObjectOfType<PlayerController>().gameObject;
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
 				+ (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
 		alertObject1.GetComponent<Renderer>().enabled = false;
@@ -74,14 +84,18 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		Debug_Foe_Alert_Status.visualDetectionValue = visualDetectionValue;
 		Debug_Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
-		timeSincePlayerDetected += Time.deltaTime;
+		timeSincePlayerSpotted += Time.deltaTime;
 
 		if (visualDetectionValue >= 2f) {
 			PlayerSpotted();
 			MoveToPlayer();
 		} else if (audialDetectionValue >= 0.5f ||
-				(timeSincePlayerDetected < timeUntilPlayerLost && hasSeenPlayer)) {
+				(timeSincePlayerSpotted < timeUntilPlayerLost && hasSeenPlayer)) {
 			MoveToPlayer();
+		} else if (isAggressive) {
+			GetComponentInParent<NavMeshAgent>().speed = baseSpeed;
+			isAggressive = false;
+			taser.SetActive(false);
 		}
 	}
 	
@@ -108,10 +122,13 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void PlayerSpotted() { //No insta-death--chase player down
-		isTrackingPlayer = true;
-		isAggressive = true;
-		timeSincePlayerDetected = 0f;
+		if (!isAggressive) {
+			isAggressive = true;
+			taser.gameObject.SetActive(true);
+		}
+		timeSincePlayerSpotted = 0f;
 		hasSeenPlayer = true;
+		GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
 	}
 	
 	void MoveToPlayer() {
@@ -128,11 +145,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 				//Communicate with other guards.
 			}
 		}
-	}
-	
-	void OnCollisionEnter() {
-		//GameController.PlayerDead = true;
-		//GameController.GameOverMessage = "You were spotted by a guard!\nPress A to restart the level";
 	}
 	
 	/*void GetCurrentRoom() {
