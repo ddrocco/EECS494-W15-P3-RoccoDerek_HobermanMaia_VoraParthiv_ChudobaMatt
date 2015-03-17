@@ -8,7 +8,6 @@ public class QUI : MonoBehaviour {
 	public Text nosignal;
 	public Text textoutput;
 	public Text cameraDesc;
-	public QCameraControl qcc;
 	public GameObject player;
 	
 	int frameVisibleMask = (1 << 5) + (1 << Layerdefs.q_visible);
@@ -17,16 +16,12 @@ public class QUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		qcc = GetComponent<QCameraControl> ();
 		textcontents = textoutput.text;
 		GetComponent<Camera>().cullingMask = frameInvisibleMask;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(!qcc.enabled){
-			qcc.pivotPoint = player.transform.position;
-		}
 		textoutput.text = textcontents;
 	}
 
@@ -45,16 +40,14 @@ public class QUI : MonoBehaviour {
 	public void showCamera(bool visible){
 		if(visible){
 			nosignal.enabled = false;
-			qcc.enabled = true;
 			cameraDesc.enabled = true;
 			GetComponent<Camera>().cullingMask = frameVisibleMask;
-			FindObjectOfType<QPowerBar>().Enabled(true);
+			FindObjectOfType<QPowerSystem>().Enabled(true);
 		} else {
 			nosignal.enabled = true;
-			qcc.enabled = false;
 			cameraDesc.enabled = false;
 			GetComponent<Camera>().cullingMask = frameInvisibleMask;
-			FindObjectOfType<QPowerBar>().Enabled(false);
+			FindObjectOfType<QPowerSystem>().Enabled(false);
 		}
 	}
 }

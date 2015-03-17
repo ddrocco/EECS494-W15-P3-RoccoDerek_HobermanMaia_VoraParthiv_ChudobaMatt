@@ -15,8 +15,10 @@ public class QPowerBar : MonoBehaviour {
 		foreach (Image child in children) {
 			if (string.Compare(child.gameObject.name,"PowerBarUnused") == 0) {
 				unused = child;
+				print ("A");
 			} else if (string.Compare(child.gameObject.name,"PowerBarUsed") == 0) {
 				used = child;
+				print ("B");
 			}
 		}
 		Enabled (false);

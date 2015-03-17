@@ -5,7 +5,7 @@ public class QInteractable : MonoBehaviour {
 	public float cost;
 	float time = 0f;
 	
-	QPowerBar bar;
+	QPowerSystem bar;
 	
 	public enum Type {
 		box,
@@ -18,7 +18,7 @@ public class QInteractable : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		bar = FindObjectOfType<QPowerBar>();
+		bar = FindObjectOfType<QPowerSystem>();
 	}
 	
 	// Update is called once per frame

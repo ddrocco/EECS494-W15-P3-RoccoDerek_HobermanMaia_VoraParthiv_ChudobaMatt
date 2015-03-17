@@ -37,7 +37,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		if (state == alertState.patrolling){
 			UpdateDestination();
 		} else if (state == alertState.investigating) {
-			StartInvestigation();
+			StartInvestigation(player.transform.position);
 		}
 	}
 
@@ -93,13 +93,13 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		GetComponent<NavMeshAgent>().destination = currentDestination;
 	}
 	
-	public void StartInvestigation() {
+	public void StartInvestigation(Vector3 destination) {
 		if (!originIsValid) {
 			originLocation = transform.position;
 		}
 		originIsValid = true;
-		currentDestination = player.transform.position;
-		GetComponent<NavMeshAgent>().destination = currentDestination;
+		currentDestination = destination;
+		GetComponent<NavMeshAgent>().destination = destination;
 		isReturning = false;
 		state = alertState.investigating;
 	}

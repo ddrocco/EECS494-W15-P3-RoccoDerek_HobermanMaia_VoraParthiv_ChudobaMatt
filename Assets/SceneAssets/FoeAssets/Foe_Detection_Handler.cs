@@ -18,6 +18,18 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	Foe_Movement_Handler movementHandler;
 	
 	int cullingMask;
+	
+	//Player spotted:
+	bool isTrackingPlayer = false;
+	bool isAggressive = false;
+	float timeSincePlayerDetected = 0f;
+	float timeUntilPlayerLost = 1f;
+	
+	//Communicate findings:
+	bool hasSeenPlayer = false;
+	public bool canCommunicate = true;
+	float timeAttemptingCommunication = 0f;
+	float timeToCommunicate = 5f;
 
 	void Start () {
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
@@ -33,6 +45,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		CalculateVisualDetection();
 		CalculateAudialDetection();
 		React();
+		Communicate();
 	}
 	
 	void CalculateVisualDetection() {
@@ -61,15 +74,13 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		Debug_Foe_Alert_Status.visualDetectionValue = visualDetectionValue;
 		Debug_Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
-		if (audialDetectionValue >= 0.5f) {
-			isAttentive = true;
-			alertObject1.GetComponent<Renderer>().enabled = true;
-			alertObject2.GetComponent<Renderer>().enabled = true;
-			movementHandler.StartInvestigation();
-		}
-		
+		timeSincePlayerDetected += Time.deltaTime;
+
 		if (visualDetectionValue >= 2f) {
-			PlayerDetected();
+			PlayerSpotted();
+			MoveToPlayer();
+		} else if (audialDetectionValue >= 0.5f || timeSincePlayerDetected < timeUntilPlayerLost) {
+			MoveToPlayer();
 		}
 	}
 	
@@ -95,9 +106,32 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		return visibleVertices;
 	}
 	
-	void PlayerDetected() { //No insta-death--chase player down
-		GameController.PlayerDead = true;
-		GameController.GameOverMessage = "You were spotted by a guard!\nPress A to restart the level";
+	void PlayerSpotted() { //No insta-death--chase player down
+		isTrackingPlayer = true;
+		isAggressive = true;
+		timeSincePlayerDetected = 0f;
+		hasSeenPlayer = true;
+	}
+	
+	void MoveToPlayer() {
+		isAttentive = true;
+		alertObject1.GetComponent<Renderer>().enabled = true;
+		alertObject2.GetComponent<Renderer>().enabled = true;
+		movementHandler.StartInvestigation(player.transform.position);
+	}
+	
+	void Communicate() {
+		if (hasSeenPlayer) {
+			timeAttemptingCommunication += Time.deltaTime;
+			if (timeAttemptingCommunication >= timeToCommunicate) {
+				//Communicate with other guards.
+			}
+		}
+	}
+	
+	void OnCollisionEnter() {
+		//GameController.PlayerDead = true;
+		//GameController.GameOverMessage = "You were spotted by a guard!\nPress A to restart the level";
 	}
 	
 	/*void GetCurrentRoom() {
