@@ -51,7 +51,9 @@ public class QCameraControl : MonoBehaviour
 		GameObject[] objs = GameObject.FindGameObjectsWithTag("CameraLocation");
 		foreach (GameObject obj in objs)
 		{
-			cameras.Add(obj.GetComponent<QCameraLocation>());
+			QCameraLocation temp = obj.GetComponent<QCameraLocation>();
+			if (temp != null)
+				cameras.Add(temp);
 		}
 		CameraComp comp = new CameraComp();
 		cameras.Sort(comp);
