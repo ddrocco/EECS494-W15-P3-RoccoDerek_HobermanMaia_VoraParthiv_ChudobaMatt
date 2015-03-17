@@ -361,7 +361,6 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!canInteract) return;
 
-		OpenThings obj;
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
 			QUI.setText("");
@@ -372,15 +371,16 @@ public class PlayerController : MonoBehaviour
 			doorObj.Interact();
 			return;
 		}
-		else if (interactiveObj.name.Contains("Box"))
-			obj = interactiveObj.GetComponentInChildren<OpenThings>();
+		else if (interactiveObj.name.Contains("Box")) {
+			OpenThings obj = interactiveObj.GetComponentInChildren<OpenThings>();
+			obj.Interact();
+		}
 		else
 		{
 			Debug.LogError("Interactive object is not a Door or Box");
 			return;
 		}
 
-		obj.Interact();
 	}
 
 	void Tag()
