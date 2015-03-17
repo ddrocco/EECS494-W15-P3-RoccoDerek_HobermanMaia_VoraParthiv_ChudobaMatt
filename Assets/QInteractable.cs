@@ -7,6 +7,15 @@ public class QInteractable : MonoBehaviour {
 	
 	QPowerBar bar;
 	
+	public enum Type {
+		box,
+		door,
+		laser,
+		guard
+	};
+	
+	public Type type;
+	
 	// Use this for initialization
 	void Start () {
 		bar = FindObjectOfType<QPowerBar>();
@@ -21,6 +30,18 @@ public class QInteractable : MonoBehaviour {
 		}
 		if (time > 2f) {
 			bar.UseObject(this);
-		} 
+		}
 	}
+	
+	public void QSelect () {
+		switch(type) {
+			case Type.door:
+				//Command lock: Doorlock();
+				//etc
+		}
+	}
+	
+	void BoxDisplay();
+	void DoorLock();
+	void DoorUnlock();
 }
