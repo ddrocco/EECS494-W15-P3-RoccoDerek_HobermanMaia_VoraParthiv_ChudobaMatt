@@ -58,6 +58,9 @@ public class QCameraOverview : QCameraLocation
 
 	void ZoomCamera()
 	{
+		// Cannot zoom when Stan has mouse controls
+		if (PlayerController.mouseMovement) return;
+
 		if (Input.GetAxis("Mouse ScrollWheel") < 0)
 		{
 			zoom += zoomSpeed;

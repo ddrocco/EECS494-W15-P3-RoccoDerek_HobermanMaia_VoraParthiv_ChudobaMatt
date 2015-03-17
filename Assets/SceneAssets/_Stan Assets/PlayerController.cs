@@ -1,4 +1,16 @@
-﻿using UnityEngine;
+﻿/* DEBUGGUING KEYBOARD CONTROLS
+ * 
+ * IJKL - movement
+ * Mouse - look around
+ * Tab - switch between Stan's mouse controls and Q's mouse controls
+ * Left click - interact
+ * Right click - tag object
+ * O - crouch
+ * U - sprint
+ * 
+ */
+
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using InControl;
@@ -64,6 +76,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject taggableObj;
 	[HideInInspector]
 	public static bool debugControls = false;
+	[HideInInspector]
+	public static bool mouseMovement = false;
 	
 	void Awake()
 	{
@@ -85,6 +99,7 @@ public class PlayerController : MonoBehaviour
 		if (InputManager.Devices.Count == 0)
 		{
 			debugControls = true;
+			mouseMovement = true;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
@@ -149,23 +164,45 @@ public class PlayerController : MonoBehaviour
 
 	void CheckDebugStates()
 	{
-		if (Input.GetKeyDown(KeyCode.Mouse0)) // Interact
+		if (Input.GetKeyDown(KeyCode.Tab)) // Switch between Stan and Q mouse controls
 		{
-			Interact();
+			mouseMovement = !mouseMovement;
+			if (mouseMovement)
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+			}
+			else
+			{
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Mouse1)) // Crouch
+		if (Input.GetKeyDown(KeyCode.O)) // Crouch
 		{
 			if (state == State.crouching)
 				state = State.walking;
 			else
 				state = State.crouching;
 		}
-		if (Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.RightApple)) // Sprint
+		if (Input.GetKeyDown(KeyCode.U)) // Sprint
 		{
 			if (state == State.sprinting)
 				state = State.walking;
 			else
 				state = State.sprinting;
+		}
+
+		// Cannot use mouse clicks when Q has control
+		if (!mouseMovement) return;
+
+		if (Input.GetKeyDown(KeyCode.Mouse0)) // Interact
+		{
+			Interact();
+		}
+		if (Input.GetKeyDown(KeyCode.Mouse1)) // Tag
+		{
+			Tag();
 		}
 	}
 
@@ -249,8 +286,13 @@ public class PlayerController : MonoBehaviour
 
 	void SetLookDirectionDebug()
 	{
-		xRotation.y += Input.GetAxis("Mouse X") * rotateSpeed;
+		if (!mouseMovement)
+		{
+			rotationYDelta = 0f;
+			return;
+		}
 
+		xRotation.y += Input.GetAxis("Mouse X") * rotateSpeed;
 		rotationYDelta = Input.GetAxis("Mouse Y") * rotateSpeed * 2f;
 	}
 
