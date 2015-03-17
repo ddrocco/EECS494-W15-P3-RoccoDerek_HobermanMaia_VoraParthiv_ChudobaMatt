@@ -38,10 +38,17 @@ public class QInteractable : MonoBehaviour {
 			case Type.door:
 				//Command lock: Doorlock();
 				//etc
+				break;
 		}
 	}
 	
-	void BoxDisplay();
-	void DoorLock();
-	void DoorUnlock();
+	void BoxDisplay() {
+	
+	}
+	void DoorLock() {
+	
+	}
+	void DoorUnlock() {
+	
+	}
 }
