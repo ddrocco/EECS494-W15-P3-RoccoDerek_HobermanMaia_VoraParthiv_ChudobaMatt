@@ -9,6 +9,7 @@ public class PlayerInteraction : MonoBehaviour
 	private Image reticleRender;
 	private Color reticleNormal;
 	private Color reticleInteract;
+	private Color reticleTag;
 	private PlayerController player;
 
 	public float detectionDistance;
@@ -25,6 +26,8 @@ public class PlayerInteraction : MonoBehaviour
 		reticleNormal.a = 0.5f;
 		reticleInteract = Color.red;
 		reticleInteract.a = 0.5f;
+		reticleTag = Color.blue;
+		reticleTag.a = 0.5f;
 		
 		cullingMask = (1 << Layerdefs.interactable) + (1 << Layerdefs.door);
 	}
@@ -33,6 +36,16 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		ResizeReticle();
 		Interact();
+		Tag();
+
+		if (!player.canTag && !player.canInteract)
+			reticleRender.color = reticleNormal;
+		else if (player.canTag)
+			reticleRender.color = reticleTag;
+		else if (player.canInteract)
+			reticleRender.color = reticleInteract;
+		else
+			Debug.LogError("Reticle color change error");
 	}
 
 	void ResizeReticle()
@@ -57,18 +70,40 @@ public class PlayerInteraction : MonoBehaviour
 			{
 				player.canInteract = true;
 				player.interactiveObj = hitInfo.transform.gameObject;
-				reticleRender.color = reticleInteract;
 			}
 			else
 			{
 				player.canInteract = false;
-				reticleRender.color = reticleNormal;
 			}
 		}
 		else
 		{
 			player.canInteract = false;
-			reticleRender.color = reticleNormal;
+		}
+	}
+
+	void Tag()
+	{
+		Ray ray = new Ray(transform.position, transform.forward);
+		Debug.DrawRay(ray.origin, ray.direction + transform.forward * (detectionDistance - 1f));
+		RaycastHit hitInfo;
+		
+		if (Physics.Raycast(ray, out hitInfo, detectionDistance, cullingMask))
+		{
+			GameObject obj = hitInfo.transform.gameObject;
+			if (obj.GetComponent<Taggable>() != null)
+			{
+				player.canTag = true;
+				player.taggableObj = obj;
+			}
+			else
+			{
+				player.canTag = false;
+			}
+		}
+		else
+		{
+			player.canTag = false;
 		}
 	}
 }
