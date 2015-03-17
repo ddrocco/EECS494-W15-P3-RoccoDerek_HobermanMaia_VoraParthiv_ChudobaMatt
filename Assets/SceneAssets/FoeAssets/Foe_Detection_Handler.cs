@@ -22,7 +22,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	int cullingMask;
 	
 	//Player spotted:
-	bool isAggressive = false;
+	public bool isAggressive = false;
 	float timeSincePlayerSpotted = 0f;
 	float timeUntilPlayerLost = 1f;
 	float baseSpeed;
@@ -49,16 +49,22 @@ public class Foe_Detection_Handler : MonoBehaviour {
 				+ (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door);
 		alertObject1.GetComponent<Renderer>().enabled = false;
 		alertObject2.GetComponent<Renderer>().enabled = false;
+		
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 	}
 	
 	void Update () {
+		if (movementHandler == null) {
+			movementHandler = GetComponentInParent<Foe_Movement_Handler>();
+		}
 		//GetCurrentRoom();
 		displacement = player.transform.position - transform.position;
 		CalculateVisualDetection();
 		CalculateAudialDetection();
 		React();
-		Communicate();
+		if (canCommunicate) {
+			Communicate();
+		}
 	}
 	
 	void CalculateVisualDetection() {
@@ -136,16 +142,16 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	public void MoveToPlayer() {
 		isAttentive = true;
-		alertObject1.GetComponent<Renderer>().enabled = true;
-		alertObject2.GetComponent<Renderer>().enabled = true;
+		//alertObject1.GetComponent<Renderer>().enabled = true;
+		//alertObject2.GetComponent<Renderer>().enabled = true;
 		movementHandler.StartInvestigation(player.transform.position);
 	}
 	
 	void Communicate() {
-		if (hasSeenPlayer) {
+		if (isAggressive) {
 			timeAttemptingCommunication += Time.deltaTime;
 			if (timeAttemptingCommunication >= timeToCommunicate) {
-				//Communicate with other guards.
+				FoeAlertSystem.Alert(player.transform.position);
 			}
 		}
 	}

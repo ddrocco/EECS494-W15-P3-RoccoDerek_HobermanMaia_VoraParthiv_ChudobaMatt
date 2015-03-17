@@ -48,6 +48,12 @@ public class Foe_Movement_Handler : MonoBehaviour {
 				stayFrozenOnLook = false;
 				GetComponent<NavMeshAgent>().speed = speed;
 			}
+		} else if (state == alertState.investigating && isReturning == false) {
+			if (foeDetectionHandler.isAggressive) {
+				GetComponent<NavMeshAgent>().speed = speed * foeDetectionHandler.sprintMultiplier;
+			} else {
+				GetComponent<NavMeshAgent>().speed = speed;
+			}
 		}
 		if ((new Vector3(transform.position.x, 0, transform.position.z)
 		     - new Vector3(currentDestination.x, 0, currentDestination.z)).magnitude < 0.1f) {
@@ -86,7 +92,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 				state = alertState.patrolling;
 				currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
 				originIsValid = false;
-				
 			}
 		}
 		currentDestination.y = transform.position.y;
@@ -103,5 +108,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		GetComponent<NavMeshAgent>().destination = destination;
 		isReturning = false;
 		state = alertState.investigating;
+		
+		foeGlanceCommand.OverrideGlanceCommand();
 	}
 }

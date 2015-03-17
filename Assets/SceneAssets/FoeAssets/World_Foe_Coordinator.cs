@@ -7,10 +7,16 @@ public class World_Foe_Coordinator : MonoBehaviour {
 	public float numRequired = 2;
 	public float speed;
 	
+	void Start() {
+		
+	}
+	
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "FoeBody") {
 			foesInCollision.Add(other.gameObject);
-			if (foesInCollision.Count < numRequired) {
+			if (foesInCollision.Count < numRequired && 
+					other.GetComponent<Foe_Movement_Handler>().state
+			    	== Foe_Movement_Handler.alertState.patrolling) {
 				other.GetComponent<NavMeshAgent>().speed = 0;
 				other.GetComponentInChildren<Foe_Glance_Command>().ReceiveGlanceCommand(10, 3f, -135f, 0);
 			} else {
@@ -18,6 +24,12 @@ public class World_Foe_Coordinator : MonoBehaviour {
 					foe.GetComponent<NavMeshAgent>().speed = foe.GetComponent<Foe_Movement_Handler>().speed;
 				}
 			}
+		}
+	}
+	
+	public void ReleaseCommunicatingGuards() {
+		foreach (GameObject foe in foesInCollision) {
+			foe.GetComponent<NavMeshAgent>().speed = foe.GetComponent<Foe_Movement_Handler>().speed;
 		}
 	}
 	
