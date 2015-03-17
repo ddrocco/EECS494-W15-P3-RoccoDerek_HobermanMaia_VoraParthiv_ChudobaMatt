@@ -5,14 +5,14 @@ public class Door_Control : MonoBehaviour {
 	public Animator anim;
 	public GameObject foeDoorOpenerPrefab;
 	public GameObject QCamera;
-	public bool guardAccess;
+	public bool locked;
 	private Transform player;
 	private float closeDistance;
 	private bool isOpen = false;
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
-		if (guardAccess && foeDoorOpenerPrefab != null) {
+		if (foeDoorOpenerPrefab != null) {
 			GameObject foeDoorOpener = Instantiate(foeDoorOpenerPrefab,
 			                                       transform.position, Quaternion.identity) as GameObject;
 			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoorAnimator = anim;
