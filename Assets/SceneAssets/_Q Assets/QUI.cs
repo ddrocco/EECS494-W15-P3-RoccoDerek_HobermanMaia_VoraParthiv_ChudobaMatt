@@ -18,6 +18,7 @@ public class QUI : MonoBehaviour {
 	void Start () {
 		textcontents = textoutput.text;
 		GetComponent<Camera>().cullingMask = frameInvisibleMask;
+		GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 	}
 	
 	// Update is called once per frame
@@ -44,12 +45,14 @@ public class QUI : MonoBehaviour {
 			GetComponent<Camera>().cullingMask = frameVisibleMask;
 			GetComponent<QCameraControl>().enabled = true;
 			FindObjectOfType<QPowerSystem>().Enabled(true);
+			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
 		} else {
 			nosignal.enabled = true;
 			cameraDesc.enabled = false;
 			GetComponent<Camera>().cullingMask = frameInvisibleMask;
 			GetComponent<QCameraControl>().enabled = false;
 			FindObjectOfType<QPowerSystem>().Enabled(false);
+			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 		}
 	}
 }

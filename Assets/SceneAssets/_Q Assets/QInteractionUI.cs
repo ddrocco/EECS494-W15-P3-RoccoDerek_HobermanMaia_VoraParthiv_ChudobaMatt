@@ -8,14 +8,18 @@ public class QInteractionUI : MonoBehaviour {
 	bool showingOptions = false;
 	QCameraControl qcc;
 	GameObject qcanvas;
-	public GameObject controlledObject;
+	public QInteractable controlledObject;
 	public GameObject optionButton;
+	GameObject InteractionCanvas;
 	List<GameObject> optionlist;
+	public List<string> options;
 
 	// Use this for initialization
 	void Start () {
 		qcc = GameObject.Find ("QCamera").GetComponent<QCameraControl> ();
 		qcanvas = GameObject.Find("QCanvas");
+		InteractionCanvas = GameObject.Find ("InteractionCanvas");
+		optionButton = InteractionCanvas.GetComponent<InteractionCanvasSetup>().OptionButton;
 	}
 	
 	// Update is called once per frame
@@ -29,29 +33,18 @@ public class QInteractionUI : MonoBehaviour {
 		qcc.enabled = showingOptions;
 
 		if(showingOptions){
+			if(options == null) options = new List<string>();
 			optionlist = new List<GameObject>();
 
-			//pick the object type and create specific options
-			if (controlledObject.name.StartsWith("QInteractive_Door")){
-				for(int i = 0; i < 2; ++i){
-					GameObject button = Instantiate(optionButton) as GameObject;
-					button.transform.SetParent(qcanvas.transform, false);
-					optionlist.Add(button);
-				}
-
-				optionlist[0].GetComponentInChildren<Text>().text = "Unlock";
-				optionlist[1].GetComponentInChildren<Text>().text = "Lock";
-
-			} else if (controlledObject.name.StartsWith("QInteractive_Laser")){
-				for(int i = 0; i < 2; ++i){
-					GameObject button = Instantiate(optionButton) as GameObject;
-					button.transform.SetParent(qcanvas.transform, false);
-					optionlist.Add(button);
-				}
-				
-				optionlist[0].GetComponentInChildren<Text>().text = "Deactivate";
-				optionlist[1].GetComponentInChildren<Text>().text = "Activate";
+			//create buttons
+			for(int i = 0; i < options.Count; ++i){
+				GameObject button = Instantiate(optionButton) as GameObject;
+				button.transform.SetParent(qcanvas.transform, false);
+				button.GetComponentInChildren<Text>().text = options[i];
+				button.GetComponent<QOptionButtons>().optionnumber = i;
+				optionlist.Add(button);
 			}
+
 			//position buttons
 			if(optionlist.Count > 0) optionlist[0].GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 100, 0);
 			for(int i = 1; i < optionlist.Count; ++i){
