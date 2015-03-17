@@ -363,17 +363,27 @@ public class PlayerController : MonoBehaviour
 
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			QUI.setText("");
+			//QUI.setText("Hello testing 123");
 			GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door")) {
-			DoorControl doorObj = interactiveObj.GetComponent<DoorControl>();
-			doorObj.Interact();
+			DoorControl obj = interactiveObj.GetComponent<DoorControl>();
+			obj.Interact();
 			return;
 		}
 		else if (interactiveObj.name.Contains("Box")) {
-			OpenThings obj = interactiveObj.GetComponentInChildren<OpenThings>();
+			BoxControl obj = interactiveObj.GetComponentInChildren<BoxControl>();
+			obj.Interact();
+			return;
+		}
+		else if (interactiveObj.name.Contains("Paper")) {
+			InformationForPlayer obj = interactiveObj.GetComponent<InformationForPlayer>();
+			obj.Interact();
+			return;
+		}
+		else if (interactiveObj.name.Contains("Filing")) {
+			FileCabinetControl obj = interactiveObj.GetComponentInChildren<FileCabinetControl>();
 			obj.Interact();
 			return;
 		}
