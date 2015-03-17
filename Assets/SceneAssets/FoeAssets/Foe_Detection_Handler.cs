@@ -79,7 +79,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (visualDetectionValue >= 2f) {
 			PlayerSpotted();
 			MoveToPlayer();
-		} else if (audialDetectionValue >= 0.5f || timeSincePlayerDetected < timeUntilPlayerLost) {
+		} else if (audialDetectionValue >= 0.5f ||
+				(timeSincePlayerDetected < timeUntilPlayerLost && hasSeenPlayer)) {
 			MoveToPlayer();
 		}
 	}
