@@ -16,5 +16,6 @@ public class Taggable : MonoBehaviour
 	{
 		if (type == TagType.door) Debug.Log("Door");
 		if (type == TagType.camera) Debug.Log("Camera");
+		if (type == TagType.guard) Debug.Log("Guard");
 	}
 }

@@ -26,8 +26,7 @@ public class PlayerInteraction : MonoBehaviour
 		reticleNormal.a = 0.5f;
 		reticleInteract = Color.red;
 		reticleInteract.a = 0.5f;
-		reticleTag = new Color(0f, 1, 1, 0.5f);
-		reticleTag = Color.red; // TEMPORARY until tagging is working 
+		reticleTag = new Color(0f, 1f, 1f, 0.5f);
 
 		cullingMask = (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door) + (1 << Layerdefs.env_camera);
 	}
@@ -88,7 +87,7 @@ public class PlayerInteraction : MonoBehaviour
 		Debug.DrawRay(ray.origin, ray.direction + transform.forward * (detectionDistance - 1f));
 		RaycastHit hitInfo;
 		
-		if (Physics.Raycast(ray, out hitInfo, detectionDistance, cullingMask))
+		if (Physics.Raycast(ray, out hitInfo, detectionDistance + 1f, cullingMask))
 		{
 			GameObject obj = hitInfo.transform.gameObject;
 			if (obj.GetComponent<Taggable>() != null)
