@@ -19,6 +19,7 @@ public class QInteractable : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		bar = FindObjectOfType<QPowerSystem>();
+		//comment
 	}
 	
 	// Update is called once per frame

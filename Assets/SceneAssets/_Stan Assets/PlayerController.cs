@@ -57,7 +57,11 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public bool canInteract = false;
 	[HideInInspector]
+	public bool canTag = false;
+	[HideInInspector]
 	public GameObject interactiveObj;
+	[HideInInspector]
+	public GameObject taggableObj;
 	[HideInInspector]
 	public static bool debugControls = false;
 	
@@ -122,6 +126,10 @@ public class PlayerController : MonoBehaviour
 		if (device.Action1.WasPressed)
 		{
 			Interact();
+		}
+		if (device.Action3.WasPressed)
+		{
+			Tag();
 		}
 	}
 
@@ -373,6 +381,25 @@ public class PlayerController : MonoBehaviour
 		}
 
 		obj.Interact();
+	}
+
+	void Tag()
+	{
+		if (!canTag) return;
+		if (taggableObj == null)
+		{
+			Debug.LogError("Null taggable object reference");
+			return;
+		}
+
+		Taggable obj = taggableObj.GetComponent<Taggable>();
+		if (obj == null)
+		{
+			Debug.LogError("Taggable object does not have script of type Taggable");
+			return;
+		}
+
+		obj.TagObject();
 	}
 
 	float IncrementTowards(float current, float target, float accel)
