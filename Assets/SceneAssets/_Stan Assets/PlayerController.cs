@@ -364,6 +364,7 @@ public class PlayerController : MonoBehaviour
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
 			QUI.setText("");
+			GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door")) {
@@ -374,6 +375,7 @@ public class PlayerController : MonoBehaviour
 		else if (interactiveObj.name.Contains("Box")) {
 			OpenThings obj = interactiveObj.GetComponentInChildren<OpenThings>();
 			obj.Interact();
+			return;
 		}
 		else
 		{

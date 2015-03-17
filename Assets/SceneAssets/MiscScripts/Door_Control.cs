@@ -6,6 +6,7 @@ public class Door_Control : MonoBehaviour {
 	public GameObject foeDoorOpenerPrefab;
 	public GameObject QCamera;
 	public bool locked;
+	public bool expectState;
 	private Transform player;
 	private float closeDistance;
 	private bool isOpen = false;
@@ -13,14 +14,22 @@ public class Door_Control : MonoBehaviour {
 	void Awake () {
 		anim = GetComponent<Animator>();
 		if (foeDoorOpenerPrefab != null) {
+			Vector3 offset;
+			if (transform.rotation.y == 0) {
+				offset = new Vector3(0, 0, .75f);
+			}
+			else {
+				offset = new Vector3(.75f, 0, 0);
+			}
 			GameObject foeDoorOpener = Instantiate(foeDoorOpenerPrefab,
-			                                       transform.position, Quaternion.identity) as GameObject;
+			                                       transform.position + offset, Quaternion.identity) as GameObject;
 			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoorAnimator = anim;
 		}
 	}
 	
 	void Start() {
 		player = PlayerController.player.transform;
+		expectState = isOpen;
 	}
 	
 	public void Interact () {
