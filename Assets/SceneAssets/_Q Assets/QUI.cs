@@ -4,9 +4,11 @@ using System.Collections;
 
 public class QUI : MonoBehaviour {
 	static string textcontents;
+	static string controlstextcontents;
 	
 	public Text nosignal;
 	public Text textoutput;
+	public Text controlstextoutput;
 	public Text cameraDesc;
 	public GameObject player;
 	
@@ -17,6 +19,7 @@ public class QUI : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		textcontents = textoutput.text;
+		controlstextcontents = controlstextoutput.text;
 		GetComponent<Camera>().cullingMask = frameInvisibleMask;
 		GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 	}
@@ -24,6 +27,7 @@ public class QUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		textoutput.text = textcontents;
+		controlstextoutput.text = controlstextcontents;
 	}
 
 	public static void setText(string newtext){
@@ -36,6 +40,18 @@ public class QUI : MonoBehaviour {
 
 	public static void clearText(){
 		textcontents = "";
+	}
+
+	public static void setControlsText(string newtext){
+		controlstextcontents = newtext;
+	}
+	
+	public static void appendControlsText(string newtext){
+		controlstextcontents += "\n" + newtext;
+	}
+	
+	public static void clearControlsText(){
+		controlstextcontents = "";
 	}
 
 	public void showCamera(bool visible){
