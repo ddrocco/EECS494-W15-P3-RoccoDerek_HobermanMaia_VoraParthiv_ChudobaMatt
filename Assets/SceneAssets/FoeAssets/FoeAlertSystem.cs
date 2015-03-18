@@ -22,6 +22,7 @@ public class FoeAlertSystem : MonoBehaviour {
 			if (foe.canCommunicate) {
 				foe.MoveToPlayer();
 				foe.movementHandler.StartInvestigation(position);
+				foe.isAggressive = true;
 			}
 		}
 		foreach (World_Foe_Coordinator coordinator in posLockList) {

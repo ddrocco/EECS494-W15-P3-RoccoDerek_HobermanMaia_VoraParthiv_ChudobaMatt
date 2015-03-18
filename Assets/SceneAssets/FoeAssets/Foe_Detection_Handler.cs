@@ -68,7 +68,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void CalculateVisualDetection() {
-		Debug.DrawRay (transform.position, transform.rotation * Vector3.forward * displacement.magnitude, Color.red);
+		Debug.DrawRay (transform.position, transform.rotation * Vector3.forward
+				* displacement.magnitude, Color.red);
 		Debug.DrawRay (transform.position, displacement, Color.blue);
 		float visualAngle = Vector3.Angle(transform.rotation * Vector3.forward, displacement);
 		
@@ -102,9 +103,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 				(timeSincePlayerSpotted < timeUntilPlayerLost && hasSeenPlayer)) {
 			MoveToPlayer();
 		} else if (isAggressive) {
-			GetComponentInParent<NavMeshAgent>().speed = baseSpeed;
-			isAggressive = false;
-			taser.SetActive(false);
+			GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
+			if (movementHandler.isReturning) {
+				isAggressive = false;
+				taser.SetActive(false);
+			}
 		}
 	}
 	
@@ -133,11 +136,10 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	void PlayerSpotted() { //No insta-death--chase player down
 		if (!isAggressive) {
 			isAggressive = true;
-			taser.gameObject.SetActive(true);
 		}
+		taser.gameObject.SetActive(true);
 		timeSincePlayerSpotted = 0f;
 		hasSeenPlayer = true;
-		GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
 	}
 	
 	public void MoveToPlayer() {

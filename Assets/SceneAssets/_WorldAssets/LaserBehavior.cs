@@ -21,7 +21,7 @@ public class LaserBehavior : MonoBehaviour {
 		color.a = 0.8f;
 		laser = GetComponent<LineRenderer>();
 		laser.material.color = color;
-		layerMask = (1 << Layerdefs.wall)+ (1 << Layerdefs.stan)
+		layerMask = (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.foe)
 				+ (1 << Layerdefs.floor) + (1 << Layerdefs.prop);
 	}
 	
