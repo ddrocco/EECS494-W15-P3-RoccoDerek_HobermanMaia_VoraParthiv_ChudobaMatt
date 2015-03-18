@@ -19,7 +19,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	//Investigating variables:
 	public Vector3 originLocation;
 	bool originIsValid = false;
-	bool isReturning;
+	public bool isReturning;
 	
 	//Child classes:
 	Foe_Glance_Command foeGlanceCommand;
