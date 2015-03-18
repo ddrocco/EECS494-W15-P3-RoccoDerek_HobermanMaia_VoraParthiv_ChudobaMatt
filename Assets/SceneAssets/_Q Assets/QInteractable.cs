@@ -85,14 +85,14 @@ public class QInteractable : MonoBehaviour {
 				UnTag();
 				break;
 			case 2:
-				AlertGuards(); //separate laser alert on timer like with boxes
+				SetOffLasers();
 				break;
 			}
 			break;
 		case Type.guard:
 			switch(option) {
 			case 0:
-				SubdueAlert();
+				SubdueGuardAlert();
 				break;
 			}
 			break;
@@ -122,7 +122,7 @@ public class QInteractable : MonoBehaviour {
 		case Type.camera:
 			switch(option) {
 			case 0:
-				SubdueAlert();
+				SubdueCameraAlert();
 				break;
 			case 1:
 				HackCamera();
@@ -197,11 +197,19 @@ public class QInteractable : MonoBehaviour {
 		QPowerSystem.main.DropObject(this);
 	}
 		
-	void AlertGuards() {
-		FoeAlertSystem.Alert(transform.position);
+	void SetOffLasers() {
+		LaserBehavior obj = GetComponent<LaserBehavior>();
+		obj.alertTimerSet = true;
+		obj.alertTimer = 0;
 	}
 	
-	void SubdueAlert() {
+	void SubdueCameraAlert() {
+		CameraControl obj = GetComponent<CameraControl>();
+		obj.alertTimerSet = false;
+		obj.alertTimer = 0;
+	}
+	
+	void SubdueGuardAlert() {
 		
 	}
 	
@@ -212,7 +220,8 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	void HackCamera() {
-	
+		CameraControl obj = GetComponent<CameraControl>();
+		obj.QIsWatching = true;
 	}
 	
 	void DoorLock() {

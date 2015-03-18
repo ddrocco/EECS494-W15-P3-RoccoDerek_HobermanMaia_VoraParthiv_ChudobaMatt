@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Laser_Deadly : MonoBehaviour {
+public class LaserBehavior : MonoBehaviour {
 	public Vector3 directionStart = Vector3.up;
 	public Vector3 directionEnd = Vector3.up;
 	public Vector3 directionCurrent = Vector3.up;
@@ -10,6 +10,11 @@ public class Laser_Deadly : MonoBehaviour {
 	
 	int layerMask;
 	LineRenderer laser;
+	
+	public bool alertTimerSet = false;
+	public float alertWait = 4f;
+	public float alertTimer = 0f;
+	Vector3 alertPosition;
 	
 	void Start() {
 		Color color = Color.red;
@@ -21,6 +26,14 @@ public class Laser_Deadly : MonoBehaviour {
 	}
 	
 	void Update() {
+		if (alertTimerSet) {
+			alertTimer += Time.deltaTime;
+			if (alertTimer >= alertWait) {
+				FoeAlertSystem.Alert(alertPosition);
+				alertTimer = 0;
+				alertTimerSet = false;
+			}
+		}
 		movementTimer += Time.deltaTime;
 		if (movementTimer > movementDuration * 2f) {
 			movementTimer -= movementDuration * 2f;
@@ -33,18 +46,16 @@ public class Laser_Deadly : MonoBehaviour {
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, directionCurrent, out hitInfo, 100f, layerMask)) {
 			if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-				GameController.PlayerDead = true;
-				string restartControl = "A";
-				if (PlayerController.debugControls) restartControl = "Left Click";
-				GameController.GameOverMessage = "You were killed by a laser!\nPress " + restartControl + " to restart the level";
-			} else {
-				laser.SetPosition(0, transform.position);
-				laser.SetPosition(1, hitInfo.point);
-				float distance = hitInfo.distance;
-				
-				GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
-				GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
+				GetComponentInParent<LaserRoomAlertSystem>().Activate(this);
+				alertTimerSet = true;
+				alertPosition = new Vector3(hitInfo.point.x, 0, hitInfo.point.z);
 			}
+			laser.SetPosition(0, transform.position);
+			laser.SetPosition(1, hitInfo.point);
+			float distance = hitInfo.distance;
+			
+			GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
+			GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
 		} else {
 			laser.SetPosition(0, transform.position);
 			laser.SetPosition(1, transform.position + directionCurrent * 100f);

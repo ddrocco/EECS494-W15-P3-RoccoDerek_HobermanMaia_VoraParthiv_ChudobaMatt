@@ -8,8 +8,9 @@ public class QCameraLocation : MonoBehaviour
 	public float minRotation;
 	public float maxRotation;
 	public string description;
-
 	public float zoom;
+	public bool usable = false;
+
 	[HideInInspector]
 	public int cameraNumber;
 }

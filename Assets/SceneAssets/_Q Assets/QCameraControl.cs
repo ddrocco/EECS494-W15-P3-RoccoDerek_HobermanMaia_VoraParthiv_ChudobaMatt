@@ -66,13 +66,6 @@ public class QCameraControl : MonoBehaviour
 		for (int i = 0; i < camCount; i++)
 			cameras[i].cameraNumber = i + 1;
 
-		//currentCam = cameras[0];
-		/*transform.position = currentCam.transform.position;
-		transform.rotation = currentCam.transform.rotation;
-		UD_rotation = currentCam.transform.eulerAngles.x;
-		LR_rotation = currentCam.transform.eulerAngles.y;
-		currentCam.zoom = zoom;*/
-
 		currentCam = camOverview;
 		lastUsedCam = cameras[0];
 		cam.orthographic = true;
@@ -82,6 +75,8 @@ public class QCameraControl : MonoBehaviour
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
 				+ (1 << Layerdefs.laser);
+
+		InitialCameraSetup();
 	}
 	
 	// Update is called once per frame
@@ -92,6 +87,47 @@ public class QCameraControl : MonoBehaviour
 		ChangeCamera();
 		ToggleControlText();
 		//UpdateSounds();
+	}
+
+	// Toggles a camera on or off to be able to be used by Q
+	// camNumber is the camera you want to enable/disable (starting at 1, not 0)
+	// newState is true if you want to activate the chosen camera, false if not
+	public void ToggleCamera(int camNumber, bool newState)
+	{
+		if (camNumber == 0)
+		{
+			Debug.LogWarning("ToggleCamera(int, bool): 0 passed in for camNumber; only >1 allowed");
+			return;
+		}
+		if (camNumber > cameras.Count)
+		{
+			Debug.LogError("Q Camera index out of range: ToggleCamera(int, bool)");
+			return;
+		}
+
+		if (newState)
+		{
+			if (cameras[camNumber - 1].usable == false)
+			{
+				cameras[camNumber - 1].usable = true;
+				camCount++;
+			}
+		}
+		else
+		{
+			if (cameras[camNumber - 1].usable == true)
+			{
+				cameras[camNumber - 1].usable = false;
+				camCount--;
+			}
+		}
+	}
+
+	void InitialCameraSetup()
+	{
+		camCount = 2;
+		cameras[0].usable = true;
+		cameras[1].usable = true;
 	}
 	
 	void GetCameraInput()
@@ -170,55 +206,85 @@ public class QCameraControl : MonoBehaviour
 			}
 			cameraChanged = true;
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha1) && camCount >= 1)
+		if (Input.GetKeyDown(KeyCode.Alpha1) && cameras.Count >= 1)
 		{
-			currentCam = cameras[0];
-			cameraChanged = true;
+			if (cameras[0].usable)
+			{
+				currentCam = cameras[0];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha2) && camCount >= 2)
+		if (Input.GetKeyDown(KeyCode.Alpha2) && cameras.Count >= 2)
 		{
-			currentCam = cameras[1];
-			cameraChanged = true;
+			if (cameras[1].usable)
+			{
+				currentCam = cameras[1];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha3) && camCount >= 3)
+		if (Input.GetKeyDown(KeyCode.Alpha3) && cameras.Count >= 3)
 		{
-			currentCam = cameras[2];
-			cameraChanged = true;
+			if (cameras[2].usable)
+			{
+				currentCam = cameras[2];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha4) && camCount >= 4)
+		if (Input.GetKeyDown(KeyCode.Alpha4) && cameras.Count >= 4)
 		{
-			currentCam = cameras[3];
-			cameraChanged = true;
+			if (cameras[3].usable)
+			{
+				currentCam = cameras[3];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha5) && camCount >= 5)
+		if (Input.GetKeyDown(KeyCode.Alpha5) && cameras.Count >= 5)
 		{
-			currentCam = cameras[4];
-			cameraChanged = true;
+			if (cameras[4].usable)
+			{
+				currentCam = cameras[4];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha6) && camCount >= 6)
+		if (Input.GetKeyDown(KeyCode.Alpha6) && cameras.Count >= 6)
 		{
-			currentCam = cameras[5];
-			cameraChanged = true;
+			if (cameras[5].usable)
+			{
+				currentCam = cameras[5];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha7) && camCount >= 7)
+		if (Input.GetKeyDown(KeyCode.Alpha7) && cameras.Count >= 7)
 		{
-			currentCam = cameras[6];
-			cameraChanged = true;
+			if (cameras[6].usable)
+			{
+				currentCam = cameras[6];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha8) && camCount >= 8)
+		if (Input.GetKeyDown(KeyCode.Alpha8) && cameras.Count >= 8)
 		{
-			currentCam = cameras[7];
-			cameraChanged = true;
+			if (cameras[7].usable)
+			{
+				currentCam = cameras[7];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha9) && camCount >= 9)
+		if (Input.GetKeyDown(KeyCode.Alpha9) && cameras.Count >= 9)
 		{
-			currentCam = cameras[8];
-			cameraChanged = true;
+			if (cameras[8].usable)
+			{
+				currentCam = cameras[8];
+				cameraChanged = true;
+			}
 		}
-		if (Input.GetKeyDown(KeyCode.Alpha0) && camCount >= 10)
+		if (Input.GetKeyDown(KeyCode.Alpha0) && cameras.Count >= 10)
 		{
-			currentCam = cameras[9];
-			cameraChanged = true;
+			if (cameras[9].usable)
+			{
+				currentCam = cameras[9];
+				cameraChanged = true;
+			}
 		}
 		if (!cameraChanged) return;
 
