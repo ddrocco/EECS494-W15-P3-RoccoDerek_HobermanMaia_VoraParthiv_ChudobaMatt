@@ -21,11 +21,6 @@ public class QInteractionUI : MonoBehaviour {
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 		optionButton = InteractionCanvas.GetComponent<InteractionCanvasSetup>().OptionButton;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	public void toggleOptions(){
 		showingOptions = !showingOptions;

@@ -14,8 +14,18 @@ public class Taggable : MonoBehaviour
 
 	public void TagObject()
 	{
-		if (type == TagType.door) Debug.Log("Door");
-		if (type == TagType.camera) Debug.Log("Camera");
-		if (type == TagType.guard) Debug.Log("Guard");
+		if (type == TagType.door)
+		{
+			Debug.Log("Door");
+		}
+		else if (type == TagType.camera)
+		{
+			Debug.Log("Camera");
+		}
+
+		else if (type == TagType.guard)
+		{
+			Debug.Log("Guard");
+		}
 	}
 }
