@@ -408,6 +408,7 @@ public class PlayerController : MonoBehaviour
 			obj.UnlockAll();
 			GameController.SendPlayerMessage("You have unlocked VIEWING BOXES for your partner!", 5);
 			QUI.setText("Now you can view and interact with boxes from your Overview without your partner having to tag them!");
+			return;
 		}
 		else if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
@@ -415,7 +416,7 @@ public class PlayerController : MonoBehaviour
 			GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
 		}
-		else if (interactiveObj.name.Contains("Elevator")) {
+		else if (interactiveObj.name == "ElevatorDoor") {
 			ElevatorControl obj = interactiveObj.GetComponent<ElevatorControl>();
 			obj.Interact();
 			return;
