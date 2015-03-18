@@ -18,7 +18,8 @@ public class QInteractable : MonoBehaviour {
 		badBox,
 		door,
 		elevatorDoor,
-		laser,
+		laserStatic,
+		laserMoving,
 		guard,
 		camera
 	};
@@ -76,7 +77,7 @@ public class QInteractable : MonoBehaviour {
 				break;
 			}
 			break;
-		case Type.laser:
+		case Type.laserStatic:
 			switch(option) {
 			case 0:
 				Tag();
@@ -85,14 +86,27 @@ public class QInteractable : MonoBehaviour {
 				UnTag();
 				break;
 			case 2:
-				AlertGuards(); //separate laser alert on timer like with boxes
+				SetOffStaticLasers();
+				break;
+			}
+			break;
+		case Type.laserMoving:
+			switch(option) {
+			case 0:
+				Tag();
+				break;
+			case 1:
+				UnTag();
+				break;
+			case 2:
+				SetOffMovingLasers();
 				break;
 			}
 			break;
 		case Type.guard:
 			switch(option) {
 			case 0:
-				SubdueAlert();
+				SubdueGuardAlert();
 				break;
 			}
 			break;
@@ -122,7 +136,7 @@ public class QInteractable : MonoBehaviour {
 		case Type.camera:
 			switch(option) {
 			case 0:
-				SubdueAlert();
+				SubdueCameraAlert();
 				break;
 			case 1:
 				HackCamera();
@@ -152,7 +166,12 @@ public class QInteractable : MonoBehaviour {
 			options.Add("Lock");
 			options.Add("Unlock");
 			break;
-		case Type.laser:
+		case Type.laserStatic:
+			options.Add("Tag");
+			options.Add ("Untag");
+			options.Add("Set Off");
+			break;
+		case Type.laserMoving:
 			options.Add("Tag");
 			options.Add ("Untag");
 			options.Add("Set Off");
@@ -197,11 +216,25 @@ public class QInteractable : MonoBehaviour {
 		QPowerSystem.main.DropObject(this);
 	}
 		
-	void AlertGuards() {
-		FoeAlertSystem.Alert(transform.position);
+	void SetOffStaticLasers() {
+		Laser_Deadly_Static obj = GetComponent<Laser_Deadly_Static>();
+		obj.alertTimerSet = true;
+		obj.alertTimer = 0;
 	}
 	
-	void SubdueAlert() {
+	void SetOffMovingLasers() {
+		Laser_Deadly obj = GetComponent<Laser_Deadly>();
+		obj.alertTimerSet = true;
+		obj.alertTimer = 0;
+	}
+	
+	void SubdueCameraAlert() {
+		CameraControl obj = GetComponent<CameraControl>();
+		obj.alertTimerSet = false;
+		obj.alertTimer = 0;
+	}
+	
+	void SubdueGuardAlert() {
 		
 	}
 	
@@ -212,7 +245,8 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	void HackCamera() {
-	
+		CameraControl obj = GetComponent<CameraControl>();
+		obj.QIsWatching = true;
 	}
 	
 	void DoorLock() {

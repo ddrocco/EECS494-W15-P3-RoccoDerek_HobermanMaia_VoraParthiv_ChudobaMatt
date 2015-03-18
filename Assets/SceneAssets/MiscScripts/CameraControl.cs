@@ -2,36 +2,60 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraControl : MonoBehaviour {
+	//Detection
 	public bool QIsWatching = true;
 	public bool QHasBlinded = false;
-	private GameObject player;
-	private int cullingMask;
+	public bool isDetected = false;
+	private Collider player;
+	private Plane[] planes;
+	private Camera myCam;
+	
+	//Alert
+	public bool alertTimerSet = false;
+	public int alertTimer = 0;
+	public int timeToAlert = 100;
 	
 	void Start () {
-		player = GameObject.Find("Player");
-		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
-			+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);
+		player = PlayerController.player.GetComponent<Collider>();
+		myCam = GetComponentInChildren<Camera>();
+		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 	}
 	
-	int GetPlayerRaycasts() {
-		Vector3[] playerVertices = player.GetComponent<Player_Vertices>().GetVertices();
-		
-		int visibleVertices = 0;
-		foreach (Vector3 vertex in playerVertices) {
-			RaycastHit hitInfo;
-			bool raycastHit = Physics.Raycast(
-				transform.position,
-				(vertex - transform.position),
-				out hitInfo,
-				(vertex - transform.position).magnitude,
-				cullingMask);
-			if (!raycastHit) {
-				++visibleVertices;
-				//Debug.DrawRay (transform.position, (vertex - transform.position), Color.green);
-			} else {
-				//Debug.DrawRay (transform.position, (vertex - transform.position), Color.magenta);
-			}
+	void Update () {
+		if (QIsWatching || QHasBlinded) {
+			return;
 		}
-		return visibleVertices;
+		isDetected = detectStan();
+		if (isDetected) {
+			GameController.SendPlayerMessage(
+				"You have been detected! Guards will soon be alerted to your presence and will hunt you down! Quick, ask your Partner to disable the alert!",
+				5);
+			alertTimerSet = true;
+			alertTimer = 0;
+		}
+		if (alertTimerSet) {
+			++alertTimer;
+		}
+		if (alertTimer >= timeToAlert) {
+			FoeAlertSystem.Alert(transform.position);
+			alertTimerSet = false;
+			alertTimer = 0;
+		}
 	}
+	
+	//Uses child camera and raycast to see if Stan is in view
+	bool detectStan () {
+		if (GeometryUtility.TestPlanesAABB(planes, player.bounds)) {
+			RaycastHit hit;
+			Vector3 heading = player.transform.position - transform.position;
+			float distance = heading.magnitude;
+			Vector3 direction = heading/distance;
+			if (Physics.Raycast(transform.position, direction, out hit, distance)) {
+				if (hit.collider.CompareTag("Player") == true) {
+					return true;
+				} else return false;
+			} else return false;
+		} else return false;
+	}
+	
 }
