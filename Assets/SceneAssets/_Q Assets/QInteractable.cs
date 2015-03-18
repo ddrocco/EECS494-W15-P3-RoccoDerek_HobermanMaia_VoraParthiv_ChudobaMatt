@@ -206,7 +206,8 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	void ExplodeBox() {
-	
+		BoxControl obj = GetComponent<BoxControl>();
+		obj.timerSet = true;
 	}
 	
 	void HackCamera() {
