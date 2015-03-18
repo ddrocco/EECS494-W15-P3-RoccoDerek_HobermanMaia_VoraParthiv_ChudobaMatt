@@ -42,6 +42,12 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+		if (foeDetectionHandler.isDead || !foeDetectionHandler.enabled) {
+			if (transform.eulerAngles.x < 90f || transform.eulerAngles.x > 270f) {
+				transform.eulerAngles = transform.eulerAngles + Vector3.right * 10f;
+			}
+		}
+		
 		if (stayFrozenOnLook) {
 			GetComponent<NavMeshAgent>().speed = 0;
 			if (!foeGlanceCommand.isLookingAround) {

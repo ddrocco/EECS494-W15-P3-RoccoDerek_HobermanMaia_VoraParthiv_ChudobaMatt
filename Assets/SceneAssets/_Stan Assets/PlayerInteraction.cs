@@ -75,6 +75,7 @@ public class PlayerInteraction : MonoBehaviour
 			}
 			else
 			{
+				print (hitInfo.transform.tag);
 				player.canInteract = false;
 			}
 		}

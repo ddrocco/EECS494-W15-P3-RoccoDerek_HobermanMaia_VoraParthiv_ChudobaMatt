@@ -5,34 +5,34 @@ using System.Collections.Generic;
 public class LaserRoomAlertSystem : MonoBehaviour {
 	List<LaserBehavior> activeLasers;
 	float targetLight = 0f;
-	Light light;
+	Light alarmLight;
 	
 	void Start () {
 		activeLasers = new List<LaserBehavior>();
-		light = GetComponent<Light>();
+		alarmLight = GetComponent<Light>();
 	}
 	
 	void Update () {
 		if (activeLasers.Count == 0) {
 			targetLight = 0f;
-		} else if (light.intensity == 0f) {
+		} else if (alarmLight.intensity == 0f) {
 			//Play alarm sounding up
 			targetLight = 8f;
-		} else if (light.intensity == 8f) {
+		} else if (alarmLight.intensity == 8f) {
 			//Play alarm sounding down
 			targetLight = 0f;
 		}
 		
-		if (light.intensity < targetLight) {
-			light.intensity += 0.3f;
+		if (alarmLight.intensity < targetLight) {
+			alarmLight.intensity += 0.3f;
 		} else {
-			light.intensity -= 0.3f;
+			alarmLight.intensity -= 0.3f;
 		}
 		
-		if (light.intensity < 0f) {
-			light.intensity = 0f;
-		} else if (light.intensity > 8f){
-			light.intensity = 8f;
+		if (alarmLight.intensity < 0f) {
+			alarmLight.intensity = 0f;
+		} else if (alarmLight.intensity > 8f){
+			alarmLight.intensity = 8f;
 		}
 	}
 	

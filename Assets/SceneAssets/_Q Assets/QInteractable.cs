@@ -212,7 +212,14 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	void SubdueGuardAlert() {
-		
+		Foe_Detection_Handler obj = GetComponent<Foe_Detection_Handler>();
+		if (!obj.isDead) {
+			obj.enabled = false;
+			GameController.SendPlayerMessage("Heartbeat monitor alert has been disabled... Hopefully before it sounded...", 5);
+		} else {
+			obj.canCommunicate = false;
+			GameController.SendPlayerMessage("Your partner has disabled enemy communications.", 5);
+		}
 	}
 	
 	void ExplodeBox() {

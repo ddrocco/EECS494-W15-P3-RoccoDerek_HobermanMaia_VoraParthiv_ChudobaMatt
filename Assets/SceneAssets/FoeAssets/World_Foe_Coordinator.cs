@@ -12,7 +12,7 @@ public class World_Foe_Coordinator : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider other) {
-		if (other.gameObject.tag == "FoeBody") {
+		if (other.GetComponent<Foe_Movement_Handler>() != null) {
 			foesInCollision.Add(other.gameObject);
 			if (foesInCollision.Count < numRequired && 
 					other.GetComponent<Foe_Movement_Handler>().state
@@ -34,7 +34,7 @@ public class World_Foe_Coordinator : MonoBehaviour {
 	}
 	
 	void OnTriggerExit(Collider other) {
-		if (other.gameObject.tag == "FoeBody") {
+		if (other.GetComponent<Foe_Movement_Handler>() != null) {
 			foesInCollision.Remove(other.gameObject);
 		}
 	}

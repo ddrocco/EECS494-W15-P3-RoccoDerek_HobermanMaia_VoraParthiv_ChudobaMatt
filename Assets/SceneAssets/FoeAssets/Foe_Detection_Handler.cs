@@ -23,7 +23,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	//Player spotted:
 	public bool isAggressive = false;
-	float timeSincePlayerSpotted = 0f;
+	float timeSincePlayerSpotted = 10f;
 	float timeUntilPlayerLost = 1f;
 	float baseSpeed;
 	public float sprintMultiplier = 5f;
@@ -33,6 +33,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public bool canCommunicate = true;
 	float timeAttemptingCommunication = 0f;
 	float timeToCommunicate = 5f;
+	
+	public bool isDead = false;
 
 	void Start () {
 		FoeAlertSystem.foeList.Add(this);
@@ -58,12 +60,16 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 		}
 		//GetCurrentRoom();
-		displacement = player.transform.position - transform.position;
-		CalculateVisualDetection();
-		CalculateAudialDetection();
-		React();
-		if (canCommunicate) {
-			Communicate();
+		if (!isDead) {
+			displacement = player.transform.position - transform.position;
+			CalculateVisualDetection();
+			CalculateAudialDetection();
+			React();
+			if (canCommunicate) {
+				Communicate();
+			}
+		} else {
+			HeartbeatMonitor();
 		}
 	}
 	
@@ -146,7 +152,9 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		isAttentive = true;
 		//alertObject1.GetComponent<Renderer>().enabled = true;
 		//alertObject2.GetComponent<Renderer>().enabled = true;
-		movementHandler.StartInvestigation(player.transform.position);
+		if (movementHandler != null){
+			movementHandler.StartInvestigation(player.transform.position);
+		}
 	}
 	
 	void Communicate() {
@@ -158,8 +166,28 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		}
 	}
 	
+	void HeartbeatMonitor() {
+		timeAttemptingCommunication += Time.deltaTime;
+		if (timeAttemptingCommunication > timeToCommunicate) {
+			FoeAlertSystem.Alert(transform.position);
+			this.enabled = false;
+		}
+		
+	}
+	
 	/*void GetCurrentRoom() {
 		currentRoom = Room_Floor_Designation.GetCurrentRoom(transform.position);
 		Debug_Foe_Alert_Status.currentRoom = currentRoom;
 	}*/
+	
+	
+	//Player kills guard
+	public void Interact() {
+		if (timeSincePlayerSpotted > 1f) {
+			isDead = true;
+			GetComponentInParent<NavMeshAgent>().enabled = false;
+			timeAttemptingCommunication = 0f;
+			FoeAlertSystem.foeList.Remove(this);
+		}
+	}
 }

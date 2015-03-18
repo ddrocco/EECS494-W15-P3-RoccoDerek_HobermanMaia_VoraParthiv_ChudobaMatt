@@ -402,12 +402,16 @@ public class PlayerController : MonoBehaviour
 	void Interact()
 	{
 		if (!canInteract) return;
-
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
 			QUI.setText("Hello testing 123");
 			GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			QUI.clearText();
+			return;
+		}
+		else if (interactiveObj.name.Contains("Elevator")) {
+			ElevatorControl obj = interactiveObj.GetComponent<ElevatorControl>();
+			obj.Interact();
 			return;
 		}
 		else if (interactiveObj.name.Contains("Door")) {
@@ -427,6 +431,11 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (interactiveObj.name.Contains("Filing")) {
 			FileCabinetControl obj = interactiveObj.GetComponentInChildren<FileCabinetControl>();
+			obj.Interact();
+			return;
+		}
+		else if (interactiveObj.name.Contains ("Foe")) {
+			Foe_Detection_Handler obj = interactiveObj.GetComponentInChildren<Foe_Detection_Handler>();
 			obj.Interact();
 			return;
 		}
