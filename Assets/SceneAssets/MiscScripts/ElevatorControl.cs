@@ -3,12 +3,16 @@ using System.Collections;
 
 public class ElevatorControl : MonoBehaviour {
 	public Animator anim;
-	public bool playerGotPasscard = false;
+	public static bool playerGotPasscard = false;
+	public bool dispPasscard;
 	public GameObject QCamera;
 	//private Transform player;
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
+	}
+	void Update() {
+		dispPasscard = playerGotPasscard;
 	}
 	
 	void Start() {
@@ -20,7 +24,7 @@ public class ElevatorControl : MonoBehaviour {
 			gameObject.GetComponent<AudioSource>().Play();
 			return;
 		} else {
-			anim.SetBool("isOpen", true);
+			anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 			return;
 		}
 	}

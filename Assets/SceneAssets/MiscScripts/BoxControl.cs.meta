@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: eb8a6336b67c44acfbe9b348dfcef946
-timeCreated: 1426571170
+timeCreated: 1426675584
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - anim: {instanceID: 0}
+  - QCamera: {instanceID: 0}
+  - elevatorDoor: {fileID: 180670, guid: a951ad73eb2a54a88811104f3cd31dee, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

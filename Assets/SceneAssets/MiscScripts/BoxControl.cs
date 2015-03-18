@@ -32,11 +32,9 @@ public class BoxControl : MonoBehaviour {
 				return;
 			}
 			else if (holdsPasscard) {
-				ElevatorControl obj = elevatorDoor.GetComponent<ElevatorControl>();
-				obj.playerGotPasscard = true;
+				ElevatorControl.playerGotPasscard = true;
 				//GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
-				QUI.appendText("Next Objective: Get to the Elevator.");
-				return;
+				//QUI.appendText("Next Objective: Get to the Elevator.");
 			}
 			GameController.SendPlayerMessage(message, 5);
 			QUI.setText(QMessage);
