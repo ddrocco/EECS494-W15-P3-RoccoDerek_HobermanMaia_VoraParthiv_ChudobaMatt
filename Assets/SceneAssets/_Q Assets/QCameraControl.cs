@@ -24,7 +24,6 @@ public class QCameraControl : MonoBehaviour
 
 	//[HideInInspector]
 	public static int camCount;
-	public int dispCamCount;
 
 	private Camera cam;
 	private QCameraLocation currentCam;
@@ -84,7 +83,6 @@ public class QCameraControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		dispCamCount = camCount;
 		GetCameraInput();		
 		UpdateCameraPosition();
 		ChangeCamera();
