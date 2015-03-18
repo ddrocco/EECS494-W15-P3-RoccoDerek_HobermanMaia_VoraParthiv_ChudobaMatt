@@ -66,11 +66,14 @@ public class QInteractionUI : MonoBehaviour {
 				b.GetComponent<QOptionButtons>().controlledObject = controlledObject;
 			}
 
+			qcanvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
 		} else {
 			//clear options
 			foreach(GameObject b in optionlist){
 				Destroy(b);
 			}
+			qcanvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
 		}
 	}
 }
