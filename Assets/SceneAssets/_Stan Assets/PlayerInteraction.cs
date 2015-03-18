@@ -29,8 +29,7 @@ public class PlayerInteraction : MonoBehaviour
 		reticleTag = new Color(0f, 1f, 1f, 0.5f);
 
 		cullingMask =
-			(1 << Layerdefs.q_interactable) +
-			(1 << Layerdefs.door) +
+			(1 << Layerdefs.prop) +
 			(1 << Layerdefs.env_camera) +
 			(1 << Layerdefs.foe);
 	}
