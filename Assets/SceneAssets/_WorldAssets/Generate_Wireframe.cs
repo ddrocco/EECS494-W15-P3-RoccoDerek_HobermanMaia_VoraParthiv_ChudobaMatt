@@ -4,6 +4,7 @@ using System.Collections;
 public class Generate_Wireframe : MonoBehaviour {
 	public GameObject wireframePrefab;
 	public int type = 0;
+	public int group = 0;
 	
 	void Start () {
 		GameObject wireframe = Instantiate(wireframePrefab, transform.position, Quaternion.identity) as GameObject;
@@ -14,6 +15,9 @@ public class Generate_Wireframe : MonoBehaviour {
 			wireframe.GetComponent<Renderer>().material.color = Color.red;
 		} else if (type == 2) { //good
 			wireframe.GetComponent<Renderer>().material.color = Color.cyan;
+		} else if (type == 4) {
+			wireframe.GetComponent<Renderer>().material.color = Color.red;
+			wireframe.GetComponent<Renderer>().enabled = false;
 		}
 	}
 }

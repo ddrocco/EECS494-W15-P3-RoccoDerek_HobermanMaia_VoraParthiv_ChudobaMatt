@@ -71,12 +71,6 @@ public class Foe_Glance_Command : MonoBehaviour {
 		fullDuration = totalTime;
 	}
 	
-	public void LookTowards(Vector3 target) {
-		isLookingAround = false;
-		transform.rotation = Quaternion.Slerp(transform.rotation,
-				Quaternion.LookRotation(target - transform.position), 0.1f);
-	}
-	
 	public void OverrideGlanceCommand() {
 		isLookingAround = false;
 		transform.localEulerAngles = Vector3.zero;

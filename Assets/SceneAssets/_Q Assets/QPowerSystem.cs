@@ -9,7 +9,11 @@ public class QPowerSystem : MonoBehaviour {
 	float time = 0f;
 	public List<QInteractable> inUse;
 	
+	public static QPowerSystem main;
+	
 	void Start () {
+		main = this;
+		
 		Image[] children = GetComponentsInChildren<Image>();
 		inUse = new List<QInteractable>();
 		foreach (Image child in children) {
