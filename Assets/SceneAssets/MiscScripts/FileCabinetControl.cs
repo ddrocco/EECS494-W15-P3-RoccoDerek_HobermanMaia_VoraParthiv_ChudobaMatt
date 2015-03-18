@@ -5,6 +5,7 @@ public class FileCabinetControl : MonoBehaviour {
 	public Animator anim;
 	public GameObject QCamera;
 	public string message;
+	public string QMessage;
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
@@ -14,7 +15,7 @@ public class FileCabinetControl : MonoBehaviour {
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 		if (anim.GetBool("isOpen") == true) {
 			GameController.SendPlayerMessage(message, 5);
-			//QUI.appendText("Next Objective: Get to the Elevator.");
+			QUI.setText(QMessage);
 		}
 	}
 }

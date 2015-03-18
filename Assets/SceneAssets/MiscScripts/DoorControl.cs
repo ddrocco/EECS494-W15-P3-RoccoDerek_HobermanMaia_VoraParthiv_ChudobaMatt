@@ -38,13 +38,13 @@ public class DoorControl : MonoBehaviour {
 			return;
 		}
 		if (!isOpen) {
-			if (transform.rotation.y == 0) {
+			if (transform.rotation.y == 0) { //zDoor
 				if (player.position.x < transform.position.x) { //Open south
 					anim.SetBool("openSouth", true);
 				} else { //Open north
 					anim.SetBool("openSouth", false);
 				}
-			} else {
+			} else { //xDoor
 				if (player.position.z < transform.position.z) { //Open east
 					anim.SetBool("openEast", true);
 				} else { //Open west

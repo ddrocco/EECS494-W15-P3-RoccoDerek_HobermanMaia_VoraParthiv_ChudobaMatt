@@ -17,10 +17,18 @@ public class Foe_Door_Opener : MonoBehaviour {
 			/*if (obj.isLocked != obj.expectState) { //test this
 				FoeAlertSystem.Alert(transform.position);
 			}*/
-			if (other.transform.position.z < transform.position.z) { //Open east--make work both east/west and north/south!
-				parentDoorAnimator.SetBool("openEast", true);
-			} else { //Open west
-				parentDoorAnimator.SetBool("openEast", false);
+			if (parentDoor.transform.rotation.y == 0) { //zDoor
+				if (other.transform.position.x < transform.position.x) { //Open south
+					parentDoorAnimator.SetBool("openSouth", true);
+				} else { //Open North
+					parentDoorAnimator.SetBool("openSouth", false);
+				}
+			} else { //xDoor
+				if (other.transform.position.z < transform.position.z) { //Open east
+					parentDoorAnimator.SetBool("openEast", true);
+				} else { //Open west
+					parentDoorAnimator.SetBool("openEast", false);
+				}
 			}
 			parentDoorAnimator.SetBool("isOpen", true);
 		}

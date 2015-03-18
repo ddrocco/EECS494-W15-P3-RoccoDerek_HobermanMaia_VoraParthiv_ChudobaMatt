@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 
 public class CameraControl : MonoBehaviour {
+	//Identification
+	public int ID;
+	
 	//Detection
 	public bool QIsWatching = true;
 	public bool QHasBlinded = false;

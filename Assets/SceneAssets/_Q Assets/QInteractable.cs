@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class QInteractable : MonoBehaviour {
 	public float cost;
+	public GameObject QCamera;
 
 	float time = 0f;
 
@@ -229,6 +230,7 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	void SubdueCameraAlert() {
+		GameController.SendPlayerMessage("Your partner has successfully turned off the camera alert...I just hope it was in time!", 5);
 		CameraControl obj = GetComponent<CameraControl>();
 		obj.alertTimerSet = false;
 		obj.alertTimer = 0;
@@ -239,6 +241,7 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	void ExplodeBox() {
+		GameController.SendPlayerMessage("Fire in the hole--your partner set of a bomb!", 5);
 		BoxControl obj = GetComponent<BoxControl>();
 		obj.timerSet = true;
 		obj.bombTimer = 0;
@@ -247,6 +250,8 @@ public class QInteractable : MonoBehaviour {
 	void HackCamera() {
 		CameraControl obj = GetComponent<CameraControl>();
 		obj.QIsWatching = true;
+		QCameraControl camObj = QCamera.GetComponent<QCameraControl>();
+		camObj.ToggleCamera(obj.ID, true);
 	}
 	
 	void DoorLock() {
