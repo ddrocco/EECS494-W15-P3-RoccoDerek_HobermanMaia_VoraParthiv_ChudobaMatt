@@ -2,80 +2,52 @@ using UnityEngine;
 using System.Collections;
 
 public class Laser_Deadly : MonoBehaviour {
-	Vector3 direction;
+	public Vector3 directionStart = Vector3.up;
+	public Vector3 directionEnd = Vector3.up;
+	public Vector3 directionCurrent = Vector3.up;
+	public float movementDuration = 1f;
+	public float movementTimer = 0f;
 	
-	public Vector3 startDirection = Vector3.forward;
-	public Vector3 endDirection = Vector3.forward;
-	public float fullCycleTime = 1f;
-	float timer;
-	public bool alertTimerSet;
-	public int alertTimer = 0;
-	public int timeTillAlert = 100;
+	int layerMask;
+	LineRenderer laser;
 	
 	void Start() {
 		Color color = Color.red;
 		color.a = 0.8f;
-		GetComponent<MeshRenderer>().material.color = color;
-		
-		startDirection.Normalize();
-		endDirection.Normalize();
-		direction = startDirection;
-		timer = 0;
+		laser = GetComponent<LineRenderer>();
+		laser.material.color = color;
+		layerMask = (1 << Layerdefs.wall)+ (1 << Layerdefs.stan)
+				+ (1 << Layerdefs.floor) + (1 << Layerdefs.prop);
 	}
 	
-	void FixedUpdate () {
-		if (alertTimerSet) {
-			alertTimer++;
+	void Update() {
+		movementTimer += Time.deltaTime;
+		if (movementTimer > movementDuration * 2f) {
+			movementTimer -= movementDuration * 2f;
 		}
-		if (alertTimer > timeTillAlert) {
-			FoeAlertSystem.Alert(transform.position);
-			alertTimer = 0;
-			alertTimerSet = false;
-		}
-	}
+		float ratio = Mathf.Abs (movementTimer - movementDuration) / movementDuration;
+		directionCurrent = (ratio * directionStart + (1 - ratio) * directionEnd);
 	
-	void Update () {		
-		direction.Normalize();
+		transform.rotation = Quaternion.LookRotation(directionCurrent);
 		
 		RaycastHit hitInfo;
-		if (Physics.Raycast(transform.parent.position,
-		                    direction, out hitInfo, 100f, (1 << Layerdefs.wall)
-		                    + (1 << Layerdefs.floor) + (1 << Layerdefs.stan))) {
-			if (hitInfo.transform.gameObject.layer == Layerdefs.stan) {
+		if (Physics.Raycast(transform.position, directionCurrent, out hitInfo, 100f, layerMask)) {
+			if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
 				GameController.PlayerDead = true;
 				string restartControl = "A";
 				if (PlayerController.debugControls) restartControl = "Left Click";
 				GameController.GameOverMessage = "You were killed by a laser!\nPress " + restartControl + " to restart the level";
+			} else {
+				laser.SetPosition(0, transform.position);
+				laser.SetPosition(1, hitInfo.point);
+				float distance = hitInfo.distance;
+				
+				GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
+				GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
 			}
-			transform.localScale = new Vector3(
-				transform.localScale.x,
-				hitInfo.distance / 2f,
-				transform.localScale.z);
-			transform.localPosition = (hitInfo.distance / 2) * direction;
 		} else {
-			transform.localScale = new Vector3(
-				transform.localScale.x,
-				100f,
-				transform.localScale.z);
-			transform.localPosition = 100f * direction;
+			laser.SetPosition(0, transform.position);
+			laser.SetPosition(1, transform.position + directionCurrent * 100f);
 		}
-		transform.LookAt(transform.position + direction, Vector3.up);
-		transform.Rotate (90f, 0, 0);
-		
-		if (startDirection != endDirection) {
-			UpdateDirection();
-		}
-	}
-	
-	void UpdateDirection() {
-		timer += Time.deltaTime;
-		if (timer >= fullCycleTime) {
-			timer -= fullCycleTime;
-		}
-		
-		float ratio = timer / fullCycleTime;
-		
-		direction = startDirection * (0.5f + 0.5f * Mathf.Cos (ratio * 2 * Mathf.PI))
-				+ endDirection * (0.5f - 0.5f * Mathf.Cos (ratio * 2 * Mathf.PI));
 	}
 }
