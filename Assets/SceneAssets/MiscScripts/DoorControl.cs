@@ -5,7 +5,7 @@ public class DoorControl : MonoBehaviour {
 	public Animator anim;
 	public GameObject foeDoorOpenerPrefab;
 	public GameObject QCamera;
-	public bool locked;
+	public bool isLocked;
 	public bool expectState;
 	private Transform player;
 	private float closeDistance;
@@ -23,7 +23,7 @@ public class DoorControl : MonoBehaviour {
 			}
 			GameObject foeDoorOpener = Instantiate(foeDoorOpenerPrefab,
 			                                       transform.position + offset, Quaternion.identity) as GameObject;
-			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoorAnimator = anim;
+			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoor = gameObject;
 		}
 	}
 	
@@ -33,6 +33,10 @@ public class DoorControl : MonoBehaviour {
 	}
 	
 	public void Interact () {
+		if (isLocked) {
+			gameObject.GetComponent<AudioSource>().Play();
+			return;
+		}
 		if (!isOpen) {
 			if (transform.rotation.y == 0) {
 				if (player.position.x < transform.position.x) { //Open south
@@ -50,9 +54,11 @@ public class DoorControl : MonoBehaviour {
 			anim.SetBool("isOpen", true);
 			isOpen = true;
 			closeDistance = Vector3.Distance(transform.position, player.position) + 1f;
+			return;
 		} else {
 			anim.SetBool("isOpen", false);
 			isOpen = false;
+			return;
 		}
 	}
 	

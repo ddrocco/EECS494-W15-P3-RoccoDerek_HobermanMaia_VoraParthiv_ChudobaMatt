@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 325d0e23a82ba459081158900e03bfaa
+timeCreated: 1426634500
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - tagViewPrefab: {fileID: 130246, guid: 27c72d5ad0cd241748cf756e4cb95552, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

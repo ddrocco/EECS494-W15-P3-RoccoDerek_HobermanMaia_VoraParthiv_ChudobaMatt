@@ -6,19 +6,20 @@ public class BoxControl : MonoBehaviour {
 	public bool willKill;
 	public bool holdsPasscard;
 	public GameObject QCamera;
-	public int timeTillDeath = 100;
+	public int timeTillExplode = 100;
 	public float distFromBomb = 3;
 	public string message;
-	private int deathTimer = 0;
-	private bool timerSet = false;
-//	private Transform player;
+	public int bombTimer = 0;
+	public bool timerSet = false;
+	public GameObject elevatorDoor;
+	private Transform player;
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
 	}
 	
 	void Start() {
-//		player = PlayerController.player.transform;
+		player = PlayerController.player.transform;
 	}
 	
 	public void Interact () {
@@ -30,8 +31,9 @@ public class BoxControl : MonoBehaviour {
 				return;
 			}
 			else if (holdsPasscard) {
-				//playerGotPasscard = true;
-				GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
+				ElevatorControl obj = elevatorDoor.GetComponent<ElevatorControl>();
+				obj.playerGotPasscard = true;
+				//GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
 				QUI.appendText("Next Objective: Get to the Elevator.");
 				return;
 			}
@@ -42,18 +44,22 @@ public class BoxControl : MonoBehaviour {
 	
 	public void FixedUpdate() {
 		if (timerSet) {
-			++deathTimer;
-			/*if (Vector3.Distance(transform.position, player.transform.position) > distFromBomb) {
-				timerSet = false;
-				deathTimer = 0;
-			}*/
+			++bombTimer;
 		}
-		if (deathTimer >= timeTillDeath) {
-			GameController.PlayerDead = true;
-			GameController.GameOverMessage =
-				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
-			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("GAME OVER\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
+		if (bombTimer >= timeTillExplode) {
+			gameObject.GetComponent<AudioSource>().Play();
+			if (Vector3.Distance(transform.position, player.transform.position) < distFromBomb) {
+				GameController.PlayerDead = true;
+				GameController.GameOverMessage =
+					"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
+				QCamera.GetComponent<QUI>().showCamera(false);
+				QUI.setText("GAME OVER\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
+			}
+			else {
+				FoeAlertSystem.Alert(transform.position);
+			}
+			bombTimer = 0;
+			timerSet = false;
 		}
 	}
 }

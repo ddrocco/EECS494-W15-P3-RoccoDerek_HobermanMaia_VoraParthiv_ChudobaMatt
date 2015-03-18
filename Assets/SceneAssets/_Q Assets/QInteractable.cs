@@ -14,10 +14,13 @@ public class QInteractable : MonoBehaviour {
 	GameObject InteractionCanvas;
 	
 	public enum Type {
-		box,
+		goodBox,
+		badBox,
 		door,
+		elevatorDoor,
 		laser,
-		guard
+		guard,
+		camera
 	};
 
 	public Type type;
@@ -58,9 +61,15 @@ public class QInteractable : MonoBehaviour {
 		case Type.door:
 			switch(option){
 			case 0:
-				DoorLock();
+				Tag();
 				break;
 			case 1:
+				UnTag();
+				break;
+			case 2:
+				DoorLock();
+				break;
+			case 3:
 				DoorUnlock();
 				break;
 			default:
@@ -68,13 +77,67 @@ public class QInteractable : MonoBehaviour {
 			}
 			break;
 		case Type.laser:
-			//Do stuff
+			switch(option) {
+			case 0:
+				Tag();
+				break;
+			case 1:
+				UnTag();
+				break;
+			case 2:
+				AlertGuards();
+				break;
+			}
 			break;
 		case Type.guard:
-			//Do stuff
+			switch(option) {
+			case 0:
+				SubdueAlert();
+				break;
+			}
 			break;
-		case Type.box:
-			//do stuff;
+		case Type.goodBox:
+			switch(option) {
+			case 0:
+				Tag();
+				break;
+			case 1:
+				UnTag();
+				break;
+			}
+			break;
+		case Type.badBox:
+			switch(option) {
+			case 0:
+				Tag();
+				break;
+			case 1:
+				UnTag();
+				break;
+			case 2:
+				ExplodeBox();
+				break;
+			}
+			break;
+		case Type.camera:
+			switch(option) {
+			case 0:
+				SubdueAlert();
+				break;
+			case 1:
+				HackCamera();
+				break;
+			}
+			break;
+		case Type.elevatorDoor:
+			switch(option) {
+			case 0:
+				Tag();
+				break;
+			case 1:
+				UnTag();
+				break;
+			}
 			break;
 		}
 	}
@@ -84,17 +147,35 @@ public class QInteractable : MonoBehaviour {
 
 		switch(type) {
 		case Type.door:
+			options.Add ("Tag");
+			options.Add ("Untag");
 			options.Add("Lock");
 			options.Add("Unlock");
 			break;
 		case Type.laser:
-			//Do stuff
+			options.Add("Tag");
+			options.Add ("Untag");
+			options.Add("Set Off");
 			break;
 		case Type.guard:
-			//Do stuff
+			options.Add("Subdue Alert");
 			break;
-		case Type.box:
-			//do stuff;
+		case Type.goodBox:
+			options.Add("Tag");
+			options.Add ("Untag");
+			break;
+		case Type.badBox:
+			options.Add("Tag");
+			options.Add ("Untag");
+			options.Add("Set off");
+			break;
+		case Type.camera:
+			options.Add("Subdue Alert");
+			options.Add("Hack");
+			break;
+		case Type.elevatorDoor:
+			options.Add("Tag");
+			options.Add ("Untag");
 			break;
 		}
 	}
@@ -104,14 +185,47 @@ public class QInteractable : MonoBehaviour {
 		QIntButton.SetActive(activated);
 	}
 	
-	void BoxDisplay() {
+	void Tag() {
+		GenerateTagVisibility tagScript = GetComponent<GenerateTagVisibility>();
+		tagScript.Tag();
+		QPowerSystem.main.UseObject(this);
+	}
+	
+	void UnTag() {
+		GenerateTagVisibility tagScript = GetComponent<GenerateTagVisibility>();
+		tagScript.UnTag();
+		QPowerSystem.main.DropObject(this);
+	}
+		
+	void AlertGuards() {
+		FoeAlertSystem.Alert(transform.position);
+	}
+	
+	void SubdueAlert() {
+		
+	}
+	
+	void ExplodeBox() {
 	
 	}
+	
+	void HackCamera() {
+	
+	}
+	
 	void DoorLock() {
-		Debug.Log ("Door Locked");
+		//Debug.Log ("Door Locked");
+		DoorControl obj = GetComponent<DoorControl>();
+		if (obj.isLocked == false) {
+			obj.isLocked = true;
+		}
 	}
 	void DoorUnlock() {
-		Debug.Log ("Door Unlocked");
+		//Debug.Log ("Door Unlocked");
+		DoorControl obj = GetComponent<DoorControl>();
+		if (obj.isLocked == true) {
+			obj.isLocked = false;
+		}
 	}
 
 

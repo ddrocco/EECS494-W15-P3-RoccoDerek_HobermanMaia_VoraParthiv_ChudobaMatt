@@ -3,11 +3,20 @@ using System.Collections;
 
 public class Foe_Door_Opener : MonoBehaviour {
 	public Animator parentDoorAnimator;
+	public GameObject parentDoor;
 	int objectsColliding = 0;
 	
+	void Start() {
+		parentDoorAnimator = parentDoor.GetComponent<Animator>();
+	}
+	
 	void OnTriggerEnter(Collider other) {
+		//DoorControl obj = parentDoor.GetComponent<DoorControl>();
 		if (other.gameObject.layer == Layerdefs.foe) {
 			++objectsColliding;
+			/*if (obj.isLocked != obj.expectState) { //test this
+				FoeAlertSystem.Alert(transform.position);
+			}*/
 			if (other.transform.position.z < transform.position.z) { //Open east
 				parentDoorAnimator.SetBool("openEast", true);
 			} else { //Open west
