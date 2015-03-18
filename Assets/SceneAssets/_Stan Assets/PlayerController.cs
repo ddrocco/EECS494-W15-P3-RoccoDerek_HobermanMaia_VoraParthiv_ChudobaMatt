@@ -405,7 +405,7 @@ public class PlayerController : MonoBehaviour
 
 		if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			//QUI.setText("Hello testing 123");
+			QUI.setText("Hello testing 123");
 			GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			QUI.clearText();
 			return;

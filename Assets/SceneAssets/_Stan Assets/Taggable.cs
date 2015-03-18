@@ -14,8 +14,23 @@ public class Taggable : MonoBehaviour
 
 	public void TagObject()
 	{
-		if (type == TagType.door) Debug.Log("Door");
-		if (type == TagType.camera) Debug.Log("Camera");
-		if (type == TagType.guard) Debug.Log("Guard");
+		if (type == TagType.door)
+		{
+			Debug.Log("Door");
+			//Change color?
+		}
+		else if (type == TagType.camera)
+		{
+			Debug.Log("Camera");
+			//Appear
+			QInteractable obj = GetComponentInParent<QInteractable>();
+			obj.enabled = true;
+		}
+
+		else if (type == TagType.guard)
+		{
+			Debug.Log("Guard");
+			//Appear
+		}
 	}
 }

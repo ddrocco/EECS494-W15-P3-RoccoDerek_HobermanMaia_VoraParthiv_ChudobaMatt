@@ -9,6 +9,7 @@ public class BoxControl : MonoBehaviour {
 	public int timeTillExplode = 100;
 	public float distFromBomb = 3;
 	public string message;
+	public string QMessage;
 	public int bombTimer = 0;
 	public bool timerSet = false;
 	public GameObject elevatorDoor;
@@ -27,7 +28,7 @@ public class BoxControl : MonoBehaviour {
 		if (anim.GetBool("isOpen") == true) {
 			if (willKill) {
 				timerSet = true;
-				GameController.SendPlayerMessage("Uh oh--you set off a bomb! Quick, tag it so your partner can diffuse it!", 5);
+				//GameController.SendPlayerMessage("Uh oh--you set off a bomb! Quick, tag it so your partner can diffuse it!", 5);
 				return;
 			}
 			else if (holdsPasscard) {
@@ -38,6 +39,7 @@ public class BoxControl : MonoBehaviour {
 				return;
 			}
 			GameController.SendPlayerMessage(message, 5);
+			QUI.setText(QMessage);
 			//QUI.appendText("Next Objective: Get to the Elevator.");
 		}
 	}

@@ -22,13 +22,14 @@ public class QCameraControl : MonoBehaviour
 	public float zoomMax = 50f;
 	public Text cameraDesc;
 
-	[HideInInspector]
-	public int camCount;
+	//[HideInInspector]
+	public static int camCount;
+	public int dispCamCount;
 
 	private Camera cam;
 	private QCameraLocation currentCam;
 	private QCameraLocation lastUsedCam;
-	private List<QCameraLocation> cameras;
+	private static List<QCameraLocation> cameras;
 	private QCameraOverview camOverview;
 	
 	public int overviewCullingMask;
@@ -55,8 +56,9 @@ public class QCameraControl : MonoBehaviour
 		foreach (GameObject obj in objs)
 		{
 			QCameraLocation temp = obj.GetComponent<QCameraLocation>();
-			if (temp != null)
+			if (temp != null) {
 				cameras.Add(temp);
+			}
 		}
 		CameraComp comp = new CameraComp();
 		cameras.Sort(comp);
@@ -82,6 +84,7 @@ public class QCameraControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		dispCamCount = camCount;
 		GetCameraInput();		
 		UpdateCameraPosition();
 		ChangeCamera();
