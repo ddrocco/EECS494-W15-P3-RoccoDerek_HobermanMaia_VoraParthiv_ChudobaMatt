@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class QInteractionUI : MonoBehaviour {
 
 	bool showingOptions = false;
-	QCameraControl qcc;
 	GameObject qcanvas;
 	public QInteractable controlledObject;
 	public GameObject optionButton;
@@ -16,16 +15,19 @@ public class QInteractionUI : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		qcc = GameObject.Find ("QCamera").GetComponent<QCameraControl> ();
 		qcanvas = GameObject.Find("QCanvas");
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 		optionButton = InteractionCanvas.GetComponent<InteractionCanvasSetup>().OptionButton;
 	}
 
+	void Update(){
+		if (Input.anyKey && showingOptions && !(Input.GetMouseButton(0) || Input.GetMouseButton(1) || Input.GetMouseButton(2))) {
+			toggleOptions();
+		}
+	}
+
 	public void toggleOptions(){
 		showingOptions = !showingOptions;
-
-		qcc.enabled = showingOptions;
 
 		if(showingOptions){
 			if(options == null) options = new List<string>();
