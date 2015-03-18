@@ -85,7 +85,7 @@ public class QInteractable : MonoBehaviour {
 				UnTag();
 				break;
 			case 2:
-				AlertGuards();
+				AlertGuards(); //separate laser alert on timer like with boxes
 				break;
 			}
 			break;
@@ -208,6 +208,7 @@ public class QInteractable : MonoBehaviour {
 	void ExplodeBox() {
 		BoxControl obj = GetComponent<BoxControl>();
 		obj.timerSet = true;
+		obj.bombTimer = 0;
 	}
 	
 	void HackCamera() {

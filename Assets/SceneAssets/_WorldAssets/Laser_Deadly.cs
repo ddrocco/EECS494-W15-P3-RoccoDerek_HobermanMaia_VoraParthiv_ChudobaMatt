@@ -8,6 +8,9 @@ public class Laser_Deadly : MonoBehaviour {
 	public Vector3 endDirection = Vector3.forward;
 	public float fullCycleTime = 1f;
 	float timer;
+	public bool alertTimerSet;
+	public int alertTimer = 0;
+	public int timeTillAlert = 100;
 	
 	void Start() {
 		Color color = Color.red;
@@ -18,6 +21,17 @@ public class Laser_Deadly : MonoBehaviour {
 		endDirection.Normalize();
 		direction = startDirection;
 		timer = 0;
+	}
+	
+	void FixedUpdate () {
+		if (alertTimerSet) {
+			alertTimer++;
+		}
+		if (alertTimer > timeTillAlert) {
+			FoeAlertSystem.Alert(transform.position);
+			alertTimer = 0;
+			alertTimerSet = false;
+		}
 	}
 	
 	void Update () {		
