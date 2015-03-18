@@ -79,9 +79,9 @@ public class QCameraControl : MonoBehaviour
 		camOverview.camActive = true;
 		cameraDesc.text = "Camera 0\n" + currentCam.description;
 		
-		overviewCullingMask = (1 >> Layerdefs.ui) + (1 >> Layerdefs.q_visible);
-		cameraCullingMask = (1 >> Layerdefs.size) - 1 - (1 >> Layerdefs.invisible)
-				- (1 >> Layerdefs.q_visible) - (1 >> Layerdefs.q_display);
+		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
+		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
+				+ (1 << Layerdefs.laser);
 	}
 	
 	// Update is called once per frame

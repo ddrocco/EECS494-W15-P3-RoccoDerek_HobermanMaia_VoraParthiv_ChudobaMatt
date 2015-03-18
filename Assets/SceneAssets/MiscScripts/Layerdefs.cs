@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Layerdefs : MonoBehaviour {
-	public static int size = 17;
+	public static int size = 18;
 	
 	public static int dflt = 0;
 	public static int transparent_fx = 1;
@@ -18,5 +18,5 @@ public class Layerdefs : MonoBehaviour {
 	public static int q_visible = 14;
 	public static int q_display = 15;
 	public static int env_camera = 16;
-	//public static int  = 17;
+	public static int laser = 17;
 }
