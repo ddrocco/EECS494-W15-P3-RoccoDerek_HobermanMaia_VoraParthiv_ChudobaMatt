@@ -402,11 +402,17 @@ public class PlayerController : MonoBehaviour
 	void Interact()
 	{
 		if (!canInteract) return;
-		if(interactiveObj.name == "InitialComputer"){
+		
+		if (interactiveObj.name == "BoxComputer") {
+			UnlockBoxes obj = interactiveObj.GetComponent<UnlockBoxes>();
+			obj.UnlockAll();
+			GameController.SendPlayerMessage("You have unlocked VIEWING BOXES for your partner!", 5);
+			QUI.setText("Now you can view and interact with boxes from your Overview without your partner having to tag them!");
+		}
+		else if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			QUI.setText("Hello testing 123");
+			QUI.setText("You're in!");
 			GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
-			QUI.clearText();
 			return;
 		}
 		else if (interactiveObj.name.Contains("Elevator")) {

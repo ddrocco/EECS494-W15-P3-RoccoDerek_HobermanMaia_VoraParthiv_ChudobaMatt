@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: 0cb12cff941437e48af711e39168cfac
-timeCreated: 1426674346
+guid: cb3ef0a68c9f34ee783c3052a9124f10
+timeCreated: 1426670832
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences:
-  - QCamera: {fileID: 167046, guid: 9d46d292b0a6b2748a39e684c7cb5648, type: 2}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

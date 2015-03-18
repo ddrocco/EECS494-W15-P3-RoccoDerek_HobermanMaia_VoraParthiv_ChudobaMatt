@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Taggable : MonoBehaviour
 {
+	public GameObject QCamera;
 	public enum TagType
 	{
 		door,
@@ -25,6 +26,11 @@ public class Taggable : MonoBehaviour
 			//Appear
 			QInteractable obj = GetComponentInParent<QInteractable>();
 			obj.enabled = true;
+			QCameraControl QCam = QCamera.GetComponent<QCameraControl>();
+			CameraControl cam = GetComponentInParent<CameraControl>();
+			cam.QIsWatching = true;
+			QCam.ToggleCamera(cam.ID, true);
+			
 		}
 
 		else if (type == TagType.guard)
