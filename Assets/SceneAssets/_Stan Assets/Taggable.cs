@@ -28,6 +28,7 @@ public class Taggable : MonoBehaviour
 			obj.enabled = true;
 			QCameraControl QCam = QCamera.GetComponent<QCameraControl>();
 			CameraControl cam = GetComponentInParent<CameraControl>();
+			cam.QIsWatching = true;
 			QCam.ToggleCamera(cam.ID, true);
 			
 		}
