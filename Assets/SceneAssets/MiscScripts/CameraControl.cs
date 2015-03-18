@@ -10,7 +10,7 @@ public class CameraControl : MonoBehaviour {
 	void Start () {
 		player = GameObject.Find("Player");
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
-			+ (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door);
+			+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);
 	}
 	
 	int GetPlayerRaycasts() {

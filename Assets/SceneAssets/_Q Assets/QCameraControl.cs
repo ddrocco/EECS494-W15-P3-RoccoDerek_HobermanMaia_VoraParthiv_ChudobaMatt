@@ -30,6 +30,9 @@ public class QCameraControl : MonoBehaviour
 	private QCameraLocation lastUsedCam;
 	private List<QCameraLocation> cameras;
 	private QCameraOverview camOverview;
+	
+	public int overviewCullingMask;
+	public int cameraCullingMask;
 
 	// Use this for initialization
 	void Awake()
@@ -75,6 +78,10 @@ public class QCameraControl : MonoBehaviour
 		cam.orthographic = true;
 		camOverview.camActive = true;
 		cameraDesc.text = "Camera 0\n" + currentCam.description;
+		
+		overviewCullingMask = (1 >> Layerdefs.ui) + (1 >> Layerdefs.q_visible);
+		cameraCullingMask = (1 >> Layerdefs.size) - 1 - (1 >> Layerdefs.invisible)
+				- (1 >> Layerdefs.q_visible) - (1 >> Layerdefs.q_display);
 	}
 	
 	// Update is called once per frame
@@ -215,15 +222,15 @@ public class QCameraControl : MonoBehaviour
 		}
 		if (!cameraChanged) return;
 
-		if (currentCam == camOverview)
-		{
+		if (currentCam == camOverview) {
 			cam.orthographic = true;
 			camOverview.camActive = true;
+			cam.cullingMask = overviewCullingMask;
 		}
-		else
-		{
+		else {
 			cam.orthographic = false;
 			camOverview.camActive = false;
+			cam.cullingMask = cameraCullingMask;
 		}
 
 		transform.position = currentCam.transform.position;

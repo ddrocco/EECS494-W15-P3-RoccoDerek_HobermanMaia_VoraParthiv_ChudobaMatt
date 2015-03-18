@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Foe_Detection_Handler : MonoBehaviour {
@@ -46,7 +46,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		player = PlayerController.player.gameObject;
 		
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
-				+ (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door);
+				+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);
 		alertObject1.GetComponent<Renderer>().enabled = false;
 		alertObject2.GetComponent<Renderer>().enabled = false;
 		

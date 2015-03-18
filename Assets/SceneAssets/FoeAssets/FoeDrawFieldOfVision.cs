@@ -25,7 +25,7 @@ public class FoeDrawFieldOfVision : MonoBehaviour {
 		maxIndex = lines.Length - 1;
 		
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
-				+ (1 << Layerdefs.q_interactable) + (1 << Layerdefs.door);
+				+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);
 	}
 	
 	void Update () {
