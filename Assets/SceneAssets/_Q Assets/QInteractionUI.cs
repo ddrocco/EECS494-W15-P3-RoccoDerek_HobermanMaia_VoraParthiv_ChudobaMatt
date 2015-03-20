@@ -12,12 +12,21 @@ public class QInteractionUI : MonoBehaviour {
 	GameObject InteractionCanvas;
 	List<GameObject> optionlist;
 	public List<string> options;
+	
+	
+	public GameObject displayIconPrefab;
+	public Image displayIcon;
 
 	// Use this for initialization
 	void Start () {
 		qcanvas = GameObject.Find("QCanvas");
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 		optionButton = InteractionCanvas.GetComponent<InteractionCanvasSetup>().OptionButton;
+		
+		GameObject displayIconObject = Instantiate (displayIconPrefab) as GameObject;
+		displayIconObject.transform.SetParent(transform);
+		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(15, 15, 0);
+		displayIcon = displayIconObject.GetComponent<Image>();
 	}
 
 	void Update(){
@@ -25,6 +34,9 @@ public class QInteractionUI : MonoBehaviour {
 			toggleOptions();
 		}
 	}
+	
+	//public void toggleDispay();
+	//public void toggleFunction();
 
 	public void toggleOptions(){
 		showingOptions = !showingOptions;

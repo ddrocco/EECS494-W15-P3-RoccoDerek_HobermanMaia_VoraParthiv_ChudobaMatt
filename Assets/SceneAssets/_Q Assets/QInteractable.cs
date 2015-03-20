@@ -42,7 +42,6 @@ public class QInteractable : MonoBehaviour {
 		QIntButton.GetComponent<QInteractionUI> ().options = options;
 		QIntButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QIntButton.transform.SetParent (InteractionCanvas.transform);
-
 	}
 	
 	// Update is called once per frame
