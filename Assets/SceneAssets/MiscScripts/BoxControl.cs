@@ -8,8 +8,8 @@ public class BoxControl : MonoBehaviour {
 	public GameObject QCamera;
 	public int timeTillExplode = 100;
 	public float distFromBomb = 3;
-	public string message;
-	public string QMessage;
+	public string message; //will only contain a snippet, if anything
+	public string QMessage; //notifies Q if Stan found something like a map piece
 	public int bombTimer = 0;
 	public bool timerSet = false;
 	public GameObject elevatorDoor;
@@ -28,22 +28,20 @@ public class BoxControl : MonoBehaviour {
 		if (anim.GetBool("isOpen") == true) {
 			if (willKill) {
 				timerSet = true;
-				//GameController.SendPlayerMessage("Uh oh--you set off a bomb! Quick, tag it so your partner can diffuse it!", 5);
 				return;
 			}
 			else if (holdsPasscard) {
 				ElevatorControl.playerGotPasscard = true;
-				//GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
-				//QUI.appendText("Next Objective: Get to the Elevator.");
+				//Change Q's tasks
 			}
 			GameController.SendPlayerMessage(message, 5);
 			QUI.setText(QMessage);
-			//QUI.appendText("Next Objective: Get to the Elevator.");
 		}
 	}
 	
 	public void FixedUpdate() {
 		if (timerSet) {
+			//play countdown noise
 			++bombTimer;
 		}
 		if (bombTimer >= timeTillExplode) {
