@@ -17,7 +17,7 @@ public class Foe_Door_Opener : MonoBehaviour {
 			/*if (obj.isLocked != obj.expectState) { //test this
 				FoeAlertSystem.Alert(transform.position);
 			}*/
-			if (parentDoor.transform.rotation.y == 0) { //zDoor
+			if (parentDoor.name == "zDoorHinge") {//parentDoor.transform.rotation.y == 0) { //zDoor
 				if (other.transform.position.x < transform.position.x) { //Open south
 					parentDoorAnimator.SetBool("openSouth", true);
 				} else { //Open North

@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Foe_Detection_Handler : MonoBehaviour {
-	public GameObject player;
+public class Foe_Detection_Handler : QInteractable {
 	public int currentRoom;
 	public GameObject taserPrefab;
 	GameObject taser;
@@ -37,6 +36,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public bool isDead = false;
 
 	void Start () {
+		base.Start();
+		
 		FoeAlertSystem.foeList.Add(this);
 	
 		taser = Instantiate(taserPrefab) as GameObject;
@@ -45,7 +46,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
 		
 		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;
-		player = PlayerController.player.gameObject;
 		
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
 				+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);
@@ -61,7 +61,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		}
 		//GetCurrentRoom();
 		if (!isDead) {
-			displacement = player.transform.position - transform.position;
+			displacement = PlayerController.player.transform.position - transform.position;
 			CalculateVisualDetection();
 			CalculateAudialDetection();
 			React();
@@ -118,7 +118,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	int GetPlayerRaycasts() {
-		Vector3[] playerVertices = player.GetComponent<Player_Vertices>().GetVertices();
+		Vector3[] playerVertices = PlayerController.player.GetComponent<Player_Vertices>().GetVertices();
 		
 		int visibleVertices = 0;
 		foreach (Vector3 vertex in playerVertices) {
@@ -153,7 +153,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		//alertObject1.GetComponent<Renderer>().enabled = true;
 		//alertObject2.GetComponent<Renderer>().enabled = true;
 		if (movementHandler != null){
-			movementHandler.StartInvestigation(player.transform.position);
+			movementHandler.StartInvestigation(PlayerController.player.transform.position);
 		}
 	}
 	
@@ -161,7 +161,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (isAggressive) {
 			timeAttemptingCommunication += Time.deltaTime;
 			if (timeAttemptingCommunication >= timeToCommunicate) {
-				FoeAlertSystem.Alert(player.transform.position);
+				FoeAlertSystem.Alert(PlayerController.player.transform.position);
 			}
 		}
 	}
@@ -188,6 +188,25 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInParent<NavMeshAgent>().enabled = false;
 			timeAttemptingCommunication = 0f;
 			FoeAlertSystem.foeList.Remove(this);
+		}
+	}
+	
+	public override void Trigger() {
+		if (!isDead) {
+			canCommunicate = false;
+			GameController.SendPlayerMessage("Your partner has disabled enemy communications.", 5);
+		} else {
+			timeToCommunicate = float.MaxValue;
+			canCommunicate = false;
+			GameController.SendPlayerMessage("Heartbeat monitor alert has been disabled... Hopefully before it sounded...", 5);
+		}
+	}
+	
+	public override Sprite GetSprite() {
+		if (canCommunicate) {
+			return ButtonSpriteDefinitions.main.guardSounding;
+		} else {
+			return ButtonSpriteDefinitions.main.guardSilent;
 		}
 	}
 }

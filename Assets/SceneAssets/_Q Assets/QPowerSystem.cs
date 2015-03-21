@@ -8,6 +8,7 @@ public class QPowerSystem : MonoBehaviour {
 	public float power = 1f;
 	float time = 0f;
 	public List<QInteractable> inUse;
+	public List<QInteractable> inDisplay;
 	
 	public static QPowerSystem main;
 	
@@ -16,6 +17,7 @@ public class QPowerSystem : MonoBehaviour {
 		
 		Image[] children = GetComponentsInChildren<Image>();
 		inUse = new List<QInteractable>();
+		inDisplay = new List<QInteractable>();
 		foreach (Image child in children) {
 			if (string.Compare(child.gameObject.name,"PowerBarUnused") == 0) {
 				unused = child;
@@ -36,22 +38,40 @@ public class QPowerSystem : MonoBehaviour {
 		UpdatePowerLevel(0.5f * Mathf.Cos (time) + 0.5f);
 	}
 	
-	public void UseObject(QInteractable obj) {
-		if (inUse.Contains(obj)) {
-			return;
+	public bool AddObject(QInteractable obj, bool functionality) {
+		if (functionality) {
+			if (inUse.Contains(obj) || power < obj.functionCost) {
+				return false;
+			}
+			inUse.Add(obj);
+			power -= obj.functionCost;
+		} else {
+			if (inDisplay.Contains(obj) || power < obj.displayCost) {
+				return false;
+			}
+			inDisplay.Add(obj);
+			power -= obj.displayCost;
 		}
-		inUse.Add(obj);
-		power -= obj.cost;
 		UpdatePowerLevel(newPowerLevel: power);
+		return true;
 	}
 	
-	public void DropObject(QInteractable obj) {
-		if (!inUse.Contains(obj)) {
-			return;
+	public bool DropObject(QInteractable obj, bool functionality) {
+		if (functionality){
+			if (!inUse.Contains(obj)) {
+				return false;
+			}
+			inUse.Remove(obj);
+			power += obj.functionCost;
+		} else {
+			if (!inDisplay.Contains(obj)) {
+				return false;
+			}
+			inDisplay.Remove(obj);
+			power += obj.displayCost;
 		}
-		inUse.Remove(obj);
-		power += obj.cost;
 		UpdatePowerLevel(newPowerLevel: power);
+		return true;
 	}
 	
 	public void Enabled(bool status) {

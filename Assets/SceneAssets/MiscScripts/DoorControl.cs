@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DoorControl : MonoBehaviour {
+public class DoorControl : QInteractable {
 	public Animator anim;
 	public GameObject foeDoorOpenerPrefab;
-	public GameObject QCamera;
 	public bool isLocked;
 	public bool expectState;
 	private Transform player;
@@ -28,6 +27,7 @@ public class DoorControl : MonoBehaviour {
 	}
 	
 	void Start() {
+		base.Start();
 		player = PlayerController.player.transform;
 		expectState = isOpen;
 	}
@@ -68,6 +68,18 @@ public class DoorControl : MonoBehaviour {
 				isOpen = false;
 				anim.SetBool("isOpen", false);
 			}
+		}
+	}
+	
+	public override void Trigger() {
+		isLocked = !isLocked;
+	}
+	
+	public override Sprite GetSprite() {
+		if (isLocked) {
+			return ButtonSpriteDefinitions.main.doorLocked;
+		} else {
+			return ButtonSpriteDefinitions.main.doorUnlocked;
 		}
 	}
 }

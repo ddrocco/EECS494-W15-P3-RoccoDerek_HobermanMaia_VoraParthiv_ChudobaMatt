@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class LaserBehavior : MonoBehaviour {
+public class LaserBehavior : QInteractable {
 	public Vector3 directionStart = Vector3.up;
 	public Vector3 directionEnd = Vector3.up;
 	public Vector3 directionCurrent = Vector3.up;
@@ -17,6 +17,7 @@ public class LaserBehavior : MonoBehaviour {
 	Vector3 alertPosition;
 	
 	void Start() {
+		base.Start();
 		Color color = Color.red;
 		color.a = 0.8f;
 		laser = GetComponent<LineRenderer>();
@@ -60,5 +61,14 @@ public class LaserBehavior : MonoBehaviour {
 			laser.SetPosition(0, transform.position);
 			laser.SetPosition(1, transform.position + directionCurrent * 100f);
 		}
+	}
+	
+	public override void Trigger() {
+		alertTimer = 0;
+		alertTimerSet = false;
+	}
+	
+	public override Sprite GetSprite() {
+		return ButtonSpriteDefinitions.main.laser;
 	}
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CameraControl : MonoBehaviour {
+public class CameraControl : QInteractable {
 	//Identification
 	public int ID;
 	
@@ -19,6 +19,7 @@ public class CameraControl : MonoBehaviour {
 	public int timeToAlert = 100;
 	
 	void Start () {
+		base.Start();
 		player = PlayerController.player.GetComponent<Collider>();
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
@@ -59,6 +60,14 @@ public class CameraControl : MonoBehaviour {
 				} else return false;
 			} else return false;
 		} else return false;
+	}
+	
+	public override void Trigger () {
+	
+	}
+	
+	public override Sprite GetSprite () {
+		return ButtonSpriteDefinitions.main.camera;
 	}
 	
 }

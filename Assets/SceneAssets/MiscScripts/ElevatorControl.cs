@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ElevatorControl : MonoBehaviour {
+public class ElevatorControl : QInteractable {
 	public Animator anim;
 	public static bool playerGotPasscard = false;
 	public bool dispPasscard;
-	public GameObject QCamera;
 	//private Transform player;
 	
 	void Awake () {
@@ -15,9 +14,11 @@ public class ElevatorControl : MonoBehaviour {
 		dispPasscard = playerGotPasscard;
 	}
 	
-	void Start() {
+	/*void Start() {
+		base.Start();
 		//player = PlayerController.player.transform;
 	}
+	*/
 	
 	public void Interact () {
 		if (!playerGotPasscard) {
@@ -27,5 +28,12 @@ public class ElevatorControl : MonoBehaviour {
 			anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 			return;
 		}
+	}
+	public override void Trigger () {
+	
+	}
+	
+	public override Sprite GetSprite () {
+		return ButtonSpriteDefinitions.main.doorUnlocked;
 	}
 }
