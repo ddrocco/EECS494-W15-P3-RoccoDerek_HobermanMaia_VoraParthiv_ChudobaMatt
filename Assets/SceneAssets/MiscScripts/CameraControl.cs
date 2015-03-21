@@ -31,9 +31,8 @@ public class CameraControl : QInteractable {
 		}
 		isDetected = detectStan();
 		if (isDetected) {
-			GameController.SendPlayerMessage(
-				"You have been detected by a camera! Guards will soon be alerted to your presence and will hunt you down! Quick, tag the camera and ask your Partner to disable the alert!",
-				5);
+			//GameController.SendPlayerMessage("You have been detected by a camera!", 5);
+			//Include visual warning for Stan and audio for Q
 			alertTimerSet = true;
 			alertTimer = 0;
 		}
