@@ -8,8 +8,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		investigating,	//Moves to a location, then goes back to patrolling.
 	};	
 	public alertState state = alertState.patrolling;
-	
-	public GameObject player;
 	public Vector3 currentDestination;
 	
 	//Patrolling variables:
@@ -37,7 +35,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		if (state == alertState.patrolling){
 			UpdateDestination();
 		} else if (state == alertState.investigating) {
-			StartInvestigation(player.transform.position);
+			StartInvestigation(PlayerController.player.transform.position);
 		}
 	}
 

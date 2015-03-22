@@ -17,13 +17,13 @@ public class LaserBehavior : QInteractable {
 	Vector3 alertPosition;
 	
 	void Start() {
-		base.Start();
 		Color color = Color.red;
 		color.a = 0.8f;
 		laser = GetComponent<LineRenderer>();
 		laser.material.color = color;
 		layerMask = (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.foe)
 				+ (1 << Layerdefs.floor) + (1 << Layerdefs.prop);
+		base.Start();
 	}
 	
 	void Update() {

@@ -9,7 +9,6 @@ public class CameraControl : QInteractable {
 	public bool QIsWatching = true;
 	public bool QHasBlinded = false;
 	public bool isDetected = false;
-	private Collider player;
 	private Plane[] planes;
 	private Camera myCam;
 	
@@ -20,7 +19,6 @@ public class CameraControl : QInteractable {
 	
 	void Start () {
 		base.Start();
-		player = PlayerController.player.GetComponent<Collider>();
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 	}
@@ -48,9 +46,9 @@ public class CameraControl : QInteractable {
 	
 	//Uses child camera and raycast to see if Stan is in view
 	bool detectStan () {
-		if (GeometryUtility.TestPlanesAABB(planes, player.bounds)) {
+		if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
 			RaycastHit hit;
-			Vector3 heading = player.transform.position - transform.position;
+			Vector3 heading = PlayerController.player.transform.position - transform.position;
 			float distance = heading.magnitude;
 			Vector3 direction = heading/distance;
 			if (Physics.Raycast(transform.position, direction, out hit, distance)) {

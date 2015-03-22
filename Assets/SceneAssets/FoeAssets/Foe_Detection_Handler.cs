@@ -4,7 +4,7 @@ using System.Collections;
 public class Foe_Detection_Handler : QInteractable {
 	public int currentRoom;
 	public GameObject taserPrefab;
-	GameObject taser;
+	public GameObject taser;
 	
 	//For haphazard use:
 	private Vector3 displacement;
@@ -36,14 +36,13 @@ public class Foe_Detection_Handler : QInteractable {
 	public bool isDead = false;
 
 	void Start () {
-		base.Start();
 		
 		FoeAlertSystem.foeList.Add(this);
 	
 		taser = Instantiate(taserPrefab) as GameObject;
-		taser.SetActive(false);
 		taser.transform.parent = transform;
 		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
+		taser.SetActive(false);
 		
 		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;
 		
@@ -53,6 +52,7 @@ public class Foe_Detection_Handler : QInteractable {
 		alertObject2.GetComponent<Renderer>().enabled = false;
 		
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
+		base.Start();
 	}
 	
 	void Update () {

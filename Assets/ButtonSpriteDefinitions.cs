@@ -11,7 +11,7 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 			camera;
 	public static ButtonSpriteDefinitions main;
 	
-	void Start() {
+	void Awake() {
 		main = this;
 	}
 }

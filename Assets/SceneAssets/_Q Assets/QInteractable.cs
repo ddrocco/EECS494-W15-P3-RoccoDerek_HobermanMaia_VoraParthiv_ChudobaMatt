@@ -36,18 +36,17 @@ public class QInteractable : MonoBehaviour {
 		if (toggleDisplay) {
 			if (!displayIsActive && powerSystem.AddObject(this, false)) {
 				Tag();
-				print ("Tagging");
+				displayIsActive = true;
 				//Eyecon stuff
 			} else if (displayIsActive && powerSystem.DropObject(this, false)) {
 				UnTag();
-				print ("Untagging");
+				displayIsActive = false;
 				//Eyecon stuff
 			}
 		} else {
-			if ((functionIsActive && powerSystem.AddObject(this, true))
-			    || (!functionIsActive && powerSystem.DropObject(this, true))) {
+			if ((!functionIsActive && powerSystem.AddObject(this, true))
+			    || (functionIsActive && powerSystem.DropObject(this, true))) {
 				functionIsActive = !functionIsActive;
-				print ("Triggerl function");
 				Trigger();
 				QIntButton.GetComponent<Image>().sprite = GetSprite();
 			}
