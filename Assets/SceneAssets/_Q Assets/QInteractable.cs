@@ -19,6 +19,8 @@ public class QInteractable : MonoBehaviour {
 	public bool displayIsActive = false;
 	public float cost = 0;
 	
+	Color activeColor = new Color(1f, 0.4f, 0.4f);
+	
 	public void Start () {
 		powerSystem = FindObjectOfType<QPowerSystem>();
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
@@ -49,16 +51,21 @@ public class QInteractable : MonoBehaviour {
 				functionIsActive = !functionIsActive;
 				Trigger();
 				QIntButton.GetComponent<Image>().sprite = GetSprite();
+				if (functionIsActive) {
+					QIntButton.GetComponent<Image>().color = activeColor;
+				} else {
+					QIntButton.GetComponent<Image>().color = Color.white;
+				}
 			}
 		}
 	}
 	
-	void Tag() {
+	public virtual void Tag() {
 		GenerateTagVisibility tagScript = GetComponent<GenerateTagVisibility>();
 		tagScript.Tag();
 	}
 	
-	void UnTag() {
+	public virtual void UnTag() {
 		GenerateTagVisibility tagScript = GetComponent<GenerateTagVisibility>();
 		tagScript.UnTag();
 	}

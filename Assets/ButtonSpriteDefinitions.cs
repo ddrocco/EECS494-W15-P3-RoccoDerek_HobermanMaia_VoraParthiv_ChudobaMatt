@@ -6,7 +6,7 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 			alarmSounding, alarmSilent,
 			guardSounding, guardSilent,
 			doorUnlocked, doorLocked,
-			laser,
+			laser, poly_laser,
 			files,
 			camera;
 	public static ButtonSpriteDefinitions main;

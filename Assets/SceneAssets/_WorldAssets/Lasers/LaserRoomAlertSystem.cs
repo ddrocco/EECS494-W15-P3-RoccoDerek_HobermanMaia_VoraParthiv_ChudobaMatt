@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class LaserRoomAlertSystem : MonoBehaviour {
 	List<LaserBehavior> activeLasers;
+	List<PolyLaserParent> activeLaserGroups;
 	float targetLight = 0f;
 	Light alarmLight;
 	
@@ -39,6 +40,15 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 	public void Activate(LaserBehavior trigger) {
 		if (!activeLasers.Contains(trigger)) {
 			activeLasers.Add (trigger);
+			if (targetLight == 0f) {
+				targetLight = 8f;
+			}
+		}
+	}
+	
+	public void Activate(PolyLaserParent trigger) {
+		if (!activeLaserGroups.Contains(trigger)) {
+			activeLaserGroups.Add (trigger);
 			if (targetLight == 0f) {
 				targetLight = 8f;
 			}

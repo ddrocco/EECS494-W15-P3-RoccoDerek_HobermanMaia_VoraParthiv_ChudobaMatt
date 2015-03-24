@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GenerateMap : MonoBehaviour {
-	public GameObject xWallPrefab, zWallPrefab, pillarPrefab;
+	public GameObject xWallPrefab, zWallPrefab, pillarPrefab, ceilingPrefab;
 	public List<int[]> tiles;
 	public List<int> pillars;
 	int xDim, zDim;
@@ -23,6 +23,9 @@ public class GenerateMap : MonoBehaviour {
 	
 		for (int z = 1; z < zDim; ++z) {
 			for (int x = 1; x < xDim; ++x) {
+				if (tiles[z][x] != 0) {
+					PlaceCeiling(x,z);
+				}
 				if (tiles[z][x-1] < tiles[z][x]) {
 					PlaceZWall(x-1, z);
 				}
@@ -42,7 +45,7 @@ public class GenerateMap : MonoBehaviour {
 	void PlaceZWall(int x, int z) {
 		GameObject newXWall = Instantiate(zWallPrefab) as GameObject;
 		newXWall.transform.parent = transform;
-		newXWall.transform.position = new Vector3(2 + 4 * x, 1.5f, 4 * z);
+		newXWall.transform.position = new Vector3(2 + 4 * x, 2.25f, 4 * z);
 		HandlePillars(x, z);
 		HandlePillars(x, z + 1);
 	}
@@ -50,7 +53,7 @@ public class GenerateMap : MonoBehaviour {
 	void PlaceXWall(int x, int z) {
 		GameObject newXWall = Instantiate(xWallPrefab) as GameObject;
 		newXWall.transform.parent = transform;
-		newXWall.transform.position = new Vector3(4 * x, 1.5f, 2 + 4 * z);
+		newXWall.transform.position = new Vector3(4 * x, 2.25f, 2 + 4 * z);
 		HandlePillars(x - 1, z + 1);
 		HandlePillars(x, z + 1);
 	}
@@ -61,8 +64,14 @@ public class GenerateMap : MonoBehaviour {
 		} else {
 			GameObject newPillar = Instantiate(pillarPrefab) as GameObject;
 			newPillar.transform.parent = transform;
-			newPillar.transform.position = new Vector3(2 + 4 * x, 1.5f, -2 + 4 * z);
+			newPillar.transform.position = new Vector3(2 + 4 * x, 2.25f, -2 + 4 * z);
 		}
+	}
+	
+	void PlaceCeiling(int x, int z) {
+		GameObject newCeiling = Instantiate(ceilingPrefab) as GameObject;
+		newCeiling.transform.parent = transform;
+		newCeiling.transform.position = new Vector3(4 * x, 4.625f, 4 * z);
 	}
 	
 	//z: -4 1.5 2

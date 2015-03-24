@@ -12,6 +12,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	public List<string> options;	
 	public GameObject displayIconPrefab;
 	public Image displayIcon;
+	float displayIconDisplacement = 10f;
 
 	// Use this for initialization
 	void Start () {
@@ -20,7 +21,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 		
 		GameObject displayIconObject = Instantiate (displayIconPrefab) as GameObject;
 		displayIconObject.transform.SetParent(transform);
-		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(15, 15, 0);
+		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
 		displayIcon = displayIconObject.GetComponent<Image>();
 		displayIcon.enabled = false;
 	}
