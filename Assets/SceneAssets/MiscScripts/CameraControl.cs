@@ -17,6 +17,9 @@ public class CameraControl : QInteractable {
 	public int alertTimer = 0;
 	public int timeToAlert = 100;
 	
+	//Stan-Visual
+	public MeshRenderer lens;
+	
 	void Start () {
 		base.Start();
 		myCam = GetComponentInChildren<Camera>();
@@ -25,7 +28,10 @@ public class CameraControl : QInteractable {
 	
 	void Update () {
 		if (QIsWatching || QHasBlinded) {
+			lens.material.color = Color.green;
 			return;
+		} else {
+			lens.material.color = Color.red;
 		}
 		isDetected = detectStan();
 		if (isDetected) {
@@ -65,6 +71,16 @@ public class CameraControl : QInteractable {
 	
 	public override Sprite GetSprite () {
 		return ButtonSpriteDefinitions.main.camera;
+	}
+	
+	public override void Tag() {
+		GenerateTagVisibility tagScript = GetComponentInChildren<GenerateTagVisibility>();
+		tagScript.Tag();
+	}
+	
+	public override void UnTag() {
+		GenerateTagVisibility tagScript = GetComponentInChildren<GenerateTagVisibility>();
+		tagScript.UnTag();
 	}
 	
 }

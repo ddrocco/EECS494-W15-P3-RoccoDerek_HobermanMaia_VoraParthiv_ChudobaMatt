@@ -9,7 +9,7 @@ public class GenerateTagVisibility : MonoBehaviour {
 		tagView = Instantiate(tagViewPrefab, transform.position, Quaternion.identity) as GameObject;
 		tagView.transform.parent = transform;
 		tagView.transform.localScale = Vector3.one;
-		tagView.transform.eulerAngles = Vector3.zero;
+		tagView.transform.localEulerAngles = Vector3.zero;
 		if (GetComponent<MeshFilter>() != null) {
 			tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 		}
