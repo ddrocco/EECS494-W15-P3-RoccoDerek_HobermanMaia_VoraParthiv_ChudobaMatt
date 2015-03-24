@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class QPowerSystem : MonoBehaviour {
+	public GameObject frame;
+
 	Image unused, used;
 	public float power = 1f;
 	float time = 0f;
@@ -25,17 +27,8 @@ public class QPowerSystem : MonoBehaviour {
 				used = child;
 			}
 		}
+		UpdatePowerLevel(newPowerLevel: power);
 		Enabled (false);
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//DebugOscillation();
-	}
-	
-	void DebugOscillation() {
-		time += Time.deltaTime;
-		UpdatePowerLevel(0.5f * Mathf.Cos (time) + 0.5f);
 	}
 	
 	public bool AddObject(QInteractable obj, bool functionality) {
@@ -77,6 +70,7 @@ public class QPowerSystem : MonoBehaviour {
 	public void Enabled(bool status) {
 		unused.gameObject.SetActive (status);
 		used.gameObject.SetActive (status);
+		frame.gameObject.SetActive(status);
 	}
 	
 	void UpdatePowerLevel(float newPowerLevel) {

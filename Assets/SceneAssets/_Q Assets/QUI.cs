@@ -12,8 +12,7 @@ public class QUI : MonoBehaviour {
 	public Text cameraDesc;
 	public GameObject player;
 	
-	int frameVisibleMask = (1 << 5) + (1 << Layerdefs.q_visible);
-	int frameInvisibleMask = (1 << 5);
+	int frameInvisibleMask = (1 << Layerdefs.ui);
 
 
 	// Use this for initialization
@@ -58,7 +57,7 @@ public class QUI : MonoBehaviour {
 		if(visible){
 			nosignal.enabled = false;
 			cameraDesc.enabled = true;
-			GetComponent<Camera>().cullingMask = frameVisibleMask;
+			GetComponent<Camera>().cullingMask = GetComponent<QCameraControl>().overviewCullingMask;
 			GetComponent<QCameraControl>().enabled = true;
 			FindObjectOfType<QPowerSystem>().Enabled(true);
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
