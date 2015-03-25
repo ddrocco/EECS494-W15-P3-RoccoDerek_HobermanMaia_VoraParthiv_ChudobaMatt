@@ -245,9 +245,7 @@ public class QCameraControl : MonoBehaviour
 		if (Input.GetKey(KeyCode.E))
 		{
 			if (currentCam == camOverview)
-				QUI.setControlsText("WASD: Pan\nScroll Wheel: Zoom\n1-" + camCount + ": Change Camera");
 			else
-				QUI.setControlsText("WASD: Rotate and Zoom\n1-" + camCount + ": Change Camera\nSPACE: Map Overview");
 		}
 		else
 		{
