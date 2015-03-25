@@ -66,7 +66,6 @@ public class CameraControl : QInteractable {
 		if (isDetected) {
 			//GameController.SendPlayerMessage("You have been detected by a camera!", 5);
 			//Include audio for Q
-			print ("Detected!");
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			alertTimerSet = true;
 			alertTimer = 0;
