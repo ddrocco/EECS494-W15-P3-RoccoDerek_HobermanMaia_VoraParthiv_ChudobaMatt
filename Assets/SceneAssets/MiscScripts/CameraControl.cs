@@ -96,7 +96,7 @@ public class CameraControl : QInteractable {
 	}
 	
 	public override Sprite GetSprite () {
-		return ButtonSpriteDefinitions.main.camera;
+		return ButtonSpriteDefinitions.main.cameraIcon;
 	}
 	
 	public override void Tag() {

@@ -8,7 +8,7 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 			doorUnlocked, doorLocked,
 			laser, poly_laser,
 			files,
-			camera;
+			cameraIcon;
 	public static ButtonSpriteDefinitions main;
 	
 	void Awake() {

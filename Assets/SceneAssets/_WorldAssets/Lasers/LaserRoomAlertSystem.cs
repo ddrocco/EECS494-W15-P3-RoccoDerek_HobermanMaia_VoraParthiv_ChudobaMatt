@@ -10,6 +10,7 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 	
 	void Start () {
 		activeLasers = new List<LaserBehavior>();
+		activeLaserGroups = new List<PolyLaserParent>();
 		alarmLight = GetComponent<Light>();
 	}
 	

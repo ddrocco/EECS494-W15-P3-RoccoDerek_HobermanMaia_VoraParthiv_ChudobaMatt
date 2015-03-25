@@ -27,9 +27,9 @@ public class DoorControl : QInteractable {
 	}
 	
 	void Start() {
-		base.Start();
 		player = PlayerController.player.transform;
 		expectState = isOpen;
+		base.Start();
 	}
 	
 	public void Interact () {
