@@ -19,25 +19,18 @@ public class CameraControl : QInteractable {
 	
 	//Stan-Visual
 	public MeshRenderer lens;
-<<<<<<< HEAD
+	public Light light;
+	public Color color0;
+	public Color color1;
 
 	// Camera switching
 	private QCameraControl camControl;
 	private QCameraLocation camLocation;
-=======
-	public Light light;
-	public Color color0;
-	public Color color1;
->>>>>>> origin/master
 	
 	void Start () {
 		base.Start();
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
-<<<<<<< HEAD
-		camControl = GameObject.Find("QCamera").GetComponent<QCameraControl>();
-		camLocation = GetComponentInParent<QCameraLocation>();
-=======
 		light = GetComponentInChildren<Light>();
 		color0 = light.color;
 		color1 = color0;
@@ -46,7 +39,9 @@ public class CameraControl : QInteractable {
 			print ("BUG");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
->>>>>>> origin/master
+
+		camControl = GameObject.Find("QCamera").GetComponent<QCameraControl>();
+		camLocation = GetComponentInParent<QCameraLocation>();
 	}
 	
 	void Update () {
