@@ -414,6 +414,7 @@ public class PlayerController : MonoBehaviour
 			QCamera.GetComponent<QUI>().showCamera(true);
 			QUI.setText("You're in!");
 			QUI.appendText("Objective: Collect the elevator passcard and move up within the building");
+			QUI.appendText("Task 1: Have your partner help you hack a camera");
 			//GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
 		}

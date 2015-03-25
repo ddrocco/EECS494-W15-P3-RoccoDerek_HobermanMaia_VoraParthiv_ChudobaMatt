@@ -9,6 +9,7 @@ public class CameraControl : QInteractable {
 	public bool QIsWatching = true;
 	public bool QHasBlinded = false;
 	public bool isDetected = false;
+	public bool wasDetected = false;
 	private Plane[] planes;
 	private Camera myCam;
 	
@@ -48,18 +49,21 @@ public class CameraControl : QInteractable {
 		float t = Mathf.PingPong(Time.time, 1);
 		light.color = Color.Lerp(color0, color1, t);
 		
+		
 		//Hacked in/broken
 		if (QIsWatching || QHasBlinded) {
 			lens.material.color = Color.black; //light off
 			color1 = color0 = Color.black; //camera appears dark
 			return;
-		} else if (!isDetected) { //Camera is on alert but hasn't detected Stan
+		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
 			color1 = color0; //light is a constant yellow
 		}
 		isDetected = detectStan();
 		if (isDetected) {
-			//GameController.SendPlayerMessage("You have been detected by a camera!", 5);
+			wasDetected = isDetected;
+			//string message = "You have been detected by camera " + ID; 
+			//GameController.SendPlayerMessage(message, 5);
 			//Include audio for Q
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			alertTimerSet = true;
@@ -69,7 +73,7 @@ public class CameraControl : QInteractable {
 			++alertTimer;
 		}
 		if (alertTimer >= timeToAlert) {
-			FoeAlertSystem.Alert(transform.position);
+			if (ID != 0) FoeAlertSystem.Alert(transform.position);
 			alertTimerSet = false;
 			alertTimer = 0;
 		}
