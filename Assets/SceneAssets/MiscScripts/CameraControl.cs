@@ -19,11 +19,17 @@ public class CameraControl : QInteractable {
 	
 	//Stan-Visual
 	public MeshRenderer lens;
+
+	// Camera switching
+	private QCameraControl camControl;
+	private QCameraLocation camLocation;
 	
 	void Start () {
 		base.Start();
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+		camControl = GameObject.Find("QCamera").GetComponent<QCameraControl>();
+		camLocation = GetComponentInParent<QCameraLocation>();
 	}
 	
 	void Update () {
@@ -66,7 +72,8 @@ public class CameraControl : QInteractable {
 	}
 	
 	public override void Trigger () {
-	
+		camControl.ChangeCamera(camLocation.cameraNumber);
+		displayIsActive = false;
 	}
 	
 	public override Sprite GetSprite () {

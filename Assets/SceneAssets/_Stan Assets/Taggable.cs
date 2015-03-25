@@ -15,6 +15,8 @@ public class Taggable : MonoBehaviour
 
 	public void TagObject()
 	{
+		return; // temporarily disabling tagging
+
 		if (type == TagType.door)
 		{
 			Debug.Log("Door");

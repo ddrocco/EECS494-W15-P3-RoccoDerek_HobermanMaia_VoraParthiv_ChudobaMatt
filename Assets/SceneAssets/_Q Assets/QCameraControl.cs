@@ -27,7 +27,6 @@ public class QCameraControl : MonoBehaviour
 
 	private Camera cam;
 	private QCameraLocation currentCam;
-	private QCameraLocation lastUsedCam;
 	private static List<QCameraLocation> cameras;
 	private QCameraOverview camOverview;
 	
@@ -68,7 +67,6 @@ public class QCameraControl : MonoBehaviour
 			cameras[i].cameraNumber = i + 1;
 
 		currentCam = camOverview;
-		lastUsedCam = cameras[0];
 		cam.orthographic = true;
 		camOverview.camActive = true;
 		cameraDesc.text = "Camera 0\n" + currentCam.description;
@@ -76,8 +74,6 @@ public class QCameraControl : MonoBehaviour
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
 				+ (1 << Layerdefs.laser);
-
-		InitialCameraSetup();
 	}
 	
 	// Update is called once per frame
@@ -85,7 +81,7 @@ public class QCameraControl : MonoBehaviour
 	{
 		GetCameraInput();		
 		UpdateCameraPosition();
-		ChangeCamera();
+		SwitchToOverview();
 		ToggleControlText();
 		//UpdateSounds();
 	}
@@ -124,11 +120,19 @@ public class QCameraControl : MonoBehaviour
 		}
 	}
 
-	void InitialCameraSetup()
+	void Start()
 	{
 		camCount = 2;
 		cameras[0].usable = true;
 		cameras[1].usable = true;
+
+		for (int i = 2; i < cameras.Count; ++i)
+		{
+			CameraControl control =
+				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
+			control.QIsWatching = false;
+			control.enabled = false;
+		}
 	}
 	
 	void GetCameraInput()
@@ -193,112 +197,39 @@ public class QCameraControl : MonoBehaviour
 		cam.fieldOfView = zoom;
 	}
 
-	void ChangeCamera()
+	void SwitchToOverview()
 	{
-		bool cameraChanged = false;
-		if (Input.GetKeyDown(KeyCode.Space))
-		{
-			if (currentCam == camOverview) {
-				currentCam = lastUsedCam;
-			}
-			else {
-				lastUsedCam = currentCam;
-				currentCam = camOverview;
-			}
-			cameraChanged = true;
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha1) && cameras.Count >= 1)
-		{
-			if (cameras[0].usable)
-			{
-				currentCam = cameras[0];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha2) && cameras.Count >= 2)
-		{
-			if (cameras[1].usable)
-			{
-				currentCam = cameras[1];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha3) && cameras.Count >= 3)
-		{
-			if (cameras[2].usable)
-			{
-				currentCam = cameras[2];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha4) && cameras.Count >= 4)
-		{
-			if (cameras[3].usable)
-			{
-				currentCam = cameras[3];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha5) && cameras.Count >= 5)
-		{
-			if (cameras[4].usable)
-			{
-				currentCam = cameras[4];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha6) && cameras.Count >= 6)
-		{
-			if (cameras[5].usable)
-			{
-				currentCam = cameras[5];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha7) && cameras.Count >= 7)
-		{
-			if (cameras[6].usable)
-			{
-				currentCam = cameras[6];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha8) && cameras.Count >= 8)
-		{
-			if (cameras[7].usable)
-			{
-				currentCam = cameras[7];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha9) && cameras.Count >= 9)
-		{
-			if (cameras[8].usable)
-			{
-				currentCam = cameras[8];
-				cameraChanged = true;
-			}
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha0) && cameras.Count >= 10)
-		{
-			if (cameras[9].usable)
-			{
-				currentCam = cameras[9];
-				cameraChanged = true;
-			}
-		}
-		if (!cameraChanged) return;
+		if (currentCam == camOverview) return;
 
-		if (currentCam == camOverview) {
+		if (Input.GetKeyDown(KeyCode.Mouse0))
+		{
+			currentCam = camOverview;
 			cam.orthographic = true;
 			camOverview.camActive = true;
 			cam.cullingMask = overviewCullingMask;
+
+			transform.position = currentCam.transform.position;
+			transform.rotation = currentCam.transform.rotation;
+			UD_rotation = currentCam.transform.eulerAngles.x;
+			LR_rotation = currentCam.transform.eulerAngles.y;
+			zoom = currentCam.zoom;
+			
+			cameraDesc.text = "Camera " + currentCam.cameraNumber + "\n" + currentCam.description;
 		}
-		else {
-			cam.orthographic = false;
-			camOverview.camActive = false;
-			cam.cullingMask = cameraCullingMask;
+	}
+
+	public void ChangeCamera(int camNumber)
+	{
+		if (cameras.Count >= camNumber && cameras[camNumber - 1].usable)
+		{
+			currentCam = cameras[camNumber - 1];
 		}
+		else
+			return;
+
+		cam.orthographic = false;
+		camOverview.camActive = false;
+		cam.cullingMask = cameraCullingMask;
 
 		transform.position = currentCam.transform.position;
 		transform.rotation = currentCam.transform.rotation;

@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
 		}
 		if (device.Action3.WasPressed)
 		{
-			Tag();
+			//Tag();
 		}
 	}
 
@@ -441,14 +441,25 @@ public class PlayerController : MonoBehaviour
 			obj.Interact();
 			return;
 		}
-		else if (interactiveObj.name.Contains ("Foe")) {
+		else if (interactiveObj.name.Contains("Foe")) {
 			Foe_Detection_Handler obj = interactiveObj.GetComponentInChildren<Foe_Detection_Handler>();
 			obj.Interact();
 			return;
 		}
+		else if (interactiveObj.transform.root.name.Contains("Q Elements")) {
+			// Enable camera
+			QCameraControl Qcontrol = QCamera.GetComponent<QCameraControl>();
+			QCameraLocation loc = interactiveObj.GetComponentInParent<QCameraLocation>();
+			Qcontrol.ToggleCamera(loc.cameraNumber, true);
+
+			CameraControl control = interactiveObj.GetComponentInParent<CameraControl>();
+			control.enabled = true;
+			control.QIsWatching = true;
+			return;
+		}
 		else
 		{
-			Debug.LogError("Interactive object is not a Door or Box");
+			Debug.LogError("Interactive object " + interactiveObj.name + " is not yet implemented");
 			return;
 		}
 

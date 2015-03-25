@@ -38,7 +38,7 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		ResizeReticle();
 		Interact();
-		Tag();
+		//Tag(); temporarily disabling
 
 		if (!player.canTag && !player.canInteract)
 			reticleRender.color = reticleNormal;
