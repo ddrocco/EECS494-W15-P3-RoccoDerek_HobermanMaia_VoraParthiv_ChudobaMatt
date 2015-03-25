@@ -407,14 +407,13 @@ public class PlayerController : MonoBehaviour
 			UnlockBoxes obj = interactiveObj.GetComponent<UnlockBoxes>();
 			obj.UnlockAll();
 			GameController.SendPlayerMessage("You have unlocked VIEWING BOXES for your partner!", 5);
-			QUI.setText("Now you can view and interact with boxes from your Overview without your partner having to tag them!");
+			//QUI.setText("Now you can view and interact with boxes from your Overview without your partner having to tag them!");
 			return;
 		}
 		else if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
 			QUI.setText("You're in!");
 			QUI.appendText("Objective: Collect the elevator passcard and move up within the building");
-			QUI.appendText("Task 1: Have your partner help you hack a camera");
 			//GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
 		}

@@ -69,11 +69,11 @@ public class BoxControl : QInteractable {
 	public override void Trigger() {
 		if (willKill) {
 			if (!timerSet) {
-				GameController.SendPlayerMessage("Fire in the hole--your partner set off a bomb!", 5);
+				//GameController.SendPlayerMessage("Fire in the hole--your partner set off a bomb!", 5);
 				timerSet = true;
 				bombTimer = 0;
 			} else {
-				GameController.SendPlayerMessage("Your partner has defused the bomb; you're safe--for now.", 5);
+				//GameController.SendPlayerMessage("Your partner has defused the bomb; you're safe--for now.", 5);
 				timerSet = false;
 				bombTimer = 0;
 				hasDetonated = true;
