@@ -74,6 +74,23 @@ public class QCameraControl : MonoBehaviour
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
 				+ (1 << Layerdefs.laser);
+
+		DisableCameras();
+	}
+
+	void DisableCameras()
+	{
+		camCount = 2;
+		cameras[0].usable = true;
+		cameras[1].usable = true;
+		
+		for (int i = 2; i < cameras.Count; ++i)
+		{
+			CameraControl control =
+				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
+			control.QIsWatching = false;
+			control.enabled = false;
+		}
 	}
 	
 	// Update is called once per frame
@@ -120,21 +137,6 @@ public class QCameraControl : MonoBehaviour
 		}
 	}
 
-	void Start()
-	{
-		camCount = 2;
-		cameras[0].usable = true;
-		cameras[1].usable = true;
-
-		for (int i = 2; i < cameras.Count; ++i)
-		{
-			CameraControl control =
-				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
-			control.QIsWatching = false;
-			control.enabled = false;
-		}
-	}
-	
 	void GetCameraInput()
 	{
 		if (currentCam == camOverview)
