@@ -61,12 +61,12 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	public virtual void Tag() {
-		GenerateTagVisibility tagScript = GetComponent<GenerateTagVisibility>();
+		GenerateTagVisibility tagScript = GetComponentInParent<GenerateTagVisibility>();
 		tagScript.Tag();
 	}
 	
 	public virtual void UnTag() {
-		GenerateTagVisibility tagScript = GetComponent<GenerateTagVisibility>();
+		GenerateTagVisibility tagScript = GetComponentInParent<GenerateTagVisibility>();
 		tagScript.UnTag();
 	}
 	

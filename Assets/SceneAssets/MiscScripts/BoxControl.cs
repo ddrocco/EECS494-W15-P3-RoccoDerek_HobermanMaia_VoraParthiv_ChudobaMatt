@@ -16,7 +16,7 @@ public class BoxControl : QInteractable {
 	private Transform player;
 	
 	void Awake () {
-		anim = GetComponent<Animator>();
+		anim = GetComponentInChildren<Animator>();
 	}
 	
 	void Start() {

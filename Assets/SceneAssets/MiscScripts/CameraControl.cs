@@ -32,12 +32,11 @@ public class CameraControl : QInteractable {
 		base.Start();
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
-		light = GetComponentInChildren<Light>();
+		Transform temp1 = transform.Find("Camera");
+		light = temp1.GetComponentInChildren<Light>();
 		color0 = light.color;
 		color1 = color0;
 		Transform temp = transform.Find("Lens");
-		if (temp == null)
-			print ("BUG");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
 
@@ -53,7 +52,7 @@ public class CameraControl : QInteractable {
 		//Hacked in/broken
 		if (QIsWatching || QHasBlinded) {
 			lens.material.color = Color.black; //light off
-			color1 = color0 = Color.black; //camera appears dark
+			color1 = color0 = Color.green; //camera appears dark
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)

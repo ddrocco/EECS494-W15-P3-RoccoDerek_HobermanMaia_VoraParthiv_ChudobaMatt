@@ -11,17 +11,17 @@ public class DoorControl : QInteractable {
 	private bool isOpen = false;
 	
 	void Awake () {
-		anim = GetComponent<Animator>();
+		anim = GetComponentInParent<Animator>();
 		if (foeDoorOpenerPrefab != null) {
 			Vector3 offset;
-			if (transform.rotation.y == 0) {
+			/*if (transform.rotation.y == 0) {
 				offset = new Vector3(0, 0, .75f);
 			}
 			else {
 				offset = new Vector3(.75f, 0, 0);
-			}
+			}*/
 			GameObject foeDoorOpener = Instantiate(foeDoorOpenerPrefab,
-			                                       transform.position + offset, Quaternion.identity) as GameObject;
+			                                       transform.position /*+ offset*/, Quaternion.identity) as GameObject;
 			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoor = gameObject;
 		}
 	}
