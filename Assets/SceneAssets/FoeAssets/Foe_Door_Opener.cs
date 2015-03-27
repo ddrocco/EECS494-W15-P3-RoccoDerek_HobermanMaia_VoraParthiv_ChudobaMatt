@@ -7,7 +7,7 @@ public class Foe_Door_Opener : MonoBehaviour {
 	int objectsColliding = 0;
 	
 	void Start() {
-		parentDoorAnimator = parentDoor.GetComponent<Animator>();
+		parentDoorAnimator = parentDoor.GetComponentInParent<Animator>();
 	}
 	
 	void OnTriggerEnter(Collider other) {
