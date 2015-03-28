@@ -412,8 +412,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if(interactiveObj.name == "InitialComputer"){
 			QCamera.GetComponent<QUI>().showCamera(true);
-			QUI.setText("You're in!");
-			QUI.appendText("Objective: Collect the elevator passcard and move up within the building");
+			QUI.setText("Objective: Collect the elevator key");
 			//GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
 		}
