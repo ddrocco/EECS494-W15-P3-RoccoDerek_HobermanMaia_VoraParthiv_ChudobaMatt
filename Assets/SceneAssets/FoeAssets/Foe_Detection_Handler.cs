@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using System.Collections;
 
 public class Foe_Detection_Handler : QInteractable {
@@ -36,7 +36,6 @@ public class Foe_Detection_Handler : QInteractable {
 	public bool isDead = false;
 
 	void Start () {
-		
 		FoeAlertSystem.foeList.Add(this);
 	
 		taser = Instantiate(taserPrefab) as GameObject;
@@ -48,6 +47,8 @@ public class Foe_Detection_Handler : QInteractable {
 		
 		cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
 				+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);
+		
+		//turns exclamation point off:
 		alertObject1.GetComponent<Renderer>().enabled = false;
 		alertObject2.GetComponent<Renderer>().enabled = false;
 		
@@ -74,7 +75,29 @@ public class Foe_Detection_Handler : QInteractable {
 	}
 	
 	void CalculateVisualDetection() {
-		Debug.DrawRay (transform.position, transform.rotation * Vector3.forward
+		Camera myCam = GetComponent<Camera>();
+		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+		bool detected;
+
+		if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
+			RaycastHit hit;
+			Vector3 heading = PlayerController.player.transform.position - transform.position;
+			float distance = heading.magnitude;
+			Vector3 direction = heading/distance;
+			if (Physics.Raycast(transform.position, direction, out hit, distance)) {
+				if (hit.collider.CompareTag("Player") == true) {
+					detected = true;
+				} else detected = false;
+			} else detected = false;
+		} else detected = false;
+		
+		if (detected) {
+			visualDetectionValue = 2f;
+		} else {
+			visualDetectionValue = 0;
+		}
+		
+		/*Debug.DrawRay (transform.position, transform.rotation * Vector3.forward
 				* displacement.magnitude, Color.red);
 		Debug.DrawRay (transform.position, displacement, Color.blue);
 		float visualAngle = Vector3.Angle(transform.rotation * Vector3.forward, displacement);
@@ -89,7 +112,7 @@ public class Foe_Detection_Handler : QInteractable {
 			visualDetectionValue = visualMultiplier
 					* Mathf.Cos (visualAngle * (Mathf.PI / 180f ))
 					/ Mathf.Pow (displacement.magnitude, lightFactor);
-		}
+		}*/
 	}
 	
 	void CalculateAudialDetection() {

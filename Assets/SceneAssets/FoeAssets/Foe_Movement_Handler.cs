@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Foe_Movement_Handler : MonoBehaviour {
 	public enum alertState{
 		patrolling,	//Nominal, walking around
-		investigating,	//Moves to a location, then goes back to patrolling.
+		investigating, //Moves to a location, then goes back to patrolling.
 	};	
 	public alertState state = alertState.patrolling;
 	public Vector3 currentDestination;
@@ -24,7 +24,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	Foe_Detection_Handler foeDetectionHandler;
 	
 	public float speed;
-	
 	public bool stayFrozenOnLook = false;
 	
 	void Start() {
@@ -61,6 +60,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		}
 		if ((new Vector3(transform.position.x, 0, transform.position.z)
 		     - new Vector3(currentDestination.x, 0, currentDestination.z)).magnitude < 0.1f) {
+		     //If close to current destination
 			UpdateDestination();
 		}
 	}
@@ -68,12 +68,10 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	void UpdateDestination() {
 		if (state == alertState.patrolling) {
 			currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
-			
 			currentPathNode += 1;
 			if (currentPathNode >= defaultPath.Count) {
 				currentPathNode = 0;
 			}
-			
 			if (foeDetectionHandler.isAttentive) {
 				foeGlanceCommand.prepareToLook = true;
 				foeGlanceCommand.waitToLook = 1f;
@@ -88,7 +86,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 					foeGlanceCommand.lookIsStationary = false;
 					isReturning = true;
 					currentDestination = originLocation;
-					
 					foeGlanceCommand.prepareToLook = true;
 					foeGlanceCommand.waitToLook = 1f;
 				}
