@@ -9,6 +9,12 @@ public class PauseScript : MonoBehaviour {
 	public GameObject QPauseMenu;
 	public GameObject StanPauseMenu;
 
+	public bool paused {
+		get {
+			return Time.timeScale < 0.5;
+		}    
+	}
+
 	// Use this for initialization
 	void Start () {
 		QPauseMenu.GetComponent<Canvas> ().worldCamera = GameObject.Find ("QCamera").GetComponent<Camera>();
@@ -26,11 +32,15 @@ public class PauseScript : MonoBehaviour {
 			if(QPauseMenu.activeSelf || StanPauseMenu.activeSelf){
 				Resume();
 			} else {
-				QPauseMenu.SetActive(true);
-				StanPauseMenu.SetActive(true);
-				Time.timeScale = 0;
+				Pause();
 			}
 		}
+	}
+
+	public void Pause(){
+		QPauseMenu.SetActive(true);
+		StanPauseMenu.SetActive(true);
+		Time.timeScale = 0;
 	}
 
 	public void Resume(){
