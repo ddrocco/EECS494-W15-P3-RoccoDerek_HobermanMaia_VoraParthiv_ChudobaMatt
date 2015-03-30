@@ -13,6 +13,8 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	public GameObject displayIconPrefab;
 	public Image displayIcon;
 	float displayIconDisplacement = 10f;
+	Color color0 = Color.white;
+	Color color1 = Color.white;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +28,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 		displayIcon.enabled = false;
 	}
 	
+	void Update () {
+		float t = Mathf.PingPong(Time.time, 1);
+		GetComponent<Image>().color = Color.Lerp(color0, color1, t);
+	}
+	
 	public void OnPointerClick(PointerEventData mouseData) {
 		if (mouseData.button == PointerEventData.InputButton.Left) {
 			controlledObject.Toggle(false);
@@ -34,5 +41,15 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 			controlledObject.Toggle(true);
 			displayIcon.enabled = controlledObject.displayIsActive;
 		}
+	}
+	
+	//Call AlertOn to cause an icon to flash red
+	public void AlertOn() {
+		color1 = Color.red;
+	}
+	
+	//Call AlertOff to turn off the flashing alert
+	public void AlertOff() {
+		color1 = Color.white;
 	}
 }
