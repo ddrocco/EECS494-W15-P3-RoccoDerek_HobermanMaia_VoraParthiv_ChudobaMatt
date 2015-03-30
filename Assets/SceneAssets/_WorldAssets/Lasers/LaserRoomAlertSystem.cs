@@ -89,7 +89,6 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 			if (signal.timeAlive > wireJointTime) {
 				float secondLegRatio = (signal.timeAlive - wireJointTime) / (timeToAlarm - wireJointTime);
 				if (secondLegRatio > 1) {
-					system.Signal();
 					signalsToDestroy.Add (signal);
 					continue;
 				}
@@ -106,6 +105,7 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 		foreach(AlarmSignal signal in signalsToDestroy) {
 			signals.Remove (signal);
 			Destroy (signal.gameObject);
+			system.Signal();
 		}	
 	}
 }

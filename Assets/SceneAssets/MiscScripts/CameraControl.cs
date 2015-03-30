@@ -52,7 +52,7 @@ public class CameraControl : QInteractable {
 		if (QIsWatching || QHasBlinded) {
 			lens.material.color = Color.black; //light off
 			color1 = color0 = Color.green; //camera appears dark
-			QIntButton.GetComponent<QInteractionUI>().AlertOff();
+			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
@@ -65,7 +65,7 @@ public class CameraControl : QInteractable {
 			//GameController.SendPlayerMessage(message, 5);
 			//Include audio for Q
 			color1 = Color.red; //sets 2nd color to red so light will flash
-			QIntButton.GetComponent<QInteractionUI>().AlertOn();
+			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			alertTimerSet = true;
 			alertTimer = 0;
 		}

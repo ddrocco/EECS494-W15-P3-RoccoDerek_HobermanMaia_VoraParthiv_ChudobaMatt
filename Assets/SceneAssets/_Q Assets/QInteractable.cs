@@ -7,13 +7,12 @@ public class QInteractable : MonoBehaviour {
 	public float functionCost;
 	public float displayCost;
 	public GameObject QCamera;
+	public GameObject QInteractionButton;
 
 	float buttonoffset = 0;
 	
-	QPowerSystem powerSystem;
 	GameObject InteractionCanvas;
 	
-	public GameObject QIntButton;
 	
 	public bool functionIsActive = false;
 	public bool displayIsActive = false;
@@ -25,16 +24,15 @@ public class QInteractable : MonoBehaviour {
 	public GameObject tagView;
 	
 	public virtual void Start () {
-		powerSystem = FindObjectOfType<QPowerSystem>();
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 
-		QIntButton = Instantiate (InteractionCanvas.GetComponent<InteractionCanvasSetup> ().QInteractiveButton);
-		QIntButton.GetComponent<RectTransform> ().localPosition =
+		QInteractionButton = Instantiate (ObjectPrefabDefinitions.main.QInteractiveButton);
+		QInteractionButton.GetComponent<RectTransform> ().localPosition =
 			new Vector3 (transform.position.x + buttonoffset, InteractionCanvas.GetComponent<RectTransform> ().localPosition.y, transform.position.z + buttonoffset);
-		QIntButton.GetComponent<RectTransform> ().localRotation = InteractionCanvas.GetComponent<RectTransform> ().localRotation;
-		QIntButton.GetComponent<QInteractionUI> ().controlledObject = this;
-		QIntButton.transform.SetParent (InteractionCanvas.transform);
-		QIntButton.GetComponent<Image>().sprite = GetSprite();
+		QInteractionButton.GetComponent<RectTransform> ().localRotation = InteractionCanvas.GetComponent<RectTransform> ().localRotation;
+		QInteractionButton.GetComponent<QInteractionUI> ().controlledObject = this;
+		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
+		QInteractionButton.GetComponent<Image>().sprite = GetSprite();
 		
 		tagView = Instantiate(tagViewPrefab, transform.position, Quaternion.identity) as GameObject;
 		tagView.transform.parent = transform;
@@ -47,25 +45,25 @@ public class QInteractable : MonoBehaviour {
 	
 	public void Toggle (bool toggleDisplay) {
 		if (toggleDisplay) {
-			if (!displayIsActive && powerSystem.AddObject(this, false)) {
+			if (!displayIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, false)) {
 				Tag();
 				displayIsActive = true;
 				//Eyecon stuff
-			} else if (displayIsActive && powerSystem.DropObject(this, false)) {
+			} else if (displayIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, false)) {
 				UnTag();
 				displayIsActive = false;
 				//Eyecon stuff
 			}
 		} else {
-			if ((!functionIsActive && powerSystem.AddObject(this, true))
-			    || (functionIsActive && powerSystem.DropObject(this, true))) {
+			if ((!functionIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, true))
+			    || (functionIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, true))) {
 				functionIsActive = !functionIsActive;
 				Trigger();
-				QIntButton.GetComponent<Image>().sprite = GetSprite();
+				QInteractionButton.GetComponent<Image>().sprite = GetSprite();
 				if (functionIsActive) {
-					QIntButton.GetComponent<Image>().color = activeColor;
+					QInteractionButton.GetComponent<Image>().color = activeColor;
 				} else {
-					QIntButton.GetComponent<Image>().color = Color.white;
+					QInteractionButton.GetComponent<Image>().color = Color.white;
 				}
 			}
 		}

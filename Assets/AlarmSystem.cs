@@ -4,8 +4,39 @@ using System.Collections;
 public class AlarmSystem : QInteractable {
 	public bool isActive = true;
 	
+	//Juice:
+	/*bool isSounding = false;
+	float soundingTimer = 0f;
+	float animationSpeed = 0.5f;*/
+	
 	public void Signal() {
+		if (isActive) {
+			//isSounding = true;
+			print ("Signal!");
+		}
 		//Raise alarm!
+	}
+	
+	void Update() {
+		/*if (isSounding) {
+			SoundAnimation();
+		}*/
+	}
+	
+	void SoundAnimation() {
+		/*if (soundingTimer > animationSpeed) {
+			soundingTimer -= animationSpeed;
+			if (QInteractionButton.transform.localEulerAngles != new Vector3(0, 45, 0)) {
+				QInteractionButton.transform.localEulerAngles = new Vector3(0, 45, 0);
+				if (QInteractionButton.transform.localScale != new Vector3(1, 2, 1)) {
+					QInteractionButton.transform.localScale = new Vector3(1, 2, 1);
+				} else {
+					QInteractionButton.transform.localScale = new Vector3(2, 1, 1);
+				}
+			} else {
+				QInteractionButton.transform.localEulerAngles = new Vector3(0, -45, 0);
+			}
+		}*/
 	}
 	
 	public override void Trigger() {

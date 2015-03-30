@@ -6,19 +6,15 @@ using UnityEngine.EventSystems;
 
 public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	public QInteractable controlledObject;
-	public GameObject optionButton;
 	List<GameObject> optionlist;
-	public List<string> options;	
-	public GameObject displayIconPrefab;
+	public List<string> options;
 	public Image displayIcon;
 	float displayIconDisplacement = 10f;
 	Color color0 = Color.white;
 	Color color1 = Color.white;
 
 	// Use this for initialization
-	void Start () {
-		optionButton = FindObjectOfType<InteractionCanvasSetup>().OptionButton;
-		
+	void Start () {		
 		GameObject displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
 		displayIconObject.transform.SetParent(transform);
 		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
