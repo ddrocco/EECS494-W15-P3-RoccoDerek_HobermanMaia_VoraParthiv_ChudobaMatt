@@ -25,6 +25,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
 		GetComponent<Image>().color = Color.Lerp(color0, color1, t);
+		GetComponent<Image>().sprite = controlledObject.GetSprite();
 	}
 	
 	public void OnPointerClick(PointerEventData mouseData) {

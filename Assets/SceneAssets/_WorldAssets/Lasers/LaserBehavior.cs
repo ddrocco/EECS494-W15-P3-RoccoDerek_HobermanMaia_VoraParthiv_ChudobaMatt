@@ -71,4 +71,8 @@ public class LaserBehavior : QInteractable {
 	public override Sprite GetSprite() {
 		return ButtonSpriteDefinitions.main.laser;
 	}
+	
+	public override GameObject TagPrefab() {
+		return ObjectPrefabDefinitions.main.TagViewLaser;
+	}
 }

@@ -212,12 +212,23 @@ public class Foe_Detection_Handler : QInteractable {
 	
 	public override void Trigger() {
 		if (!isDead) {
-			canCommunicate = false;
-			GameController.SendPlayerMessage("Your partner has disabled enemy communications.", 5);
+			if (canCommunicate) {
+				canCommunicate = false;
+				GameController.SendPlayerMessage("", 5);
+				return;
+			} else {
+				canCommunicate = true;
+				GameController.SendPlayerMessage("", 5);
+				return;
+			}
 		} else {
-			timeToCommunicate = float.MaxValue;
-			canCommunicate = false;
-			GameController.SendPlayerMessage("Heartbeat monitor alert has been disabled... Hopefully before it sounded...", 5);
+			if (canCommunicate) {
+				timeToCommunicate = float.MaxValue;
+				canCommunicate = false;
+				GameController.SendPlayerMessage("Heartbeat monitor alert has been disabled... Hopefully before it sounded...", 5);
+			} else {
+				GameController.SendPlayerMessage("You already disabled the heartbeat monitor.  No use turning it back on.", 5);
+			}
 		}
 	}
 	

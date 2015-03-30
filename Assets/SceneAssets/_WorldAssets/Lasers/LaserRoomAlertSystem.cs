@@ -10,7 +10,6 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 	Vector3 connectingWireJoint;
 	float connectingWireJointRatio;
 	float timeToAlarm = 5f;
-	public GameObject alarmSignalPrefab;
 	List<AlarmSignal> signals;
 	float timeSinceSignalSent = 0f;
 	
@@ -107,5 +106,9 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 			Destroy (signal.gameObject);
 			system.Signal();
 		}	
+	}
+	
+	public virtual GameObject TagPrefab() {
+		return ObjectPrefabDefinitions.main.TagViewLaser;
 	}
 }

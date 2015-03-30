@@ -20,7 +20,6 @@ public class QInteractable : MonoBehaviour {
 	
 	Color activeColor = new Color(1f, 0.4f, 0.4f);
 	
-	public GameObject tagViewPrefab;
 	public GameObject tagView;
 	
 	public virtual void Start () {
@@ -34,13 +33,17 @@ public class QInteractable : MonoBehaviour {
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
 		QInteractionButton.GetComponent<Image>().sprite = GetSprite();
 		
-		tagView = Instantiate(tagViewPrefab, transform.position, Quaternion.identity) as GameObject;
+		tagView = Instantiate(TagPrefab(), transform.position, Quaternion.identity) as GameObject;
 		tagView.transform.parent = transform;
 		tagView.transform.localScale = Vector3.one;
 		tagView.transform.localEulerAngles = Vector3.zero;
 		if (GetComponent<MeshFilter>() != null && tagView.GetComponent<MeshFilter>() != null) {
 			tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 		}
+	}
+	
+	public virtual GameObject TagPrefab() {
+		return ObjectPrefabDefinitions.main.TagViewSolid;
 	}
 	
 	public void Toggle (bool toggleDisplay) {

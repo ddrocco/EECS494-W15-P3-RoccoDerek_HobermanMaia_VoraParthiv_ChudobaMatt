@@ -23,7 +23,7 @@ public class PolyLaserParent : QInteractable {
 	public float alertTimer = 0f;
 	Vector3 alertPosition;
 	
-	void Awake() {
+	void Start() {
 		Color color = Color.red;
 		color.a = 0.8f;
 		lasers = new List<LineRenderer>();
@@ -102,5 +102,9 @@ public class PolyLaserParent : QInteractable {
 		foreach (ParticleSystemRenderer system in systems) {
 			system.enabled = false;
 		}
+	}
+	
+	public override GameObject TagPrefab() {
+		return ObjectPrefabDefinitions.main.TagViewLaser;
 	}
 }
