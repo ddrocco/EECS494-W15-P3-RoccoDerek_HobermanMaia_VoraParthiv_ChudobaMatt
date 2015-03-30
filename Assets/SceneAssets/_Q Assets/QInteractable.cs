@@ -21,7 +21,10 @@ public class QInteractable : MonoBehaviour {
 	
 	Color activeColor = new Color(1f, 0.4f, 0.4f);
 	
-	public void Start () {
+	public GameObject tagViewPrefab;
+	public GameObject tagView;
+	
+	public virtual void Start () {
 		powerSystem = FindObjectOfType<QPowerSystem>();
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 
@@ -32,6 +35,14 @@ public class QInteractable : MonoBehaviour {
 		QIntButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QIntButton.transform.SetParent (InteractionCanvas.transform);
 		QIntButton.GetComponent<Image>().sprite = GetSprite();
+		
+		tagView = Instantiate(tagViewPrefab, transform.position, Quaternion.identity) as GameObject;
+		tagView.transform.parent = transform;
+		tagView.transform.localScale = Vector3.one;
+		tagView.transform.localEulerAngles = Vector3.zero;
+		if (GetComponent<MeshFilter>() != null && tagView.GetComponent<MeshFilter>() != null) {
+			tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+		}
 	}
 	
 	public void Toggle (bool toggleDisplay) {
@@ -60,16 +71,6 @@ public class QInteractable : MonoBehaviour {
 		}
 	}
 	
-	public virtual void Tag() {
-		GenerateTagVisibility tagScript = GetComponentInParent<GenerateTagVisibility>();
-		tagScript.Tag();
-	}
-	
-	public virtual void UnTag() {
-		GenerateTagVisibility tagScript = GetComponentInParent<GenerateTagVisibility>();
-		tagScript.UnTag();
-	}
-	
 	void SubdueCameraAlert() {
 		GameController.SendPlayerMessage("Your partner has successfully turned off the camera alert...I just hope it was in time!", 5);
 		CameraControl obj = GetComponent<CameraControl>();
@@ -89,5 +90,18 @@ public class QInteractable : MonoBehaviour {
 	}
 	public virtual Sprite GetSprite() {
 		return null;
+	}
+		
+	public virtual void Tag() {
+		if (tagView.GetComponent<MeshRenderer>() != null) {
+			tagView.GetComponent<MeshRenderer>().enabled = true;
+		}
+		tagView.GetComponent<ParticleSystemRenderer>().enabled = true;
+	}
+	public virtual void UnTag() {
+		if (tagView.GetComponent<MeshRenderer>() != null) {
+			tagView.GetComponent<MeshRenderer>().enabled = false;
+		}
+		tagView.GetComponent<ParticleSystemRenderer>().enabled = false;
 	}
 }

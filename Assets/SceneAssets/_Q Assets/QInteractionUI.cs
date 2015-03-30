@@ -7,7 +7,6 @@ using UnityEngine.EventSystems;
 public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	public QInteractable controlledObject;
 	public GameObject optionButton;
-	GameObject InteractionCanvas;
 	List<GameObject> optionlist;
 	public List<string> options;	
 	public GameObject displayIconPrefab;
@@ -18,10 +17,9 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 
 	// Use this for initialization
 	void Start () {
-		InteractionCanvas = GameObject.Find ("InteractionCanvas");
-		optionButton = InteractionCanvas.GetComponent<InteractionCanvasSetup>().OptionButton;
+		optionButton = FindObjectOfType<InteractionCanvasSetup>().OptionButton;
 		
-		GameObject displayIconObject = Instantiate (displayIconPrefab) as GameObject;
+		GameObject displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
 		displayIconObject.transform.SetParent(transform);
 		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
 		displayIcon = displayIconObject.GetComponent<Image>();

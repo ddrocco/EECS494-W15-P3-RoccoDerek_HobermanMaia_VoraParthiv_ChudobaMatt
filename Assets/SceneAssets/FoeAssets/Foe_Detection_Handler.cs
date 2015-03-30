@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Foe_Detection_Handler : QInteractable {
 	public int currentRoom;
-	public GameObject taserPrefab;
 	public GameObject taser;
 	
 	//For haphazard use:
@@ -35,10 +34,8 @@ public class Foe_Detection_Handler : QInteractable {
 	
 	public bool isDead = false;
 
-	void Start () {
-		FoeAlertSystem.foeList.Add(this);
-	
-		taser = Instantiate(taserPrefab) as GameObject;
+	public override void Start () {	
+		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
 		taser.transform.parent = transform;
 		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
 		taser.SetActive(false);
@@ -210,7 +207,6 @@ public class Foe_Detection_Handler : QInteractable {
 			isDead = true;
 			GetComponentInParent<NavMeshAgent>().enabled = false;
 			timeAttemptingCommunication = 0f;
-			FoeAlertSystem.foeList.Remove(this);
 		}
 	}
 	

@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GenerateMap : MonoBehaviour {
-	public GameObject xWallPrefab, zWallPrefab, pillarPrefab, ceilingPrefab;
 	public List<int[]> tiles;
 	public List<int> pillars;
 	int xDim, zDim;
@@ -43,7 +42,7 @@ public class GenerateMap : MonoBehaviour {
 	}
 	
 	void PlaceZWall(int x, int z) {
-		GameObject newXWall = Instantiate(zWallPrefab) as GameObject;
+		GameObject newXWall = Instantiate(ObjectPrefabDefinitions.main.ZWall) as GameObject;
 		newXWall.transform.parent = transform;
 		newXWall.transform.position = new Vector3(2 + 4 * x, 2.25f, 4 * z);
 		HandlePillars(x, z);
@@ -51,7 +50,7 @@ public class GenerateMap : MonoBehaviour {
 	}
 	
 	void PlaceXWall(int x, int z) {
-		GameObject newXWall = Instantiate(xWallPrefab) as GameObject;
+		GameObject newXWall = Instantiate(ObjectPrefabDefinitions.main.XWall) as GameObject;
 		newXWall.transform.parent = transform;
 		newXWall.transform.position = new Vector3(4 * x, 2.25f, 2 + 4 * z);
 		HandlePillars(x - 1, z + 1);
@@ -62,14 +61,14 @@ public class GenerateMap : MonoBehaviour {
 		if (!pillars.Contains(x * zDim + z)) {
 			pillars.Add (x * zDim + z);
 		} else {
-			GameObject newPillar = Instantiate(pillarPrefab) as GameObject;
+			GameObject newPillar = Instantiate(ObjectPrefabDefinitions.main.Pillar) as GameObject;
 			newPillar.transform.parent = transform;
 			newPillar.transform.position = new Vector3(2 + 4 * x, 2.25f, -2 + 4 * z);
 		}
 	}
 	
 	void PlaceCeiling(int x, int z) {
-		GameObject newCeiling = Instantiate(ceilingPrefab) as GameObject;
+		GameObject newCeiling = Instantiate(ObjectPrefabDefinitions.main.Ceiling) as GameObject;
 		newCeiling.transform.parent = transform;
 		newCeiling.transform.position = new Vector3(4 * x, 4.625f, 4 * z);
 	}

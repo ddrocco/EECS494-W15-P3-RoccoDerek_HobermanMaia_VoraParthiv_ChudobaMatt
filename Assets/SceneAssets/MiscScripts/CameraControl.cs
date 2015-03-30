@@ -20,7 +20,7 @@ public class CameraControl : QInteractable {
 	
 	//Stan-Visual
 	public MeshRenderer lens;
-	public Light light;
+	public Light alertLight;
 	public Color color0;
 	public Color color1;
 
@@ -28,13 +28,12 @@ public class CameraControl : QInteractable {
 	private QCameraControl camControl;
 	private QCameraLocation camLocation;
 	
-	void Start () {
-		base.Start();
+	public override void Start () {
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 		Transform temp1 = transform.Find("Camera");
-		light = temp1.GetComponentInChildren<Light>();
-		color0 = light.color;
+		alertLight = temp1.GetComponentInChildren<Light>();
+		color0 = alertLight.color;
 		color1 = color0;
 		Transform temp = transform.Find("Lens");
 		lens = temp.GetComponent<MeshRenderer>();
@@ -42,11 +41,12 @@ public class CameraControl : QInteractable {
 
 		camControl = GameObject.Find("QCamera").GetComponent<QCameraControl>();
 		camLocation = GetComponentInParent<QCameraLocation>();
+		base.Start();
 	}
 	
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
-		light.color = Color.Lerp(color0, color1, t);
+		alertLight.color = Color.Lerp(color0, color1, t);
 		
 		//Hacked in/broken
 		if (QIsWatching || QHasBlinded) {
@@ -101,16 +101,5 @@ public class CameraControl : QInteractable {
 	
 	public override Sprite GetSprite () {
 		return ButtonSpriteDefinitions.main.cameraIcon;
-	}
-	
-	public override void Tag() {
-		GenerateTagVisibility tagScript = GetComponentInChildren<GenerateTagVisibility>();
-		tagScript.Tag();
-	}
-	
-	public override void UnTag() {
-		GenerateTagVisibility tagScript = GetComponentInChildren<GenerateTagVisibility>();
-		tagScript.UnTag();
-	}
-	
+	}	
 }

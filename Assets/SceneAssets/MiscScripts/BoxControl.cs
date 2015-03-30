@@ -13,15 +13,13 @@ public class BoxControl : QInteractable {
 	public int bombTimer = 0;
 	public bool timerSet = false;
 	public GameObject elevatorDoor;
-	private Transform player;
 	
 	void Awake () {
 		anim = GetComponentInChildren<Animator>();
 	}
 	
-	void Start() {
+	public override void Start() {
 		base.Start();
-		player = PlayerController.player.transform;
 	}
 	
 	public void Interact () {
@@ -50,7 +48,7 @@ public class BoxControl : QInteractable {
 		}
 		if (bombTimer >= timeTillExplode) {
 			gameObject.GetComponent<AudioSource>().Play();
-			if (Vector3.Distance(transform.position, player.transform.position) < distFromBomb) {
+			if (Vector3.Distance(transform.position, PlayerController.player.transform.position) < distFromBomb) {
 				GameController.PlayerDead = true;
 				GameController.GameOverMessage =
 					"You opened a box with a bomb in it - your partner should be watching out for that stuff!";

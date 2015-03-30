@@ -18,7 +18,7 @@ public class FoeDrawFieldOfVision : MonoBehaviour {
 	void Start () {
 		lines = new LineRenderer[numLines];
 		for (int i = 0; i < numLines; ++i) {
-			GameObject line = Instantiate(foeVisionLineRendererPrefab) as GameObject;
+			GameObject line = Instantiate(ObjectPrefabDefinitions.main.FoeVisionLineRenderer) as GameObject;
 			lines[i] = line.GetComponent<LineRenderer>();
 			line.transform.parent = transform;
 		}

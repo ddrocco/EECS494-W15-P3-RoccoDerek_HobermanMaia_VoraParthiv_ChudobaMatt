@@ -6,15 +6,14 @@ public class DoorControl : QInteractable {
 	public GameObject foeDoorOpenerPrefab;
 	public bool isLocked;
 	public bool expectState;
-	private Transform player;
 	private float closeDistance;
 	private bool isOpen = false;
 	
 	void Awake () {
 		anim = GetComponentInParent<Animator>();
 		if (foeDoorOpenerPrefab != null) {
-			Vector3 offset;
-			/*if (transform.rotation.y == 0) {
+			/*Vector3 offset;
+			if (transform.rotation.y == 0) {
 				offset = new Vector3(0, 0, .75f);
 			}
 			else {
@@ -26,8 +25,7 @@ public class DoorControl : QInteractable {
 		}
 	}
 	
-	void Start() {
-		player = PlayerController.player.transform;
+	public override void Start() {
 		expectState = isOpen;
 		base.Start();
 	}
@@ -39,13 +37,13 @@ public class DoorControl : QInteractable {
 		}
 		if (!isOpen) {
 			if (transform.rotation.y == 0) { //zDoor
-				if (player.position.x < transform.position.x) { //Open south
+				if (FindObjectOfType<PlayerController>().transform.position.x < transform.position.x) { //Open south
 					anim.SetBool("openSouth", true);
 				} else { //Open north
 					anim.SetBool("openSouth", false);
 				}
 			} else { //xDoor
-				if (player.position.z < transform.position.z) { //Open east
+				if (FindObjectOfType<PlayerController>().transform.position.z < transform.position.z) { //Open east
 					anim.SetBool("openEast", true);
 				} else { //Open west
 					anim.SetBool("openEast", false);
@@ -53,7 +51,7 @@ public class DoorControl : QInteractable {
 			}
 			anim.SetBool("isOpen", true);
 			isOpen = true;
-			closeDistance = Vector3.Distance(transform.position, player.position) + 1f;
+			closeDistance = Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position) + 1f;
 			return;
 		} else {
 			anim.SetBool("isOpen", false);
@@ -64,7 +62,7 @@ public class DoorControl : QInteractable {
 	
 	void Update() {
 		if (isOpen) {
-			if (Vector3.Distance(transform.position, player.position) > closeDistance) {
+			if (Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position) > closeDistance) {
 				isOpen = false;
 				anim.SetBool("isOpen", false);
 			}

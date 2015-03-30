@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Taggable : MonoBehaviour
 {
-	public GameObject QCamera;
 	public enum TagType
 	{
 		door,
@@ -16,7 +15,7 @@ public class Taggable : MonoBehaviour
 	public void TagObject()
 	{
 		return; // temporarily disabling tagging
-
+/*
 		if (type == TagType.door)
 		{
 			Debug.Log("Door");
@@ -39,6 +38,6 @@ public class Taggable : MonoBehaviour
 		{
 			Debug.Log("Guard");
 			//Appear
-		}
+		}*/
 	}
 }

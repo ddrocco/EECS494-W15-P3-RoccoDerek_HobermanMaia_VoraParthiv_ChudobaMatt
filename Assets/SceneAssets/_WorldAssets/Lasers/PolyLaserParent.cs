@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PolyLaserParent : QInteractable {
-	public GameObject laserChildPrefab;
 	public List<Vector3> origins, directionStarts, directionEnds;
 	
 	[HideInInspector]
@@ -29,7 +28,7 @@ public class PolyLaserParent : QInteractable {
 		color.a = 0.8f;
 		lasers = new List<LineRenderer>();
 		foreach (Vector3 origin in origins) {
-			GameObject laser = Instantiate(laserChildPrefab) as GameObject;
+			GameObject laser = Instantiate(ObjectPrefabDefinitions.main.PolyLaserChild) as GameObject;
 			laser.GetComponent<LineRenderer>().material.color = color;
 			laser.transform.parent = transform;
 			laser.transform.localPosition = origin;
@@ -62,7 +61,7 @@ public class PolyLaserParent : QInteractable {
 			RaycastHit hitInfo;
 			if (Physics.Raycast(origins[i] + transform.position, directionCurrents[i], out hitInfo, 100f, layerMask)) {
 				if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-					GetComponentInParent<LaserRoomAlertSystem>().Activate(this);
+					GetComponentInParent<LaserRoomAlertSystem>().SignalAlarm();
 					alertTimerSet = true;
 					alertPosition = new Vector3(hitInfo.point.x, 0, hitInfo.point.z);
 				}

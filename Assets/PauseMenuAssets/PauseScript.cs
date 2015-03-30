@@ -4,8 +4,7 @@ using System.Collections;
 using InControl;
 
 public class PauseScript : MonoBehaviour {
-
-	private InputDevice device;
+//	private InputDevice device;
 	public GameObject QPauseMenu;
 	public GameObject StanPauseMenu;
 
@@ -23,7 +22,7 @@ public class PauseScript : MonoBehaviour {
 	}
 
 	void Awake() {
-		device = InputManager.ActiveDevice;
+	//	device = InputManager.ActiveDevice;
 	}
 	
 	// Update is called once per frame

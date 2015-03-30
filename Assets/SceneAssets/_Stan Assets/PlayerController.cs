@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
 	public float minimumY = -60f;
 	public float maximumY = 60f;
 	public GameObject camPrefab;
-	public GameObject QCamera;
 
 	// Public variables accessible by other classes
 	[HideInInspector]
@@ -411,7 +410,7 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 		else if(interactiveObj.name == "InitialComputer"){
-			QCamera.GetComponent<QUI>().showCamera(true);
+			FindObjectOfType<QUI>().showCamera(true);
 			QUI.setText("Objective: Collect the elevator key");
 			//GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
 			return;
@@ -448,7 +447,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (interactiveObj.transform.root.name.Contains("Q Elements")) {
 			// Enable camera
-			QCameraControl Qcontrol = QCamera.GetComponent<QCameraControl>();
+			QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
 			QCameraLocation loc = interactiveObj.GetComponentInParent<QCameraLocation>();
 			Qcontrol.ToggleCamera(loc.cameraNumber, true);
 

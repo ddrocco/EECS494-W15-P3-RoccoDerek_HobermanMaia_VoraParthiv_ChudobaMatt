@@ -13,6 +13,7 @@ public class FileCabinetControl : MonoBehaviour {
 
 	void Start()
 	{
+		message = "*The README document is hundreds of pages long.  How awful.*";
 		/*string control = "pressing (X)";
 		if (PlayerController.debugControls)
 			control = "right-clicking";

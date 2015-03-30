@@ -13,7 +13,6 @@ public class QCameraControl : MonoBehaviour
 	public bool isPanning = false;
 	*/
 	
-	public GameObject player;
 	public Vector3 pivotPoint;
 	public float UD_rotation, LR_rotation, zoom;
 	public float rotationSpeed = 200f;
@@ -44,7 +43,7 @@ public class QCameraControl : MonoBehaviour
 		audioSource = GetComponent<AudioSource>();
 		audioSource.enabled = false;
 		*/
-		pivotPoint = player.transform.position;
+		pivotPoint = FindObjectOfType<PlayerController>().transform.position;
 		cam = GetComponent<Camera>();
 		cameras = new List<QCameraLocation>();
 		camOverview = GameObject.Find("CamOverview").GetComponent<QCameraOverview>();

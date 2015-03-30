@@ -8,7 +8,7 @@ public class QPowerSystem : MonoBehaviour {
 
 	Image unused, used;
 	public float power = 1f;
-	float time = 0f;
+//	float time = 0f;
 	public List<QInteractable> inUse;
 	public List<QInteractable> inDisplay;
 	

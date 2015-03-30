@@ -3,56 +3,109 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class LaserRoomAlertSystem : MonoBehaviour {
-	List<LaserBehavior> activeLasers;
-	List<PolyLaserParent> activeLaserGroups;
-	float targetLight = 0f;
 	Light alarmLight;
+	bool lightRampingUp;
+	
+	public bool useAlarmSystem = true;
+	Vector3 connectingWireJoint;
+	float connectingWireJointRatio;
+	float timeToAlarm = 5f;
+	public GameObject alarmSignalPrefab;
+	List<AlarmSignal> signals;
+	float timeSinceSignalSent = 0f;
 	
 	void Start () {
-		activeLasers = new List<LaserBehavior>();
-		activeLaserGroups = new List<PolyLaserParent>();
 		alarmLight = GetComponent<Light>();
+		signals = new List<AlarmSignal>();
+		ConnectToAlarm();
 	}
 	
 	void Update () {
-		if (activeLasers.Count == 0) {
-			targetLight = 0f;
-		} else if (alarmLight.intensity == 0f) {
-			//Play alarm sounding up
-			targetLight = 8f;
-		} else if (alarmLight.intensity == 8f) {
-			//Play alarm sounding down
-			targetLight = 0f;
+		timeSinceSignalSent += Time.deltaTime;
+		UpdateAlarmLight();
+		UpdateActiveSignals();
+	}
+	
+	void ConnectToAlarm() {
+		if (!useAlarmSystem) {
+			return;
 		}
-		
-		if (alarmLight.intensity < targetLight) {
+		AlarmSystem system = FindObjectOfType<AlarmSystem>();
+		if (system == null) {
+			print ("Could not find alarm system!");
+			useAlarmSystem = false;
+			return;
+		}
+		GetComponent<LineRenderer>().SetPosition(0,transform.position);
+		connectingWireJoint = new Vector3(transform.position.x, transform.position.y, system.transform.position.z);
+		GetComponent<LineRenderer>().SetPosition(1,connectingWireJoint);
+		GetComponent<LineRenderer>().SetPosition(2,system.transform.position);
+		float distance1 = Vector3.Distance(transform.position, connectingWireJoint);
+		connectingWireJointRatio = distance1 / (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position));
+	}
+	
+	public void SignalAlarm() {
+		if (!useAlarmSystem) {
+			return;
+		}
+		if (timeSinceSignalSent < 0.5f) {
+			return;
+		}
+		if (alarmLight.intensity == 0) {
+			lightRampingUp = true;
+		}
+		GameObject alarmSignal = Instantiate(ObjectPrefabDefinitions.main.AlarmSignal);
+		alarmSignal.transform.parent = transform;
+		signals.Add(alarmSignal.GetComponent<AlarmSignal>());
+		timeSinceSignalSent = 0;
+	}
+	
+	void UpdateAlarmLight() {
+		if (lightRampingUp) {
 			alarmLight.intensity += 0.3f;
-		} else {
+			if (alarmLight.intensity >= 8f) {
+				lightRampingUp = false;
+				alarmLight.intensity = 8f;
+			}
+		} else if (alarmLight.intensity > 0){
 			alarmLight.intensity -= 0.3f;
-		}
-		
-		if (alarmLight.intensity < 0f) {
-			alarmLight.intensity = 0f;
-		} else if (alarmLight.intensity > 8f){
-			alarmLight.intensity = 8f;
-		}
-	}
-	
-	public void Activate(LaserBehavior trigger) {
-		if (!activeLasers.Contains(trigger)) {
-			activeLasers.Add (trigger);
-			if (targetLight == 0f) {
-				targetLight = 8f;
+			if (alarmLight.intensity <= 0) {
+				alarmLight.intensity = 0;
+				if (signals.Count > 0) {
+					lightRampingUp = true;
+				}
 			}
 		}
 	}
 	
-	public void Activate(PolyLaserParent trigger) {
-		if (!activeLaserGroups.Contains(trigger)) {
-			activeLaserGroups.Add (trigger);
-			if (targetLight == 0f) {
-				targetLight = 8f;
-			}
+	void UpdateActiveSignals() {
+		if (!useAlarmSystem) {
+			return;
 		}
+		AlarmSystem system = FindObjectOfType<AlarmSystem>();
+		float wireJointTime = timeToAlarm * connectingWireJointRatio;
+		List<AlarmSignal> signalsToDestroy = new List<AlarmSignal>();
+		foreach (AlarmSignal signal in signals) {
+			if (signal.timeAlive > wireJointTime) {
+				float secondLegRatio = (signal.timeAlive - wireJointTime) / (timeToAlarm - wireJointTime);
+				if (secondLegRatio > 1) {
+					system.Signal();
+					signalsToDestroy.Add (signal);
+					continue;
+				}
+				signal.transform.position = connectingWireJoint * (1f - secondLegRatio)
+						+ system.transform.position * secondLegRatio + new Vector3(0, 5, 0);
+			} else {
+				float firstLegRatio = signal.timeAlive / wireJointTime;
+				signal.transform.position = transform.position * (1f - firstLegRatio)
+						+ connectingWireJoint * firstLegRatio + new Vector3(0, 5, 0);
+			}
+			float timeRatio = 1f - signal.timeAlive / timeToAlarm;
+			signal.GetComponent<ParticleSystem>().startColor = new Color(1f, timeRatio, 0f);
+		}
+		foreach(AlarmSignal signal in signalsToDestroy) {
+			signals.Remove (signal);
+			Destroy (signal.gameObject);
+		}	
 	}
 }
