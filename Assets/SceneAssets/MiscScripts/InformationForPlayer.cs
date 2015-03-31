@@ -6,7 +6,7 @@ public class InformationForPlayer : MonoBehaviour {
 	public string QMessage;
 	
 	public void Interact() {
-		GameController.SendPlayerMessage(message, 5);
+		GameController.SendPlayerMessage(message, 2);
 		//QUI.setText(QMessage);
 	}
 }

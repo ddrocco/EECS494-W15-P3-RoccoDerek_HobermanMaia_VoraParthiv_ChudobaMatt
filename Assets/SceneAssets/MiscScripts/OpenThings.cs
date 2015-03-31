@@ -58,7 +58,7 @@ public class OpenThings : MonoBehaviour {
 			GameController.GameOverMessage =
 				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("GAME OVER\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
+			QUI.setText("Mission Failed!\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
 		}
 	}
 }

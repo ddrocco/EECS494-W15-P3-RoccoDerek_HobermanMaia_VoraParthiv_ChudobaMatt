@@ -6,8 +6,8 @@ public class WonGame : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.CompareTag("Player")) {
-			GameController.SendPlayerMessage("YOU WON! Press spacebar to restart", 5);
-			QUI.setText("YOU WON! Press spacebar to restart");
+			GameController.SendPlayerMessage("Mission Complete! Press A to restart", 10);
+			QUI.setText("Mission Complete! Press spacebar to restart");
 			gameOver = true;
 		}
 	}
