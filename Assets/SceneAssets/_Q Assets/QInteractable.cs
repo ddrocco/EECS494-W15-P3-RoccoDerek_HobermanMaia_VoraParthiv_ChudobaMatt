@@ -3,7 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum MapGroup
+{
+	One,
+	Two,
+	Three
+};
+
 public class QInteractable : MonoBehaviour {
+	public MapGroup group;
 	public float functionCost;
 	public float displayCost;
 	public GameObject QCamera;
