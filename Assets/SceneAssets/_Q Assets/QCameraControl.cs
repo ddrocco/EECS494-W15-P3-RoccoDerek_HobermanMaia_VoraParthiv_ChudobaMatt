@@ -32,8 +32,8 @@ public class QCameraControl : MonoBehaviour
 	public int overviewCullingMask;
 	public int cameraCullingMask;
 
-	public static Color color0 = Color.black;
-	public static Color color1 = Color.black;
+	public Color color0 = Color.black;
+	public Color color1 = Color.black;
 
 	// Use this for initialization
 	void Awake()
@@ -77,7 +77,7 @@ public class QCameraControl : MonoBehaviour
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
 				+ (1 << Layerdefs.laser);
 
-		DisableCameras();
+		//DisableCameras();
 	}
 
 	void DisableCameras()
@@ -265,12 +265,12 @@ public class QCameraControl : MonoBehaviour
 	}
 	
 	//Call AlertOn to cause an icon to flash red
-	public static void AlertOn() {
+	public void AlertOn() {
 		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 0f);
 	}
 	
 	//Call AlertOff to turn off the flashing alert
-	public static void AlertOff() {
+	public void AlertOff() {
 		color1 = Color.black;
 	}
 	

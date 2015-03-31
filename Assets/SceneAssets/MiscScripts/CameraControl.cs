@@ -34,6 +34,8 @@ public class CameraControl : QInteractable {
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 		Transform temp1 = transform.Find("Camera");
 		alertLight = temp1.GetComponentInChildren<Light>();
+		color0 = alertLight.color;
+		color1 = color0;
 		Transform temp = transform.Find("Lens");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
@@ -62,6 +64,7 @@ public class CameraControl : QInteractable {
 			GetComponent<ExternalAlertSystem>().SignalAlarm();
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
+			camControl.AlertOn();
 			timeSinceLastSignal = 0f;
 		}
 		timeSinceLastSignal += Time.deltaTime;
