@@ -411,9 +411,17 @@ public class PlayerController : MonoBehaviour
 		}
 		else if(interactiveObj.name == "InitialComputer"){
 			FindObjectOfType<QUI>().showCamera(true);
-			QUI.setText("Objective: Collect the elevator key");
-			//GameController.SendPlayerMessage("Great job! Try interacting with the pile of papers on the desk.", 5);
+			QUI.setText("Objective: Find the elevator key");
+			GameController.SendPlayerMessage("System access granted", 5);
 			return;
+		}
+		else if (interactiveObj.name == "Map1Computer") {
+			MapCoverControl.ToggleMapGroup(2, true);
+			GameController.SendPlayerMessage("Additional access granted", 5);
+		}
+		else if (interactiveObj.name == "Map2Computer") {
+			MapCoverControl.ToggleMapGroup(3, true);
+			GameController.SendPlayerMessage("Full system access granted", 5);
 		}
 		else if (interactiveObj.name == "ElevatorDoor") {
 			ElevatorControl obj = interactiveObj.GetComponent<ElevatorControl>();
