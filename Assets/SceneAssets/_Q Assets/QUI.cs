@@ -59,6 +59,7 @@ public class QUI : MonoBehaviour {
 			cameraDesc.enabled = true;
 			GetComponent<Camera>().cullingMask = GetComponent<QCameraControl>().overviewCullingMask;
 			GetComponent<QCameraControl>().enabled = true;
+			GameObject.Find("CamOverview").GetComponent<QCameraOverview>().camActive = true;
 			//FindObjectOfType<QPowerSystem>().Enabled(true);
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
 		} else {

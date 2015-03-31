@@ -14,6 +14,8 @@ public class PauseScript : MonoBehaviour {
 		}    
 	}
 
+	public static bool GamePaused = false;
+
 	// Use this for initialization
 	void Start () {
 		QPauseMenu.GetComponent<Canvas> ().worldCamera = GameObject.Find ("QCamera").GetComponent<Camera>();
@@ -40,12 +42,14 @@ public class PauseScript : MonoBehaviour {
 		QPauseMenu.SetActive(true);
 		StanPauseMenu.SetActive(true);
 		Time.timeScale = 0;
+		GamePaused = true;
 	}
 
 	public void Resume(){
 		QPauseMenu.SetActive(false);
 		StanPauseMenu.SetActive(false);
 		Time.timeScale = 1;
+		GamePaused = false;
 	}
 
 	public void Restart(){

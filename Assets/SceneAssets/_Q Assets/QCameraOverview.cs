@@ -39,7 +39,7 @@ public class QCameraOverview : QCameraLocation
 	
 	void Update()
 	{
-		if (!camActive) return;
+		if (!camActive || PauseScript.GamePaused) return;
 
 		GetCameraInput();
 		ZoomCamera();
@@ -47,7 +47,7 @@ public class QCameraOverview : QCameraLocation
 
 	void FixedUpdate()
 	{
-		if (!camActive) return;
+		if (!camActive || PauseScript.GamePaused) return;
 
 		MoveCamera();
 	}

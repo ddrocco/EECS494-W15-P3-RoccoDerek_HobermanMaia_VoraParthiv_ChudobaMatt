@@ -67,7 +67,7 @@ public class QCameraControl : MonoBehaviour
 
 		currentCam = camOverview;
 		cam.orthographic = true;
-		camOverview.camActive = true;
+		camOverview.camActive = false;
 		cameraDesc.text = "Camera 0\n" + currentCam.description;
 		
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
@@ -79,11 +79,11 @@ public class QCameraControl : MonoBehaviour
 
 	void DisableCameras()
 	{
-		camCount = 2;
-		cameras[0].usable = true;
-		cameras[1].usable = true;
+		camCount = 0;
+		//cameras[0].usable = true;
+		//cameras[1].usable = true;
 		
-		for (int i = 2; i < cameras.Count; ++i)
+		for (int i = 0; i < cameras.Count; ++i)
 		{
 			CameraControl control =
 				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
@@ -95,6 +95,8 @@ public class QCameraControl : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (PauseScript.GamePaused) return;
+
 		GetCameraInput();		
 		UpdateCameraPosition();
 		SwitchToOverview();
