@@ -21,8 +21,9 @@ public class CameraControl : QInteractable {
 	//Stan-Visual
 	public MeshRenderer lens;
 	public Light alertLight;
-	public Color color0;
-	public Color color1;
+	public Color color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
+	public Color color1 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
+	public Color green = new Color(200f/255f, 250/255f, 100f/255f, 0);
 
 	// Camera switching
 	private QCameraControl camControl;
@@ -33,8 +34,6 @@ public class CameraControl : QInteractable {
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 		Transform temp1 = transform.Find("Camera");
 		alertLight = temp1.GetComponentInChildren<Light>();
-		color0 = alertLight.color;
-		color1 = color0;
 		Transform temp = transform.Find("Lens");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
@@ -50,16 +49,16 @@ public class CameraControl : QInteractable {
 		
 		//Hacked in/broken
 		if (QIsWatching || QHasBlinded) {
-			lens.material.color = Color.black; //light off
-			color1 = color0 = Color.green; //camera appears dark
+			lens.material.color = Color.black; //lens off
+			color1 = color0 = green; //camera light appears greenish
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
-			color1 = color0; //light is a constant yellow
 		}
 		isDetected = detectStan();
 		if (isDetected && timeSinceLastSignal >= timeBetweenSignals) {
+			wasDetected = true;
 			GetComponent<ExternalAlertSystem>().SignalAlarm();
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();

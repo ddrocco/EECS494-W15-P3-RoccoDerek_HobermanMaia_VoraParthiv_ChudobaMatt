@@ -32,6 +32,9 @@ public class QCameraControl : MonoBehaviour
 	public int overviewCullingMask;
 	public int cameraCullingMask;
 
+	public static Color color0 = Color.black;
+	public static Color color1 = Color.black;
+
 	// Use this for initialization
 	void Awake()
 	{
@@ -96,7 +99,10 @@ public class QCameraControl : MonoBehaviour
 	void Update()
 	{
 		if (PauseScript.GamePaused) return;
-
+		
+		float t = Mathf.PingPong(Time.time, 1f);
+		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
+		
 		GetCameraInput();		
 		UpdateCameraPosition();
 		SwitchToOverview();
@@ -257,6 +263,17 @@ public class QCameraControl : MonoBehaviour
 			QUI.setControlsText("Hold E to View Controls");
 		}
 	}
+	
+	//Call AlertOn to cause an icon to flash red
+	public static void AlertOn() {
+		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 0f);
+	}
+	
+	//Call AlertOff to turn off the flashing alert
+	public static void AlertOff() {
+		color1 = Color.black;
+	}
+	
 
 	/*
 	void UpdateSounds() {
