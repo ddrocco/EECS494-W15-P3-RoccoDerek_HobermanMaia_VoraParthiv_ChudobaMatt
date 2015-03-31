@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class LaserRoomAlertSystem : MonoBehaviour {
+public class ExternalAlertSystem : MonoBehaviour {
 	Light alarmLight;
 	bool lightRampingUp;
 	
@@ -29,7 +29,7 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 		if (!useAlarmSystem) {
 			return;
 		}
-		AlarmSystem system = FindObjectOfType<AlarmSystem>();
+		AlertHub system = FindObjectOfType<AlertHub>();
 		if (system == null) {
 			print ("Could not find alarm system!");
 			useAlarmSystem = false;
@@ -81,7 +81,7 @@ public class LaserRoomAlertSystem : MonoBehaviour {
 		if (!useAlarmSystem) {
 			return;
 		}
-		AlarmSystem system = FindObjectOfType<AlarmSystem>();
+		AlertHub system = FindObjectOfType<AlertHub>();
 		float wireJointTime = timeToAlarm * connectingWireJointRatio;
 		List<AlarmSignal> signalsToDestroy = new List<AlarmSignal>();
 		foreach (AlarmSignal signal in signals) {

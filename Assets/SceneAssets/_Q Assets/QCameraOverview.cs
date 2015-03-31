@@ -17,7 +17,24 @@ public class QCameraOverview : QCameraLocation
 	void Awake()
 	{
 		cam = GameObject.Find("QCamera").GetComponent<Camera>();
-		cam.orthographicSize = zoom;
+		cam.orthographicSize = zoom;		
+	}
+	
+	void Start() {
+		foreach (Transform obj in FindObjectOfType<Transform>()) {
+			if (obj.position.x < minX) {
+				minX = obj.position.x;
+			}
+			if (obj.position.x > maxX) {
+				maxX = obj.position.x;
+			}
+			if (obj.position.y < minY) {
+				minY = obj.position.y;
+			}
+			if (obj.position.y > maxY) {
+				maxY = obj.position.y;
+			}
+		}
 	}
 	
 	void Update()

@@ -23,7 +23,7 @@ public class PolyLaserParent : QInteractable {
 	public float alertTimer = 0f;
 	Vector3 alertPosition;
 	
-	void Start() {
+	public override void Start() {
 		Color color = Color.red;
 		color.a = 0.8f;
 		lasers = new List<LineRenderer>();
@@ -61,7 +61,7 @@ public class PolyLaserParent : QInteractable {
 			RaycastHit hitInfo;
 			if (Physics.Raycast(origins[i] + transform.position, directionCurrents[i], out hitInfo, 100f, layerMask)) {
 				if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-					GetComponentInParent<LaserRoomAlertSystem>().SignalAlarm();
+					GetComponentInParent<ExternalAlertSystem>().SignalAlarm();
 					alertTimerSet = true;
 					alertPosition = new Vector3(hitInfo.point.x, 0, hitInfo.point.z);
 				}

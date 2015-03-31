@@ -71,20 +71,6 @@ public class QInteractable : MonoBehaviour {
 			}
 		}
 	}
-	
-	void SubdueCameraAlert() {
-		GameController.SendPlayerMessage("Your partner has successfully turned off the camera alert...I just hope it was in time!", 5);
-		CameraControl obj = GetComponent<CameraControl>();
-		obj.alertTimerSet = false;
-		obj.alertTimer = 0;
-	}
-	
-	void HackCamera() {
-		CameraControl obj = GetComponent<CameraControl>();
-		obj.QIsWatching = true;
-		QCameraControl camObj = QCamera.GetComponent<QCameraControl>();
-		camObj.ToggleCamera(obj.ID, true);
-	}
 
 	public virtual void Trigger() {
 		

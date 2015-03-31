@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AlarmSystem : QInteractable {
+public class AlertHub : QInteractable {
 	public bool isActive = true;
 	
 	//Juice:

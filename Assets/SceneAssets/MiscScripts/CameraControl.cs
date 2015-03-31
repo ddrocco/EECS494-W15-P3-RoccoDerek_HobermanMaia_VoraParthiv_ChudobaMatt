@@ -15,8 +15,8 @@ public class CameraControl : QInteractable {
 	
 	//Alert
 	public bool alertTimerSet = false;
-	public int alertTimer = 0;
-	public int timeToAlert = 100;
+	public float timeBetweenSignals = 0.5f;
+	public float timeSinceLastSignal = 0f;
 	
 	//Stan-Visual
 	public MeshRenderer lens;
@@ -59,24 +59,13 @@ public class CameraControl : QInteractable {
 			color1 = color0; //light is a constant yellow
 		}
 		isDetected = detectStan();
-		if (isDetected) {
-			wasDetected = true;
-			//string message = "You have been detected by camera " + ID; 
-			//GameController.SendPlayerMessage(message, 5);
-			//Include audio for Q
+		if (isDetected && timeSinceLastSignal >= timeBetweenSignals) {
+			GetComponent<ExternalAlertSystem>().SignalAlarm();
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
-			alertTimerSet = true;
-			alertTimer = 0;
+			timeSinceLastSignal = 0f;
 		}
-		if (alertTimerSet) {
-			++alertTimer;
-		}
-		if (alertTimer >= timeToAlert) {
-			if (ID != 0) FoeAlertSystem.Alert(transform.position);
-			alertTimerSet = false;
-			alertTimer = 0;
-		}
+		timeSinceLastSignal += Time.deltaTime;
 	}
 	
 	//Uses child camera and raycast to see if Stan is in view
@@ -92,6 +81,17 @@ public class CameraControl : QInteractable {
 				} else return false;
 			} else return false;
 		} else return false;
+	}
+	
+	void SubdueCameraAlert() {
+		GameController.SendPlayerMessage("Your partner has successfully turned off the camera alert...I just hope it was in time!", 5);
+	}
+	
+	void HackCamera() {
+		CameraControl obj = GetComponent<CameraControl>();
+		obj.QIsWatching = true;
+		QCameraControl camObj = QCamera.GetComponent<QCameraControl>();
+		camObj.ToggleCamera(obj.ID, true);
 	}
 	
 	public override void Trigger () {
