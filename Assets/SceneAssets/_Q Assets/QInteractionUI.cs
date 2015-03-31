@@ -12,14 +12,24 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	float displayIconDisplacement = 10f;
 	Color color0 = Color.white;
 	Color color1 = Color.white;
+	
+	public bool hasDisplayIcon;
 
 	// Use this for initialization
-	void Start () {		
-		GameObject displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
-		displayIconObject.transform.SetParent(transform);
-		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
-		displayIcon = displayIconObject.GetComponent<Image>();
-		displayIcon.enabled = false;
+	void Start () {
+		if (controlledObject.GetComponent<AlertHub>() != null) {
+			hasDisplayIcon = false;
+		} else {
+			hasDisplayIcon = true;
+		}
+		
+		if (hasDisplayIcon) {
+			GameObject displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
+			displayIconObject.transform.SetParent(transform);
+			displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
+			displayIcon = displayIconObject.GetComponent<Image>();
+			displayIcon.sprite = controlledObject.GetDisplayStatus();
+		}
 	}
 	
 	void Update () {
@@ -34,7 +44,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 		}
 		if (mouseData.button == PointerEventData.InputButton.Right) {
 			controlledObject.Toggle(true);
-			displayIcon.enabled = controlledObject.displayIsActive;
+			displayIcon.sprite = controlledObject.GetDisplayStatus();
 		}
 	}
 	

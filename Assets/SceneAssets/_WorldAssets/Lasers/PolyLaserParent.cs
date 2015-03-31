@@ -87,7 +87,15 @@ public class PolyLaserParent : QInteractable {
 	}
 	
 	public override Sprite GetSprite() {
-		return ButtonSpriteDefinitions.main.poly_laser;
+		return ButtonSpriteDefinitions.main.polyLaser;
+	}
+	
+	public override Sprite GetDisplayStatus() {
+		if (displayIsActive) {
+			return ButtonSpriteDefinitions.main.displayHighlight;
+		} else {
+			return ButtonSpriteDefinitions.main.displayInvisible;
+		}
 	}
 	
 	public override void Tag() {

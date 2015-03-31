@@ -72,6 +72,14 @@ public class LaserBehavior : QInteractable {
 		return ButtonSpriteDefinitions.main.laser;
 	}
 	
+	public override Sprite GetDisplayStatus() {
+		if (displayIsActive) {
+			return ButtonSpriteDefinitions.main.displayHighlight;
+		} else {
+			return ButtonSpriteDefinitions.main.displayInvisible;
+		}
+	}
+	
 	public override GameObject TagPrefab() {
 		return ObjectPrefabDefinitions.main.TagViewLaser;
 	}

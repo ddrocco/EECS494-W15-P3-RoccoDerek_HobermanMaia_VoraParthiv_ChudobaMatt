@@ -86,6 +86,13 @@ public class QInteractable : MonoBehaviour {
 	public virtual Sprite GetSprite() {
 		return null;
 	}
+	public virtual Sprite GetDisplayStatus() {
+		if (displayIsActive) {
+			return ButtonSpriteDefinitions.main.displayHighlight;
+		} else {
+			return ButtonSpriteDefinitions.main.displayVisible;
+		}
+	}
 		
 	public virtual void Tag() {
 		if (tagView.GetComponent<MeshRenderer>() != null) {
