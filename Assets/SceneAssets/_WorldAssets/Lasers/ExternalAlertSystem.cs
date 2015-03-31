@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class ExternalAlertSystem : MonoBehaviour {
 	Light alarmLight;
 	bool lightRampingUp;
+	float maxIntensity = 1f;
 	
 	public bool useAlarmSystem = true;
 	Vector3 connectingWireJoint;
@@ -21,7 +22,9 @@ public class ExternalAlertSystem : MonoBehaviour {
 	
 	void Update () {
 		timeSinceSignalSent += Time.deltaTime;
-		UpdateAlarmLight();
+		if (GetComponent<Light>() != null) {
+			UpdateAlarmLight();
+		}
 		UpdateActiveSignals();
 	}
 	
@@ -50,7 +53,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		if (timeSinceSignalSent < 0.5f) {
 			return;
 		}
-		if (alarmLight.intensity == 0) {
+		if (GetComponent<Light>() != null && alarmLight.intensity == 0) {
 			lightRampingUp = true;
 		}
 		GameObject alarmSignal = Instantiate(ObjectPrefabDefinitions.main.AlarmSignal);
@@ -61,13 +64,13 @@ public class ExternalAlertSystem : MonoBehaviour {
 	
 	void UpdateAlarmLight() {
 		if (lightRampingUp) {
-			alarmLight.intensity += 0.3f;
-			if (alarmLight.intensity >= 8f) {
+			alarmLight.intensity += 3f * Time.deltaTime;
+			if (alarmLight.intensity >= maxIntensity) {
 				lightRampingUp = false;
-				alarmLight.intensity = 8f;
+				alarmLight.intensity = maxIntensity;
 			}
 		} else if (alarmLight.intensity > 0){
-			alarmLight.intensity -= 0.3f;
+			alarmLight.intensity -= 3f * Time.deltaTime;;
 			if (alarmLight.intensity <= 0) {
 				alarmLight.intensity = 0;
 				if (signals.Count > 0) {

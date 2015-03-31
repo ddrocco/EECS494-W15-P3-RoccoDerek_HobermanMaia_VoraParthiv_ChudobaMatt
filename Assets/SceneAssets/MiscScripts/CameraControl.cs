@@ -61,7 +61,7 @@ public class CameraControl : QInteractable {
 		isDetected = detectStan();
 		if (isDetected && timeSinceLastSignal >= timeBetweenSignals) {
 			wasDetected = true;
-			GetComponent<ExternalAlertSystem>().SignalAlarm();
+			GetComponentInChildren<ExternalAlertSystem>().SignalAlarm();
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			camControl.AlertOn();

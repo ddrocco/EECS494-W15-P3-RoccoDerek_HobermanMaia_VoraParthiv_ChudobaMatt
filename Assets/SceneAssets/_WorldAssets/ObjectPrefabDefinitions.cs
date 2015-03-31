@@ -9,6 +9,7 @@ public class ObjectPrefabDefinitions : MonoBehaviour {
 		FoeTaser,
 		QInteractiveButton, QDisplayIcon,
 		AlarmSignal,
+		SecurityCamera,
 		XWall, ZWall, Pillar, Ceiling;
 	public static ObjectPrefabDefinitions main;
 	

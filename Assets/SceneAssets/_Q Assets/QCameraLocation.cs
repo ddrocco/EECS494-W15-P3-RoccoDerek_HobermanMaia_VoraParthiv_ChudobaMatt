@@ -13,6 +13,13 @@ public class QCameraLocation : MonoBehaviour
 
 	[HideInInspector]
 	public int cameraNumber;
+	
+	void Start() {
+		GameObject securityCamera = Instantiate(ObjectPrefabDefinitions.main.SecurityCamera);
+		securityCamera.transform.parent = transform;
+		securityCamera.transform.localPosition = Vector3.zero;
+		securityCamera.transform.localEulerAngles = Vector3.zero;
+	}
 }
 
 public class CameraComp : IComparer<QCameraLocation>
