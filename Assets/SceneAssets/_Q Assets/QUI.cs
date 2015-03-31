@@ -66,6 +66,7 @@ public class QUI : MonoBehaviour {
 			//FindObjectOfType<QPowerSystem>().Enabled(true);
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
 			QCompass.SetActive (true);
+			GetComponent<QCameraControl>().DisableCameras();
 		} else {
 			nosignal.enabled = true;
 			cameraDesc.enabled = false;

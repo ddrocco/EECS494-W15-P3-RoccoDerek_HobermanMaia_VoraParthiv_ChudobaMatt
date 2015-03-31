@@ -80,7 +80,7 @@ public class QCameraControl : MonoBehaviour
 		//DisableCameras();
 	}
 
-	void DisableCameras()
+	public void DisableCameras()
 	{
 		camCount = 0;
 		//cameras[0].usable = true;
@@ -91,7 +91,7 @@ public class QCameraControl : MonoBehaviour
 			CameraControl control =
 				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
 			control.QIsWatching = false;
-			control.enabled = false;
+			control.disableButtonView();
 		}
 	}
 	
@@ -131,6 +131,9 @@ public class QCameraControl : MonoBehaviour
 			if (cameras[camNumber - 1].usable == false)
 			{
 				cameras[camNumber - 1].usable = true;
+				CameraControl control =
+					cameras[camNumber - 1].gameObject.GetComponentInChildren<CameraControl>();
+				control.enableButtonView();
 				camCount++;
 			}
 		}
@@ -139,6 +142,9 @@ public class QCameraControl : MonoBehaviour
 			if (cameras[camNumber - 1].usable == true)
 			{
 				cameras[camNumber - 1].usable = false;
+				CameraControl control =
+					cameras[camNumber - 1].gameObject.GetComponentInChildren<CameraControl>();
+				control.disableButtonView();
 				camCount--;
 			}
 		}

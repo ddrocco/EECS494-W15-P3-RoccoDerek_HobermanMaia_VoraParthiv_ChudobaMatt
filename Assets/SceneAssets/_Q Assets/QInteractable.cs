@@ -99,4 +99,12 @@ public class QInteractable : MonoBehaviour {
 		}
 		tagView.GetComponent<ParticleSystemRenderer>().enabled = false;
 	}
+	
+	public void disableButtonView() {
+		QInteractionButton.GetComponent<Image>().enabled = false;
+	}
+	
+	public void enableButtonView() {
+		QInteractionButton.GetComponent<Image>().enabled = true;
+	}
 }
