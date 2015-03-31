@@ -24,6 +24,17 @@ public class GameController : MonoBehaviour
 				GameOver();
 		}
 	}
+
+	private static bool _won;
+	public static bool PlayerWon
+	{
+		get { return _won; }
+		set
+		{
+			_won = value;
+		}
+	}
+
 	public static string GameOverMessage;
 
 	void Awake()
@@ -42,14 +53,20 @@ public class GameController : MonoBehaviour
 	void Update()
 	{
 		DisplayPlayerMessage();
-		if (!PlayerDead) return;
+		if (!PlayerDead && !PlayerWon) return;
 
 		EnableText();
 
 		if (Input.GetKeyDown(KeyCode.Escape) || device.Action1.WasPressed || Input.GetKeyDown(KeyCode.Mouse0))
 		{
-			PlayerDead = false;
-			Application.LoadLevel(levelName);
+			if(PlayerDead){
+				PlayerDead = false;
+				Application.LoadLevel(Application.loadedLevel);
+			} else if (PlayerWon){
+				PlayerWon = false;
+				if(Application.levelCount > Application.loadedLevel + 1) Application.LoadLevel(Application.loadedLevel + 1);
+				else Application.LoadLevel(0);
+			}
 		}
 	}
 
@@ -75,6 +92,7 @@ public class GameController : MonoBehaviour
 		playerMessageText.enabled = false;
 		playerGameOverText.text = "Game Over";
 		playerGameOverMessageText.text = GameOverMessage;
+		Time.timeScale = 0;
 	}
 
 	public static void SendPlayerMessage(string message, float time)
