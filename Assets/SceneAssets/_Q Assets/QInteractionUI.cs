@@ -12,7 +12,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	float displayIconDisplacement = 10f;
 	Color color0 = Color.white;
 	Color color1 = Color.white;
-	
+	GameObject displayIconObject;
 	public bool hasDisplayIcon;
 
 	// Use this for initialization
@@ -24,7 +24,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 		}
 		
 		if (hasDisplayIcon) {
-			GameObject displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
+			displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
 			displayIconObject.transform.SetParent(transform);
 			displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
 			displayIcon = displayIconObject.GetComponent<Image>();
@@ -34,8 +34,12 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
-		GetComponent<Image>().color = Color.Lerp(color0, color1, t);
-		GetComponent<Image>().sprite = controlledObject.GetSprite();
+		Image temp = GetComponent<Image>();
+		temp.color = Color.Lerp(color0, color1, t);
+		temp.sprite = controlledObject.GetSprite();
+		if (displayIconObject != null) {
+			displayIconObject.GetComponent<Image>().enabled = temp.enabled;
+		}
 	}
 	
 	public void OnPointerClick(PointerEventData mouseData) {
