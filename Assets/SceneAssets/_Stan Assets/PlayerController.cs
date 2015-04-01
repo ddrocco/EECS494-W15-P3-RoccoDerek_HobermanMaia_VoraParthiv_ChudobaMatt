@@ -116,10 +116,10 @@ public class PlayerController : MonoBehaviour
 			if (mouseIsLocked) {
 				Cursor.lockState = CursorLockMode.Locked;
 			} else {
-				Cursor.lockState = CursorLockMode.Confined;
+				Cursor.lockState = CursorLockMode.None;
 			}
 		} else {
-			Cursor.lockState = CursorLockMode.Confined;
+			Cursor.lockState = CursorLockMode.None;
 		}
 		
 		if (GameController.PlayerDead)
