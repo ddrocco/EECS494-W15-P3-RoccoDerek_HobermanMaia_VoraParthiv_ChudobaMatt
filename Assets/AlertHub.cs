@@ -3,6 +3,9 @@ using System.Collections;
 
 public class AlertHub : QInteractable {
 	public bool isActive = true;
+	public GameObject mapCover1;
+	public GameObject mapCover2;
+	//public Camera QCamera;
 	
 	//Juice:
 	/*bool isSounding = false;

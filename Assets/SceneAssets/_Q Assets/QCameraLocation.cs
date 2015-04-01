@@ -19,6 +19,7 @@ public class QCameraLocation : MonoBehaviour
 		securityCamera.transform.parent = transform;
 		securityCamera.transform.localPosition = Vector3.zero;
 		securityCamera.transform.localEulerAngles = Vector3.zero;
+		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
 	}
 }
 
