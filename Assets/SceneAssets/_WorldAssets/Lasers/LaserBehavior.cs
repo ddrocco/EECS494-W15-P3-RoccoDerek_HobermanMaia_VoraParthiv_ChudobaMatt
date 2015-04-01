@@ -11,11 +11,6 @@ public class LaserBehavior : QInteractable {
 	int layerMask;
 	LineRenderer laser;
 	
-	public bool alertTimerSet = false;
-	public float alertWait = 4f;
-	public float alertTimer = 0f;
-	Vector3 alertPosition;
-	
 	public override void Start() {
 		Color color = Color.red;
 		color.a = 0.8f;
@@ -27,14 +22,6 @@ public class LaserBehavior : QInteractable {
 	}
 	
 	void Update() {
-		if (alertTimerSet) {
-			alertTimer += Time.deltaTime;
-			if (alertTimer >= alertWait) {
-				FoeAlertSystem.Alert(alertPosition);
-				alertTimer = 0;
-				alertTimerSet = false;
-			}
-		}
 		movementTimer += Time.deltaTime;
 		if (movementTimer > movementDuration * 2f) {
 			movementTimer -= movementDuration * 2f;
@@ -47,9 +34,7 @@ public class LaserBehavior : QInteractable {
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, directionCurrent, out hitInfo, 100f, layerMask)) {
 			if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-				GetComponentInParent<ExternalAlertSystem>().SignalAlarm();
-				alertTimerSet = true;
-				alertPosition = new Vector3(hitInfo.point.x, 0, hitInfo.point.z);
+				GetComponentInParent<ExternalAlertSystem>().SignalAlarm(new Vector3(hitInfo.point.x, 0, hitInfo.point.z));
 			}
 			laser.SetPosition(0, transform.position);
 			laser.SetPosition(1, hitInfo.point);
@@ -64,8 +49,7 @@ public class LaserBehavior : QInteractable {
 	}
 	
 	public override void Trigger() {
-		alertTimer = 0;
-		alertTimerSet = false;
+		return;
 	}
 	
 	public override Sprite GetSprite() {

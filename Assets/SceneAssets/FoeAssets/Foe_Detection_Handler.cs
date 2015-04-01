@@ -38,6 +38,7 @@ public class Foe_Detection_Handler : QInteractable {
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
 		taser.transform.parent = transform;
 		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
+		taser.transform.localEulerAngles = Vector3.zero;
 		taser.SetActive(false);
 		
 		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;

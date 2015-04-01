@@ -55,7 +55,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		connectingWireJointRatio = distance1 / (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position));
 	}
 	
-	public void SignalAlarm() {
+	public void SignalAlarm(Vector3 location) {
 		if (!useAlarmSystem) {
 			return;
 		}
@@ -67,6 +67,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		}
 		GameObject alarmSignal = Instantiate(ObjectPrefabDefinitions.main.AlarmSignal);
 		alarmSignal.transform.parent = transform;
+		alarmSignal.GetComponent<AlarmSignal>().detectionLocation = location;
 		signals.Add(alarmSignal.GetComponent<AlarmSignal>());
 		timeSinceSignalSent = 0;
 	}
@@ -114,8 +115,8 @@ public class ExternalAlertSystem : MonoBehaviour {
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
 			signals.Remove (signal);
+			system.Signal(signal.detectionLocation);
 			Destroy (signal.gameObject);
-			system.Signal();
 		}	
 	}
 	

@@ -9,10 +9,11 @@ public class AlertHub : QInteractable {
 	float soundingTimer = 0f;
 	float animationSpeed = 0.5f;*/
 	
-	public void Signal() {
+	public void Signal(Vector3 detectionLocation) {
 		if (isActive) {
 			//isSounding = true;
-			print ("Signal!");
+			print ("INTRUDER DETECTED at " + detectionLocation + "!");
+			FoeAlertSystem.Alert(detectionLocation);
 		}
 		//Raise alarm!
 	}

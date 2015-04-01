@@ -17,12 +17,6 @@ public class PolyLaserParent : QInteractable {
 	[HideInInspector]
 	public int layerMask;
 	
-	public bool alertTimerSet = false;
-	public float alertWait = 4f;
-	[HideInInspector]
-	public float alertTimer = 0f;
-	Vector3 alertPosition;
-	
 	public override void Start() {
 		Color color = Color.red;
 		color.a = 0.8f;
@@ -42,14 +36,6 @@ public class PolyLaserParent : QInteractable {
 	}
 	
 	void Update() {
-		if (alertTimerSet) {
-			alertTimer += Time.deltaTime;
-			if (alertTimer >= alertWait) {
-				FoeAlertSystem.Alert(alertPosition);
-				alertTimer = 0;
-				alertTimerSet = false;
-			}
-		}
 		movementTimer += Time.deltaTime;
 		if (movementTimer > movementDuration * 2f) {
 			movementTimer -= movementDuration * 2f;
@@ -61,9 +47,7 @@ public class PolyLaserParent : QInteractable {
 			RaycastHit hitInfo;
 			if (Physics.Raycast(origins[i] + transform.position, directionCurrents[i], out hitInfo, 100f, layerMask)) {
 				if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-					GetComponentInParent<ExternalAlertSystem>().SignalAlarm();
-					alertTimerSet = true;
-					alertPosition = new Vector3(hitInfo.point.x, 0, hitInfo.point.z);
+					GetComponentInParent<ExternalAlertSystem>().SignalAlarm(new Vector3(hitInfo.point.x, 0, hitInfo.point.z));
 				}
 				lasers[i].SetPosition(0, origins[i] + transform.position);
 				lasers[i].SetPosition(1, hitInfo.point);
@@ -82,8 +66,7 @@ public class PolyLaserParent : QInteractable {
 	}
 	
 	public override void Trigger() {
-		alertTimer = 0;
-		alertTimerSet = false;
+		return;
 	}
 	
 	public override Sprite GetSprite() {

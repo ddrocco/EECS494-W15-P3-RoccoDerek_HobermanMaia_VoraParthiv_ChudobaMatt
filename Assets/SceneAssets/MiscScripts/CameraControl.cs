@@ -8,7 +8,6 @@ public class CameraControl : QInteractable {
 	//Detection
 	public bool QIsWatching = true;
 	public bool QHasBlinded = false;
-	public bool isDetected = false;
 	public bool wasDetected = false;
 	private Plane[] planes;
 	private Camera myCam;
@@ -58,10 +57,10 @@ public class CameraControl : QInteractable {
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
 		}
-		isDetected = detectStan();
-		if (isDetected && timeSinceLastSignal >= timeBetweenSignals) {
+		Vector3 detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
+		if (detectionLocation != Vector3.down && timeSinceLastSignal >= timeBetweenSignals) {
 			wasDetected = true;
-			GetComponentInChildren<ExternalAlertSystem>().SignalAlarm();
+			GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
 			color1 = Color.red; //sets 2nd color to red so light will flash
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			camControl.AlertOn();
@@ -71,7 +70,7 @@ public class CameraControl : QInteractable {
 	}
 	
 	//Uses child camera and raycast to see if Stan is in view
-	bool detectStan () {
+	Vector3 detectStan () {
 		if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
 			RaycastHit hit;
 			Vector3 heading = PlayerController.player.transform.position - transform.position;
@@ -79,10 +78,10 @@ public class CameraControl : QInteractable {
 			Vector3 direction = heading/distance;
 			if (Physics.Raycast(transform.position, direction, out hit, distance)) {
 				if (hit.collider.CompareTag("Player") == true) {
-					return true;
-				} else return false;
-			} else return false;
-		} else return false;
+					return new Vector3(hit.point.x, 0, hit.point.z);
+				} else return Vector3.down;
+			} else return Vector3.down;
+		} else return Vector3.down;
 	}
 	
 	void SubdueCameraAlert() {
