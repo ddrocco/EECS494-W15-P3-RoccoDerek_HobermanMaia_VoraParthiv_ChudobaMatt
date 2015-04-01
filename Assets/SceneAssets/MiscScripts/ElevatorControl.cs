@@ -22,6 +22,7 @@ public class ElevatorControl : QInteractable {
 	
 	public void Interact () {
 		if (!playerGotPasscard) {
+			GameController.SendPlayerMessage("Locked:\nFind the key", 5);
 			gameObject.GetComponent<AudioSource>().Play();
 			return;
 		} else {
