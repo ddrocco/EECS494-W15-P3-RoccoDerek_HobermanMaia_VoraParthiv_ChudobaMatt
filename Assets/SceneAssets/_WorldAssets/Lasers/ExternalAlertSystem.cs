@@ -43,6 +43,9 @@ public class ExternalAlertSystem : MonoBehaviour {
 		}
 		float minDist = float.PositiveInfinity;
 		foreach (AlertHub foundSystem in systems) {
+			if (foundSystem.isActive) {
+				AlertHub.isSounding = true;
+			}
 			if (Vector3.Distance(foundSystem.transform.position, transform.position) < minDist) {
 				minDist = Vector3.Distance(foundSystem.transform.position, transform.position);
 				system = foundSystem;

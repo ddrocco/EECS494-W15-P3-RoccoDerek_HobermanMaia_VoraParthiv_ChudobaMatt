@@ -4,7 +4,7 @@ using System.Collections;
 public class FileCabinetControl : MonoBehaviour {
 	public Animator anim;
 	public GameObject QCamera;
-	private string message; //Will only contain a snippet of a message, if anything
+	public string message; //Will only contain a snippet of a message, if anything
 	public string QMessage; //Can send a message to Q if it contains something like a map piece
 	
 	void Awake () {
@@ -13,7 +13,7 @@ public class FileCabinetControl : MonoBehaviour {
 
 	void Start()
 	{
-		message = "*The README document is hundreds of pages long.  How awful.*";
+		//message = "*The README document is hundreds of pages long.  How awful.*";
 		/*string control = "pressing (X)";
 		if (PlayerController.debugControls)
 			control = "right-clicking";

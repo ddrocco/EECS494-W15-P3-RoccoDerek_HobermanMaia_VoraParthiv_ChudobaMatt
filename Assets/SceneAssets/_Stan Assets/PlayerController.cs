@@ -482,6 +482,9 @@ public class PlayerController : MonoBehaviour
 
 			CameraControl control = interactiveObj.GetComponentInParent<CameraControl>();
 			control.QIsWatching = true;
+			if (Qcontrol.warning) {
+				Qcontrol.AlertOff();
+			}
 			return;
 		}
 		else

@@ -8,13 +8,13 @@ public class CameraControl : QInteractable {
 	
 	//Detection
 	public bool QIsWatching = true;
-	public bool QHasBlinded = false;
+	public bool Offline = false;
 	public bool wasDetected = false;
 	private Plane[] planes;
 	private Camera myCam;
 	
 	//Alert
-	float timeBetweenSignals = 0.5f;
+	float timeBetweenSignals = .75f;
 	float timeSinceLastSignal = 0f;
 	
 	//Stan-Visual
@@ -53,7 +53,7 @@ public class CameraControl : QInteractable {
 		}
 		
 		//Hacked in/broken
-		if (QIsWatching || QHasBlinded) {
+		if (QIsWatching) {
 			lens.material.color = Color.black; //lens off
 			color1 = color0 = green; //camera light appears greenish
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
@@ -62,20 +62,21 @@ public class CameraControl : QInteractable {
 			lens.material.color = Color.red; //appears red (dangerous)
 		}
 		Vector3 detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
-		if (detectionLocation != Vector3.down && timeSinceLastSignal >= timeBetweenSignals) {
+		if (detectionLocation != Vector3.down) {
 			if (!wasDetected) {
-				timeBetweenSignals = .5f;
+				print ("got here");
 				camControl.WarningOn();
 				wasDetected = true;
 				color1 = Color.red; //sets 2nd color to red so light will flash
-				QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash
+				//QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
+				//doesn't work bc camera isn't visible to Q until it's disbabled
 			}
-			wasDetected = true;
-			GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
-			color1 = Color.red; //sets 2nd color to red so light will flash
-			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
-			camControl.AlertOn();
-			timeSinceLastSignal = 0f;
+			if (!Offline){
+				GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
+			}
+			if (timeSinceLastSignal >= timeBetweenSignals) {
+				timeSinceLastSignal = 0f;
+			}
 		}
 		timeSinceLastSignal += Time.deltaTime;
 	}

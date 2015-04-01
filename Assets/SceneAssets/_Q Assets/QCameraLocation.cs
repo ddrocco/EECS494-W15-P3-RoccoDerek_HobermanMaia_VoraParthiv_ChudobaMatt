@@ -10,7 +10,9 @@ public class QCameraLocation : MonoBehaviour
 	public string description;
 	public float zoom;
 	public bool usable = false;
-
+	public bool Offline;
+	public Quaternion start, finish;
+	
 	[HideInInspector]
 	public int cameraNumber;
 	
@@ -20,6 +22,25 @@ public class QCameraLocation : MonoBehaviour
 		securityCamera.transform.localPosition = new Vector3(0, 0, -.2f);
 		securityCamera.transform.localEulerAngles = Vector3.zero;
 		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
+		if (Offline) {
+			securityCamera.GetComponent<CameraControl>().Offline = true;
+			start = finish = Quaternion.Euler(transform.rotation.eulerAngles.x,
+			                                  transform.rotation.eulerAngles.y,
+			                                  transform.rotation.eulerAngles.z);
+		} else {
+			start = Quaternion.Euler(transform.rotation.eulerAngles.x,
+			                         transform.rotation.eulerAngles.y - 30,
+			                         transform.rotation.eulerAngles.z);
+			finish = Quaternion.Euler(transform.rotation.eulerAngles.x,
+			                          transform.rotation.eulerAngles.y + 30,
+			                          transform.rotation.eulerAngles.z);
+			
+		}
+	}
+	
+	void Update() {
+		float t = Mathf.PingPong(Time.time/4, 1f);
+		transform.rotation = Quaternion.Lerp(start, finish, t);
 	}
 }
 

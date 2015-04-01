@@ -4,6 +4,7 @@ using System.Collections;
 public class AlertHub : QInteractable {
 	public bool isActive = true;
 	public static bool isSounding = false;
+	public bool wasSounding = false;
 	
 	//Juice:
 	/*float soundingTimer = 0f;
@@ -14,7 +15,6 @@ public class AlertHub : QInteractable {
 			print ("INTRUDER DETECTED at " + detectionLocation + "!");
 			FoeAlertSystem.Alert(detectionLocation);
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
-			isSounding = true;
 			FindObjectOfType<QCameraControl>().AlertOn();
 		}
 		//Raise alarm!
@@ -22,7 +22,15 @@ public class AlertHub : QInteractable {
 	
 	void Update() {
 		if (!isSounding) {
-			FindObjectOfType<QCameraControl>().AlertOff();
+			if (wasSounding) {
+				FindObjectOfType<QCameraControl>().AlertOff();
+				wasSounding = false;
+			}
+		}
+		else {
+			if (!wasSounding) {
+				wasSounding = true;
+			}
 		}
 	}
 	

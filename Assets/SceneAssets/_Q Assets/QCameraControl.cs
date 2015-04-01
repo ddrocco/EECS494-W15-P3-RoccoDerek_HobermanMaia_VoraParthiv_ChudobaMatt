@@ -35,6 +35,8 @@ public class QCameraControl : MonoBehaviour
 	//Alert flashing
 	public Color color0 = Color.black;
 	public Color color1 = Color.black;	
+	public bool warning = false;
+	public bool alerting = false;
 
 	// Use this for initialization
 	void Awake()
@@ -283,22 +285,27 @@ public class QCameraControl : MonoBehaviour
 				return;
 			}
 		}
-		AlertOff();
 	}
 	
 	//Call AlertOn to cause an icon to flash red
 	public void AlertOn() {
 		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 1f);
+		alerting = true;
+		warning = false;
 	}
 	
+	//Call AlertOn to cause an icon to flash yellow
 	public void WarningOn() {
 		color1 = new Color(60f/255f, 60f/255f, 0f/255f, 1f);
+		warning = true;
+		alerting = false;
 	}
 	
 	//Call AlertOff to turn off the flashing alert
 	public void AlertOff() {
+		print ("off");
 		color1 = Color.black;
-		AlertHub.isSounding = false;
+		warning = alerting = false;
 	}
 	
 

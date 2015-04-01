@@ -8,6 +8,6 @@ public class AlarmSignal : MonoBehaviour {
 	public Vector3 detectionLocation;
 	
 	void Update() {
-		timeAlive += Time.deltaTime;
+		timeAlive += 3*Time.deltaTime/4f;
 	}
 }
