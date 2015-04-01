@@ -32,8 +32,12 @@ public class QCameraControl : MonoBehaviour
 	public int overviewCullingMask;
 	public int cameraCullingMask;
 
+	//Alert flashing
 	public Color color0 = Color.black;
 	public Color color1 = Color.black;
+	public GameObject mapCover1;
+	public GameObject mapCover2;
+	
 
 	// Use this for initialization
 	void Awake()
@@ -102,6 +106,8 @@ public class QCameraControl : MonoBehaviour
 		
 		float t = Mathf.PingPong(Time.time, 1f);
 		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
+		mapCover1.GetComponent<Image>().color = Color.Lerp (color0, color1, t);
+		mapCover2.GetComponent<Image>().color = Color.Lerp (color0, color1, t);
 		
 		GetCameraInput();		
 		UpdateCameraPosition();
@@ -273,12 +279,12 @@ public class QCameraControl : MonoBehaviour
 	//Call AlertOn to cause an icon to flash red
 	public void AlertOn() {
 		print ("Alerted!");
-		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 0f);
+		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 1f);
 	}
 	
 	public void WarningOn() {
 		print ("Warned!");
-		color1 = new Color(60f/255f, 60f/255f, 0f/255f, 0f);
+		color1 = new Color(60f/255f, 60f/255f, 0f/255f, 1f);
 	}
 	
 	//Call AlertOff to turn off the flashing alert
