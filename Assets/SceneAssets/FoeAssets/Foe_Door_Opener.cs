@@ -23,7 +23,7 @@ public class Foe_Door_Opener : MonoBehaviour {
 				} else { //Open North
 					parentDoorAnimator.SetBool("openSouth", false);
 				}
-			} else { //xDoor
+			} else if (parentDoor.name == "xDoorHinge") { //xDoor
 				if (other.transform.position.z < transform.position.z) { //Open east
 					parentDoorAnimator.SetBool("openEast", true);
 				} else { //Open west

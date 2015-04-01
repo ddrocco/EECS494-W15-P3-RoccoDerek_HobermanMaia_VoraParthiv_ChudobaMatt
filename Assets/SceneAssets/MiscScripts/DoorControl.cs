@@ -6,8 +6,11 @@ public class DoorControl : QInteractable {
 	public GameObject foeDoorOpenerPrefab;
 	public bool isLocked;
 	public bool expectState;
+
 	private float closeDistance;
 	private bool isOpen = false;
+	private float closeTimer;
+	private const float closeTimerVal = 2f;
 	
 	void Awake () {
 		anim = GetComponentInParent<Animator>();
@@ -23,6 +26,8 @@ public class DoorControl : QInteractable {
 			                                       transform.position /*+ offset*/, Quaternion.identity) as GameObject;
 			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoor = gameObject;
 		}
+
+		closeTimer = closeTimerVal;
 	}
 	
 	public override void Start() {
@@ -64,8 +69,21 @@ public class DoorControl : QInteractable {
 	void Update() {
 		if (isOpen) {
 			if (Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position) > closeDistance) {
-				isOpen = false;
-				anim.SetBool("isOpen", false);
+				// Keep door open until timer runs out
+				if (closeTimer < 0f)
+				{
+					closeTimer = closeTimerVal;
+					isOpen = false;
+					anim.SetBool("isOpen", false);
+				}
+				else
+					closeTimer -= Time.deltaTime;
+
+			}
+			else
+			{
+				// Reset timer when you get close to door again
+				closeTimer = closeTimerVal;
 			}
 		}
 	}
