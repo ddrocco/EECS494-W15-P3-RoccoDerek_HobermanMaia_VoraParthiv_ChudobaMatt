@@ -32,6 +32,7 @@ public class DoorControl : QInteractable {
 	
 	public void Interact () {
 		if (isLocked) {
+			GameController.SendPlayerMessage("Locked", 2);
 			gameObject.GetComponent<AudioSource>().Play();
 			return;
 		}
