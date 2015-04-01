@@ -33,6 +33,8 @@ public class Foe_Detection_Handler : QInteractable {
 	public bool isDead = false;
 	bool playerDisabled = false;
 
+	int cullingMask;
+
 	public override void Start () {	
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
 		taser.transform.parent = transform;
@@ -46,6 +48,10 @@ public class Foe_Detection_Handler : QInteractable {
 				+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);*/
 		
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
+		
+		cullingMask = (1 << Layerdefs.floor) + (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.prop)
+				+ (1 << Layerdefs.foe);
+		
 		base.Start();
 	}
 	
@@ -75,8 +81,8 @@ public class Foe_Detection_Handler : QInteractable {
 			RaycastHit hit;
 			Vector3 heading = PlayerController.player.transform.position - transform.position;
 			float distance = heading.magnitude;
-			Vector3 direction = heading/distance;
-			if (Physics.Raycast(transform.position, direction, out hit, distance)) {
+			Vector3 direction = heading.normalized;
+			if (Physics.Raycast(transform.position, direction, out hit, distance, cullingMask)) {
 				if (hit.collider.CompareTag("Player") == true) {
 					detected = true;
 				} else detected = false;

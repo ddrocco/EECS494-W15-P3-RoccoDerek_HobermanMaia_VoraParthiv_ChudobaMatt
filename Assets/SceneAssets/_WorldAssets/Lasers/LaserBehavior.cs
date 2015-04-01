@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class LaserBehavior : QInteractable {
@@ -66,5 +67,10 @@ public class LaserBehavior : QInteractable {
 	
 	public override GameObject TagPrefab() {
 		return ObjectPrefabDefinitions.main.TagViewLaser;
+	}
+	
+	public override void enableButtonView() {
+		QInteractionButton.GetComponent<Image>().enabled = true;
+		GetComponentInChildren<LineRenderer>().enabled = true;
 	}
 }

@@ -114,7 +114,7 @@ public class QInteractable : MonoBehaviour {
 		QInteractionButton.GetComponent<Image>().enabled = false;
 	}
 	
-	public void enableButtonView() {
+	public virtual void enableButtonView() {
 		QInteractionButton.GetComponent<Image>().enabled = true;
 	}
 }

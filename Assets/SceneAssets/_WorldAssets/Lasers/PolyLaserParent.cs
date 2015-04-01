@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -97,5 +98,10 @@ public class PolyLaserParent : QInteractable {
 	
 	public override GameObject TagPrefab() {
 		return null;
+	}
+	
+	public override void enableButtonView() {
+		QInteractionButton.GetComponent<Image>().enabled = true;
+		GetComponentInChildren<LineRenderer>().enabled = true;
 	}
 }

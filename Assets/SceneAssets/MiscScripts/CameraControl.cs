@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class CameraControl : QInteractable {
 	//Identification
@@ -104,5 +105,10 @@ public class CameraControl : QInteractable {
 	
 	public override Sprite GetSprite () {
 		return ButtonSpriteDefinitions.main.cameraIcon;
-	}	
+	}
+	
+	public override void enableButtonView() {
+		QInteractionButton.GetComponent<Image>().enabled = true;
+		GetComponentInChildren<LineRenderer>().enabled = true;
+	}
 }

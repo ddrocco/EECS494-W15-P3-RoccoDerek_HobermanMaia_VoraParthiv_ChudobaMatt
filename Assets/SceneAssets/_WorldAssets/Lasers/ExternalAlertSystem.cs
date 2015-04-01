@@ -20,6 +20,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		alarmLight = GetComponent<Light>();
 		signals = new List<AlarmSignal>();
 		ConnectToAlarm();
+		GetComponent<LineRenderer>().enabled = false;
 	}
 	
 	void Update () {
