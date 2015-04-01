@@ -9,8 +9,8 @@ public class MapCoverControl : MonoBehaviour
 	private static List<QInteractable> group1;
 	private static List<QInteractable> group2;
 	private static List<QInteractable> group3;
-	private static Image mapCover1;
-	private static Image mapCover2;
+	public static Image mapCover1;
+	public static Image mapCover2;
 
 	void Start()
 	{

@@ -2,12 +2,19 @@
 using System.Collections;
 
 public class Generate_Wireframe : MonoBehaviour {
-	public GameObject wireframePrefab;
 	public int type = 0;
 	public int group = 0;
+	public bool isDynamic;
 	
 	void Start () {
-		GameObject wireframe = Instantiate(wireframePrefab, transform.position, Quaternion.identity) as GameObject;
+		GameObject wireframe;
+		if (isDynamic) {
+			wireframe = Instantiate(ObjectPrefabDefinitions.main
+					.WireframeDynamic, transform.position, Quaternion.identity) as GameObject;
+		} else {
+			wireframe = Instantiate(ObjectPrefabDefinitions.main
+                    .Wireframe, transform.position, Quaternion.identity) as GameObject;
+		}
 		wireframe.transform.parent = transform;
 		wireframe.transform.localScale = Vector3.one;
 		wireframe.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;

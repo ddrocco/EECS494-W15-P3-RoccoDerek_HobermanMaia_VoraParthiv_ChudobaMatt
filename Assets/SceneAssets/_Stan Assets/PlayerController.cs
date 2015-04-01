@@ -481,7 +481,6 @@ public class PlayerController : MonoBehaviour
 			Qcontrol.ToggleCamera(loc.cameraNumber, true);
 
 			CameraControl control = interactiveObj.GetComponentInParent<CameraControl>();
-			//control.enabled = true;
 			control.QIsWatching = true;
 			return;
 		}

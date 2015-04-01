@@ -13,7 +13,6 @@ public class Foe_Detection_Handler : QInteractable {
 	
 	//Exclamation points:
 	public bool isAttentive = false;
-	public GameObject alertObject1, alertObject2;
 	
 	public Foe_Movement_Handler movementHandler;
 	

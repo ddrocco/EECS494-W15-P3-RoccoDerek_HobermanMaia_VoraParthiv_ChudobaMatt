@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AlertHub : QInteractable {
 	public bool isActive = true;
-	public bool isSounding = false;
+	public static bool isSounding = false;
 	
 	//Juice:
 	/*float soundingTimer = 0f;
@@ -15,14 +15,15 @@ public class AlertHub : QInteractable {
 			FoeAlertSystem.Alert(detectionLocation);
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			isSounding = true;
+			FindObjectOfType<QCameraControl>().AlertOn();
 		}
 		//Raise alarm!
 	}
 	
 	void Update() {
-		/*if (isSounding) {
-			SoundAnimation();
-		}*/
+		if (!isSounding) {
+			FindObjectOfType<QCameraControl>().AlertOff();
+		}
 	}
 	
 	void SoundAnimation() {
@@ -55,4 +56,6 @@ public class AlertHub : QInteractable {
 			return ButtonSpriteDefinitions.main.alarmSilent;
 		}
 	}
+	
+	
 }

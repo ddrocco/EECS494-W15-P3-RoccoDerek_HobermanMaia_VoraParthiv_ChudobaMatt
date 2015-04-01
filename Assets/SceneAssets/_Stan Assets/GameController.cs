@@ -6,7 +6,7 @@ using InControl;
 public class GameController : MonoBehaviour
 {
 	private InputDevice device;
-	private string levelName = "_Final_Prototype_Map";
+//	private string levelName = "_Final_Prototype_Map";
 	private Text playerGameOverText;
 	private Text playerGameOverMessageText;
 	private Text playerMessageText;

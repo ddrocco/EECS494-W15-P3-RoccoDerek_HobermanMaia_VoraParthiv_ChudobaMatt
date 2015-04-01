@@ -48,6 +48,9 @@ public class CameraControl : QInteractable {
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
 		alertLight.color = Color.Lerp(color0, color1, t);
+		if (t < 0.1f) {
+			AlarmDisable();
+		}
 		
 		//Hacked in/broken
 		if (QIsWatching || QHasBlinded) {
@@ -60,7 +63,13 @@ public class CameraControl : QInteractable {
 		}
 		Vector3 detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
 		if (detectionLocation != Vector3.down && timeSinceLastSignal >= timeBetweenSignals) {
-			timeBetweenSignals = 0.5f;
+			if (!wasDetected) {
+				timeBetweenSignals = .5f;
+				camControl.WarningOn();
+				wasDetected = true;
+				color1 = Color.red; //sets 2nd color to red so light will flash
+				QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash
+			}
 			wasDetected = true;
 			GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
 			color1 = Color.red; //sets 2nd color to red so light will flash
@@ -69,6 +78,15 @@ public class CameraControl : QInteractable {
 			timeSinceLastSignal = 0f;
 		}
 		timeSinceLastSignal += Time.deltaTime;
+	}
+	
+	void AlarmDisable() {
+		foreach (Foe_Detection_Handler foe in FindObjectsOfType<Foe_Detection_Handler>()) {
+			if (foe.GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.investigating
+			    && !foe.isDead) {
+				
+			}
+		}
 	}
 	
 	//Uses child camera and raycast to see if Stan is in view

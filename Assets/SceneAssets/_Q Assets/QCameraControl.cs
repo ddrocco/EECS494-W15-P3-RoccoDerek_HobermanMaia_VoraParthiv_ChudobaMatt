@@ -32,8 +32,9 @@ public class QCameraControl : MonoBehaviour
 	public int overviewCullingMask;
 	public int cameraCullingMask;
 
+	//Alert flashing
 	public Color color0 = Color.black;
-	public Color color1 = Color.black;
+	public Color color1 = Color.black;	
 
 	// Use this for initialization
 	void Awake()
@@ -102,6 +103,11 @@ public class QCameraControl : MonoBehaviour
 		
 		float t = Mathf.PingPong(Time.time, 1f);
 		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
+		MapCoverControl.mapCover1.color = Color.Lerp (color0, color1, t);
+		MapCoverControl.mapCover2.color = Color.Lerp (color0, color1, t);
+		if (t < 0.1f) {
+			AttemptTurningOffAlert();
+		}
 		
 		GetCameraInput();		
 		UpdateCameraPosition();
@@ -270,14 +276,29 @@ public class QCameraControl : MonoBehaviour
 		}
 	}
 	
+	void AttemptTurningOffAlert() {
+		foreach (Foe_Movement_Handler foe in FindObjectsOfType<Foe_Movement_Handler>()) {
+			if (foe.state == Foe_Movement_Handler.alertState.investigating
+		    && !foe.GetComponentInChildren<Foe_Detection_Handler>().isDead && !foe.isReturning) {
+				return;
+			}
+		}
+		AlertOff();
+	}
+	
 	//Call AlertOn to cause an icon to flash red
 	public void AlertOn() {
-		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 0f);
+		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 1f);
+	}
+	
+	public void WarningOn() {
+		color1 = new Color(60f/255f, 60f/255f, 0f/255f, 1f);
 	}
 	
 	//Call AlertOff to turn off the flashing alert
 	public void AlertOff() {
 		color1 = Color.black;
+		AlertHub.isSounding = false;
 	}
 	
 
