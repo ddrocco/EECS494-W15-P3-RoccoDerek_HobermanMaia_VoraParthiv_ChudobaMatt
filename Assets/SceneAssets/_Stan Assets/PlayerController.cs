@@ -17,6 +17,7 @@ using InControl;
 
 public class PlayerController : MonoBehaviour
 {
+	public bool mouseLockOnPlay = true;
 	public static PlayerController player;
 	
 	private enum State
@@ -106,6 +107,14 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Tab)) {
+			mouseLockOnPlay = !mouseLockOnPlay;
+		}
+		if (mouseLockOnPlay) {
+			Cursor.lockState = CursorLockMode.Locked;
+		} else {
+			Cursor.lockState = CursorLockMode.Confined;
+		}
 		if (GameController.PlayerDead)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;

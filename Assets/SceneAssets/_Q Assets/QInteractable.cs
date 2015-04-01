@@ -41,12 +41,15 @@ public class QInteractable : MonoBehaviour {
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
 		QInteractionButton.GetComponent<Image>().sprite = GetSprite();
 		
-		tagView = Instantiate(TagPrefab(), transform.position, Quaternion.identity) as GameObject;
-		tagView.transform.parent = transform;
-		tagView.transform.localScale = Vector3.one;
-		tagView.transform.localEulerAngles = Vector3.zero;
-		if (GetComponent<MeshFilter>() != null && tagView.GetComponent<MeshFilter>() != null) {
-			tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+		GameObject tagPrefab = TagPrefab();
+		if (tagPrefab != null) {
+			tagView = Instantiate(TagPrefab(), transform.position, Quaternion.identity) as GameObject;
+			tagView.transform.parent = transform;
+			tagView.transform.localScale = Vector3.one;
+			tagView.transform.localEulerAngles = Vector3.zero;
+			if (GetComponent<MeshFilter>() != null && tagView.GetComponent<MeshFilter>() != null) {
+				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
+			}
 		}
 	}
 	

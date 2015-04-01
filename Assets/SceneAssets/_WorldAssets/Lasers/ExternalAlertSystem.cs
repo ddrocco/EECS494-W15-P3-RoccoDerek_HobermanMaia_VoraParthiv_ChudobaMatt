@@ -14,6 +14,8 @@ public class ExternalAlertSystem : MonoBehaviour {
 	List<AlarmSignal> signals;
 	float timeSinceSignalSent = 0f;
 	
+	AlertHub system;
+	
 	void Start () {
 		alarmLight = GetComponent<Light>();
 		signals = new List<AlarmSignal>();
@@ -32,11 +34,18 @@ public class ExternalAlertSystem : MonoBehaviour {
 		if (!useAlarmSystem) {
 			return;
 		}
-		AlertHub system = FindObjectOfType<AlertHub>();
-		if (system == null) {
+		AlertHub[] systems = FindObjectsOfType<AlertHub>();
+		if (systems == null) {
 			print ("Could not find alarm system!");
 			useAlarmSystem = false;
 			return;
+		}
+		float minDist = float.PositiveInfinity;
+		foreach (AlertHub foundSystem in systems) {
+			if (Vector3.Distance(foundSystem.transform.position, transform.position) < minDist) {
+				minDist = Vector3.Distance(foundSystem.transform.position, transform.position);
+				system = foundSystem;
+			}
 		}
 		GetComponent<LineRenderer>().SetPosition(0,transform.position);
 		connectingWireJoint = new Vector3(transform.position.x, transform.position.y, system.transform.position.z);
@@ -84,7 +93,6 @@ public class ExternalAlertSystem : MonoBehaviour {
 		if (!useAlarmSystem) {
 			return;
 		}
-		AlertHub system = FindObjectOfType<AlertHub>();
 		float wireJointTime = timeToAlarm * connectingWireJointRatio;
 		List<AlarmSignal> signalsToDestroy = new List<AlarmSignal>();
 		foreach (AlarmSignal signal in signals) {

@@ -69,8 +69,8 @@ public class PolyLaserParent : QInteractable {
 				lasers[i].SetPosition(1, hitInfo.point);
 				float distance = hitInfo.distance;
 				
-				GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
-				GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
+				lasers[i].GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
+				lasers[i].GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
 				
 				lasers[i].transform.rotation = Quaternion.LookRotation(hitInfo.point - origins[i] - transform.position);
 			} else {
@@ -113,6 +113,6 @@ public class PolyLaserParent : QInteractable {
 	}
 	
 	public override GameObject TagPrefab() {
-		return ObjectPrefabDefinitions.main.TagViewLaser;
+		return null;
 	}
 }
