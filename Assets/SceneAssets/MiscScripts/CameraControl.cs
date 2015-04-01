@@ -13,9 +13,8 @@ public class CameraControl : QInteractable {
 	private Camera myCam;
 	
 	//Alert
-	public bool alertTimerSet = false;
-	public float timeBetweenSignals = 0.5f;
-	public float timeSinceLastSignal = 0f;
+	float timeBetweenSignals = 0.5f;
+	float timeSinceLastSignal = 0f;
 	
 	//Stan-Visual
 	public MeshRenderer lens;
@@ -33,8 +32,9 @@ public class CameraControl : QInteractable {
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 		Transform temp1 = transform.Find("Camera");
 		alertLight = temp1.GetComponentInChildren<Light>();
-		color0 = alertLight.color;
+		color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 		color1 = color0;
+		green = new Color(200f/255f, 250/255f, 100f/255f, 0);
 		Transform temp = transform.Find("Lens");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
@@ -59,6 +59,7 @@ public class CameraControl : QInteractable {
 		}
 		Vector3 detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
 		if (detectionLocation != Vector3.down && timeSinceLastSignal >= timeBetweenSignals) {
+			timeBetweenSignals = 0.5f;
 			wasDetected = true;
 			GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
 			color1 = Color.red; //sets 2nd color to red so light will flash
@@ -70,6 +71,7 @@ public class CameraControl : QInteractable {
 	}
 	
 	//Uses child camera and raycast to see if Stan is in view
+	//Returns location of Stan if detected, and Vector3.down if not.
 	Vector3 detectStan () {
 		if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
 			RaycastHit hit;

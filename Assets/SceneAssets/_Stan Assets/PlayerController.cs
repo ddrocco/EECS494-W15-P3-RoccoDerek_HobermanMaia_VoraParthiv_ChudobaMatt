@@ -17,7 +17,9 @@ using InControl;
 
 public class PlayerController : MonoBehaviour
 {
-	public bool mouseLockOnPlay = true;
+	public bool useMouseLock = true;
+	bool mouseIsLocked = true;
+	
 	public static PlayerController player;
 	
 	private enum State
@@ -107,14 +109,19 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Tab)) {
-			mouseLockOnPlay = !mouseLockOnPlay;
-		}
-		if (mouseLockOnPlay) {
-			Cursor.lockState = CursorLockMode.Locked;
+		if (useMouseLock) {
+			if (Input.GetKeyDown(KeyCode.Tab)) {
+				mouseIsLocked = !mouseIsLocked;
+			}
+			if (mouseIsLocked) {
+				Cursor.lockState = CursorLockMode.Locked;
+			} else {
+				Cursor.lockState = CursorLockMode.Confined;
+			}
 		} else {
 			Cursor.lockState = CursorLockMode.Confined;
 		}
+		
 		if (GameController.PlayerDead)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -457,7 +464,12 @@ public class PlayerController : MonoBehaviour
 			obj.Interact();
 			return;
 		}
-		else if (interactiveObj.name.Contains("Foe")) {
+		else if (interactiveObj.GetComponent<Foe_Detection_Handler>() != null) {
+			Foe_Detection_Handler obj = interactiveObj.GetComponent<Foe_Detection_Handler>();
+			obj.Interact();
+			return;
+		}
+		else if (interactiveObj.GetComponent<Foe_Movement_Handler>() != null) {
 			Foe_Detection_Handler obj = interactiveObj.GetComponentInChildren<Foe_Detection_Handler>();
 			obj.Interact();
 			return;
@@ -469,7 +481,7 @@ public class PlayerController : MonoBehaviour
 			Qcontrol.ToggleCamera(loc.cameraNumber, true);
 
 			CameraControl control = interactiveObj.GetComponentInParent<CameraControl>();
-			control.enabled = true;
+			//control.enabled = true;
 			control.QIsWatching = true;
 			return;
 		}

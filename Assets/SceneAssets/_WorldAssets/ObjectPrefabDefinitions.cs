@@ -11,6 +11,8 @@ public class ObjectPrefabDefinitions : MonoBehaviour {
 		AlarmSignal,
 		SecurityCamera,
 		XWall, ZWall, Pillar, Ceiling;
+		
+	public Material alertConnection;
 	public static ObjectPrefabDefinitions main;
 	
 	void Awake() {

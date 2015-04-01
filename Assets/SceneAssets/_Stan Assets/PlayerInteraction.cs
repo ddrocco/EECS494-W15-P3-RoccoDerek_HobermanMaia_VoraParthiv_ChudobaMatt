@@ -68,7 +68,7 @@ public class PlayerInteraction : MonoBehaviour
 		
 		if (Physics.Raycast(ray, out hitInfo, detectionDistance, cullingMask))
 		{
-			if (hitInfo.transform.tag == "Interactive")
+			if (hitInfo.transform.tag == "Interactive" || hitInfo.transform.tag == "FoeBody")
 			{
 				player.canInteract = true;
 				player.interactiveObj = hitInfo.transform.gameObject;

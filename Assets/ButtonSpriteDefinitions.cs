@@ -3,10 +3,11 @@ using System.Collections;
 
 public class ButtonSpriteDefinitions : MonoBehaviour {
 	public Sprite
-			displayInvisible, displayVisible, displayHighlight,
+			displayInvisible, displayVisible, displayHighlight, nil,
 			bomb5, bomb4, bomb3, bomb2, bomb1, bombLit, bombDefault, bombDefused,
-			alarmSounding, alarmSilent,
+			alarmSounding, alarmEnabled, alarmSilent,
 			guardSounding, guardSilent,
+			heartbeatMonitor, heartbeatMonitorDisabled,
 			doorUnlocked, doorLocked,
 			laser, polyLaser,
 			files,

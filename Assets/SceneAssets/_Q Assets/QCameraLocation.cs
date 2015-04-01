@@ -17,8 +17,9 @@ public class QCameraLocation : MonoBehaviour
 	void Start() {
 		GameObject securityCamera = Instantiate(ObjectPrefabDefinitions.main.SecurityCamera);
 		securityCamera.transform.parent = transform;
-		securityCamera.transform.localPosition = Vector3.zero;
+		securityCamera.transform.localPosition = new Vector3(0, 0, -.2f);
 		securityCamera.transform.localEulerAngles = Vector3.zero;
+		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
 	}
 }
 

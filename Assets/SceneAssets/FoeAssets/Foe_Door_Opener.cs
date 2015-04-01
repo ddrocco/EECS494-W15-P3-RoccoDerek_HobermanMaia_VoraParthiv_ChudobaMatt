@@ -12,7 +12,7 @@ public class Foe_Door_Opener : MonoBehaviour {
 	
 	void OnTriggerEnter(Collider other) {
 		//DoorControl obj = parentDoor.GetComponent<DoorControl>();
-		if (other.gameObject.layer == Layerdefs.foe) {
+		if (other.tag == "FoeBody") {
 			++objectsColliding;
 			/*if (obj.isLocked != obj.expectState) { //test this
 				FoeAlertSystem.Alert(transform.position);
@@ -35,7 +35,7 @@ public class Foe_Door_Opener : MonoBehaviour {
 	}
 	
 	void OnTriggerExit(Collider other) {
-		if (other.gameObject.layer == Layerdefs.foe) {
+		if (other.tag == "FoeBody") {
 			--objectsColliding;
 			if (objectsColliding == 0) {
 				parentDoorAnimator.SetBool("isOpen", false);

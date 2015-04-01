@@ -3,17 +3,18 @@ using System.Collections;
 
 public class AlertHub : QInteractable {
 	public bool isActive = true;
+	public bool isSounding = false;
 	
 	//Juice:
-	/*bool isSounding = false;
-	float soundingTimer = 0f;
+	/*float soundingTimer = 0f;
 	float animationSpeed = 0.5f;*/
 	
 	public void Signal(Vector3 detectionLocation) {
 		if (isActive) {
-			//isSounding = true;
 			print ("INTRUDER DETECTED at " + detectionLocation + "!");
 			FoeAlertSystem.Alert(detectionLocation);
+			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
+			isSounding = true;
 		}
 		//Raise alarm!
 	}
@@ -42,11 +43,14 @@ public class AlertHub : QInteractable {
 	
 	public override void Trigger() {
 		isActive = !isActive;
+		isSounding = false;
 	}
 	
 	public override Sprite GetSprite() {
-		if (isActive) {
+		if (isSounding) {
 			return ButtonSpriteDefinitions.main.alarmSounding;
+		} else if (isActive) {
+			return ButtonSpriteDefinitions.main.alarmEnabled;
 		} else {
 			return ButtonSpriteDefinitions.main.alarmSilent;
 		}

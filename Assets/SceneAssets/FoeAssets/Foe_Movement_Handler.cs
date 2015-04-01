@@ -10,6 +10,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	public alertState state = alertState.patrolling;
 	public Vector3 currentDestination;
 	
+	float minNodeDistance = 0.5f;
+	
 	//Patrolling variables:
 	public List<int> defaultPath;
 	public int currentPathNode = 0;
@@ -44,6 +46,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 			if (transform.eulerAngles.x < 90f || transform.eulerAngles.x > 270f) {
 				transform.eulerAngles = transform.eulerAngles + Vector3.right * 10f;
 			}
+			return;
 		}
 		
 		if (stayFrozenOnLook) {
@@ -59,8 +62,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 				GetComponent<NavMeshAgent>().speed = speed;
 			}
 		}
-		if ((new Vector3(transform.position.x, 0, transform.position.z)
-		     - new Vector3(currentDestination.x, 0, currentDestination.z)).magnitude < 0.1f) {
+		if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), 
+				new Vector3(currentDestination.x, 0, currentDestination.z)) < minNodeDistance) {
 		     //If close to current destination
 			UpdateDestination();
 		}
@@ -101,6 +104,9 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 	
 	public void StartInvestigation(Vector3 destination) {
+		if (GetComponentInChildren<Foe_Detection_Handler>().isDead) {
+			return;
+		}
 		if (!originIsValid) {
 			originLocation = transform.position;
 		}

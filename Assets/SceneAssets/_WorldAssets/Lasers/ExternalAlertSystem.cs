@@ -47,10 +47,16 @@ public class ExternalAlertSystem : MonoBehaviour {
 				system = foundSystem;
 			}
 		}
-		GetComponent<LineRenderer>().SetPosition(0,transform.position);
+		LineRenderer connection = GetComponent<LineRenderer>();
+		connection.SetWidth(0.4f, 0.4f);
+		connection.material = ObjectPrefabDefinitions.main.alertConnection;
+		connection.SetPosition(0,transform.position);
 		connectingWireJoint = new Vector3(transform.position.x, transform.position.y, system.transform.position.z);
-		GetComponent<LineRenderer>().SetPosition(1,connectingWireJoint);
-		GetComponent<LineRenderer>().SetPosition(2,system.transform.position);
+       	connection.SetPosition(1,connectingWireJoint
+        	 + 0.1f * (transform.position - connectingWireJoint).normalized);
+       	connection.SetPosition(2,connectingWireJoint
+			+ 0.1f * (system.transform.position - connectingWireJoint).normalized);
+       	connection.SetPosition(3,system.transform.position);
 		float distance1 = Vector3.Distance(transform.position, connectingWireJoint);
 		connectingWireJointRatio = distance1 / (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position));
 	}
