@@ -51,9 +51,9 @@ public class BoxControl : QInteractable {
 			if (Vector3.Distance(transform.position, PlayerController.player.transform.position) < distFromBomb) {
 				GameController.PlayerDead = true;
 				GameController.GameOverMessage =
-					"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
+					"You set off a bomb";
 				QCamera.GetComponent<QUI>().showCamera(false);
-				QUI.setText("GAME OVER\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
+				QUI.setText("Game Over\nThe agent set off a bomb");
 			}
 			else {
 				FoeAlertSystem.Alert(transform.position);
