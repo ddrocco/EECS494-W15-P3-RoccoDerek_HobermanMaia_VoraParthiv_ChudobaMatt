@@ -272,11 +272,18 @@ public class QCameraControl : MonoBehaviour
 	
 	//Call AlertOn to cause an icon to flash red
 	public void AlertOn() {
+		print ("Alerted!");
 		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 0f);
+	}
+	
+	public void WarningOn() {
+		print ("Warned!");
+		color1 = new Color(60f/255f, 60f/255f, 0f/255f, 0f);
 	}
 	
 	//Call AlertOff to turn off the flashing alert
 	public void AlertOff() {
+		print ("All clear!");
 		color1 = Color.black;
 	}
 	

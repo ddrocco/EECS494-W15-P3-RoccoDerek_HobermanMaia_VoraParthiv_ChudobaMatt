@@ -5,7 +5,6 @@ public class AlertHub : QInteractable {
 	public bool isActive = true;
 	public GameObject mapCover1;
 	public GameObject mapCover2;
-	//public Camera QCamera;
 	
 	//Juice:
 	/*bool isSounding = false;
@@ -16,14 +15,16 @@ public class AlertHub : QInteractable {
 		if (isActive) {
 			//isSounding = true;
 			print ("Signal!");
+			QCamera.GetComponent<QCameraControl>().AlertOn();
 		}
 		//Raise alarm!
 	}
 	
 	void Update() {
-		/*if (isSounding) {
-			SoundAnimation();
-		}*/
+		if (!isActive) {
+			QCamera.GetComponent<QCameraControl>().AlertOff();
+		}
+		
 	}
 	
 	void SoundAnimation() {
@@ -53,4 +54,6 @@ public class AlertHub : QInteractable {
 			return ButtonSpriteDefinitions.main.alarmSilent;
 		}
 	}
+	
+	
 }
