@@ -1,20 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 public class World_Foe_Route_Node : MonoBehaviour {
-	static int global_route_id = 0;
-	public int routeNodeID = -1;
 	public bool pauseAndLookOnEntry = false;
 	
 	static public GameObject[] routeNodeList = new GameObject[32];
 	
+	//Set OBJECT NAME to anything followed by a NUM.  That NUM will be its ID.
+	//If NUM exceeds 32, feel free to change the size of routeNodeList.
+	
 	void Awake () {
-		if (routeNodeID == -1) {
-			routeNodeID = global_route_id;
-		}
-		routeNodeList[routeNodeID] = gameObject;
-		++global_route_id;
+		string id = Regex.Replace(name, @"[^\d]", "");
+		routeNodeList[int.Parse(id)] = gameObject;
 		
 		if (pauseAndLookOnEntry) {
 			GetComponent<Renderer>().material.color = Color.green;

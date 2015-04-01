@@ -23,6 +23,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	Foe_Glance_Command foeGlanceCommand;
 	Foe_Detection_Handler foeDetectionHandler;
 	
+	[HideInInspector]
 	public float speed;
 	public bool stayFrozenOnLook = false;
 	
