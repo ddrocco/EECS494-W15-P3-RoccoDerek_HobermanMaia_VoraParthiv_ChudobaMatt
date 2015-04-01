@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
-		if (useMouseLock) {
+		if (mouseMovement) {
 			if (Input.GetKeyDown(KeyCode.Tab)) {
 				mouseIsLocked = !mouseIsLocked;
 			}
@@ -428,7 +428,7 @@ public class PlayerController : MonoBehaviour
 		else if(interactiveObj.name == "InitialComputer"){
 			FindObjectOfType<QUI>().showCamera(true);
 			QUI.setText("Objective: Find the elevator key");
-			GameController.SendPlayerMessage("System access granted", 5);
+			GameController.SendPlayerMessage("System access granted:\nFind more terminals", 5);
 			return;
 		}
 		else if (interactiveObj.name == "Map1Computer") {
@@ -437,7 +437,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (interactiveObj.name == "Map2Computer") {
 			MapCoverControl.ToggleMapGroup(3, true);
-			GameController.SendPlayerMessage("Full system access granted", 5);
+			GameController.SendPlayerMessage("Full system access granted:\nGet to the elevator", 5);
 		}
 		else if (interactiveObj.name == "ElevatorDoor") {
 			ElevatorControl obj = interactiveObj.GetComponent<ElevatorControl>();

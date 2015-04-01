@@ -8,9 +8,9 @@ public class EndGameControl : MonoBehaviour {
 		if (other.tag == "Player") {
 			GameController.PlayerWon = true;
 			GameController.GameOverMessage =
-				"You won!  Congratulations!";
+				"Mission Success!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("WELL DONE\nYour partner survived. EXCELLENT WORK.");
+			QUI.setText("Mission Success\nWell done!");
 			Time.timeScale = 0;
 			return;
 		}
