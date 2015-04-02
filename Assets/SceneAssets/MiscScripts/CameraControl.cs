@@ -22,7 +22,7 @@ public class CameraControl : QInteractable {
 	public Light alertLight;
 	public Color color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color color1 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
-	public Color green = new Color(200f/255f, 250/255f, 100f/255f, 0);
+	public Color green/* = new Color(200f/255f, 250/255f, 100f/255f, 0)*/;
 
 	// Camera switching
 	private QCameraControl camControl;
@@ -35,7 +35,7 @@ public class CameraControl : QInteractable {
 		alertLight = temp1.GetComponentInChildren<Light>();
 		color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 		color1 = color0;
-		green = new Color(200f/255f, 250/255f, 100f/255f, 0);
+		//green = new Color(200f/255f, 250/255f, 100f/255f, 0);
 		Transform temp = transform.Find("Lens");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
