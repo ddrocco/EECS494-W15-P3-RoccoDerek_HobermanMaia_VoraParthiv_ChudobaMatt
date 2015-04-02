@@ -105,8 +105,8 @@ public class QCameraControl : MonoBehaviour
 		
 		float t = Mathf.PingPong(Time.time, 1f);
 		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
-		MapCoverControl.mapCover1.color = Color.Lerp (color0, color1, t);
-		MapCoverControl.mapCover2.color = Color.Lerp (color0, color1, t);
+		//MapCoverControl.mapCover1.color = Color.Lerp (color0, color1, t);
+		//MapCoverControl.mapCover2.color = Color.Lerp (color0, color1, t);
 		if (t < 0.1f) {
 			AttemptTurningOffAlert();
 		}

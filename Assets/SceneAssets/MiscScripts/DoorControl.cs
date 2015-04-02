@@ -31,7 +31,7 @@ public class DoorControl : QInteractable {
 	}
 	
 	public override void Start() {
-		expectState = isOpen;
+		expectState = isLocked;
 		base.Start();
 	}
 	
