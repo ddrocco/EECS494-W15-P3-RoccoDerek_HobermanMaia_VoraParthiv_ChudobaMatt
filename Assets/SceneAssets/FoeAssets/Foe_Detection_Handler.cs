@@ -166,6 +166,7 @@ public class Foe_Detection_Handler : QInteractable {
 			timeAttemptingCommunication = 0f;
 			GetComponentInParent<Rigidbody>().isKinematic = false;
 			GetComponentInParent<Rigidbody>().useGravity = true;
+			GetComponentInChildren<Light>().enabled = false;
 		}
 	}
 	
