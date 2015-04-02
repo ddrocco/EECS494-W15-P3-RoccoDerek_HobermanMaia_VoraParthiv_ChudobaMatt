@@ -12,7 +12,7 @@ public class AlertHub : QInteractable {
 	
 	public void Signal(Vector3 detectionLocation) {
 		if (isActive) {
-			print ("INTRUDER DETECTED at " + detectionLocation + "!");
+			//print ("INTRUDER DETECTED at " + detectionLocation + "!");
 			FoeAlertSystem.Alert(detectionLocation);
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			FindObjectOfType<QCameraControl>().AlertOn();

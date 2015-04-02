@@ -160,6 +160,7 @@ public class Foe_Detection_Handler : QInteractable {
 	public void Interact() {
 		if (timeSincePlayerSpotted > 1f) {
 			isDead = true;
+			taser.SetActive(false);
 			GetComponentInParent<NavMeshAgent>().enabled = false;
 			GetComponent<Foe_Glance_Command>().enabled = false;
 			timeAttemptingCommunication = 0f;

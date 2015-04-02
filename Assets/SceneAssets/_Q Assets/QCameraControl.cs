@@ -303,7 +303,6 @@ public class QCameraControl : MonoBehaviour
 	
 	//Call AlertOff to turn off the flashing alert
 	public void AlertOff() {
-		print ("off");
 		color1 = Color.black;
 		warning = alerting = false;
 	}
