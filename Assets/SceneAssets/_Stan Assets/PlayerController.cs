@@ -416,83 +416,13 @@ public class PlayerController : MonoBehaviour
 
 	void Interact()
 	{
-		if (!canInteract) return;
-		
-		if (interactiveObj.name == "BoxComputer") {
-			UnlockBoxes obj = interactiveObj.GetComponent<UnlockBoxes>();
-			obj.UnlockAll();
-			GameController.SendPlayerMessage("You have unlocked VIEWING BOXES for your partner!", 5);
-			//QUI.setText("Now you can view and interact with boxes from your Overview without your partner having to tag them!");
-			return;
+		if (canInteract) {
+			interactiveObj.SendMessage("Interact");
 		}
-		else if(interactiveObj.name == "InitialComputer"){
-			FindObjectOfType<QUI>().showCamera(true);
-			QUI.setText("Objective: Find the elevator key");
-			GameController.SendPlayerMessage("System access granted:\nFind more terminals", 5);
-			return;
-		}
-		else if (interactiveObj.name == "Map1Computer") {
-			MapCoverControl.ToggleMapGroup(2, true);
-			GameController.SendPlayerMessage("Additional access granted", 5);
-		}
-		else if (interactiveObj.name == "Map2Computer") {
-			MapCoverControl.ToggleMapGroup(3, true);
-			GameController.SendPlayerMessage("Full system access granted:\nGet to the elevator", 5);
-		}
-		else if (interactiveObj.name == "ElevatorDoor") {
-			ElevatorControl obj = interactiveObj.GetComponent<ElevatorControl>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.name.Contains("Door")) {
-			DoorControl obj = interactiveObj.GetComponent<DoorControl>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.name.Contains("Box")) {
-			BoxControl obj = interactiveObj.GetComponentInChildren<BoxControl>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.name.Contains("Paper")) {
-			InformationForPlayer obj = interactiveObj.GetComponent<InformationForPlayer>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.name.Contains("Filing")) {
-			FileCabinetControl obj = interactiveObj.GetComponentInChildren<FileCabinetControl>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.GetComponent<Foe_Detection_Handler>() != null) {
-			Foe_Detection_Handler obj = interactiveObj.GetComponent<Foe_Detection_Handler>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.GetComponent<Foe_Movement_Handler>() != null) {
-			Foe_Detection_Handler obj = interactiveObj.GetComponentInChildren<Foe_Detection_Handler>();
-			obj.Interact();
-			return;
-		}
-		else if (interactiveObj.transform.root.name.Contains("Q Elements")) {
-			// Enable camera
-			QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
-			QCameraLocation loc = interactiveObj.GetComponentInParent<QCameraLocation>();
-			Qcontrol.ToggleCamera(loc.cameraNumber, true);
-
-			CameraControl control = interactiveObj.GetComponentInParent<CameraControl>();
-			control.QIsWatching = true;
-			if (Qcontrol.warning) {
-				Qcontrol.AlertOff();
-			}
-			return;
-		}
-		else
-		{
+		/*else {
 			Debug.LogError("Interactive object " + interactiveObj.name + " is not yet implemented");
 			return;
-		}
-
+		}*/
 	}
 
 	void Tag()

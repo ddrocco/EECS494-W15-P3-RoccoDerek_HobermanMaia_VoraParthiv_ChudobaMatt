@@ -18,6 +18,12 @@ public class UnlockBoxes : MonoBehaviour {
 		}
 		print (boxes.Count);
 	}
+	
+	public void Interact() {
+		GameController.SendPlayerMessage("You have unlocked VIEWING BOXES for your partner!", 5);
+		//QUI.setText("Now you can view and interact with boxes from your Overview without your partner having to tag them!");
+		UnlockAll();
+	}
 
 	public void UnlockAll() {
 		foreach (GameObject box in boxes) {

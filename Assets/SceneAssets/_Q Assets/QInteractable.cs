@@ -21,12 +21,13 @@ public class QInteractable : MonoBehaviour {
 	
 	GameObject InteractionCanvas;
 	
-	
+	public bool qHasAccess = true;
 	public bool functionIsActive = false;
 	public bool displayIsActive = false;
 	public float cost = 0;
 	
 	Color activeColor = new Color(1f, 0.4f, 0.4f);
+	Color inactiveColor = new Color(0.2f, 0.2f, 0.2f);
 	
 	public GameObject tagView;
 	
@@ -58,7 +59,9 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	public void Toggle (bool toggleDisplay) {
-		if (toggleDisplay) {
+		if (!qHasAccess) {
+			return;
+		} else if (toggleDisplay) {
 			if (!displayIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, false)) {
 				Tag();
 				displayIsActive = true;
@@ -74,7 +77,9 @@ public class QInteractable : MonoBehaviour {
 				functionIsActive = !functionIsActive;
 				Trigger();
 				QInteractionButton.GetComponent<Image>().sprite = GetSprite();
-				if (functionIsActive) {
+				if (!qHasAccess) {
+					QInteractionButton.GetComponent<Image>().color = inactiveColor;
+				} else if (functionIsActive) {
 					QInteractionButton.GetComponent<Image>().color = activeColor;
 				} else {
 					QInteractionButton.GetComponent<Image>().color = Color.white;

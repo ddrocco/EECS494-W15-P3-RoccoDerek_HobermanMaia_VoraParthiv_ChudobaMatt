@@ -119,4 +119,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		
 		foeGlanceCommand.OverrideGlanceCommand();
 	}
+	
+	public void Interact() {
+		GetComponentInChildren<Foe_Detection_Handler>().Interact();
+	}
 }

@@ -117,6 +117,18 @@ public class CameraControl : QInteractable {
 		camObj.ToggleCamera(obj.ID, true);
 	}
 	
+	public void Interact() {
+		// Enable camera
+		QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
+		QCameraLocation loc = GetComponentInParent<QCameraLocation>();
+		Qcontrol.ToggleCamera(loc.cameraNumber, true);
+		
+		QIsWatching = true;
+		if (Qcontrol.warning) {
+			Qcontrol.AlertOff();
+		}
+	}
+	
 	public override void Trigger () {
 		camControl.ChangeCamera(camLocation.cameraNumber);
 		displayIsActive = false;

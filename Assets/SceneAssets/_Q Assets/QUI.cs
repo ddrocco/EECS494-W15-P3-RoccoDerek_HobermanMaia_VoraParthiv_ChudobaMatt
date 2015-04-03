@@ -34,6 +34,12 @@ public class QUI : MonoBehaviour {
 		textoutput.text = textcontents;
 		controlstextoutput.text = controlstextcontents;
 	}
+	
+	public void Interact() {
+		showCamera(true);
+		QUI.setText("Objective: Find the elevator key");
+		GameController.SendPlayerMessage("System access granted:\nFind more terminals", 5);
+	}
 
 	public static void setText(string newtext){
 		textcontents = newtext;
