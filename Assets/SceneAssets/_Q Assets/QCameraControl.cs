@@ -292,6 +292,7 @@ public class QCameraControl : MonoBehaviour
 		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 1f);
 		alerting = true;
 		warning = false;
+		GetComponent<AudioSource>().enabled = true;
 	}
 	
 	//Call AlertOn to cause an icon to flash yellow
@@ -305,6 +306,7 @@ public class QCameraControl : MonoBehaviour
 	public void AlertOff() {
 		color1 = Color.black;
 		warning = alerting = false;
+		GetComponent<AudioSource>().enabled = false;
 	}
 	
 

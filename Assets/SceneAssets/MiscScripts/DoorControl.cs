@@ -1,5 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
+
+public enum DoorDirection {
+	x,
+	z
+};
 
 public class DoorControl : QInteractable {
 	public Animator anim;
@@ -11,6 +17,8 @@ public class DoorControl : QInteractable {
 	private bool isOpen = false;
 	private float closeTimer;
 	private const float closeTimerVal = 2f;
+	
+	public DoorDirection direction;
 	
 	void Awake () {
 		anim = GetComponentInParent<Animator>();
@@ -57,7 +65,8 @@ public class DoorControl : QInteractable {
 			}
 			anim.SetBool("isOpen", true);
 			isOpen = true;
-			closeDistance = Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position) + 1f;
+			closeDistance = Vector3.Distance(transform.position,
+					FindObjectOfType<PlayerController>().transform.position) + 1f;
 			return;
 		} else {
 			anim.SetBool("isOpen", false);
@@ -68,10 +77,10 @@ public class DoorControl : QInteractable {
 	
 	void Update() {
 		if (isOpen) {
-			if (Vector3.Distance(transform.position, FindObjectOfType<PlayerController>().transform.position) > closeDistance) {
+			if (Vector3.Distance(transform.position,
+					FindObjectOfType<PlayerController>().transform.position) > closeDistance) {
 				// Keep door open until timer runs out
-				if (closeTimer < 0f)
-				{
+				if (closeTimer < 0f) {
 					closeTimer = closeTimerVal;
 					isOpen = false;
 					anim.SetBool("isOpen", false);
@@ -80,8 +89,7 @@ public class DoorControl : QInteractable {
 					closeTimer -= Time.deltaTime;
 
 			}
-			else
-			{
+			else {
 				// Reset timer when you get close to door again
 				closeTimer = closeTimerVal;
 			}

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class Foe_Door_Opener : MonoBehaviour {
@@ -6,8 +7,26 @@ public class Foe_Door_Opener : MonoBehaviour {
 	public GameObject parentDoor;
 	int objectsColliding = 0;
 	
+	bool unlockInProgress = false;
+	float timeSpentUnlocking = 0;
+	float unlockTime = 5f;
+	Vector3 unlockerPosition;
+	
 	void Start() {
 		parentDoorAnimator = parentDoor.GetComponentInParent<Animator>();
+	}
+	
+	void Update() {
+		if (unlockInProgress) {
+			timeSpentUnlocking += Time.deltaTime * objectsColliding;
+			if (timeSpentUnlocking >= unlockTime) {
+				OpenDoor(unlockerPosition);
+				parentDoor.GetComponent<DoorControl>().isLocked = parentDoor.GetComponent<DoorControl>().expectState;
+				parentDoor.GetComponent<DoorControl>().QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
+			}
+		} else {
+			timeSpentUnlocking = 0;
+		}
 	}
 	
 	void OnTriggerEnter(Collider other) {
@@ -18,23 +37,12 @@ public class Foe_Door_Opener : MonoBehaviour {
 				FoeAlertSystem.Alert(transform.position);
 			}*/
 			if (!parentDoor.GetComponent<DoorControl>().isLocked) {
-				if (parentDoor.name == "zDoorHinge") {//parentDoor.transform.rotation.y == 0) { //zDoor
-					if (other.transform.position.x < transform.position.x) { //Open south
-						parentDoorAnimator.SetBool("openSouth", true);
-					} else { //Open North
-						parentDoorAnimator.SetBool("openSouth", false);
-					}
-				} else if (parentDoor.name == "xDoorHinge") { //xDoor
-					if (other.transform.position.z < transform.position.z) { //Open east
-						parentDoorAnimator.SetBool("openEast", true);
-					} else { //Open west
-						parentDoorAnimator.SetBool("openEast", false);
-					}
-				}
-				parentDoorAnimator.SetBool("isOpen", true);
+				OpenDoor(other.transform.position);
 			}
 			else {
-				//other.gameObject.GetComponent.
+				unlockInProgress = true;
+				unlockerPosition = other.transform.position;
+				parentDoor.GetComponent<DoorControl>().QInteractionButton.GetComponent<QInteractionUI>().InUseOn();
 			}
 		}
 	}
@@ -44,7 +52,27 @@ public class Foe_Door_Opener : MonoBehaviour {
 			--objectsColliding;
 			if (objectsColliding == 0) {
 				parentDoorAnimator.SetBool("isOpen", false);
+				unlockInProgress = false;
 			}
 		}
+	}
+	
+	void OpenDoor(Vector3 guardPosition) {
+		if (parentDoor.GetComponent<DoorControl>().direction == DoorDirection.z) {//parentDoor.transform.rotation.y == 0) { //zDoor
+			if (guardPosition.x < transform.position.x) { //Open south
+				parentDoorAnimator.SetBool("openSouth", true);
+			} else { //Open North
+				parentDoorAnimator.SetBool("openSouth", false);
+			}
+		} else if (parentDoor.GetComponent<DoorControl>().direction == DoorDirection.x) { //xDoor
+			if (guardPosition.z < transform.position.z) { //Open east
+				parentDoorAnimator.SetBool("openEast", true);
+			} else { //Open west
+				parentDoorAnimator.SetBool("openEast", false);
+			}
+		} else {
+			print ("Door hinge dimension invalid");
+		}
+		parentDoorAnimator.SetBool("isOpen", true);
 	}
 }

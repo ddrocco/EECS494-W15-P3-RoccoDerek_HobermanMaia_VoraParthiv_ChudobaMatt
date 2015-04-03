@@ -17,7 +17,6 @@ public class AlertHub : QInteractable {
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			FindObjectOfType<QCameraControl>().AlertOn();
 		}
-		//Raise alarm!
 	}
 	
 	void Update() {
