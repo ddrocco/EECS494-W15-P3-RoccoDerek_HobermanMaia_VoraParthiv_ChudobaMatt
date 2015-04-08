@@ -20,6 +20,9 @@ public class DoorControl : QInteractable {
 	
 	public DoorDirection direction;
 	
+	public int lockGroup = 0;
+	bool lockGroupActive = false;
+	
 	void Awake () {
 		anim = GetComponentInParent<Animator>();
 		if (foeDoorOpenerPrefab != null) {
@@ -34,7 +37,6 @@ public class DoorControl : QInteractable {
 			                                       transform.position /*+ offset*/, Quaternion.identity) as GameObject;
 			foeDoorOpener.GetComponent<Foe_Door_Opener>().parentDoor = gameObject;
 		}
-
 		closeTimer = closeTimerVal;
 	}
 	
@@ -97,6 +99,9 @@ public class DoorControl : QInteractable {
 	}
 	
 	public override void Trigger() {
+		if (lockGroupActive) {
+			return;
+		}
 		isLocked = !isLocked;
 	}
 	
@@ -105,6 +110,19 @@ public class DoorControl : QInteractable {
 			return ButtonSpriteDefinitions.main.doorLocked;
 		} else {
 			return ButtonSpriteDefinitions.main.doorUnlocked;
+		}
+	}
+	
+	public void SetLockState(int lockGroupValue, bool lockGroupState) {
+		if (lockGroup != lockGroupValue) {
+			return;
+		}
+		lockGroupActive = lockGroupState;
+		if (lockGroupActive) {
+			isLocked = true;
+			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
+		} else {
+			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 		}
 	}
 }

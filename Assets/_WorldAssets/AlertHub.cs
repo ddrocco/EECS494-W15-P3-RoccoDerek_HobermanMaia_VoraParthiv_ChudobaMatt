@@ -6,6 +6,8 @@ public class AlertHub : QInteractable {
 	public static bool isSounding = false;
 	public bool wasSounding = false;
 	
+	public int lockdownGroup = 1;
+	
 	//Juice:
 	/*float soundingTimer = 0f;
 	float animationSpeed = 0.5f;*/
@@ -16,12 +18,14 @@ public class AlertHub : QInteractable {
 			FoeAlertSystem.Alert(detectionLocation);
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
 			FindObjectOfType<QCameraControl>().AlertOn();
+			SetLockdownState(true);
 		}
 	}
 	
 	void Update() {
 		if (!isSounding) {
 			if (wasSounding) {
+				SetLockdownState(false);
 				FindObjectOfType<QCameraControl>().AlertOff();
 				wasSounding = false;
 			}
@@ -64,5 +68,9 @@ public class AlertHub : QInteractable {
 		}
 	}
 	
-	
+	void SetLockdownState(bool newLockdownState) {
+		foreach(DoorControl door in FindObjectsOfType<DoorControl>()) {
+			door.SetLockState(lockdownGroup, newLockdownState);
+		}
+	}
 }

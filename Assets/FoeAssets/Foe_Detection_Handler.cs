@@ -31,6 +31,8 @@ public class Foe_Detection_Handler : QInteractable {
 	
 	public bool isDead = false;
 	bool playerDisabled = false;
+	
+	public int jurisdictionZone;
 
 	int cullingMask;
 

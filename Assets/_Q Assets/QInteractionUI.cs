@@ -14,6 +14,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	Color color1 = Color.white;
 	GameObject displayIconObject;
 	public bool hasDisplayIcon;
+	bool buttonEnabled = true;
 
 	// Use this for initialization
 	void Start () {
@@ -43,12 +44,29 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	}
 	
 	public void OnPointerClick(PointerEventData mouseData) {
+		if (!buttonEnabled) {
+			return;
+		}
+		
 		if (mouseData.button == PointerEventData.InputButton.Left) {
 			controlledObject.Toggle(false);
 		}
 		if (mouseData.button == PointerEventData.InputButton.Right) {
 			controlledObject.Toggle(true);
 			displayIcon.sprite = controlledObject.GetDisplayStatus();
+		}
+	}
+	
+	public void SetEnabled(bool newEnabledState) {
+		buttonEnabled = newEnabledState;
+		if (buttonEnabled) {
+			color0 = Color.white;
+			if (color1 == Color.gray) {
+				color1 = Color.white;
+			}
+		} else {
+			color0 = Color.gray;
+			color1 = Color.gray;
 		}
 	}
 	

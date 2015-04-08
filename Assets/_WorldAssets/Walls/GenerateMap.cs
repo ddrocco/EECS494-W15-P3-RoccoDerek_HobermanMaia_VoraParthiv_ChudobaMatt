@@ -10,13 +10,18 @@ public class GenerateMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tiles = new List<int[]>();
-		tiles.Add (new int[] {0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,1,1,1,1,0});
-		tiles.Add (new int[] {0,0,1,1,1,1,0});
-		tiles.Add (new int[] {0,0,1,1,1,1,0});
-		tiles.Add (new int[] {0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,0,2,0,0,2,0,0});
+		tiles.Add (new int[] {0,2,1,1,1,1,2,0});
+		tiles.Add (new int[] {0,0,1,1,1,1,0,0});
+		tiles.Add (new int[] {0,0,1,1,1,1,0,0});
+		tiles.Add (new int[] {0,2,1,1,1,1,2,0});
+		tiles.Add (new int[] {0,0,2,0,0,2,0,0});
+		tiles.Add (new int[] {0,0,0,0,1,1,0,0});
+		tiles.Add (new int[] {0,0,0,0,1,1,0,0});
+		tiles.Add (new int[] {0,0,2,2,1,1,0,0});
+		tiles.Add (new int[] {0,0,2,2,1,1,0,0});
+		tiles.Add (new int[] {0,0,0,0,0,0,0,0});
 		zDim = tiles.Count - 1;
 		xDim = tiles[0].Length - 1;
 	
