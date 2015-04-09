@@ -64,7 +64,6 @@ public class CameraControl : QInteractable {
 		Vector3 detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
 		if (detectionLocation != Vector3.down) {
 			if (!wasDetected) {
-				//print ("got here");
 				camControl.WarningOn();
 				wasDetected = true;
 				color1 = Color.red; //sets 2nd color to red so light will flash
