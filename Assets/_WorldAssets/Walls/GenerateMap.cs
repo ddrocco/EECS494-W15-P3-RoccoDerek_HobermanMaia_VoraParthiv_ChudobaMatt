@@ -49,7 +49,7 @@ public class GenerateMap : MonoBehaviour {
 	void PlaceZWall(int x, int z) {
 		GameObject newXWall = Instantiate(ObjectPrefabDefinitions.main.ZWall) as GameObject;
 		newXWall.transform.parent = transform;
-		newXWall.transform.position = new Vector3(2 + 4 * x, 2.25f, 4 * z);
+		newXWall.transform.position = new Vector3(2 + 4 * x, 1.75f, 4 * z);
 		HandlePillars(x, z);
 		HandlePillars(x, z + 1);
 	}
@@ -57,7 +57,7 @@ public class GenerateMap : MonoBehaviour {
 	void PlaceXWall(int x, int z) {
 		GameObject newXWall = Instantiate(ObjectPrefabDefinitions.main.XWall) as GameObject;
 		newXWall.transform.parent = transform;
-		newXWall.transform.position = new Vector3(4 * x, 2.25f, 2 + 4 * z);
+		newXWall.transform.position = new Vector3(4 * x, 1.75f, 2 + 4 * z);
 		HandlePillars(x - 1, z + 1);
 		HandlePillars(x, z + 1);
 	}
@@ -68,14 +68,14 @@ public class GenerateMap : MonoBehaviour {
 		} else {
 			GameObject newPillar = Instantiate(ObjectPrefabDefinitions.main.Pillar) as GameObject;
 			newPillar.transform.parent = transform;
-			newPillar.transform.position = new Vector3(2 + 4 * x, 2.25f, -2 + 4 * z);
+			newPillar.transform.position = new Vector3(2 + 4 * x, 1.75f, -2 + 4 * z);
 		}
 	}
 	
 	void PlaceCeiling(int x, int z) {
 		GameObject newCeiling = Instantiate(ObjectPrefabDefinitions.main.Ceiling) as GameObject;
 		newCeiling.transform.parent = transform;
-		newCeiling.transform.position = new Vector3(4 * x, 4.625f, 4 * z);
+		newCeiling.transform.position = new Vector3(4 * x, 3.625f, 4 * z);
 	}
 	
 	//z: -4 1.5 2

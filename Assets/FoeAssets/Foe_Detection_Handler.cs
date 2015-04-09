@@ -170,7 +170,7 @@ public class Foe_Detection_Handler : QInteractable {
 			GetComponentInParent<Rigidbody>().useGravity = true;
 			GetComponentInChildren<Light>().enabled = false;
 			
-			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
+			//AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
 		}
 	}
 	
