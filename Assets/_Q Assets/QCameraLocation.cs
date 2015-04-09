@@ -12,6 +12,7 @@ public class QCameraLocation : MonoBehaviour
 	public bool usable = false;
 	public bool Offline;
 	public Quaternion start, finish;
+	public bool rotate;
 	
 	[HideInInspector]
 	public int cameraNumber;
@@ -34,13 +35,14 @@ public class QCameraLocation : MonoBehaviour
 			finish = Quaternion.Euler(transform.rotation.eulerAngles.x,
 			                          transform.rotation.eulerAngles.y + 30,
 			                          transform.rotation.eulerAngles.z);
-			
 		}
 	}
 	
 	void Update() {
-		float t = Mathf.PingPong(Time.time/4, 1f);
-		transform.rotation = Quaternion.Lerp(start, finish, t);
+		if (rotate) {
+			float t = Mathf.PingPong(Time.time/4, 1f);
+			transform.rotation = Quaternion.Lerp(start, finish, t);
+		}
 	}
 }
 
