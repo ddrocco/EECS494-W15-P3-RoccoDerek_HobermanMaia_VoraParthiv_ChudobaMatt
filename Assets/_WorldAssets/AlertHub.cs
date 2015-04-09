@@ -5,12 +5,7 @@ public class AlertHub : QInteractable {
 	public bool isActive = true;
 	public static bool isSounding = false;
 	public bool wasSounding = false;
-	
 	public int lockdownGroup = 1;
-	
-	//Juice:
-	/*float soundingTimer = 0f;
-	float animationSpeed = 0.5f;*/
 	
 	public void Signal(Vector3 detectionLocation) {
 		if (isActive) {
@@ -29,28 +24,11 @@ public class AlertHub : QInteractable {
 				FindObjectOfType<QCameraControl>().AlertOff();
 				wasSounding = false;
 			}
-		}
-		else {
+		} else {
 			if (!wasSounding) {
 				wasSounding = true;
 			}
 		}
-	}
-	
-	void SoundAnimation() {
-		/*if (soundingTimer > animationSpeed) {
-			soundingTimer -= animationSpeed;
-			if (QInteractionButton.transform.localEulerAngles != new Vector3(0, 45, 0)) {
-				QInteractionButton.transform.localEulerAngles = new Vector3(0, 45, 0);
-				if (QInteractionButton.transform.localScale != new Vector3(1, 2, 1)) {
-					QInteractionButton.transform.localScale = new Vector3(1, 2, 1);
-				} else {
-					QInteractionButton.transform.localScale = new Vector3(2, 1, 1);
-				}
-			} else {
-				QInteractionButton.transform.localEulerAngles = new Vector3(0, -45, 0);
-			}
-		}*/
 	}
 	
 	public override void Trigger() {

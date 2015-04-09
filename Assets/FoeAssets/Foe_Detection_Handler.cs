@@ -1,13 +1,14 @@
  using UnityEngine;
 using System.Collections;
 
-public class Foe_Detection_Handler : QInteractable {
+public class Foe_Detection_Handler : MonoBehaviour {
 	public int currentRoom;
 	public GameObject taser;
 	
 	//For haphazard use:
 	private Vector3 displacement;
-	private float visualDetectionValue, audialDetectionValue;
+	private float audialDetectionValue;
+	private bool playerSpotted = false;
 	public static float audioMultiplier = 0f;
 	public float visionWidth = 75f;
 	
@@ -29,14 +30,11 @@ public class Foe_Detection_Handler : QInteractable {
 	float timeAttemptingCommunication = 0f;
 	float timeToCommunicate = 5f;
 	
-	public bool isDead = false;
-	bool playerDisabled = false;
-	
 	public int jurisdictionZone;
 
 	int cullingMask;
 
-	public override void Start () {	
+	void Start () {	
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
 		taser.transform.parent = transform;
 		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
@@ -44,33 +42,21 @@ public class Foe_Detection_Handler : QInteractable {
 		taser.SetActive(false);
 		
 		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;
-		
-		/*cullingMask = (1 << Layerdefs.wall) + (1 << Layerdefs.floor)
-				+ (1 << Layerdefs.q_display) + (1 << Layerdefs.prop);*/
-		
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 		
 		cullingMask = (1 << Layerdefs.floor) + (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.prop)
 				+ (1 << Layerdefs.foe);
-		
-		base.Start();
 	}
 	
 	void Update () {
 		if (movementHandler == null) {
 			movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 		}
-		//GetCurrentRoom();
-		if (!isDead) {
-			displacement = PlayerController.player.transform.position - transform.position;
-			CalculateVisualDetection();
-			CalculateAudialDetection();
-			React();
-		} else {
-			if (canCommunicate) {
-				HeartbeatMonitor();
-			}
-		}
+		
+		displacement = PlayerController.player.transform.position - transform.position;
+		CalculateVisualDetection();
+		CalculateAudialDetection();
+		React();
 	}
 	
 	void CalculateVisualDetection() {
@@ -86,14 +72,20 @@ public class Foe_Detection_Handler : QInteractable {
 			if (Physics.Raycast(transform.position, direction, out hit, distance, cullingMask)) {
 				if (hit.collider.CompareTag("Player") == true) {
 					detected = true;
-				} else detected = false;
-			} else detected = false;
-		} else detected = false;
+				} else {
+					detected = false;
+				}
+			} else {
+				detected = false;
+			}
+		} else {
+			detected = false;
+		}
 		
 		if (detected) {
-			visualDetectionValue = 2f;
+			playerSpotted = true;
 		} else {
-			visualDetectionValue = 0;
+			playerSpotted = false;
 		}
 	}
 	
@@ -102,12 +94,12 @@ public class Foe_Detection_Handler : QInteractable {
 	}
 	
 	void React() {
-		Debug_Foe_Alert_Status.visualDetectionValue = visualDetectionValue;
+		Debug_Foe_Alert_Status.playerSpotted = playerSpotted;
 		Debug_Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
 		timeSincePlayerSpotted += Time.deltaTime;
 
-		if (visualDetectionValue >= 2f) {
+		if (playerSpotted) {
 			PlayerSpotted();
 			MoveToPlayer();
 			if (canCommunicate) {
@@ -136,7 +128,7 @@ public class Foe_Detection_Handler : QInteractable {
 	
 	public void MoveToPlayer() {
 		isAttentive = true;
-		if (!isDead && movementHandler != null){
+		if (movementHandler != null){
 			movementHandler.StartInvestigation(PlayerController.player.transform.position);
 		}
 	}
@@ -150,60 +142,21 @@ public class Foe_Detection_Handler : QInteractable {
 		}
 	}
 	
-	void HeartbeatMonitor() {
-		timeAttemptingCommunication += Time.deltaTime;
-		if (timeAttemptingCommunication > timeToCommunicate) {
-			FindObjectOfType<HeartbeatMonitor>().ReceiveDistressCall(transform.position);
-			canCommunicate = false;
-		}
-	}	
-	
 	//Player kills guard
 	public void Interact() {
 		if (timeSincePlayerSpotted > 1f) {
-			isDead = true;
+			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
+			
 			taser.SetActive(false);
-			GetComponentInParent<NavMeshAgent>().enabled = false;
-			GetComponent<Foe_Glance_Command>().enabled = false;
-			timeAttemptingCommunication = 0f;
 			GetComponentInParent<Rigidbody>().isKinematic = false;
 			GetComponentInParent<Rigidbody>().useGravity = true;
+			Vector2 randRotation = 2500f * Random.insideUnitCircle.normalized;
+			GetComponentInParent<Rigidbody>().AddTorque(new Vector3(randRotation.x, 0, randRotation.y));
+			GetComponentInParent<NavMeshAgent>().enabled = false;
+			GetComponentInParent<Foe_Movement_Handler>().enabled = false;
 			GetComponentInChildren<Light>().enabled = false;
-			
-			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
-		}
-	}
-	
-	public override void Trigger() {
-		if (!isDead) {
-			if (canCommunicate) {
-				canCommunicate = false;
-				GameController.SendPlayerMessage("", 5);
-				return;
-			} else {
-				canCommunicate = true;
-				GameController.SendPlayerMessage("", 5);
-				return;
-			}
-		} else {
-			if (canCommunicate) {
-				timeToCommunicate = float.MaxValue;
-				canCommunicate = false;
-				playerDisabled = true;
-				GameController.SendPlayerMessage("Your partner has disabled the guard's heartbeat monitor!", 5);
-			} else if (playerDisabled) {
-				GameController.SendPlayerMessage("", 5);
-			} else {
-				GameController.SendPlayerMessage("", 5);
-			}
-		}
-	}
-	
-	public override Sprite GetSprite() {
-		if (canCommunicate) {
-			return ButtonSpriteDefinitions.main.guardSounding;
-		} else {
-			return ButtonSpriteDefinitions.main.guardSilent;
+			GetComponent<Foe_Glance_Command>().enabled = false;
+			enabled = false;
 		}
 	}
 }

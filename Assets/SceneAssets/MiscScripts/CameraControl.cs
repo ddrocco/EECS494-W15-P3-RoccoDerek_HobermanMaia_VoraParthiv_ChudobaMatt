@@ -83,8 +83,7 @@ public class CameraControl : QInteractable {
 	
 	void AlarmDisable() {
 		foreach (Foe_Detection_Handler foe in FindObjectsOfType<Foe_Detection_Handler>()) {
-			if (foe.GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.investigating
-			    && !foe.isDead) {
+			if (foe.GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.investigating) {
 				
 			}
 		}

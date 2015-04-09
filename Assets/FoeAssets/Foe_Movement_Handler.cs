@@ -41,14 +41,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate() {
-		if (foeDetectionHandler.isDead || !foeDetectionHandler.enabled) {
-			if (transform.eulerAngles.x < 90f || transform.eulerAngles.x > 270f) {
-				transform.eulerAngles = transform.eulerAngles + Vector3.right * 10f;
-			}
-			return;
-		}
-		
+	void FixedUpdate() {		
 		if (stayFrozenOnLook) {
 			GetComponent<NavMeshAgent>().speed = 0;
 			if (!foeGlanceCommand.isLookingAround) {
@@ -104,9 +97,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 	
 	public void StartInvestigation(Vector3 destination) {
-		if (GetComponentInChildren<Foe_Detection_Handler>().isDead) {
-			return;
-		}
 		if (!originIsValid) {
 			originLocation = transform.position;
 		}

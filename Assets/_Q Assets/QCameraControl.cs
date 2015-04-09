@@ -107,10 +107,10 @@ public class QCameraControl : MonoBehaviour
 		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
 		//MapCoverControl.mapCover1.color = Color.Lerp (color0, color1, t);
 		//MapCoverControl.mapCover2.color = Color.Lerp (color0, color1, t);
-		if (t < 0.1f) {
+/*		if (t < 0.1f) {
 			AttemptTurningOffAlert();
 		}
-		
+*/		
 		GetCameraInput();		
 		UpdateCameraPosition();
 		SwitchToOverview();
@@ -278,14 +278,13 @@ public class QCameraControl : MonoBehaviour
 		}
 	}
 	
-	void AttemptTurningOffAlert() {
+	/*void AttemptTurningOffAlert() {
 		foreach (Foe_Movement_Handler foe in FindObjectsOfType<Foe_Movement_Handler>()) {
-			if (foe.state == Foe_Movement_Handler.alertState.investigating
-		    && !foe.GetComponentInChildren<Foe_Detection_Handler>().isDead && !foe.isReturning) {
+			if (foe.state == Foe_Movement_Handler.alertState.investigating && !foe.isReturning) {
 				return;
 			}
 		}
-	}
+	}*/
 	
 	//Call AlertOn to cause an icon to flash red
 	public void AlertOn() {
