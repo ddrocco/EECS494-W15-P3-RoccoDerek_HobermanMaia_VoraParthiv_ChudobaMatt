@@ -61,6 +61,13 @@ public class QCameraOverview : QCameraLocation
 
 	void MoveCamera()
 	{
+		if(Input.GetKey(KeyCode.Space)) {
+			Vector3 playerPos = FindObjectOfType<PlayerController>().transform.position;
+			transform.position = new Vector3(playerPos.x, transform.position.y, playerPos.z);
+			cam.transform.position = transform.position;
+			return;
+		}
+		
 		Vector3 pos = transform.position;
 		pos.x += (dir.x * panSpeed * Time.fixedDeltaTime);
 		pos.z += (dir.z * panSpeed * Time.fixedDeltaTime);

@@ -11,7 +11,7 @@ public class MapCoverControl : MonoBehaviour
 	private static List<QInteractable> group3;
 	public static Image mapCover1;
 	public static Image mapCover2;
-
+	
 	void Start()
 	{
 		groups = new List<List<QInteractable>>();
@@ -50,7 +50,7 @@ public class MapCoverControl : MonoBehaviour
 	}
 
 	public static void ToggleMapGroup(int group, bool state)
-	{
+	{		
 		if (group < 1 || group > 3)
 		{
 			Debug.LogError("ToggleMapGroup(int, bool) int must be between 1 and 3");

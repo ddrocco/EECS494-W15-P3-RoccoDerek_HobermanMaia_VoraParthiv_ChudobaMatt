@@ -4,8 +4,12 @@ using System.Collections;
 public class ComputerConsole : MonoBehaviour {
 	public int mapValue;
 	
+	public bool debugComputer = false;
+	
 	public void Interact() {
-		MapCoverControl.ToggleMapGroup(mapValue, true);
+		if (!debugComputer) {
+			MapCoverControl.ToggleMapGroup(mapValue, true);
+		}
 		OtherAction(mapValue);
 	}
 	
