@@ -152,6 +152,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInParent<Rigidbody>().useGravity = true;
 			Vector2 randRotation = 2500f * Random.insideUnitCircle.normalized;
 			GetComponentInParent<Rigidbody>().AddTorque(new Vector3(randRotation.x, 0, randRotation.y));
+			GetComponentInParent<Rigidbody>().mass = 0.1f;
 			GetComponentInParent<NavMeshAgent>().enabled = false;
 			GetComponentInParent<Foe_Movement_Handler>().enabled = false;
 			GetComponentInChildren<Light>().enabled = false;
