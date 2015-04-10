@@ -144,6 +144,9 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	//Player kills guard
 	public void Interact() {
+		if (!enabled) {
+			return;
+		}
 		if (timeSincePlayerSpotted > 1f) {
 			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
 			

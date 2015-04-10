@@ -21,7 +21,7 @@ public class DoorControl : QInteractable {
 	Vector3 basePosition, baseForward, baseRight;
 	int cullGuards, cullStan;
 	float openDistance = 1.5f;
-	float closeDistance = 2.4f;
+	float closeDistance = 3f;
 	
 	RaycastHit hitInfo;
 	List<Ray> raysRight = new List<Ray>();
@@ -32,8 +32,8 @@ public class DoorControl : QInteractable {
 	float timeToUnlock = 5f;
 	float timeUntilUnlocked = 5f;
 	
-	void Awake () {
-		basePosition = transform.position;
+	void Awake () {		
+		basePosition = transform.position + new Vector3(0, -0.5f, 0);
 		baseForward = transform.forward / 1.5f;
 		baseRight = transform.right;
 		cullGuards = (1 << Layerdefs.foe);
@@ -46,12 +46,20 @@ public class DoorControl : QInteractable {
 		raysLeft.Add(new Ray(basePosition + baseForward,	-baseRight * openDistance));
 		raysLeft.Add(new Ray(basePosition - baseForward,	-baseRight * openDistance));
 		
-		raysClose.Add(new Ray(basePosition - baseRight * closeDistance,					baseRight * closeDistance * 2));
-		raysClose.Add(new Ray(basePosition - baseRight * closeDistance + baseForward,	baseRight * closeDistance * 2));
-		raysClose.Add(new Ray(basePosition - baseRight * closeDistance - baseForward,	baseRight * closeDistance * 2));
-		raysClose.Add(new Ray(basePosition + baseRight * closeDistance,					-baseRight * closeDistance * 2));
-		raysClose.Add(new Ray(basePosition + baseRight * closeDistance + baseForward,	-baseRight * closeDistance * 2));
-		raysClose.Add(new Ray(basePosition + baseRight * closeDistance - baseForward,	-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance,						baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance + baseForward,		baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance - baseForward,		baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance + 2 * baseForward,	baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance - 2 * baseForward,	baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance + 3 * baseForward,	baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition - baseRight * closeDistance - 3 * baseForward,	baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance,						-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance + baseForward,		-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance - baseForward,		-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance + 2 * baseForward,	-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance - 2 * baseForward,	-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance + 3 * baseForward,	-baseRight * closeDistance * 2));
+		raysClose.Add(new Ray(basePosition + baseRight * closeDistance - 3 * baseForward,	-baseRight * closeDistance * 2));
 	}
 	
 	public override void Start() {
@@ -90,6 +98,9 @@ public class DoorControl : QInteractable {
 	}
 	
 	void Update() {
+		foreach (Ray ray in raysClose) {
+			Debug.DrawRay(ray.origin, ray.direction * closeDistance);
+		}
 		if (GetComponentInParent<Animator>().GetBool("isOpen")) {
 			CloseForGuardsAndStan();
 		} else {	
@@ -154,7 +165,6 @@ public class DoorControl : QInteractable {
 				return;
 			}
 		}
-		
 		//No guards or stans detected
 		GetComponentInParent<Animator>().SetBool("isOpen", false);
 		GetComponent<NavMeshObstacle>().enabled = false;
