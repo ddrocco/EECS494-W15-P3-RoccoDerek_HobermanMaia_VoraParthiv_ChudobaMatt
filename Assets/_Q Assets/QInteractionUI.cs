@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
+public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler {
 	public QInteractable controlledObject;
 	List<GameObject> optionlist;
 	public List<string> options;
@@ -13,6 +13,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 	Color color0 = Color.white;
 	Color color1 = Color.white;
 	GameObject displayIconObject;
+	private GameObject tooltip;
 	public bool hasDisplayIcon;
 	bool buttonEnabled = true;
 
@@ -31,6 +32,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 			displayIcon = displayIconObject.GetComponent<Image>();
 			displayIcon.sprite = controlledObject.GetDisplayStatus();
 		}
+
 	}
 	
 	void Update () {
@@ -55,6 +57,44 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler {
 			controlledObject.Toggle(true);
 			displayIcon.sprite = controlledObject.GetDisplayStatus();
 		}
+	}
+
+	//generate tooltip
+	public void OnPointerEnter(PointerEventData mouseData){
+		if (!buttonEnabled) {
+			return;
+		}
+
+		tooltip = Instantiate (ObjectPrefabDefinitions.main.Tooltip) as GameObject;
+		tooltip.transform.SetParent (transform);
+
+		Vector3 pos = tooltip.GetComponent<RectTransform> ().localEulerAngles;
+		pos.x = 0;
+		pos.y = 0;
+		pos.z = 0;
+		tooltip.GetComponent<RectTransform> ().localEulerAngles = pos;
+
+		pos = tooltip.GetComponent<RectTransform> ().localScale;
+		pos.x = 0.1f;
+		pos.y = 0.1f;
+		pos.z = 0.1f;
+		tooltip.GetComponent<RectTransform> ().localScale = pos;
+
+		pos = tooltip.GetComponent<RectTransform> ().anchoredPosition3D;
+		pos.x = -20f;
+		pos.y = 10f;
+		pos.z = 0;
+		tooltip.GetComponent<RectTransform> ().anchoredPosition3D = pos;
+
+	}
+
+	//destroy tooltip
+	public void OnPointerExit(PointerEventData mouseData){
+		if (!buttonEnabled) {
+			return;
+		}
+
+		Destroy (tooltip);
 	}
 	
 	public void SetEnabled(bool newEnabledState) {

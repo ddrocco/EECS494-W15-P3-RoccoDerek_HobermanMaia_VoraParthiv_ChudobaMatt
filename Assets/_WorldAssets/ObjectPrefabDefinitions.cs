@@ -7,7 +7,7 @@ public class ObjectPrefabDefinitions : MonoBehaviour {
 		TagViewSolid, TagViewLaser,
 		FoeVisionLineRenderer,
 		FoeTaser,
-		QInteractiveButton, QDisplayIcon,
+		QInteractiveButton, QDisplayIcon, Tooltip,
 		AlarmSignal,
 		SecurityCamera,
 		XWall, ZWall, Pillar, Ceiling;
