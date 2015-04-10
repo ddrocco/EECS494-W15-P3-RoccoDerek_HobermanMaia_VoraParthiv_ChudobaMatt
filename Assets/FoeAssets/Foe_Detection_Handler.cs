@@ -26,13 +26,13 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	//Communicate findings:
 	bool hasSeenPlayer = false;
-	public bool canCommunicate = true;
-	float timeAttemptingCommunication = 0f;
-	float timeToCommunicate = 5f;
 	
 	public int jurisdictionZone;
 
 	int cullingMask;
+	
+	float shoveDisorientationTime = 0.5f;
+	float timeUntilOriented;
 
 	void Start () {	
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
@@ -46,9 +46,23 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		
 		cullingMask = (1 << Layerdefs.floor) + (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.prop)
 				+ (1 << Layerdefs.foe);
+		
+		timeUntilOriented = shoveDisorientationTime;
 	}
 	
 	void Update () {
+		if (timeUntilOriented < shoveDisorientationTime) {
+			timeUntilOriented -= Time.deltaTime;
+			if (timeUntilOriented <= 0f) {
+				timeUntilOriented = shoveDisorientationTime;
+				GetComponentInParent<Rigidbody>().isKinematic = true;
+				GetComponentInParent<NavMeshAgent>().enabled = true;
+				GetComponentInParent<Rigidbody>().useGravity = false;
+				GetComponentInParent<Rigidbody>().freezeRotation = false;
+				timeSincePlayerSpotted = 0f;
+			}
+		}
+	
 		if (movementHandler == null) {
 			movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 		}
@@ -102,9 +116,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (playerSpotted) {
 			PlayerSpotted();
 			MoveToPlayer();
-			if (canCommunicate) {
-				Communicate();
-			}
 		} else if (audialDetectionValue >= 0.5f ||
 				(timeSincePlayerSpotted < timeUntilPlayerLost && hasSeenPlayer)) {
 			MoveToPlayer();
@@ -133,21 +144,13 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		}
 	}
 	
-	void Communicate() {
-		if (isAggressive) {
-			timeAttemptingCommunication += Time.deltaTime;
-			if (timeAttemptingCommunication >= timeToCommunicate) {
-				FoeAlertSystem.Alert(PlayerController.player.transform.position);
-			}
-		}
-	}
-	
 	//Player kills guard
 	public void Interact() {
-		if (!enabled) {
+		if (!enabled || timeUntilOriented != shoveDisorientationTime) {
 			return;
 		}
 		if (timeSincePlayerSpotted > 1f) {
+			print ("Guard Slain!");
 			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
 			
 			taser.SetActive(false);
@@ -161,6 +164,20 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInChildren<Light>().enabled = false;
 			GetComponent<Foe_Glance_Command>().enabled = false;
 			enabled = false;
+		} else {
+			GetComponentInParent<Rigidbody>().isKinematic = false;
+			GetComponentInParent<Rigidbody>().mass = 0.1f;
+			GetComponentInParent<Rigidbody>().useGravity = true;
+			GetComponentInParent<Rigidbody>().freezeRotation = true;
+			GetComponentInParent<NavMeshAgent>().enabled = false;
+
+			float magnitude = 25f;
+			Vector3 direction = transform.position - FindObjectOfType<PlayerController>().transform.position;
+			Vector3 horizontalShove = magnitude * new Vector3(direction.x, 0, direction.z).normalized;
+			Vector3 verticalShove = new Vector3 (0, magnitude / 2, 0);
+			GetComponentInParent<Rigidbody>().AddForce(horizontalShove + verticalShove);
+			
+			timeUntilOriented -= Time.deltaTime;
 		}
 	}
 }

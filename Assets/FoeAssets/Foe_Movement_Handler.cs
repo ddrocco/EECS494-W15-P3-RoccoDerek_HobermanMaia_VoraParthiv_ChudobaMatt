@@ -97,6 +97,10 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 	
 	public void StartInvestigation(Vector3 destination) {
+		if (!GetComponent<NavMeshAgent>().enabled) {
+			return;
+		}
+		
 		if (!originIsValid) {
 			originLocation = transform.position;
 		}
