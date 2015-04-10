@@ -57,7 +57,7 @@ public class GameController : MonoBehaviour
 
 		EnableText();
 
-		if (Input.GetKeyDown(KeyCode.Escape) || device.Action1.WasPressed || Input.GetKeyDown(KeyCode.Mouse0))
+		if (device.Action1.WasPressed || Input.GetKeyDown(KeyCode.Space))
 		{
 			if(PlayerDead){
 				PlayerDead = false;
@@ -90,8 +90,13 @@ public class GameController : MonoBehaviour
 		playerGameOverText.enabled = true;
 		playerGameOverMessageText.enabled = true;
 		playerMessageText.enabled = false;
-		playerGameOverText.text = "Game Over";
-		playerGameOverMessageText.text = GameOverMessage;
+		if (_won) {
+			playerGameOverText.text = "SUCCESS";
+			playerGameOverMessageText.text = "Mission Complete! Press A to continue";
+		} else {
+			playerGameOverText.text = "Game Over";
+			playerGameOverMessageText.text = GameOverMessage;
+		}
 		Time.timeScale = 0;
 	}
 
