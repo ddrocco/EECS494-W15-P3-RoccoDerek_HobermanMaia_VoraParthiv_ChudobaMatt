@@ -52,6 +52,8 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		
 		if (mouseData.button == PointerEventData.InputButton.Left) {
 			controlledObject.Toggle(false);
+			OnPointerExit(null);
+			OnPointerEnter(null);
 		}
 		if (mouseData.button == PointerEventData.InputButton.Right) {
 			controlledObject.Toggle(true);
@@ -67,6 +69,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
 		tooltip = Instantiate (ObjectPrefabDefinitions.main.Tooltip) as GameObject;
 		tooltip.transform.SetParent (transform);
+		Text tooltipText = tooltip.GetComponent<Text> ();
 
 		Vector3 pos = tooltip.GetComponent<RectTransform> ().localEulerAngles;
 		pos.x = 0;
@@ -85,6 +88,45 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		pos.y = 10f;
 		pos.z = 0;
 		tooltip.GetComponent<RectTransform> ().anchoredPosition3D = pos;
+
+		//Door Locks
+		if (controlledObject.GetComponent<DoorControl> () != null) {
+			if (controlledObject.GetComponent<DoorControl> ().isLocked)
+				tooltipText.text = "Unlock Door";
+			else
+				tooltipText.text = "Lock Door";
+		} 
+		//Cameras
+		else if (controlledObject.GetComponent<CameraControl> () != null) {
+			tooltipText.text = "Enter Camera View";
+		}
+		//Boxes
+		else if (controlledObject.GetComponent<BoxControl> () != null) {
+			//Bombs
+			if (controlledObject.GetComponent<BoxControl> ().willKill){
+				if (controlledObject.GetComponent<BoxControl> ().timerSet)
+					tooltipText.text = "Defuse Bomb";
+				else
+					tooltipText.text = "Set Off Bomb";
+			}
+			//Not Bombs
+			else
+				tooltipText.text = "Box";
+		}
+		//Alarm
+		else if (controlledObject.GetComponent<AlertHub> () != null) {
+			if (controlledObject.GetComponent<AlertHub> ().isActive)
+				tooltipText.text = "Disable Alarm";
+			else
+				tooltipText.text = "Enable Alarm";
+		}
+		//Lasers
+		else if (controlledObject.GetComponent<LaserBehavior> () != null) {
+			tooltipText.text = "Laser";
+		}
+		else if (controlledObject.GetComponent<PolyLaserParent> () != null) {
+			tooltipText.text = "Laser Group";
+		}
 
 	}
 
