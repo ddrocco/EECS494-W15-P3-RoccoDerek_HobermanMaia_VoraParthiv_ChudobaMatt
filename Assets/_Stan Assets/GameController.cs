@@ -7,6 +7,7 @@ public class GameController : MonoBehaviour
 {
 	private InputDevice device;
 //	private string levelName = "_Final_Prototype_Map";
+	private GameObject GameOverBG;
 	private Text playerGameOverText;
 	private Text playerGameOverMessageText;
 	private Text playerMessageText;
@@ -41,6 +42,7 @@ public class GameController : MonoBehaviour
 	{
 		device = InputManager.ActiveDevice;
 
+		GameOverBG = GameObject.Find ("GameOverBG");
 		playerGameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
 		playerGameOverMessageText = GameObject.Find("GameOverMessageText").GetComponent<Text>();
 		playerMessageText = GameObject.Find("PlayerMessageText").GetComponent<Text>();
@@ -48,6 +50,7 @@ public class GameController : MonoBehaviour
 		playerGameOverText.enabled = false;
 		playerGameOverMessageText.enabled = false;
 		playerMessageText.enabled = false;
+		GameOverBG.SetActive (false);
 	}
 
 	void Update()
@@ -97,6 +100,8 @@ public class GameController : MonoBehaviour
 			playerGameOverText.text = "Game Over";
 			playerGameOverMessageText.text = GameOverMessage;
 		}
+
+		GameOverBG.SetActive (true);
 		Time.timeScale = 0;
 	}
 
