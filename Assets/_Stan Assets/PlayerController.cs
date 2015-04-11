@@ -81,6 +81,11 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public static bool mouseMovement = false;
 	
+	List<AudioClip> footsteps;
+	List<AudioClip> crouchFootsteps;
+	List<AudioClip> runFootsteps;
+	int currentFootstep = 0;
+	
 	void Awake()
 	{
 		player = this;
@@ -105,6 +110,10 @@ public class PlayerController : MonoBehaviour
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
+		
+		footsteps = AudioDefinitions.main.Footsteps;
+		crouchFootsteps = AudioDefinitions.main.CrouchFootsteps;
+		runFootsteps = AudioDefinitions.main.RunFootsteps;
 	}
 
 	void Update()
@@ -281,6 +290,8 @@ public class PlayerController : MonoBehaviour
 			
 			// Multiply the normalized direction vector by the modified length
 			moveDirection = moveDirection * directionLength;
+			
+			AdjustSoundConstants();
 		}
 		else
 		{
@@ -461,10 +472,34 @@ public class PlayerController : MonoBehaviour
 	void AdjustSoundConstants() {
 		if (state == State.crouching) {
 			Foe_Detection_Handler.audioMultiplier = 3f;
+			if (!GetComponent<AudioSource>().isPlaying) {
+				if (++currentFootstep >= crouchFootsteps.Count) {
+					currentFootstep = 0;
+				}
+				GetComponent<AudioSource>().clip = crouchFootsteps[currentFootstep];
+				GetComponent<AudioSource>().volume = 0.5f;
+				GetComponent<AudioSource>().Play();
+			}
 		} else if (state == State.walking) {
 			Foe_Detection_Handler.audioMultiplier = 6f;
+			if (!GetComponent<AudioSource>().isPlaying) {
+				if (++currentFootstep >= footsteps.Count) {
+					currentFootstep = 0;
+				}
+				GetComponent<AudioSource>().clip = footsteps[currentFootstep];
+				GetComponent<AudioSource>().volume = 0.02f;
+				GetComponent<AudioSource>().Play();
+			}
 		} else if (state == State.sprinting) {
 			Foe_Detection_Handler.audioMultiplier = 15f;
+			if (!GetComponent<AudioSource>().isPlaying) {
+				if (++currentFootstep >= runFootsteps.Count) {
+					currentFootstep = 0;
+				}
+				GetComponent<AudioSource>().clip = runFootsteps[currentFootstep];
+				GetComponent<AudioSource>().volume = 1f;
+				GetComponent<AudioSource>().Play();
+			}
 		}
 	}
 }

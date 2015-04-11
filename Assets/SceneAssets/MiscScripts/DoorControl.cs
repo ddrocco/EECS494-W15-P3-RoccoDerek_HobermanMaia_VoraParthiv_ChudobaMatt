@@ -70,7 +70,8 @@ public class DoorControl : QInteractable {
 	public void Interact () {
 		if (isLocked) {
 			GameController.SendPlayerMessage("Locked", 2);
-			gameObject.GetComponent<AudioSource>().Play();
+			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorLocked;
+			GetComponent<AudioSource>().Play();
 			return;
 		}
 		
@@ -90,9 +91,13 @@ public class DoorControl : QInteractable {
 			}
 			GetComponentInParent<Animator>().SetBool("isOpen", true);
 			GetComponent<NavMeshObstacle>().enabled = true;
+			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
+			GetComponent<AudioSource>().Play();
 			return;
 		} else {
 			GetComponentInParent<Animator>().SetBool("isOpen", false);
+			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
+			GetComponent<AudioSource>().Play();
 			return;
 		}
 	}
@@ -138,6 +143,8 @@ public class DoorControl : QInteractable {
 				GetComponentInParent<Animator>().SetBool("openSouth", !openRight);
 			}
 			GetComponentInParent<Animator>().SetBool("isOpen", true);
+			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
+			GetComponent<AudioSource>().Play();
 			GetComponent<NavMeshObstacle>().enabled = true;
 		} else {
 			if (timeUntilUnlocked <= 0) {
@@ -167,6 +174,8 @@ public class DoorControl : QInteractable {
 		}
 		//No guards or stans detected
 		GetComponentInParent<Animator>().SetBool("isOpen", false);
+		GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
+		GetComponent<AudioSource>().Play();
 		GetComponent<NavMeshObstacle>().enabled = false;
 	}
 	
