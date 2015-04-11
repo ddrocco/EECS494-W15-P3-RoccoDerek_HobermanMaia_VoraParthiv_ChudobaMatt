@@ -1,5 +1,6 @@
- using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Foe_Detection_Handler : MonoBehaviour {
 	public int currentRoom;
@@ -132,6 +133,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (!isAggressive) {
 			isAggressive = true;
 		}
+		if (timeSincePlayerSpotted >= timeUntilPlayerLost) {
+			List<AudioClip> soundClips = AudioDefinitions.main.GuardSpotsPlayer;
+			int i = Mathf.FloorToInt(Random.Range(0, soundClips.Count));
+			AudioSource.PlayClipAtPoint(soundClips[i], transform.position);
+		}
 		taser.gameObject.SetActive(true);
 		timeSincePlayerSpotted = 0f;
 		hasSeenPlayer = true;
@@ -149,7 +155,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (!enabled || timeUntilOriented != shoveDisorientationTime) {
 			return;
 		}
-		if (timeSincePlayerSpotted > 1f) {
+		if (timeSincePlayerSpotted > timeUntilPlayerLost) {
 			print ("Guard Slain!");
 			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
 			
