@@ -12,7 +12,7 @@ public class AudioDefinitions : MonoBehaviour {
 		PaperNoises,
 		GuardChatter1, GuardChatter2, GuardChatter3;
 	public List<AudioClip> CrouchFootsteps, Footsteps, RunFootsteps,
-		GuardSpotsPlayer;
+		GuardSpotsPlayer, GuardHearsPlayer;
 	public static AudioDefinitions main;
 	
 	void Awake() {

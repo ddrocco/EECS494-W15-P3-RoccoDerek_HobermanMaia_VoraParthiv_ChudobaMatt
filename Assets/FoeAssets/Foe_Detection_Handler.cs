@@ -25,9 +25,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	float baseSpeed;
 	public float sprintMultiplier = 5f;
 	
-	//Communicate findings:
-	bool hasSeenPlayer = false;
-	
 	public int jurisdictionZone;
 
 	int cullingMask;
@@ -117,8 +114,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (playerSpotted) {
 			PlayerSpotted();
 			MoveToPlayer();
-		} else if (audialDetectionValue >= 0.5f ||
-				(timeSincePlayerSpotted < timeUntilPlayerLost && hasSeenPlayer)) {
+		} else if (audialDetectionValue >= 0.5f) {
+			if (GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.patrolling) {
+				GetComponent<AudioSource>().clip = SelectRandomClip(AudioDefinitions.main.GuardHearsPlayer);
+				GetComponent<AudioSource>().Play ();
+			}
 			MoveToPlayer();
 		} else if (isAggressive) {
 			GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
@@ -134,13 +134,11 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			isAggressive = true;
 		}
 		if (timeSincePlayerSpotted >= timeUntilPlayerLost) {
-			List<AudioClip> soundClips = AudioDefinitions.main.GuardSpotsPlayer;
-			int i = Mathf.FloorToInt(Random.Range(0, soundClips.Count));
-			AudioSource.PlayClipAtPoint(soundClips[i], transform.position);
+			GetComponent<AudioSource>().clip = SelectRandomClip(AudioDefinitions.main.GuardSpotsPlayer);
+			GetComponent<AudioSource>().Play();
 		}
 		taser.gameObject.SetActive(true);
 		timeSincePlayerSpotted = 0f;
-		hasSeenPlayer = true;
 	}
 	
 	public void MoveToPlayer() {
@@ -185,5 +183,10 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			
 			timeUntilOriented -= Time.deltaTime;
 		}
+	}
+	
+	public static AudioClip SelectRandomClip(List<AudioClip> clips) {
+		int i = Mathf.FloorToInt(Random.Range(0, clips.Count));
+		return clips[i];
 	}
 }
