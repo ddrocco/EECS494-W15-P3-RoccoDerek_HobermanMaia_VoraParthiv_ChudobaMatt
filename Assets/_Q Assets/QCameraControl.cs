@@ -93,6 +93,9 @@ public class QCameraControl : MonoBehaviour
 		{
 			CameraControl control =
 				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
+			if (control == null) {
+				continue;
+			}
 			control.QIsWatching = false;
 			control.disableButtonView();
 		}

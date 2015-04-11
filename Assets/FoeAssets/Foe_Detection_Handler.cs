@@ -31,7 +31,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 
 	int cullingMask;
 	
-	float shoveDisorientationTime = 0.5f;
+	float shoveDisorientationTime = 1f;
 	float timeUntilOriented;
 
 	void Start () {	
@@ -171,7 +171,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInParent<Rigidbody>().freezeRotation = true;
 			GetComponentInParent<NavMeshAgent>().enabled = false;
 
-			float magnitude = 25f;
+			float magnitude = 50f;
 			Vector3 direction = transform.position - FindObjectOfType<PlayerController>().transform.position;
 			Vector3 horizontalShove = magnitude * new Vector3(direction.x, 0, direction.z).normalized;
 			Vector3 verticalShove = new Vector3 (0, magnitude / 2, 0);

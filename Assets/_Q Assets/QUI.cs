@@ -15,7 +15,8 @@ public class QUI : MonoBehaviour {
 	public GameObject Legend;
 	
 	int frameInvisibleMask = (1 << Layerdefs.ui);
-
+	
+	public bool startEnabled = false;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,9 @@ public class QUI : MonoBehaviour {
 		QCompass.SetActive (false);
 		Legend = GameObject.Find ("Legend");
 		Legend.SetActive (false);
+		if (startEnabled) {
+			showCamera(true);
+		}
 	}
 	
 	// Update is called once per frame
