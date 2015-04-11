@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using InControl;
 
 public class Buttons : MonoBehaviour {
 
@@ -7,8 +8,8 @@ public class Buttons : MonoBehaviour {
 		Application.LoadLevel ("_AlphaScene");
 	}
 
-	public void Controls(){
-
+	void Update(){
+		if (InputManager.MenuWasPressed) Play ();
 	}
 
 }

@@ -1,10 +1,13 @@
 fileFormatVersion: 2
 guid: 962d00d95a251e149b3e9b396712dfda
-timeCreated: 1426288305
+timeCreated: 1428699285
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - controlledObject: {instanceID: 0}
+  - displayIcon: {instanceID: 0}
+  - tooltipPrefab: {fileID: 159966, guid: b348add17887c414392c9f973abeb95a, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

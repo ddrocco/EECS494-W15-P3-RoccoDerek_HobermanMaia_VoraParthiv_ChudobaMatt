@@ -7,6 +7,7 @@ public class PlayerInteraction : MonoBehaviour
 	private Camera cam;
 	private GameObject reticle;
 	private Image reticleRender;
+	private Text reticleLetter;
 	private Color reticleNormal;
 	private Color reticleInteract;
 	private Color reticleTag;
@@ -22,9 +23,10 @@ public class PlayerInteraction : MonoBehaviour
 		player = GameObject.Find("Player").GetComponent<PlayerController>();
 
 		reticleRender = reticle.GetComponent<Image>();
+		reticleLetter = GameObject.Find ("ReticleLetter").GetComponent<Text>();
 		reticleNormal = Color.black;
 		reticleNormal.a = 0.5f;
-		reticleInteract = Color.red;
+		reticleInteract = Color.green;
 		reticleInteract.a = 0.5f;
 		reticleTag = new Color(0f, 1f, 1f, 0.5f);
 
@@ -40,12 +42,18 @@ public class PlayerInteraction : MonoBehaviour
 		Interact();
 		//Tag(); temporarily disabling
 
-		if (!player.canTag && !player.canInteract)
+		if (!player.canTag && !player.canInteract) {
 			reticleRender.color = reticleNormal;
-		else if (player.canTag)
+			reticleLetter.enabled = false;
+		}
+		else if (player.canTag){
 			reticleRender.color = reticleTag;
-		else if (player.canInteract)
+			reticleLetter.enabled = false;
+		}
+		else if (player.canInteract) {
 			reticleRender.color = reticleInteract;
+			reticleLetter.enabled = true;
+		}
 		else
 			Debug.LogError("Reticle color change error");
 	}
@@ -54,7 +62,7 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		Vector3 scale = reticle.transform.localScale;
 		
-		scale.x = 40f / (cam.pixelWidth);
+		scale.x = 100f / (cam.pixelWidth);
 		scale.y = scale.x;
 		
 		reticle.transform.localScale = scale;

@@ -12,11 +12,10 @@ public class QUI : MonoBehaviour {
 	public Text cameraDesc;
 	public GameObject player;
 	public GameObject QCompass;
-	public GameObject Legend;
+	//public GameObject Legend;
 	
 	int frameInvisibleMask = (1 << Layerdefs.ui);
-	
-	public bool startEnabled = false;
+
 
 	// Use this for initialization
 	void Start () {
@@ -26,11 +25,8 @@ public class QUI : MonoBehaviour {
 		GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 		QCompass = GameObject.Find ("QCompass");
 		QCompass.SetActive (false);
-		Legend = GameObject.Find ("Legend");
-		Legend.SetActive (false);
-		if (startEnabled) {
-			showCamera(true);
-		}
+		//Legend = GameObject.Find ("Legend");
+		//Legend.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -79,7 +75,7 @@ public class QUI : MonoBehaviour {
 			//FindObjectOfType<QPowerSystem>().Enabled(true);
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
 			QCompass.SetActive (true);
-			Legend.SetActive (true);
+			//Legend.SetActive (true);
 			GetComponent<QCameraControl>().DisableCameras();
 		} else {
 			nosignal.enabled = true;
@@ -89,7 +85,7 @@ public class QUI : MonoBehaviour {
 			//FindObjectOfType<QPowerSystem>().Enabled(false);
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 			QCompass.SetActive (false);
-			Legend.SetActive (false);
+			//Legend.SetActive (false);
 		}
 	}
 }
