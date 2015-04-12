@@ -125,7 +125,6 @@ public class QInteractable : MonoBehaviour {
 		
 		int time = Mathf.FloorToInt(Time.time * switchRate);
 		int index = time % sprites.Count;
-		print (time + " " + index);
 		return sprites[index];
 	}
 }

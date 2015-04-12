@@ -127,7 +127,11 @@ public class PlayerInteraction : MonoBehaviour
 				toolTipText.text = "Open box";
 			}
 		} else if (hitInfo.transform.GetComponent<InformationForPlayer>()) {
-			toolTipText.text = "Read";
+			if (hitInfo.transform.GetComponent<InformationForPlayer>().read) {
+				toolTipText.text = "Reread";
+			} else {
+				toolTipText.text = "Read";
+			}
 		} else if (hitInfo.transform.GetComponent<Foe_Detection_Handler>()) {
 			Foe_Detection_Handler foe = hitInfo.transform.GetComponent<Foe_Detection_Handler>();
 			if (foe.timeSincePlayerSpotted >= foe.timeUntilPlayerLost) {

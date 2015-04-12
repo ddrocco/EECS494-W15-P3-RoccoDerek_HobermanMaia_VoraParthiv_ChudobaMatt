@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class AudioDefinitions : MonoBehaviour {
 	public AudioClip WilhelmScream,
-		StaticNoise,
+		StaticNoise, ShortCircuit,
 		AlarmNoise,
 		BoxOpening, BoxClosing,
 		TickTock, Explosion,

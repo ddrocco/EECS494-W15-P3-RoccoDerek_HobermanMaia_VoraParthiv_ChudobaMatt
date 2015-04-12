@@ -24,7 +24,7 @@ public class GenerateQRenderer : MonoBehaviour {
 		qRendererObject.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 		switch (type) {
 		case QViewType.StaticGreen:
-			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0f, 0.03f, 0f));
+			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0f, 0.1f, 0f));
 			break;
 		case QViewType.GoodBlue:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.cyan);
