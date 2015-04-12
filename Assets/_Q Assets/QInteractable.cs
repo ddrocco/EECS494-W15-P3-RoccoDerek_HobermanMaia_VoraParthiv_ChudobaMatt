@@ -23,7 +23,7 @@ public class QInteractable : MonoBehaviour {
 	public bool functionIsActive = false;
 	public float functionCost = 0;
 	
-	public bool displayIsNil = false;
+	public bool objectIsTaggable = true;
 	public bool qHasDisplayAccess = true;
 	public bool displayIsActive = false;
 	public float displayCost = 0;
@@ -46,7 +46,10 @@ public class QInteractable : MonoBehaviour {
 		
 		//Generate Stan-visible (3d) tag object
 		GameObject tagPrefab = GetStanVisibleTag();
-		if (tagPrefab != null) {
+		if (tagPrefab == null) {
+			objectIsTaggable = false;
+		}
+		if (objectIsTaggable) {
 			tagView = Instantiate(GetStanVisibleTag(), transform.position, Quaternion.identity) as GameObject;
 			tagView.transform.parent = transform;
 			tagView.transform.localScale = Vector3.one;
@@ -55,8 +58,6 @@ public class QInteractable : MonoBehaviour {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
 			QInteractionButton.GetComponent<QInteractionUI>().GenerateDisplayIcon();
-		} else {
-			displayIsNil = true;
 		}
 	}
 	
