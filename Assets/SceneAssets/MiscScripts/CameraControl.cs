@@ -129,9 +129,11 @@ public class CameraControl : QInteractable {
 		Qcontrol.ToggleCamera(loc.cameraNumber, true);
 		
 		QIsWatching = true;
-		if (Qcontrol.warning) {
+		if (Qcontrol.warning || Qcontrol.alerting) {
 			Qcontrol.AlertOff();
 		}
+		
+		tag = "Untagged";
 	}
 	
 	public override void Trigger () {

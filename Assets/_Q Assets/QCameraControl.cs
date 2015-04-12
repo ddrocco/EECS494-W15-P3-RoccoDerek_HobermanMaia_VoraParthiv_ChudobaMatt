@@ -41,14 +41,8 @@ public class QCameraControl : MonoBehaviour
 	// Use this for initialization
 	void Awake()
 	{
-		//Sound stuff:
-		/*
-		source = GetComponent<AudioSource>();
-		currentStep = 0;
-		isPanning = false;
-		audioSource = GetComponent<AudioSource>();
-		audioSource.enabled = false;
-		*/
+		GetComponent<AudioSource>().enabled = false;
+		
 		pivotPoint = FindObjectOfType<PlayerController>().transform.position;
 		cam = GetComponent<Camera>();
 		cameras = new List<QCameraLocation>();
