@@ -107,20 +107,14 @@ public class BoxControl : QInteractable {
 	public override Sprite GetSprite() {
 		if (isBomb) {
 			if (!isArmed) {
-				return ButtonSpriteDefinitions.main.bombDefused;
+				return ButtonSpriteDefinitions.main.BombDefused;
 			}
 			if (timerSet) {
-				switch (Mathf.CeilToInt(timeToDetonation)) {
-					case 1:	return ButtonSpriteDefinitions.main.bomb1;
-					case 2:	return ButtonSpriteDefinitions.main.bomb2;
-					case 3:	return ButtonSpriteDefinitions.main.bomb3;
-					case 4:	return ButtonSpriteDefinitions.main.bomb4;
-					case 5:	return ButtonSpriteDefinitions.main.bomb5;
-				}
+				return ButtonSpriteDefinitions.main.BombDetonationCountdown[Mathf.FloorToInt(timeToDetonation)];
 			} else {
-				return ButtonSpriteDefinitions.main.bombDefault;
+				return ButtonSpriteDefinitions.main.BombDefault;
 			}
 		}
-		return ButtonSpriteDefinitions.main.files;
+		return ButtonSpriteDefinitions.main.Files;
 	}
 }

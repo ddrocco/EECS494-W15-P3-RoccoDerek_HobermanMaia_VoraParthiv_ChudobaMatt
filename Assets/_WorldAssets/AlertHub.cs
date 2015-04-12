@@ -37,13 +37,7 @@ public class AlertHub : QInteractable {
 	}
 	
 	public override Sprite GetSprite() {
-		if (isSounding) {
-			return ButtonSpriteDefinitions.main.alarmSounding;
-		} else if (isActive) {
-			return ButtonSpriteDefinitions.main.alarmEnabled;
-		} else {
-			return ButtonSpriteDefinitions.main.alarmSilent;
-		}
+		return ButtonSpriteDefinitions.main.Alarm;
 	}
 	
 	void SetLockdownState(bool newLockdownState) {

@@ -35,6 +35,6 @@ public class ElevatorControl : QInteractable {
 	}
 	
 	public override Sprite GetSprite () {
-		return ButtonSpriteDefinitions.main.doorUnlocked;
+		return ButtonSpriteDefinitions.main.Elevator;
 	}
 }

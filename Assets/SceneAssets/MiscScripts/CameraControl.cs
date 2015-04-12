@@ -142,7 +142,13 @@ public class CameraControl : QInteractable {
 	}
 	
 	public override Sprite GetSprite () {
-		return ButtonSpriteDefinitions.main.cameraIcon;
+		if (QIsWatching) {
+			return ButtonSpriteDefinitions.main.CameraUnderQ;
+		} else if (isBlinded) {
+			return ButtonSpriteDefinitions.main.CameraBlinded;
+		} else {
+			return ButtonSpriteDefinitions.main.CameraOnAlert;
+		}
 	}
 	
 	public override void enableButtonView() {

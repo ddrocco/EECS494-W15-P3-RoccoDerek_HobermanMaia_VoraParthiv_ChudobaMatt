@@ -188,9 +188,9 @@ public class DoorControl : QInteractable {
 	
 	public override Sprite GetSprite() {
 		if (isLocked) {
-			return ButtonSpriteDefinitions.main.doorLocked;
+			return ButtonSpriteDefinitions.main.DoorLocked;
 		} else {
-			return ButtonSpriteDefinitions.main.doorUnlocked;
+			return ButtonSpriteDefinitions.main.DoorUnlocked;
 		}
 	}
 	

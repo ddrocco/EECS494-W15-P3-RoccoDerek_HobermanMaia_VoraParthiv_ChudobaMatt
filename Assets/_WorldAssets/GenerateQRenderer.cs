@@ -24,7 +24,7 @@ public class GenerateQRenderer : MonoBehaviour {
 		qRendererObject.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 		switch (type) {
 		case QViewType.StaticGreen:
-			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.green);
+			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0f, 0.03f, 0f));
 			break;
 		case QViewType.GoodBlue:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.cyan);
@@ -33,7 +33,7 @@ public class GenerateQRenderer : MonoBehaviour {
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.red);
 			break;
 		case QViewType.RoomGray:
-			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0.1f, 0.1f, 0.1f));
+			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0.01f, 0.01f, 0.01f));
 			qRendererObject.transform.position += new Vector3(0, -15f, 0);
 			break;	
 		}

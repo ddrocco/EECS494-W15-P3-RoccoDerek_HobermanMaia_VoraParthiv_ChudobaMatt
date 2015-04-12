@@ -108,7 +108,9 @@ public class PlayerController : MonoBehaviour
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
 		}
-		
+	}
+	
+	void Start() {
 		footsteps = AudioDefinitions.main.Footsteps;
 		crouchFootsteps = AudioDefinitions.main.CrouchFootsteps;
 		runFootsteps = AudioDefinitions.main.RunFootsteps;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LaserBehavior : QInteractable {
 	public Vector3 directionStart = Vector3.up;
@@ -54,14 +55,14 @@ public class LaserBehavior : QInteractable {
 	}
 	
 	public override Sprite GetSprite() {
-		return ButtonSpriteDefinitions.main.laser;
+		return ButtonSpriteDefinitions.main.Laser;
 	}
 	
 	public override Sprite GetDisplayStatus() {
 		if (displayIsActive) {
-			return ButtonSpriteDefinitions.main.displayHighlight;
+			return GetAnimationFrame(ButtonSpriteDefinitions.main.displayTaggedAnimation);
 		} else {
-			return ButtonSpriteDefinitions.main.displayInvisible;
+			return ButtonSpriteDefinitions.main.DisplayInvisible;
 		}
 	}
 	

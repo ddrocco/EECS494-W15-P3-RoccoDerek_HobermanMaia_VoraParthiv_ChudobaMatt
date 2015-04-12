@@ -102,6 +102,12 @@ public class PlayerInteraction : MonoBehaviour
 			} else {
 				toolTipText.text = "Open door";
 			}
+		} else if (hitInfo.transform.GetComponent<DoorknobControl>()) {
+			if (hitInfo.transform.GetComponentInParent<Animator>().GetBool("isOpen")) {
+				toolTipText.text = "Close door actually using doorknob";
+			} else {
+				toolTipText.text = "Open door actually using doorknob";
+			}
 		} else if (hitInfo.transform.GetComponent<CameraControl>()){
 			toolTipText.text = "Blind camera";
 		} else if (hitInfo.transform.GetComponent<ComputerConsole>()) {

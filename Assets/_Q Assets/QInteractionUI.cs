@@ -8,7 +8,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	public QInteractable controlledObject;
 	List<GameObject> optionlist;
 	public List<string> options;
-	public Image displayIcon;
 	float displayIconDisplacement = 10f;
 	Color color0 = Color.white;
 	Color color1 = Color.white;
@@ -29,19 +28,17 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 			displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
 			displayIconObject.transform.SetParent(transform);
 			displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
-			displayIcon = displayIconObject.GetComponent<Image>();
-			displayIcon.sprite = controlledObject.GetDisplayStatus();
 		}
 
 	}
 	
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
-		Image temp = GetComponent<Image>();
-		temp.color = Color.Lerp(color0, color1, t);
-		temp.sprite = controlledObject.GetSprite();
+		GetComponent<Image>().color = Color.Lerp(color0, color1, t);
+		GetComponent<Image>().sprite = controlledObject.GetSprite();
 		if (displayIconObject != null) {
-			displayIconObject.GetComponent<Image>().enabled = temp.enabled;
+			displayIconObject.GetComponent<Image>().enabled = GetComponent<Image>().enabled;
+			displayIconObject.GetComponent<Image>().sprite = controlledObject.GetDisplayStatus();
 		}
 	}
 	
@@ -57,7 +54,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		}
 		if (mouseData.button == PointerEventData.InputButton.Right) {
 			controlledObject.Toggle(true);
-			displayIcon.sprite = controlledObject.GetDisplayStatus();
 		}
 	}
 

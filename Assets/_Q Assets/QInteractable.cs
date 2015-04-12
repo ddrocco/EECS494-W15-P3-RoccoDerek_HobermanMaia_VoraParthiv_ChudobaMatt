@@ -12,8 +12,6 @@ public enum MapGroup
 
 public class QInteractable : MonoBehaviour {
 	public MapGroup group;
-	public float functionCost;
-	public float displayCost;
 	public GameObject QCamera;
 	public GameObject QInteractionButton;
 
@@ -21,10 +19,13 @@ public class QInteractable : MonoBehaviour {
 	
 	GameObject InteractionCanvas;
 	
-	public bool qHasAccess = true;
+	public bool qHasFunctionAccess = true;
 	public bool functionIsActive = false;
+	public float functionCost = 0;
+	
+	public bool qHasDisplayAccess = true;
 	public bool displayIsActive = false;
-	public float cost = 0;
+	public float displayCost = 0;
 	
 	Color activeColor = new Color(1f, 0.4f, 0.4f);
 	Color inactiveColor = new Color(0.2f, 0.2f, 0.2f);
@@ -40,7 +41,6 @@ public class QInteractable : MonoBehaviour {
 		QInteractionButton.GetComponent<RectTransform> ().localRotation = InteractionCanvas.GetComponent<RectTransform> ().localRotation;
 		QInteractionButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
-		QInteractionButton.GetComponent<Image>().sprite = GetSprite();
 		
 		GameObject tagPrefab = TagPrefab();
 		if (tagPrefab != null) {
@@ -59,31 +59,21 @@ public class QInteractable : MonoBehaviour {
 	}
 	
 	public void Toggle (bool toggleDisplay) {
-		if (!qHasAccess) {
-			return;
-		} else if (toggleDisplay) {
+		if (toggleDisplay && qHasDisplayAccess) {
 			if (!displayIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, false)) {
 				Tag();
 				displayIsActive = true;
-				//Eyecon stuff
 			} else if (displayIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, false)) {
 				UnTag();
 				displayIsActive = false;
-				//Eyecon stuff
 			}
-		} else {
-			if ((!functionIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, true))
-			    || (functionIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, true))) {
-				functionIsActive = !functionIsActive;
+		} else if (!toggleDisplay && qHasFunctionAccess) {
+			if (!functionIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, true)) {
+				functionIsActive = true;
 				Trigger();
-				QInteractionButton.GetComponent<Image>().sprite = GetSprite();
-				if (!qHasAccess) {
-					QInteractionButton.GetComponent<Image>().color = inactiveColor;
-				} else if (functionIsActive) {
-					QInteractionButton.GetComponent<Image>().color = activeColor;
-				} else {
-					QInteractionButton.GetComponent<Image>().color = Color.white;
-				}
+			} else if (functionIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, true)) {
+				functionIsActive = false;
+				Trigger();
 			}
 		}
 	}
@@ -96,9 +86,9 @@ public class QInteractable : MonoBehaviour {
 	}
 	public virtual Sprite GetDisplayStatus() {
 		if (displayIsActive) {
-			return ButtonSpriteDefinitions.main.displayHighlight;
+			return GetAnimationFrame(ButtonSpriteDefinitions.main.displayTaggedAnimation);
 		} else {
-			return ButtonSpriteDefinitions.main.displayVisible;
+			return ButtonSpriteDefinitions.main.DisplayVisible;
 		}
 	}
 		
@@ -121,5 +111,14 @@ public class QInteractable : MonoBehaviour {
 	
 	public virtual void enableButtonView() {
 		QInteractionButton.GetComponent<Image>().enabled = true;
+	}
+	
+	public static Sprite GetAnimationFrame(List<Sprite> sprites) {
+		float switchRate = 10f;
+		
+		int time = Mathf.FloorToInt(Time.time * switchRate);
+		int index = time % sprites.Count;
+		print (time + " " + index);
+		return sprites[index];
 	}
 }
