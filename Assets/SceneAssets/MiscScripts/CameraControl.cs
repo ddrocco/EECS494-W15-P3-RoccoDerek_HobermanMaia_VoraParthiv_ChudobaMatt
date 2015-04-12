@@ -7,7 +7,8 @@ public class CameraControl : QInteractable {
 	public int ID;
 	
 	//Detection
-	public bool QIsWatching = true;
+	public bool QIsWatching = false;
+	public bool isBlinded = false;
 	public bool Offline = false;
 	public bool wasDetected = false;
 	private Plane[] planes;
@@ -22,26 +23,32 @@ public class CameraControl : QInteractable {
 	public Light alertLight;
 	public Color color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color color1 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
-	public Color green/* = new Color(200f/255f, 250/255f, 100f/255f, 0)*/;
+	public Color green;
 
 	// Camera switching
 	private QCameraControl camControl;
 	private QCameraLocation camLocation;
 	
 	public override void Start () {
+	
+		//Setting up detection
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+		
+		//Setting up appearance
 		Transform temp1 = transform.Find("Camera");
 		alertLight = temp1.GetComponentInChildren<Light>();
 		color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 		color1 = color0;
-		//green = new Color(200f/255f, 250/255f, 100f/255f, 0);
 		Transform temp = transform.Find("Lens");
 		lens = temp.GetComponent<MeshRenderer>();
 		lens.material.color = Color.green;
-
+		
+		//Setting up switching
 		camControl = GameObject.Find("QCamera").GetComponent<QCameraControl>();
 		camLocation = GetComponentInParent<QCameraLocation>();
+		
+		//Setting up Q-button
 		base.Start();
 	}
 	
@@ -53,7 +60,7 @@ public class CameraControl : QInteractable {
 		}
 		
 		//Hacked in/broken
-		if (QIsWatching) {
+		if (QIsWatching || isBlinded) {
 			lens.material.color = Color.black; //lens off
 			color1 = color0 = green; //camera light appears greenish
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
@@ -67,7 +74,7 @@ public class CameraControl : QInteractable {
 				camControl.WarningOn();
 				wasDetected = true;
 				color1 = Color.red; //sets 2nd color to red so light will flash
-				//QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
+				QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
 				//doesn't work bc camera isn't visible to Q until it's disbabled
 			}
 			if (!Offline){
