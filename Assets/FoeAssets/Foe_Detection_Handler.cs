@@ -20,8 +20,10 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	//Player spotted:
 	public bool isAggressive = false;
-	float timeSincePlayerSpotted = 10f;
-	float timeUntilPlayerLost = 1f;
+	[HideInInspector]
+	public float timeSincePlayerSpotted = 10f;
+	[HideInInspector]
+	public float timeUntilPlayerLost = 1f;
 	float baseSpeed;
 	public float sprintMultiplier = 5f;
 	
@@ -154,7 +156,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			return;
 		}
 		if (timeSincePlayerSpotted > timeUntilPlayerLost) {
-			print ("Guard Slain!");
 			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
 			
 			taser.SetActive(false);
@@ -167,6 +168,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInParent<Foe_Movement_Handler>().enabled = false;
 			GetComponentInChildren<Light>().enabled = false;
 			GetComponent<Foe_Glance_Command>().enabled = false;
+			GetComponentInParent<Foe_Movement_Handler>().tag = "Untagged";
+			tag = "Untagged";
 			enabled = false;
 		} else {
 			GetComponentInParent<Rigidbody>().isKinematic = false;

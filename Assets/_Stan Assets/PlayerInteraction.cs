@@ -97,7 +97,11 @@ public class PlayerInteraction : MonoBehaviour
 		toolTipFrame.enabled = true;
 		toolTipText.enabled = true;
 		if (hitInfo.transform.GetComponent<DoorControl>()) {
-			toolTipText.text = "Open door";
+			if (hitInfo.transform.GetComponentInParent<Animator>().GetBool("isOpen")) {
+				toolTipText.text = "Close door";
+			} else {
+				toolTipText.text = "Open door";
+			}
 		} else if (hitInfo.transform.GetComponent<CameraControl>()){
 			toolTipText.text = "Blind camera";
 		} else if (hitInfo.transform.GetComponent<ComputerConsole>()) {
@@ -105,13 +109,34 @@ public class PlayerInteraction : MonoBehaviour
 		} else if (hitInfo.transform.GetComponent<ElevatorControl>()) {
 			toolTipText.text = "Call elevator";
 		} else if (hitInfo.transform.GetComponent<FileCabinetControl>()) {
-			toolTipText.text = "Open drawer";
+			if (hitInfo.transform.GetComponent<FileCabinetControl>().anim.GetBool("isOpen")) {
+				toolTipText.text = "Close drawer";
+			} else {
+				toolTipText.text = "Open drawer";
+			}
 		} else if (hitInfo.transform.GetComponent<BoxControl>()) {
-			toolTipText.text = "Open box";
+			if (hitInfo.transform.GetComponent<BoxControl>().anim.GetBool("isOpen")) {
+				toolTipText.text = "Close box";
+			} else {
+				toolTipText.text = "Open box";
+			}
 		} else if (hitInfo.transform.GetComponent<InformationForPlayer>()) {
 			toolTipText.text = "Read";
-		}
-		
+		} else if (hitInfo.transform.GetComponent<Foe_Detection_Handler>()) {
+			Foe_Detection_Handler foe = hitInfo.transform.GetComponent<Foe_Detection_Handler>();
+			if (foe.timeSincePlayerSpotted >= foe.timeUntilPlayerLost) {
+				toolTipText.text = "Kill guard";
+			} else {
+				toolTipText.text = "Shove guard";
+			}
+		} else if (hitInfo.transform.GetComponent<Foe_Movement_Handler>()) {
+			Foe_Detection_Handler foe = hitInfo.transform.GetComponentInChildren<Foe_Detection_Handler>();
+			if (foe.timeSincePlayerSpotted >= foe.timeUntilPlayerLost) {
+				toolTipText.text = "Kill guard";
+			} else {
+				toolTipText.text = "Shove guard";
+			}
+		}		
 	}
 
 	void EndTip() {
