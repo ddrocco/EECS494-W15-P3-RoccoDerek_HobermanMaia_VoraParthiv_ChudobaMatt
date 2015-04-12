@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,7 +21,7 @@ public class World_Foe_Coordinator : MonoBehaviour {
 				other.GetComponentInChildren<Foe_Glance_Command>().ReceiveGlanceCommand(10, 3f, -135f, 0);
 			} else {
 				foreach (GameObject foe in foesInCollision) {
-					foe.GetComponent<NavMeshAgent>().speed = foe.GetComponent<Foe_Movement_Handler>().speed;
+					foe.GetComponent<NavMeshAgent>().speed = foe.GetComponent<Foe_Movement_Handler>().baseSpeed;
 				}
 			}
 		}
@@ -29,7 +29,7 @@ public class World_Foe_Coordinator : MonoBehaviour {
 	
 	public void ReleaseCommunicatingGuards() {
 		foreach (GameObject foe in foesInCollision) {
-			foe.GetComponent<NavMeshAgent>().speed = foe.GetComponent<Foe_Movement_Handler>().speed;
+			foe.GetComponent<NavMeshAgent>().speed = foe.GetComponent<Foe_Movement_Handler>().baseSpeed;
 		}
 	}
 	

@@ -41,7 +41,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		taser.transform.localEulerAngles = Vector3.zero;
 		taser.SetActive(false);
 		
-		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;
 		movementHandler = GetComponentInParent<Foe_Movement_Handler>();
 		
 		cullingMask = (1 << Layerdefs.floor) + (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.prop)
@@ -56,7 +55,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			if (timeUntilOriented <= 0f) {
 				timeUntilOriented = shoveDisorientationTime;
 				GetComponentInParent<Rigidbody>().isKinematic = true;
-				GetComponentInParent<NavMeshAgent>().enabled = true;
 				GetComponentInParent<Rigidbody>().useGravity = false;
 				GetComponentInParent<Rigidbody>().freezeRotation = false;
 				timeSincePlayerSpotted = 0f;
@@ -122,12 +120,9 @@ public class Foe_Detection_Handler : MonoBehaviour {
 				GetComponent<AudioSource>().Play ();
 			}
 			MoveToPlayer();
-		} else if (isAggressive) {
-			GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
-			if (movementHandler.isReturning) {
-				isAggressive = false;
-				taser.SetActive(false);
-			}
+		} else if (isAggressive && movementHandler.isReturning) {
+			isAggressive = false;
+			taser.SetActive(false);
 		}
 	}
 	
@@ -164,7 +159,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			Vector2 randRotation = 2500f * Random.insideUnitCircle.normalized;
 			GetComponentInParent<Rigidbody>().AddTorque(new Vector3(randRotation.x, 0, randRotation.y));
 			GetComponentInParent<Rigidbody>().mass = 0.1f;
-			GetComponentInParent<NavMeshAgent>().enabled = false;
 			GetComponentInParent<Foe_Movement_Handler>().enabled = false;
 			GetComponentInChildren<Light>().enabled = false;
 			GetComponent<Foe_Glance_Command>().enabled = false;
@@ -176,7 +170,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInParent<Rigidbody>().mass = 0.1f;
 			GetComponentInParent<Rigidbody>().useGravity = true;
 			GetComponentInParent<Rigidbody>().freezeRotation = true;
-			GetComponentInParent<NavMeshAgent>().enabled = false;
 
 			float magnitude = 50f;
 			Vector3 direction = transform.position - FindObjectOfType<PlayerController>().transform.position;

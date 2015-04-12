@@ -20,7 +20,7 @@ public class DoorControl : QInteractable {
 	//Opening (guards) and closing (guards and Stan) detection:
 	Vector3 basePosition, baseForward, baseRight;
 	int cullGuards, cullStan;
-	float openDistance = 1.5f;
+	float openDistance = 0.4f;
 	float closeDistance = 3f;
 	
 	RaycastHit hitInfo;
@@ -116,14 +116,14 @@ public class DoorControl : QInteractable {
 	void OpenForGuards() {
 		foreach(Ray ray in raysRight) {
 			if (Physics.Raycast(ray, out hitInfo, openDistance, cullGuards)) {
-				OpenDoor (openRight: true, guardNavAgent: hitInfo.collider.GetComponentInParent<NavMeshAgent>());
+				OpenDoor (openRight: true, guard: hitInfo.collider.gameObject);
 				return;
 			}
 		}
 		
 		foreach(Ray ray in raysLeft) {
 			if (Physics.Raycast(ray, out hitInfo, openDistance, cullGuards)) {
-				OpenDoor (openRight: false, guardNavAgent: hitInfo.collider.GetComponentInParent<NavMeshAgent>());
+				OpenDoor (openRight: false, guard: hitInfo.collider.gameObject);
 				return;
 			}
 		}
@@ -135,7 +135,7 @@ public class DoorControl : QInteractable {
 		timeUntilUnlocked = timeToUnlock;
 	}
 	
-	void OpenDoor(bool openRight, NavMeshAgent guardNavAgent) {
+	void OpenDoor(bool openRight, GameObject guard) {
 		if (!isLocked) {
 			if (direction == DoorDirection.x) {
 				GetComponentInParent<Animator>().SetBool("openEast", openRight);
@@ -151,9 +151,11 @@ public class DoorControl : QInteractable {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 				isLocked = false;
 				expectState = false;
-				guardNavAgent.Resume ();
+				guard.GetComponentInParent<Foe_Movement_Handler>().navigator.Resume ();
+				guard.GetComponentInParent<Foe_Movement_Handler>().canMove = true;
 			} else {
-				guardNavAgent.Stop ();
+				guard.GetComponentInParent<Foe_Movement_Handler>().navigator.Stop ();
+				guard.GetComponentInParent<Foe_Movement_Handler>().canMove = false;
 			}
 			if (timeUntilUnlocked == timeToUnlock) {
 				QInteractionButton.GetComponent<QInteractionUI>().InUseOn();
