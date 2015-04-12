@@ -32,6 +32,9 @@ public class DoorControl : QInteractable {
 	float timeToUnlock = 5f;
 	float timeUntilUnlocked = 5f;
 	
+	float timeSinceOpened = 0;
+	float timeUntilObstacleEnable = 0.5f;
+	
 	void Awake () {		
 		basePosition = transform.position + new Vector3(0, -0.5f, 0);
 		baseForward = transform.forward / 1.5f;
@@ -90,7 +93,7 @@ public class DoorControl : QInteractable {
 				}
 			}
 			GetComponentInParent<Animator>().SetBool("isOpen", true);
-			GetComponent<NavMeshObstacle>().enabled = true;
+			timeSinceOpened = 0f;
 			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
 			GetComponent<AudioSource>().Play();
 			return;
@@ -103,6 +106,13 @@ public class DoorControl : QInteractable {
 	}
 	
 	void Update() {
+		timeSinceOpened += Time.deltaTime;
+		if (GetComponentInParent<Animator>().GetBool ("isOpen") && timeSinceOpened > timeUntilObstacleEnable) {
+			GetComponent<NavMeshObstacle>().enabled = true;
+		} else {
+			GetComponent<NavMeshObstacle>().enabled = false;
+		}
+			
 		foreach (Ray ray in raysClose) {
 			Debug.DrawRay(ray.origin, ray.direction * closeDistance);
 		}
@@ -143,9 +153,9 @@ public class DoorControl : QInteractable {
 				GetComponentInParent<Animator>().SetBool("openSouth", !openRight);
 			}
 			GetComponentInParent<Animator>().SetBool("isOpen", true);
+			timeSinceOpened = 0;
 			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
 			GetComponent<AudioSource>().Play();
-			GetComponent<NavMeshObstacle>().enabled = true;
 		} else {
 			if (timeUntilUnlocked <= 0) {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
@@ -167,7 +177,7 @@ public class DoorControl : QInteractable {
 			if (Physics.Raycast(ray, out hitInfo, closeDistance, cullGuards + cullStan)) {
 				if (hitInfo.collider.GetComponentInParent<NavMeshAgent>()) {
 					hitInfo.collider.GetComponentInParent<NavMeshAgent>().speed =
-							hitInfo.collider.GetComponentInParent<Foe_Movement_Handler>().baseSpeed;
+							hitInfo.collider.GetComponentInParent<Foe_Movement_Handler>().speed;
 				}
 				return;
 			}
@@ -176,7 +186,6 @@ public class DoorControl : QInteractable {
 		GetComponentInParent<Animator>().SetBool("isOpen", false);
 		GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
 		GetComponent<AudioSource>().Play();
-		GetComponent<NavMeshObstacle>().enabled = false;
 	}
 	
 	public override void Trigger() {
