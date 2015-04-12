@@ -10,7 +10,6 @@ public class PlayerInteraction : MonoBehaviour
 	private Text reticleLetter;
 	private Color reticleNormal;
 	private Color reticleInteract;
-	private Color reticleTag;
 	private PlayerController player;
 
 	public float detectionDistance;
@@ -28,7 +27,6 @@ public class PlayerInteraction : MonoBehaviour
 		reticleNormal.a = 0.5f;
 		reticleInteract = Color.green;
 		reticleInteract.a = 0.5f;
-		reticleTag = new Color(0f, 1f, 1f, 0.5f);
 
 		cullingMask =
 			(1 << Layerdefs.prop) +
@@ -40,14 +38,9 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		ResizeReticle();
 		Interact();
-		//Tag(); temporarily disabling
 
-		if (!player.canTag && !player.canInteract) {
+		if (!player.canInteract) {
 			reticleRender.color = reticleNormal;
-			reticleLetter.enabled = false;
-		}
-		else if (player.canTag){
-			reticleRender.color = reticleTag;
 			reticleLetter.enabled = false;
 		}
 		else if (player.canInteract) {
@@ -89,31 +82,6 @@ public class PlayerInteraction : MonoBehaviour
 		else
 		{
 			player.canInteract = false;
-		}
-	}
-
-	void Tag()
-	{
-		Ray ray = new Ray(transform.position, transform.forward);
-		Debug.DrawRay(ray.origin, ray.direction + transform.forward * (detectionDistance - 1f));
-		RaycastHit hitInfo;
-		
-		if (Physics.Raycast(ray, out hitInfo, detectionDistance + 1f, cullingMask))
-		{
-			GameObject obj = hitInfo.transform.gameObject;
-			if (obj.GetComponent<Taggable>() != null)
-			{
-				player.canTag = true;
-				player.taggableObj = obj;
-			}
-			else
-			{
-				player.canTag = false;
-			}
-		}
-		else
-		{
-			player.canTag = false;
 		}
 	}
 }

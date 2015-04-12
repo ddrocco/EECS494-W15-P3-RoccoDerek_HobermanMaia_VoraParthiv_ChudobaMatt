@@ -71,8 +71,6 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public bool canInteract = false;
 	[HideInInspector]
-	public bool canTag = false;
-	[HideInInspector]
 	public GameObject interactiveObj;
 	[HideInInspector]
 	public GameObject taggableObj;
@@ -166,10 +164,6 @@ public class PlayerController : MonoBehaviour
 		{
 			Interact();
 		}
-		if (device.Action3.WasPressed)
-		{
-			//Tag();
-		}
 	}
 
 	void FixedUpdate()
@@ -223,10 +217,6 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetKeyDown(KeyCode.Mouse0)) // Interact
 		{
 			Interact();
-		}
-		if (Input.GetKeyDown(KeyCode.Mouse1)) // Tag
-		{
-			Tag();
 		}
 	}
 
@@ -434,25 +424,6 @@ public class PlayerController : MonoBehaviour
 			Debug.LogError("Interactive object " + interactiveObj.name + " is not yet implemented");
 			return;
 		}*/
-	}
-
-	void Tag()
-	{
-		if (!canTag) return;
-		if (taggableObj == null)
-		{
-			Debug.LogError("Null taggable object reference");
-			return;
-		}
-
-		Taggable obj = taggableObj.GetComponent<Taggable>();
-		if (obj == null)
-		{
-			Debug.LogError("Taggable object does not have script of type Taggable");
-			return;
-		}
-
-		obj.TagObject();
 	}
 
 	float IncrementTowards(float current, float target, float accel)
