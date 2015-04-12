@@ -5,7 +5,7 @@ public class CreateMajorEntities : MonoBehaviour {
 	public bool functional = false;
 
 	public GameObject //AgentPrefab, HackerPrefab,
-	CompassPrefab, PauseSystemPrefab;
+	CompassPrefab, PauseSystemPrefab, EventSystemPrefab;
 	
 	//public Vector3 AgentPosition, AgentRotation;
 	
@@ -17,5 +17,6 @@ public class CreateMajorEntities : MonoBehaviour {
 		//Instantiate(HackerPrefab);
 		Instantiate(CompassPrefab);
 		Instantiate(PauseSystemPrefab);
+		Instantiate(EventSystemPrefab);
 	}
 }

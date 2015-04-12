@@ -72,6 +72,8 @@ public class BoxControl : QInteractable {
 			gameObject.GetComponent<AudioSource>().clip = AudioDefinitions.main.Explosion;
 			gameObject.GetComponent<AudioSource>().loop = false;
 			gameObject.GetComponent<AudioSource>().Play();
+			Instantiate(ObjectPrefabDefinitions.main.ExplosionSmoke, transform.position, Quaternion.identity);
+			Instantiate(ObjectPrefabDefinitions.main.Explosion, transform.position, Quaternion.identity);
 			
 			if (Vector3.Distance(transform.position, PlayerController.player.transform.position) < killDistance) {
 				GameController.PlayerDead = true;

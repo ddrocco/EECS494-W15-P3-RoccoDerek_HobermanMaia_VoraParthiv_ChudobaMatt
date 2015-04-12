@@ -10,6 +10,7 @@ public class ObjectPrefabDefinitions : MonoBehaviour {
 		QInteractiveButton, QDisplayIcon, Tooltip,
 		AlarmSignal,
 		SecurityCamera,
+		Explosion, ExplosionSmoke,
 		XWall, ZWall, Pillar, Ceiling;
 		
 	public Material alertConnection;
