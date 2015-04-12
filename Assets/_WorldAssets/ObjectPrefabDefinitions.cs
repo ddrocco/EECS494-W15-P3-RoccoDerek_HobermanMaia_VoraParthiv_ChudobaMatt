@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class ObjectPrefabDefinitions : MonoBehaviour {
-	public GameObject Wireframe, WireframeDynamic,
+	public GameObject Wireframe, WireframeDynamic, QRenderer,
 		Laser, PolyLaserChild,
 		TagViewSolid, TagViewLaser,
 		FoeVisionLineRenderer,
