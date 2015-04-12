@@ -18,6 +18,9 @@ public class CameraControl : QInteractable {
 	float timeBetweenSignals = .75f;
 	float timeSinceLastSignal = 0f;
 	
+	float timeSinceSeenStan = float.MaxValue;
+	float timeBetweenAlertNoises = 10f;
+	
 	//Stan-Visual
 	public MeshRenderer lens;
 	public Light alertLight;
@@ -77,7 +80,7 @@ public class CameraControl : QInteractable {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
 				//doesn't work bc camera isn't visible to Q until it's disbabled
 			}
-			if (!Offline){
+			if (!Offline) {
 				GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
 			}
 			if (timeSinceLastSignal >= timeBetweenSignals) {
@@ -105,6 +108,11 @@ public class CameraControl : QInteractable {
 			Vector3 direction = heading/distance;
 			if (Physics.Raycast(transform.position, direction, out hit, distance)) {
 				if (hit.collider.CompareTag("Player") == true) {
+					if (timeSinceSeenStan >= timeBetweenAlertNoises) {
+						AudioSource.PlayClipAtPoint(AudioDefinitions.main.MGSAlert,
+								FindObjectOfType<PlayerController>().transform.position);
+					}
+					timeSinceSeenStan = 0f;
 					return new Vector3(hit.point.x, 0, hit.point.z);
 				} else return Vector3.down;
 			} else return Vector3.down;
