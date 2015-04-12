@@ -3,15 +3,18 @@ using System.Collections;
 
 public class BoxControl : QInteractable {
 	public Animator anim;
-	public bool willKill;
-	bool hasDetonated;
-	public bool holdsPasscard;
-	public int timeTillExplode = 100;
-	public float distFromBomb = 3;
+	public bool isBomb;	//Differentiates between documents and bombs
 	public string message; //will only contain a snippet, if anything
 	public string QMessage; //notifies Q if Stan found something like a map piece
-	public int bombTimer = 0;
+	
+	public bool holdsPasscard;
+	
+	//Bomb:
+	bool isArmed = true;
 	public bool timerSet = false;
+	public float timeToDetonation = 5f;
+	public float killDistance = 3f;
+	
 	public GameObject elevatorDoor;
 	
 	void Awake () {
@@ -23,10 +26,17 @@ public class BoxControl : QInteractable {
 	}
 	
 	public void Interact () {
-		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
+		if (anim.GetBool("isOpen")) {
+			anim.SetBool("isOpen",false);
+			AudioSource.PlayClipAtPoint(AudioDefinitions.main.BoxClosing,transform.position);
+		} else {
+			anim.SetBool("isOpen",true);
+			AudioSource.PlayClipAtPoint(AudioDefinitions.main.BoxOpening,transform.position);
+		}
+		
 		if (anim.GetBool("isOpen") == true) {
-			if (willKill) {
-				if (hasDetonated) {
+			if (isBomb) {
+				if (!isArmed) {
 					return;
 				}
 				timerSet = true;
@@ -41,53 +51,76 @@ public class BoxControl : QInteractable {
 		}
 	}
 	
-	public void FixedUpdate() {
+	public void Update() {
+		if (!isBomb || !isArmed) {
+			return;
+		}
 		if (timerSet) {
 			//play countdown noise
-			++bombTimer;
+			int previousCountdown = Mathf.CeilToInt(timeToDetonation);
+			timeToDetonation -= Time.deltaTime;
+			if (previousCountdown == 5 && Mathf.CeilToInt(timeToDetonation) == 4) {
+				gameObject.GetComponent<AudioSource>().clip = AudioDefinitions.main.TickTock;
+				gameObject.GetComponent<AudioSource>().loop = true;
+				gameObject.GetComponent<AudioSource>().Play();
+			} else if (previousCountdown == 2 && Mathf.CeilToInt(timeToDetonation) == 1) {
+				gameObject.GetComponent<AudioSource>().loop = false;
+			}
 		}
-		if (bombTimer >= timeTillExplode) {
+		if (timeToDetonation <= 0) {
+		
+			gameObject.GetComponent<AudioSource>().clip = AudioDefinitions.main.Explosion;
+			gameObject.GetComponent<AudioSource>().loop = false;
 			gameObject.GetComponent<AudioSource>().Play();
-			if (Vector3.Distance(transform.position, PlayerController.player.transform.position) < distFromBomb) {
+			
+			if (Vector3.Distance(transform.position, PlayerController.player.transform.position) < killDistance) {
 				GameController.PlayerDead = true;
 				GameController.GameOverMessage =
 					"You set off a bomb";
-				QCamera.GetComponent<QUI>().showCamera(false);
+				FindObjectOfType<QUI>().showCamera(false);
 				QUI.setText("Game Over\nThe agent set off a bomb");
 			}
 			else {
 				FoeAlertSystem.Alert(transform.position);
 			}
-			hasDetonated = true;
+			isArmed = false;
 			timerSet = false;
-			bombTimer = 0;
+			timeToDetonation = 0;
 		}
 	}
 	
 	public override void Trigger() {
-		if (willKill) {
+		if (isBomb && isArmed) {
 			if (!timerSet) {
 				//GameController.SendPlayerMessage("Fire in the hole--your partner set off a bomb!", 5);
 				timerSet = true;
-				bombTimer = 0;
 			} else {
 				//GameController.SendPlayerMessage("Your partner has defused the bomb; you're safe--for now.", 5);
 				timerSet = false;
-				bombTimer = 0;
-				hasDetonated = true;
+				isArmed = false;
+				
+				gameObject.GetComponent<AudioSource>().loop = false;
 			}
 		}
 	}
 	
 	public override Sprite GetSprite() {
-		if (willKill && timerSet) {
-			return ButtonSpriteDefinitions.main.bombLit;
-		} else if (willKill && hasDetonated) {
-			return ButtonSpriteDefinitions.main.bombDefused;
-		} else if (willKill && !timerSet) {
-			return ButtonSpriteDefinitions.main.bombDefault;
-		} else {
-			return ButtonSpriteDefinitions.main.files;
+		if (isBomb) {
+			if (!isArmed) {
+				return ButtonSpriteDefinitions.main.bombDefused;
+			}
+			if (timerSet) {
+				switch (Mathf.CeilToInt(timeToDetonation)) {
+					case 1:	return ButtonSpriteDefinitions.main.bomb1;
+					case 2:	return ButtonSpriteDefinitions.main.bomb2;
+					case 3:	return ButtonSpriteDefinitions.main.bomb3;
+					case 4:	return ButtonSpriteDefinitions.main.bomb4;
+					case 5:	return ButtonSpriteDefinitions.main.bomb5;
+				}
+			} else {
+				return ButtonSpriteDefinitions.main.bombDefault;
+			}
 		}
+		return ButtonSpriteDefinitions.main.files;
 	}
 }

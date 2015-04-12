@@ -103,7 +103,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		//Boxes
 		else if (controlledObject.GetComponent<BoxControl> () != null) {
 			//Bombs
-			if (controlledObject.GetComponent<BoxControl> ().willKill){
+			if (controlledObject.GetComponent<BoxControl> ().isBomb){
 				if (controlledObject.GetComponent<BoxControl> ().timerSet)
 					tooltipText.text = "Defuse Bomb";
 				else
