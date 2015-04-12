@@ -96,7 +96,7 @@ public class PolyLaserParent : QInteractable {
 		}
 	}
 	
-	public override GameObject TagPrefab() {
+	public override GameObject GetStanVisibleTag() {
 		return null;
 	}
 	

@@ -10,7 +10,7 @@ public class BoxControl : QInteractable {
 	public bool holdsPasscard;
 	
 	//Bomb:
-	bool isArmed = true;
+	public bool isArmed = true;
 	public bool timerSet = false;
 	public float timeToDetonation = 5f;
 	public float killDistance = 3f;

@@ -23,6 +23,7 @@ public class QInteractable : MonoBehaviour {
 	public bool functionIsActive = false;
 	public float functionCost = 0;
 	
+	public bool displayIsNil = false;
 	public bool qHasDisplayAccess = true;
 	public bool displayIsActive = false;
 	public float displayCost = 0;
@@ -35,6 +36,7 @@ public class QInteractable : MonoBehaviour {
 	public virtual void Start () {
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 
+		//Generate and position button
 		QInteractionButton = Instantiate (ObjectPrefabDefinitions.main.QInteractiveButton);
 		QInteractionButton.GetComponent<RectTransform> ().localPosition =
 			new Vector3 (transform.position.x + buttonoffset, InteractionCanvas.GetComponent<RectTransform> ().localPosition.y, transform.position.z + buttonoffset);
@@ -42,19 +44,23 @@ public class QInteractable : MonoBehaviour {
 		QInteractionButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
 		
-		GameObject tagPrefab = TagPrefab();
+		//Generate Stan-visible (3d) tag object
+		GameObject tagPrefab = GetStanVisibleTag();
 		if (tagPrefab != null) {
-			tagView = Instantiate(TagPrefab(), transform.position, Quaternion.identity) as GameObject;
+			tagView = Instantiate(GetStanVisibleTag(), transform.position, Quaternion.identity) as GameObject;
 			tagView.transform.parent = transform;
 			tagView.transform.localScale = Vector3.one;
 			tagView.transform.localEulerAngles = Vector3.zero;
 			if (GetComponent<MeshFilter>() != null && tagView.GetComponent<MeshFilter>() != null) {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
+			QInteractionButton.GetComponent<QInteractionUI>().GenerateDisplayIcon();
+		} else {
+			displayIsNil = true;
 		}
 	}
 	
-	public virtual GameObject TagPrefab() {
+	public virtual GameObject GetStanVisibleTag() {
 		return ObjectPrefabDefinitions.main.TagViewSolid;
 	}
 	

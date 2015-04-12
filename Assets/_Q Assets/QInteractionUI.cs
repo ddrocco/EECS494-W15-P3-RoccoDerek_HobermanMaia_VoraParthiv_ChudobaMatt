@@ -13,23 +13,12 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	Color color1 = Color.white;
 	GameObject displayIconObject;
 	private GameObject tooltip;
-	public bool hasDisplayIcon;
 	bool buttonEnabled = true;
 
-	// Use this for initialization
-	void Start () {
-		if (controlledObject.GetComponent<AlertHub>() != null) {
-			hasDisplayIcon = false;
-		} else {
-			hasDisplayIcon = true;
-		}
-		
-		if (hasDisplayIcon) {
-			displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
-			displayIconObject.transform.SetParent(transform);
-			displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
-		}
-
+	public void GenerateDisplayIcon() {
+		displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
+		displayIconObject.transform.SetParent(transform);
+		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
 	}
 	
 	void Update () {
@@ -88,22 +77,25 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		//Door Locks
 		if (controlledObject.GetComponent<DoorControl> () != null) {
 			if (controlledObject.GetComponent<DoorControl> ().isLocked)
-				tooltipText.text = "Unlock Door";
+				tooltipText.text = ">Unlock Door";
 			else
-				tooltipText.text = "Lock Door";
+				tooltipText.text = ">Lock Door";
 		} 
 		//Cameras
 		else if (controlledObject.GetComponent<CameraControl> () != null) {
-			tooltipText.text = "Enter Camera View";
+			tooltipText.text = ">Enter Camera View";
 		}
 		//Boxes
 		else if (controlledObject.GetComponent<BoxControl> () != null) {
 			//Bombs
 			if (controlledObject.GetComponent<BoxControl> ().isBomb){
-				if (controlledObject.GetComponent<BoxControl> ().timerSet)
-					tooltipText.text = "Defuse Bomb";
-				else
-					tooltipText.text = "Set Off Bomb";
+				if (!controlledObject.GetComponent<BoxControl>().isArmed) {
+					tooltipText.text = "Disarmed Bomb";
+				} else if(controlledObject.GetComponent<BoxControl>().timerSet) {
+					tooltipText.text = ">Defuse Bomb";
+				} else {
+					tooltipText.text = ">Set Off Bomb";
+				}
 			}
 			//Not Bombs
 			else
@@ -112,9 +104,9 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		//Alarm
 		else if (controlledObject.GetComponent<AlertHub> () != null) {
 			if (controlledObject.GetComponent<AlertHub> ().isActive)
-				tooltipText.text = "Disable Alarm";
+				tooltipText.text = ">Disable Alarm";
 			else
-				tooltipText.text = "Enable Alarm";
+				tooltipText.text = ">Enable Alarm";
 		}
 		//Lasers
 		else if (controlledObject.GetComponent<LaserBehavior> () != null) {

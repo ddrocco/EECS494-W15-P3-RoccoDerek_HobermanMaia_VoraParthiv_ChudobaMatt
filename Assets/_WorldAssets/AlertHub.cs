@@ -45,4 +45,16 @@ public class AlertHub : QInteractable {
 			door.SetLockState(lockdownGroup, newLockdownState);
 		}
 	}
+	
+	public override GameObject GetStanVisibleTag() {
+		return null;
+	}
+	
+	public override void Tag() {
+		return;
+	}
+	
+	public override void UnTag() {
+		return;
+	}
 }

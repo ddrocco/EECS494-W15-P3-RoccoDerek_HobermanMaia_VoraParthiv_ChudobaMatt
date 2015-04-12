@@ -151,9 +151,9 @@ public class DoorControl : QInteractable {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 				isLocked = false;
 				expectState = false;
-				guardNavAgent.speed = guardNavAgent.GetComponent<Foe_Movement_Handler>().speed;
+				guardNavAgent.Resume ();
 			} else {
-				guardNavAgent.speed = 0;
+				guardNavAgent.Stop ();
 			}
 			if (timeUntilUnlocked == timeToUnlock) {
 				QInteractionButton.GetComponent<QInteractionUI>().InUseOn();
@@ -167,7 +167,7 @@ public class DoorControl : QInteractable {
 			if (Physics.Raycast(ray, out hitInfo, closeDistance, cullGuards + cullStan)) {
 				if (hitInfo.collider.GetComponentInParent<NavMeshAgent>()) {
 					hitInfo.collider.GetComponentInParent<NavMeshAgent>().speed =
-							hitInfo.collider.GetComponentInParent<Foe_Movement_Handler>().speed;
+							hitInfo.collider.GetComponentInParent<Foe_Movement_Handler>().baseSpeed;
 				}
 				return;
 			}

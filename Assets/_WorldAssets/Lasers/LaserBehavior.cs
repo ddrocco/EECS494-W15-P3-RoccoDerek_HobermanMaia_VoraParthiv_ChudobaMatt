@@ -66,7 +66,7 @@ public class LaserBehavior : QInteractable {
 		}
 	}
 	
-	public override GameObject TagPrefab() {
+	public override GameObject GetStanVisibleTag() {
 		return ObjectPrefabDefinitions.main.TagViewLaser;
 	}
 	
