@@ -11,7 +11,10 @@ public class PlayerInteraction : MonoBehaviour
 	private Color reticleNormal;
 	private Color reticleInteract;
 	private PlayerController player;
-
+	private Image toolTipFrame;
+	private Text toolTipText;
+	private RaycastHit hitInfo;
+	
 	public float detectionDistance;
 	private int cullingMask;
 
@@ -27,6 +30,9 @@ public class PlayerInteraction : MonoBehaviour
 		reticleNormal.a = 0.5f;
 		reticleInteract = Color.green;
 		reticleInteract.a = 0.5f;
+		
+		toolTipFrame = GameObject.Find ("ToolTips").GetComponent<Image>();
+		toolTipText = GameObject.Find ("ToolTipsText").GetComponent<Text>();
 
 		cullingMask =
 			(1 << Layerdefs.prop) +
@@ -42,10 +48,13 @@ public class PlayerInteraction : MonoBehaviour
 		if (!player.canInteract) {
 			reticleRender.color = reticleNormal;
 			reticleLetter.enabled = false;
+			EndTip ();
 		}
 		else if (player.canInteract) {
 			reticleRender.color = reticleInteract;
 			reticleLetter.enabled = true;
+			//ToolTips
+			GiveTip ();
 		}
 		else
 			Debug.LogError("Reticle color change error");
@@ -65,7 +74,6 @@ public class PlayerInteraction : MonoBehaviour
 	{
 		Ray ray = new Ray(transform.position, transform.forward);
 		Debug.DrawRay(ray.origin, ray.direction + transform.forward * (detectionDistance - 1f));
-		RaycastHit hitInfo;
 		
 		if (Physics.Raycast(ray, out hitInfo, detectionDistance, cullingMask))
 		{
@@ -83,5 +91,31 @@ public class PlayerInteraction : MonoBehaviour
 		{
 			player.canInteract = false;
 		}
+	}
+	
+	void GiveTip() {
+		toolTipFrame.enabled = true;
+		toolTipText.enabled = true;
+		if (hitInfo.transform.GetComponent<DoorControl>()) {
+			toolTipText.text = "Open door";
+		} else if (hitInfo.transform.GetComponent<CameraControl>()){
+			toolTipText.text = "Blind camera";
+		} else if (hitInfo.transform.GetComponent<ComputerConsole>()) {
+			toolTipText.text = "Use computer";
+		} else if (hitInfo.transform.GetComponent<ElevatorControl>()) {
+			toolTipText.text = "Call elevator";
+		} else if (hitInfo.transform.GetComponent<FileCabinetControl>()) {
+			toolTipText.text = "Open drawer";
+		} else if (hitInfo.transform.GetComponent<BoxControl>()) {
+			toolTipText.text = "Open box";
+		} else if (hitInfo.transform.GetComponent<InformationForPlayer>()) {
+			toolTipText.text = "Read";
+		}
+		
+	}
+
+	void EndTip() {
+		toolTipFrame.enabled = false;
+		toolTipText.enabled = false;
 	}
 }
