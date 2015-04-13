@@ -28,8 +28,8 @@ public class QInteractable : MonoBehaviour {
 	public bool displayIsActive = false;
 	public float displayCost = 0;
 	
-	Color activeColor = new Color(1f, 0.4f, 0.4f);
-	Color inactiveColor = new Color(0.2f, 0.2f, 0.2f);
+	//Color activeColor = new Color(1f, 0.4f, 0.4f);
+	//Color inactiveColor = new Color(0.2f, 0.2f, 0.2f);
 	
 	public GameObject tagView;
 	

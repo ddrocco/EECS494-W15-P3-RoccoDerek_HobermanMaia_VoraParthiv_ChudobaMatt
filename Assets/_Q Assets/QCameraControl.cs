@@ -47,7 +47,6 @@ public class QCameraControl : MonoBehaviour
 		cam = GetComponent<Camera>();
 		cameras = new List<QCameraLocation>();
 		camOverview = GameObject.Find("CamOverview").GetComponent<QCameraOverview>();
-		camOverview.camActive = false;
 
 		GameObject[] objs = GameObject.FindGameObjectsWithTag("CameraLocation");
 		foreach (GameObject obj in objs)
@@ -67,7 +66,6 @@ public class QCameraControl : MonoBehaviour
 
 		currentCam = camOverview;
 		cam.orthographic = true;
-		camOverview.camActive = false;
 		cameraDesc.text = "Camera 0\n" + currentCam.description;
 		
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);

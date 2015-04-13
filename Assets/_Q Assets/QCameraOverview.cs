@@ -8,7 +8,6 @@ public class QCameraOverview : QCameraLocation
 	public float minX, maxX;
 	public float minY, maxY;
 	public float minZoom, maxZoom;
-	[HideInInspector]
 	public bool camActive;
 
 	private Camera cam;
