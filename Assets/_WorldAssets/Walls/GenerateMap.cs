@@ -10,18 +10,20 @@ public class GenerateMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tiles = new List<int[]>();
-		tiles.Add (new int[] {0,0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,2,0,0,2,0,0});
-		tiles.Add (new int[] {0,2,1,1,1,1,2,0});
-		tiles.Add (new int[] {0,0,1,1,1,1,0,0});
-		tiles.Add (new int[] {0,0,1,1,1,1,0,0});
-		tiles.Add (new int[] {0,2,1,1,1,1,2,0});
-		tiles.Add (new int[] {0,0,2,0,0,2,0,0});
-		tiles.Add (new int[] {0,0,0,0,1,1,0,0});
-		tiles.Add (new int[] {0,0,0,0,1,1,0,0});
-		tiles.Add (new int[] {0,0,2,2,1,1,0,0});
-		tiles.Add (new int[] {0,0,2,2,1,1,0,0});
-		tiles.Add (new int[] {0,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,0,2,2,2,2,2,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,0,2,2,2,2,2,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,4,4,1,1,1,1,1,1,1,1,3,3,0});
+		tiles.Add (new int[] {0,4,4,1,1,1,1,1,1,1,1,3,3,0});
+		tiles.Add (new int[] {0,4,4,1,1,0,0,0,0,1,1,1,1,0});
+		tiles.Add (new int[] {0,4,4,1,1,0,0,0,0,1,1,1,1,0});
+		tiles.Add (new int[] {0,0,0,1,1,0,0,0,0,1,1,4,0,0});
+		tiles.Add (new int[] {0,0,0,1,1,0,0,0,0,1,1,5,5,0});
+		tiles.Add (new int[] {0,0,2,1,1,1,1,1,1,1,1,5,5,0});
+		tiles.Add (new int[] {0,0,0,1,1,1,1,1,1,1,1,5,5,0});
+		tiles.Add (new int[] {0,5,5,5,5,6,6,6,6,6,7,5,5,0});
+		tiles.Add (new int[] {0,5,5,5,5,6,6,6,6,6,0,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
 		zDim = tiles.Count - 1;
 		xDim = tiles[0].Length - 1;
 	

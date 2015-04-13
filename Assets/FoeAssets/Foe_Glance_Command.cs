@@ -27,6 +27,15 @@ public class Foe_Glance_Command : MonoBehaviour {
 		}
 	
 		if (!isLookingAround) {
+			if (GetComponent<Foe_Detection_Handler>().timeSincePlayerSpotted < GetComponent<Foe_Detection_Handler>().timeUntilPlayerLost) {
+				Vector3 lookPos = new Vector3(
+						FindObjectOfType<PlayerController>().transform.position.x,
+						transform.position.y,
+						FindObjectOfType<PlayerController>().transform.position.z);
+				transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookPos - transform.position, Vector3.up), 0.5f);
+			} else {
+				transform.LookAt(transform.position + transform.parent.forward);
+			}
 			return;
 		}
 		

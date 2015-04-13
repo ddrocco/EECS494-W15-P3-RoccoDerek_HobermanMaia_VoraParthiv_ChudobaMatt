@@ -83,7 +83,7 @@ public class BoxControl : QInteractable {
 				QUI.setText("Game Over\nThe agent set off a bomb");
 			}
 			else {
-				FoeAlertSystem.Alert(transform.position);
+				FoeAlertSystem.Alert(transform.position, isPlayer: false);
 			}
 			isArmed = false;
 			timerSet = false;
@@ -113,7 +113,7 @@ public class BoxControl : QInteractable {
 				return ButtonSpriteDefinitions.main.BombDefused;
 			}
 			if (timerSet) {
-				//return ButtonSpriteDefinitions.main.BombDetonationCountdown[Mathf.FloorToInt(timeToDetonation)];
+				return ButtonSpriteDefinitions.main.BombDetonationCountdown[Mathf.FloorToInt(timeToDetonation)];
 			} else {
 				return ButtonSpriteDefinitions.main.BombDefault;
 			}

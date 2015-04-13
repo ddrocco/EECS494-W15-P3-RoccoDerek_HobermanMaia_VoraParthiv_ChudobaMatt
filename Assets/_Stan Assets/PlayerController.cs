@@ -20,12 +20,14 @@ public class PlayerController : MonoBehaviour
 	
 	public static PlayerController player;
 	
-	private enum State
+	public bool isStationary = true;
+	public enum State
 	{
 		walking, sprinting
 	}
 	private State _state;
-	private State state
+	[HideInInspector]
+	public State state
 	{
 		get { return _state; }
 		set
@@ -203,7 +205,7 @@ public class PlayerController : MonoBehaviour
 		moveDirection = transform.TransformDirection(moveDirection);
 
 		if (moveDirection != Vector3.zero)
-		{
+		{			
 			// Get the length of the direction vector and then normalize it
 			// Dividing by the length is cheaper than normalizing
 			float directionLength = moveDirection.magnitude;
@@ -225,7 +227,6 @@ public class PlayerController : MonoBehaviour
 		{
 			if (state == State.sprinting)
 				state = State.walking;
-			Foe_Detection_Handler.audioMultiplier = 1f;
 		}
 	}
 
@@ -289,6 +290,7 @@ public class PlayerController : MonoBehaviour
 	{
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
 		GetComponent<Rigidbody>().velocity = (moveDirection * currentSpeed * dt);
+		isStationary = (moveDirection == Vector3.zero);
 	}
 
 	// Rotates the player and camera on a fixed interval
@@ -353,7 +355,6 @@ public class PlayerController : MonoBehaviour
 	
 	void AdjustSoundConstants() {
 		if (state == State.walking) {
-			Foe_Detection_Handler.audioMultiplier = 6f;
 			if (!GetComponent<AudioSource>().isPlaying) {
 				if (++currentFootstep >= footsteps.Count) {
 					currentFootstep = 0;
@@ -363,7 +364,6 @@ public class PlayerController : MonoBehaviour
 				GetComponent<AudioSource>().Play();
 			}
 		} else if (state == State.sprinting) {
-			Foe_Detection_Handler.audioMultiplier = 15f;
 			if (!GetComponent<AudioSource>().isPlaying) {
 				if (++currentFootstep >= runFootsteps.Count) {
 					currentFootstep = 0;

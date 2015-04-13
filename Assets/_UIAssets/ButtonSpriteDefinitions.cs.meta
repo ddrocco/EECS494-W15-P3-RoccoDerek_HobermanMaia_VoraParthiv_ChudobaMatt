@@ -1,10 +1,26 @@
 fileFormatVersion: 2
 guid: 9182ae7943129754bb7bcd0e3e6ac80e
-timeCreated: 1426874510
+timeCreated: 1428930164
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - DisplayInvisible: {fileID: 21300000, guid: 55ebe7952489b7946aaf0c4079df5d30, type: 3}
+  - DisplayVisible: {fileID: 21300000, guid: e06a3767d8a87e149a3588a96c33c15d, type: 3}
+  - nil: {instanceID: 0}
+  - BombDefault: {instanceID: 0}
+  - BombDefused: {instanceID: 0}
+  - Alarm: {instanceID: 0}
+  - DoorUnlocked: {instanceID: 0}
+  - DoorLocked: {instanceID: 0}
+  - Laser: {instanceID: 0}
+  - PolyLaser: {instanceID: 0}
+  - Files: {instanceID: 0}
+  - Elevator: {instanceID: 0}
+  - CameraOnAlert: {instanceID: 0}
+  - CameraBlinded: {instanceID: 0}
+  - CameraUnderQ: {instanceID: 0}
+  - CameraArrow: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

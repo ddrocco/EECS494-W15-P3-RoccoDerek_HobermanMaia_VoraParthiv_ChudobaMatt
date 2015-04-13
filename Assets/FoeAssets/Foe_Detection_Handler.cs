@@ -8,9 +8,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	//For haphazard use:
 	private Vector3 displacement;
-	private float audialDetectionValue;
 	private bool playerSpotted = false;
-	public static float audioMultiplier = 0f;
 	public float visionWidth = 75f;
 	
 	//Exclamation points:
@@ -33,6 +31,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	
 	float shoveDisorientationTime = 1f;
 	float timeUntilOriented;
+	
+	public bool isDeaf = false;
 
 	void Start () {	
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
@@ -60,6 +60,10 @@ public class Foe_Detection_Handler : MonoBehaviour {
 				GetComponentInParent<Rigidbody>().useGravity = false;
 				GetComponentInParent<Rigidbody>().freezeRotation = false;
 				timeSincePlayerSpotted = 0f;
+				if (GetComponentInParent<Foe_Movement_Handler>().queuedMovement) {
+					GetComponentInParent<NavMeshAgent>().destination =
+							GetComponentInParent<Foe_Movement_Handler>().currentDestination;	
+				}
 			}
 		}
 	
@@ -69,7 +73,6 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		
 		displacement = PlayerController.player.transform.position - transform.position;
 		CalculateVisualDetection();
-		CalculateAudialDetection();
 		React();
 	}
 	
@@ -103,20 +106,33 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		}
 	}
 	
-	void CalculateAudialDetection() {
-		audialDetectionValue = audioMultiplier / Mathf.Pow (displacement.magnitude, 2);
+	bool CanHearPlayer() {
+		if (isDeaf || FindObjectOfType<PlayerController>().isStationary) {
+			return false;
+		} else if (FindObjectOfType<PlayerController>().state == PlayerController.State.sprinting) {
+			if (displacement.magnitude < 15f) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			if (displacement.magnitude < 3f) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 	
 	void React() {
 		Debug_Foe_Alert_Status.playerSpotted = playerSpotted;
-		Debug_Foe_Alert_Status.audialDetectionValue = audialDetectionValue;
 		
 		timeSincePlayerSpotted += Time.deltaTime;
 
 		if (playerSpotted) {
 			PlayerSpotted();
 			MoveToPlayer();
-		} else if (audialDetectionValue >= 0.5f) {
+		} else if (CanHearPlayer()) {
 			if (GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.patrolling) {
 				GetComponent<AudioSource>().clip = SelectRandomClip(AudioDefinitions.main.GuardHearsPlayer);
 				GetComponent<AudioSource>().Play ();
@@ -124,7 +140,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			MoveToPlayer();
 		} else if (isAggressive) {
 			GetComponentInParent<NavMeshAgent>().speed = baseSpeed * sprintMultiplier;
-			if (movementHandler.isReturning) {
+			if (movementHandler.state == Foe_Movement_Handler.alertState.returning) {
 				isAggressive = false;
 				taser.SetActive(false);
 			}
@@ -132,9 +148,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void PlayerSpotted() { //No insta-death--chase player down
-		if (!isAggressive) {
-			isAggressive = true;
-		}
+		isAggressive = true;
+		isDeaf = false;
 		if (timeSincePlayerSpotted >= timeUntilPlayerLost) {
 			GetComponent<AudioSource>().clip = SelectRandomClip(AudioDefinitions.main.GuardSpotsPlayer);
 			GetComponent<AudioSource>().Play();
@@ -146,7 +161,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public void MoveToPlayer() {
 		isAttentive = true;
 		if (movementHandler != null){
-			movementHandler.StartInvestigation(PlayerController.player.transform.position);
+			movementHandler.StartInvestigation(PlayerController.player.transform.position, isPlayer: true);
 		}
 	}
 	

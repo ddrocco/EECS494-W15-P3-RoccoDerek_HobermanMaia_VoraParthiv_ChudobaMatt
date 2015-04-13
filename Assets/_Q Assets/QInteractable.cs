@@ -7,7 +7,8 @@ public enum MapGroup
 {
 	One,
 	Two,
-	Three
+	Three,
+	Never
 };
 
 public class QInteractable : MonoBehaviour {

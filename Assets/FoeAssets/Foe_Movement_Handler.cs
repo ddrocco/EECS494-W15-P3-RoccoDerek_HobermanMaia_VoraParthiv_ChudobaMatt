@@ -5,21 +5,22 @@ using System.Collections.Generic;
 public class Foe_Movement_Handler : MonoBehaviour {
 	public enum alertState{
 		patrolling,	//Nominal, walking around
-		investigating, //Moves to a location, then goes back to patrolling.
+		investigating, //Moves to a location
+		returning //Goes back to patrolling.
 	};	
 	public alertState state = alertState.patrolling;
 	public Vector3 currentDestination;
 	
 	float minNodeDistance = 0.5f;
+	public float minInvestigationDistance = 1f;
 	
 	//Patrolling variables:
 	public List<int> defaultPath;
 	public int currentPathNode = 0;
 	
-	//Investigating variables:
+	//Investigating IN / Returning OUT variables:
 	public Vector3 originLocation;
 	bool originIsValid = false;
-	public bool isReturning;
 	
 	//Child classes:
 	Foe_Glance_Command foeGlanceCommand;
@@ -29,34 +30,69 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	public float speed;
 	public bool stayFrozenOnLook = false;
 	
+	[HideInInspector]
+	public bool queuedMovement;
+	
 	void Start() {
 		foeGlanceCommand = GetComponentInChildren<Foe_Glance_Command>();
 		foeDetectionHandler = GetComponentInChildren<Foe_Detection_Handler>();
 		speed = GetComponent<NavMeshAgent>().speed;
 	
-		if (state == alertState.patrolling){
-			UpdateDestination();
-		} else if (state == alertState.investigating) {
-			StartInvestigation(PlayerController.player.transform.position);
-		}
+		state = alertState.patrolling;
+		UpdateDestination();
 	}
 
-	void FixedUpdate() {		
-		if (stayFrozenOnLook) {
-			GetComponent<NavMeshAgent>().speed = 0;
-			if (!foeGlanceCommand.isLookingAround) {
-				stayFrozenOnLook = false;
-				GetComponent<NavMeshAgent>().speed = speed;
-			}
-		} else if (state == alertState.investigating && isReturning == false) {
-			if (foeDetectionHandler.isAggressive) {
-				GetComponent<NavMeshAgent>().speed = speed * foeDetectionHandler.sprintMultiplier;
-			} else {
-				GetComponent<NavMeshAgent>().speed = speed;
-			}
+	void FixedUpdate() {	
+		if (GetComponent<NavMeshAgent>() == null) {
+			return;
 		}
+		
+		/*if (!GetComponent<NavMeshAgent>().hasPath) {
+			timeWithoutPath += Time.deltaTime;
+			if (timeWithoutPath > 2f) {
+				switch(state) {
+				case alertState.patrolling:
+					UpdateDestination();
+					break;
+				case alertState.investigating:
+					EndInvestigation();
+					break;
+				case alertState.returning:
+					UpdateDestination();
+					break;
+				}
+				GetComponent<NavMeshAgent>().enabled = false;
+				GetComponent<NavMeshAgent>().enabled = true;
+				timeWithoutPath = 0f;
+			}
+		} else {
+			timeWithoutPath = 0f;
+		}*/
+					
+		if (stayFrozenOnLook) {
+			if (foeGlanceCommand.isLookingAround) {
+				GetComponent<NavMeshAgent>().Stop ();
+			} else {
+				stayFrozenOnLook = false;
+				GetComponent<NavMeshAgent>().Resume ();
+			}
+		} else if (state == alertState.investigating && foeDetectionHandler.isAggressive) {
+			GetComponent<NavMeshAgent>().speed = speed * foeDetectionHandler.sprintMultiplier;
+		} else {
+			GetComponent<NavMeshAgent>().speed = speed;
+		}
+		
+		float minDist;
+		if (state == alertState.patrolling) {
+			minDist = minNodeDistance;
+		} else if (state == alertState.investigating) {
+			minDist = minInvestigationDistance;
+		} else {
+			minDist = minNodeDistance;
+		}
+		
 		if (Vector3.Distance(new Vector3(transform.position.x, 0, transform.position.z), 
-				new Vector3(currentDestination.x, 0, currentDestination.z)) < minNodeDistance) {
+				new Vector3(currentDestination.x, 0, currentDestination.z)) < minDist) {
 		     //If close to current destination
 			UpdateDestination();
 		}
@@ -64,39 +100,51 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	
 	void UpdateDestination() {
 		if (state == alertState.patrolling) {
-			currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
-			currentPathNode += 1;
-			if (currentPathNode >= defaultPath.Count) {
-				currentPathNode = 0;
-			}
-			if (foeDetectionHandler.isAttentive) {
-				foeGlanceCommand.prepareToLook = true;
-				foeGlanceCommand.waitToLook = 1f;
-			}
-		} else if (state == alertState.investigating) {
-			if (!isReturning) {
-				if (!foeGlanceCommand.lookIsStationary) {
-					foeGlanceCommand.ReceiveGlanceCommand(3f, 0.25f, -90f, 90f);
-					foeGlanceCommand.lookIsStationary = true;
+			if (defaultPath.Count == 0) {
+				currentDestination = transform.position;
+				GetComponentInChildren<Light>().enabled = false;
+			} else {
+				currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
+				currentPathNode += 1;
+				if (currentPathNode >= defaultPath.Count) {
+					currentPathNode = 0;
 				}
-				if (!foeGlanceCommand.isLookingAround) {
-					foeGlanceCommand.lookIsStationary = false;
-					isReturning = true;
-					currentDestination = originLocation;
+				if (foeDetectionHandler.isAttentive) {
 					foeGlanceCommand.prepareToLook = true;
 					foeGlanceCommand.waitToLook = 1f;
 				}
-			} else if (isReturning) {
-				state = alertState.patrolling;
+			}
+		} else if (state == alertState.investigating) {
+			GetComponentInChildren<Light>().enabled = true;
+			if (!foeGlanceCommand.lookIsStationary) {
+				foeGlanceCommand.ReceiveGlanceCommand(3f, 0.25f, -90f, 90f);
+				foeGlanceCommand.lookIsStationary = true;
+			}
+			if (!foeGlanceCommand.isLookingAround) {
+				foeGlanceCommand.lookIsStationary = false;
+				foeGlanceCommand.prepareToLook = true;
+				foeGlanceCommand.waitToLook = 1f;
+				EndInvestigation();
+			}
+		} else if (state == alertState.returning) {
+			state = alertState.patrolling;
+			originIsValid = false;
+			if (defaultPath.Count == 0) {
+				currentDestination = transform.position;
+			} else {
 				currentDestination = World_Foe_Route_Node.routeNodeList[defaultPath[currentPathNode]].transform.position;
-				originIsValid = false;
 			}
 		}
+		
 		currentDestination.y = transform.position.y;
-		GetComponent<NavMeshAgent>().destination = currentDestination;
+		if (GetComponent<NavMeshAgent>().enabled) {
+			GetComponent<NavMeshAgent>().destination = currentDestination;	
+		} else {
+			queuedMovement = true;
+		}
 	}
 	
-	public void StartInvestigation(Vector3 destination) {
+	public void StartInvestigation(Vector3 destination, bool isPlayer) {
 		if (!GetComponent<NavMeshAgent>().enabled) {
 			return;
 		}
@@ -107,11 +155,20 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		stayFrozenOnLook = false;
 		originIsValid = true;
 		currentDestination = destination;
+		if (isPlayer) {
+			minInvestigationDistance = FoeAlertSystem.playerRange;
+		} else {
+			minInvestigationDistance = FoeAlertSystem.bombRange;
+		}
 		GetComponent<NavMeshAgent>().destination = destination;
-		isReturning = false;
 		state = alertState.investigating;
 		
 		foeGlanceCommand.OverrideGlanceCommand();
+	}
+	
+	public void EndInvestigation() {
+		state = alertState.returning;
+		currentDestination = originLocation;
 	}
 	
 	public void Interact() {

@@ -12,7 +12,7 @@ public class MapCoverControl : MonoBehaviour
 	public static Image mapCover1;
 	public static Image mapCover2;
 	
-	void Start()
+	void Awake()
 	{
 		groups = new List<List<QInteractable>>();
 		group1 = new List<QInteractable>();

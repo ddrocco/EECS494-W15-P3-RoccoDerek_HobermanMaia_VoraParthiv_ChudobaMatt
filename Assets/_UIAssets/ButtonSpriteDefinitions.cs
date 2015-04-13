@@ -11,7 +11,7 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 			Laser, PolyLaser,
 			Files,
 			Elevator,
-			CameraOnAlert, CameraBlinded, CameraUnderQ;
+			CameraOnAlert, CameraBlinded, CameraUnderQ, CameraArrow;
 	public List<Sprite> BombDetonationCountdown,
 			displayTaggedAnimation;
 	public static ButtonSpriteDefinitions main;

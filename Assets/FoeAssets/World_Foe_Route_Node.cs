@@ -14,10 +14,7 @@ public class World_Foe_Route_Node : MonoBehaviour {
 	void Awake () {
 		string id = Regex.Replace(name, @"[^\d]", "");
 		routeNodeList[int.Parse(id)] = gameObject;
-		
-		if (pauseAndLookOnEntry) {
-			GetComponent<Renderer>().material.color = Color.green;
-		}
+		GetComponent<Renderer>().enabled = false;
 	}
 	
 	void OnTriggerEnter(Collider other) {

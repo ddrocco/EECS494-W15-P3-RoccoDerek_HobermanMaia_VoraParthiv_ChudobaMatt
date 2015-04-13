@@ -12,6 +12,7 @@ public class ComputerConsole : MonoBehaviour {
 			MapCoverControl.ToggleMapGroup(mapValue, true);
 		}
 		OtherAction(mapValue);
+		EnableRenderers(mapValue);
 	}
 	
 	void OtherAction(int value) {
@@ -28,17 +29,28 @@ public class ComputerConsole : MonoBehaviour {
 			//hack this camera!
 			GameObject Parent = transform.parent.gameObject;
 			CameraControl camControl = Parent.GetComponentInChildren<CameraControl>();
-			camControl.QIsWatching = true;
-			QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
-			QCameraLocation loc = GetComponentInParent<QCameraLocation>();
-			Qcontrol.ToggleCamera(loc.cameraNumber, true);
-			if (Qcontrol.warning) {
-				Qcontrol.AlertOff();
-			}
+			TakeCameraControl(camControl);
+		}
+	}
+	
+	public static void TakeCameraControl(CameraControl camControl) {
+		camControl.QIsWatching = true;
+		QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
+		QCameraLocation loc = camControl.GetComponentInParent<QCameraLocation>();
+		Qcontrol.ToggleCamera(loc.cameraNumber, true);
+		if (Qcontrol.warning) {
+			Qcontrol.AlertOff();
 		}
 	}
 	
 	void Lightpocalypse() {
 		FindObjectOfType<BrokenLightParent>().Lightpocalypse();
+	}
+	
+	void EnableRenderers(int value) {
+		int enabledValue = value-1;
+		foreach (GenerateQRenderer renderObject in FindObjectsOfType<GenerateQRenderer>()) {
+			renderObject.Activate(enabledValue);
+		}
 	}
 }

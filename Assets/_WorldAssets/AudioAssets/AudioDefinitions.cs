@@ -9,9 +9,8 @@ public class AudioDefinitions : MonoBehaviour {
 		BoxOpening, BoxClosing,
 		TickTock, Explosion,
 		DoorLocked, DoorOpen, DoorClose,
-		ComputerAccess,
-		PaperNoises,
-		GuardChatter1, GuardChatter2, GuardChatter3;
+		
+		Level5Script;
 	public List<AudioClip> CrouchFootsteps, Footsteps, RunFootsteps,
 		GuardSpotsPlayer, GuardHearsPlayer;
 	public static AudioDefinitions main;

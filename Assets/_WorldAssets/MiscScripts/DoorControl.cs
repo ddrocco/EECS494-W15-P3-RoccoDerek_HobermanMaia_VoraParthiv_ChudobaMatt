@@ -23,7 +23,6 @@ public class DoorControl : QInteractable {
 	float openDistance = 1.5f;
 	float closeDistance = 3f;
 	
-	RaycastHit hitInfo;
 	List<Ray> raysRight = new List<Ray>();
 	List<Ray> raysLeft = new List<Ray>();
 	List<Ray> raysClose = new List<Ray>();
@@ -31,9 +30,6 @@ public class DoorControl : QInteractable {
 	//Guards unlocking
 	float timeToUnlock = 5f;
 	float timeUntilUnlocked = 5f;
-	
-	float timeSinceOpened = 0;
-	float timeUntilObstacleEnable = 0.5f;
 	
 	void Awake () {		
 		basePosition = transform.position + new Vector3(0, -0.5f, 0);
@@ -93,7 +89,6 @@ public class DoorControl : QInteractable {
 				}
 			}
 			GetComponentInParent<Animator>().SetBool("isOpen", true);
-			timeSinceOpened = 0f;
 			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
 			GetComponent<AudioSource>().Play();
 			return;
@@ -105,14 +100,7 @@ public class DoorControl : QInteractable {
 		}
 	}
 	
-	void Update() {
-		timeSinceOpened += Time.deltaTime;
-		if (GetComponentInParent<Animator>().GetBool ("isOpen") && timeSinceOpened > timeUntilObstacleEnable) {
-			GetComponent<NavMeshObstacle>().enabled = true;
-		} else {
-			GetComponent<NavMeshObstacle>().enabled = false;
-		}
-			
+	void Update() {			
 		foreach (Ray ray in raysClose) {
 			Debug.DrawRay(ray.origin, ray.direction * closeDistance);
 		}
@@ -124,18 +112,25 @@ public class DoorControl : QInteractable {
 	}
 	
 	void OpenForGuards() {
+		bool valid = false;
 		foreach(Ray ray in raysRight) {
-			if (Physics.Raycast(ray, out hitInfo, openDistance, cullGuards)) {
-				OpenDoor (openRight: true, guardNavAgent: hitInfo.collider.GetComponentInParent<NavMeshAgent>());
-				return;
+			RaycastHit[] hits = Physics.RaycastAll(ray, openDistance, cullGuards);
+			foreach (RaycastHit hit in hits) {
+				OpenDoor (openRight: true, guardNavAgent: hit.collider.GetComponentInParent<NavMeshAgent>());
+				valid = true;
 			}
 		}
 		
 		foreach(Ray ray in raysLeft) {
-			if (Physics.Raycast(ray, out hitInfo, openDistance, cullGuards)) {
-				OpenDoor (openRight: false, guardNavAgent: hitInfo.collider.GetComponentInParent<NavMeshAgent>());
-				return;
+			RaycastHit[] hits = Physics.RaycastAll(ray, openDistance, cullGuards);
+			foreach (RaycastHit hit in hits) {
+				OpenDoor (openRight: false, guardNavAgent: hit.collider.GetComponentInParent<NavMeshAgent>());
+				valid = true;
 			}
+		}
+		
+		if (valid) {
+			return;
 		}
 		
 		//No guards found:
@@ -153,7 +148,6 @@ public class DoorControl : QInteractable {
 				GetComponentInParent<Animator>().SetBool("openSouth", !openRight);
 			}
 			GetComponentInParent<Animator>().SetBool("isOpen", true);
-			timeSinceOpened = 0;
 			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
 			GetComponent<AudioSource>().Play();
 		} else {
@@ -163,7 +157,10 @@ public class DoorControl : QInteractable {
 				expectState = false;
 				guardNavAgent.Resume ();
 			} else {
-				guardNavAgent.Stop ();
+				if (guardNavAgent.GetComponentInChildren<Foe_Detection_Handler>().timeSincePlayerSpotted >= 
+				    	guardNavAgent.GetComponentInChildren<Foe_Detection_Handler>().timeUntilPlayerLost) {
+					guardNavAgent.Stop ();    	
+				}
 			}
 			if (timeUntilUnlocked == timeToUnlock) {
 				QInteractionButton.GetComponent<QInteractionUI>().InUseOn();
@@ -173,19 +170,24 @@ public class DoorControl : QInteractable {
 	}
 	
 	void CloseForGuardsAndStan() {
+		bool valid = false;		
 		foreach(Ray ray in raysClose) {
-			if (Physics.Raycast(ray, out hitInfo, closeDistance, cullGuards + cullStan)) {
-				if (hitInfo.collider.GetComponentInParent<NavMeshAgent>()) {
-					hitInfo.collider.GetComponentInParent<NavMeshAgent>().speed =
-							hitInfo.collider.GetComponentInParent<Foe_Movement_Handler>().speed;
+			RaycastHit[] hits = Physics.RaycastAll(ray, closeDistance, cullGuards + cullStan);
+			foreach (RaycastHit hit in hits) {
+				if (hit.collider.GetComponentInParent<NavMeshAgent>() && hit.collider.GetComponentInParent<NavMeshAgent>().enabled) {
+					hit.collider.GetComponentInParent<NavMeshAgent>().Resume ();
 				}
-				return;
+				valid = true;
 			}
 		}
-		//No guards or stans detected
-		GetComponentInParent<Animator>().SetBool("isOpen", false);
-		GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
-		GetComponent<AudioSource>().Play();
+		
+		if (valid) {
+			return;
+		} else {
+			GetComponentInParent<Animator>().SetBool("isOpen", false);
+			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
+			GetComponent<AudioSource>().Play();
+		}
 	}
 	
 	public override void Trigger() {

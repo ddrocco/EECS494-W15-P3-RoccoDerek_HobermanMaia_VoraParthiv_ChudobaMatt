@@ -32,6 +32,8 @@ public class CameraControl : QInteractable {
 	private QCameraControl camControl;
 	private QCameraLocation camLocation;
 	
+	private GameObject QArrowIcon;
+	
 	public override void Start () {
 	
 		//Setting up detection
@@ -60,6 +62,10 @@ public class CameraControl : QInteractable {
 		alertLight.color = Color.Lerp(color0, color1, t);
 		if (t < 0.1f) {
 			AlarmDisable();
+		}
+		
+		if (QArrowIcon != null) {
+			QArrowIcon.transform.localEulerAngles = new Vector3(0, 180, transform.eulerAngles.y);
 		}
 		
 		//Hacked in/broken
@@ -162,5 +168,12 @@ public class CameraControl : QInteractable {
 	public override void enableButtonView() {
 		QInteractionButton.GetComponent<Image>().enabled = true;
 		GetComponentInChildren<LineRenderer>().enabled = true;
+		
+		QArrowIcon = Instantiate (ObjectPrefabDefinitions.main.CameraArrowIcon) as GameObject;
+		QArrowIcon.transform.SetParent(QInteractionButton.transform);
+		QArrowIcon.transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+		QArrowIcon.transform.localEulerAngles = new Vector3(0, 180, transform.eulerAngles.y);
+		QArrowIcon.transform.localPosition = Vector3.zero;
+		QArrowIcon.GetComponent<Image>().sprite = ButtonSpriteDefinitions.main.CameraArrow;
 	}
 }
