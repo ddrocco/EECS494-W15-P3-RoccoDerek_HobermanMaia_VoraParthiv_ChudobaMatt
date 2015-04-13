@@ -4,9 +4,7 @@
  * Mouse - look around
  * Tab - switch between Stan's mouse controls and Q's mouse controls
  * Left click - interact
- * Right click - tag object
- * O - crouch
- * U - sprint
+ * O - sprint
  * 
  */
 
@@ -24,7 +22,7 @@ public class PlayerController : MonoBehaviour
 	
 	private enum State
 	{
-		walking, sprinting, crouching
+		walking, sprinting
 	}
 	private State _state;
 	private State state
@@ -44,10 +42,6 @@ public class PlayerController : MonoBehaviour
 	// Movement variables
 	private float currentSpeed;
 	private float targetSpeed;
-	private Vector3 normalScale;
-	private Vector3 crouchScale;
-	private float crouchFactor = 0.66f;
-	private float crouchLerpVal = 1f;
 
 	// Rotation variables
 	private Vector3 moveDirection = Vector3.zero;
@@ -59,8 +53,6 @@ public class PlayerController : MonoBehaviour
 	// Public variables to be changed in the inspector
 	public float walkSpeed;
 	public float sprintSpeed;
-	public float crouchSpeed;
-	public float crouchAnimationSpeed;
 	public float acceleration;
 	public float rotateSpeed;
 	public float minimumY = -60f;
@@ -73,14 +65,11 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public GameObject interactiveObj;
 	[HideInInspector]
-	public GameObject taggableObj;
-	[HideInInspector]
 	public static bool debugControls = false;
 	[HideInInspector]
 	public static bool mouseMovement = false;
 	
 	List<AudioClip> footsteps;
-	List<AudioClip> crouchFootsteps;
 	List<AudioClip> runFootsteps;
 	int currentFootstep = 0;
 	
@@ -97,9 +86,6 @@ public class PlayerController : MonoBehaviour
 		state = State.walking;
 		currentSpeed = walkSpeed;
 		targetSpeed = walkSpeed;
-		normalScale = transform.localScale;
-		crouchScale = normalScale;
-		crouchScale.y *= crouchFactor;
 
 		if (InputManager.Devices.Count == 0)
 		{
@@ -112,7 +98,6 @@ public class PlayerController : MonoBehaviour
 	
 	void Start() {
 		footsteps = AudioDefinitions.main.Footsteps;
-		crouchFootsteps = AudioDefinitions.main.CrouchFootsteps;
 		runFootsteps = AudioDefinitions.main.RunFootsteps;
 	}
 
@@ -148,21 +133,14 @@ public class PlayerController : MonoBehaviour
 		SetLookDirection();
 
 		// Change states based on controller input
-		if (device.LeftStickButton.WasPressed)
+		if (device.Action3.WasPressed) // X button on Xbox
 		{
 			if (state == State.sprinting)
 				state = State.walking;
 			else
 				state = State.sprinting;
 		}
-		if (device.Action2.WasPressed)
-		{
-			if (state == State.crouching)
-				state = State.walking;
-			else
-				state = State.crouching;
-		}
-		if (device.Action1.WasPressed)
+		if (device.Action1.WasPressed) // A button on Xbox
 		{
 			Interact();
 		}
@@ -179,7 +157,6 @@ public class PlayerController : MonoBehaviour
 		float dt = Time.fixedDeltaTime;
 		Move(dt);
 		Look(dt);
-		Crouch(dt);
 	}
 
 	void CheckDebugStates()
@@ -198,14 +175,7 @@ public class PlayerController : MonoBehaviour
 				Cursor.visible = true;
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.O)) // Crouch
-		{
-			if (state == State.crouching)
-				state = State.walking;
-			else
-				state = State.crouching;
-		}
-		if (Input.GetKeyDown(KeyCode.U)) // Sprint
+		if (Input.GetKeyDown(KeyCode.O)) // Sprint
 		{
 			if (state == State.sprinting)
 				state = State.walking;
@@ -351,70 +321,13 @@ public class PlayerController : MonoBehaviour
 			targetSpeed = sprintSpeed;
 			acceleration = Mathf.Abs(acceleration);
 		}
-		else if (state == State.walking && newState == State.crouching)
-		{
-			currentSpeed = walkSpeed;
-			targetSpeed = crouchSpeed;
-			acceleration = Mathf.Abs(acceleration) * -1f;
-		}
 		else if (state == State.sprinting && newState == State.walking)
 		{
 			targetSpeed = walkSpeed;
 			acceleration = Mathf.Abs(acceleration) * -1f;
 		}
-		else if (state == State.sprinting && newState == State.crouching)
-		{
-			currentSpeed = walkSpeed;
-			targetSpeed = crouchSpeed;
-			acceleration = Mathf.Abs(acceleration) * -1f;
-		}
-		else if (state == State.crouching && newState == State.walking)
-		{
-			targetSpeed = walkSpeed;
-			acceleration = Mathf.Abs(acceleration);
-		}
-		else if (state == State.crouching && newState == State.sprinting)
-		{
-			currentSpeed = (walkSpeed + crouchSpeed) / 2f;
-			targetSpeed = sprintSpeed;
-			acceleration = Mathf.Abs(acceleration);
-		}
 		else
 			Debug.LogError("Invalid player state change");
-	}
-
-	void Crouch(float dt)
-	{
-		Vector3 scaleBefore = transform.localScale;
-		Vector3 scaleAfter;
-		if (state == State.crouching) // lerp from standing to crouching
-		{
-			crouchLerpVal = Mathf.Clamp(crouchLerpVal - (dt * crouchAnimationSpeed), 0f, 1f);
-			transform.localScale = Vector3.Lerp(crouchScale, normalScale, crouchLerpVal);
-			scaleAfter = transform.localScale;
-
-			if (scaleBefore != scaleAfter)
-			{
-				float delta = scaleBefore.y - scaleAfter.y;
-				Vector3 pos = transform.position;
-				pos.y -= delta;
-				transform.position = pos;
-			}
-		}
-		else // lerp from crouching to standing
-		{
-			crouchLerpVal = Mathf.Clamp(crouchLerpVal + (dt * crouchAnimationSpeed), 0f, 1f);
-			transform.localScale = Vector3.Lerp(crouchScale, normalScale, crouchLerpVal);
-			scaleAfter = transform.localScale;
-
-			if (scaleBefore != scaleAfter)
-			{
-				float delta = scaleAfter.y - scaleBefore.y;
-				Vector3 pos = transform.position;
-				pos.y += delta;
-				transform.position = pos;
-			}
-		}
 	}
 
 	void Interact()
@@ -422,10 +335,6 @@ public class PlayerController : MonoBehaviour
 		if (canInteract) {
 			interactiveObj.SendMessage("Interact");
 		}
-		/*else {
-			Debug.LogError("Interactive object " + interactiveObj.name + " is not yet implemented");
-			return;
-		}*/
 	}
 
 	float IncrementTowards(float current, float target, float accel)
@@ -443,17 +352,7 @@ public class PlayerController : MonoBehaviour
 	}
 	
 	void AdjustSoundConstants() {
-		if (state == State.crouching) {
-			Foe_Detection_Handler.audioMultiplier = 3f;
-			if (!GetComponent<AudioSource>().isPlaying) {
-				if (++currentFootstep >= crouchFootsteps.Count) {
-					currentFootstep = 0;
-				}
-				GetComponent<AudioSource>().clip = crouchFootsteps[currentFootstep];
-				GetComponent<AudioSource>().volume = 0.5f;
-				GetComponent<AudioSource>().Play();
-			}
-		} else if (state == State.walking) {
+		if (state == State.walking) {
 			Foe_Detection_Handler.audioMultiplier = 6f;
 			if (!GetComponent<AudioSource>().isPlaying) {
 				if (++currentFootstep >= footsteps.Count) {
