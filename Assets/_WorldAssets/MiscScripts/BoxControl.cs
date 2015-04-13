@@ -88,6 +88,7 @@ public class BoxControl : QInteractable {
 			isArmed = false;
 			timerSet = false;
 			timeToDetonation = 0;
+			Destroy(this.gameObject, .5f);
 		}
 	}
 	
@@ -112,7 +113,7 @@ public class BoxControl : QInteractable {
 				return ButtonSpriteDefinitions.main.BombDefused;
 			}
 			if (timerSet) {
-				return ButtonSpriteDefinitions.main.BombDetonationCountdown[Mathf.FloorToInt(timeToDetonation)];
+				//return ButtonSpriteDefinitions.main.BombDetonationCountdown[Mathf.FloorToInt(timeToDetonation)];
 			} else {
 				return ButtonSpriteDefinitions.main.BombDefault;
 			}
