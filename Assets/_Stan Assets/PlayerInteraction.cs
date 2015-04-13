@@ -132,7 +132,9 @@ public class PlayerInteraction : MonoBehaviour
 			} else {
 				toolTipText.text = "Read";
 			}
-		} else if (hitInfo.transform.GetComponent<Foe_Detection_Handler>()) {
+		} else if (hitInfo.transform.GetComponent<UselessDataComputer>()) {
+			toolTipText.text = "Get data";
+		}else if (hitInfo.transform.GetComponent<Foe_Detection_Handler>()) {
 			Foe_Detection_Handler foe = hitInfo.transform.GetComponent<Foe_Detection_Handler>();
 			if (foe.timeSincePlayerSpotted >= foe.timeUntilPlayerLost) {
 				toolTipText.text = "Kill guard";
