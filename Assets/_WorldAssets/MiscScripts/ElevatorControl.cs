@@ -9,6 +9,9 @@ public class ElevatorControl : QInteractable {
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
+		if (anim == null) {
+			anim = GetComponentInParent<Animator>();
+		}
 	}
 	void Update() {
 		dispPasscard = playerGotPasscard;
@@ -23,7 +26,7 @@ public class ElevatorControl : QInteractable {
 	public void Interact () {
 		if (!playerGotPasscard) {
 			GameController.SendPlayerMessage("Locked:\nFind the key", 5);
-			gameObject.GetComponent<AudioSource>().Play();
+			//gameObject.GetComponent<AudioSource>().Play();
 			return;
 		} else {
 			anim.SetBool("isOpen", !anim.GetBool("isOpen"));
