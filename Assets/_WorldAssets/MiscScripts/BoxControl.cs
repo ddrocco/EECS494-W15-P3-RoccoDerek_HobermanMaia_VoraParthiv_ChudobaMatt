@@ -88,7 +88,11 @@ public class BoxControl : QInteractable {
 			isArmed = false;
 			timerSet = false;
 			timeToDetonation = 0;
-			Destroy(this.gameObject, .5f);
+			MeshRenderer[] visibles = GetComponentsInChildren<MeshRenderer>();
+			foreach (MeshRenderer obj in visibles) {
+				obj.enabled = false;
+			}
+			Destroy(this.gameObject, 1f);
 		}
 	}
 	
