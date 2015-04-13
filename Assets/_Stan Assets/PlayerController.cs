@@ -240,24 +240,8 @@ public class PlayerController : MonoBehaviour
 
 	void SetMoveDirectionDebug()
 	{
-		//moveDirection.x = Input.GetAxis("Horizontal");
-		moveDirection.x = 0;
-		if (Input.GetKey(KeyCode.J)) {
-			moveDirection.x -= 1;
-		}
-		if (Input.GetKey(KeyCode.L)) {
-			moveDirection.x += 1;
-		}
-		
-		//moveDirection.z = Input.GetAxis("Vertical");
-		moveDirection.z = 0;
-		if (Input.GetKey(KeyCode.K)) {
-			print ("This fucking sucks");
-			moveDirection.z -= 1;
-		}
-		if (Input.GetKey(KeyCode.I)) {
-			moveDirection.z += 1;
-		}
+		moveDirection.x = Input.GetAxis("Horizontal");
+		moveDirection.z = Input.GetAxis("Vertical");
 
 		moveDirection = transform.TransformDirection(moveDirection);
 
