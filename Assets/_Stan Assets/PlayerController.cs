@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public GameObject interactiveObj;
 	[HideInInspector]
-	public static bool debugControls = false;
+	public static bool debugControls = true;
 	[HideInInspector]
 	public static bool mouseMovement = false;
 	
@@ -89,12 +89,20 @@ public class PlayerController : MonoBehaviour
 		currentSpeed = walkSpeed;
 		targetSpeed = walkSpeed;
 
-		if (InputManager.Devices.Count == 0)
+		foreach (var Device in InputManager.Devices) {
+			print (Device.Name);
+			if (Device.Name == "XBoxController") {
+				debugControls = false;
+			}
+		}
+		if (debugControls)
 		{
-			debugControls = true;
+			print ("Using Keyboard and Mouse for Agent");
 			mouseMovement = true;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
+		} else {
+			print ("Using XBox Controller for Agent");
 		}
 	}
 	
@@ -232,8 +240,24 @@ public class PlayerController : MonoBehaviour
 
 	void SetMoveDirectionDebug()
 	{
-		moveDirection.x = Input.GetAxis("Horizontal");
-		moveDirection.z = Input.GetAxis("Vertical");
+		//moveDirection.x = Input.GetAxis("Horizontal");
+		moveDirection.x = 0;
+		if (Input.GetKey(KeyCode.J)) {
+			moveDirection.x -= 1;
+		}
+		if (Input.GetKey(KeyCode.L)) {
+			moveDirection.x += 1;
+		}
+		
+		//moveDirection.z = Input.GetAxis("Vertical");
+		moveDirection.z = 0;
+		if (Input.GetKey(KeyCode.K)) {
+			print ("This fucking sucks");
+			moveDirection.z -= 1;
+		}
+		if (Input.GetKey(KeyCode.I)) {
+			moveDirection.z += 1;
+		}
 
 		moveDirection = transform.TransformDirection(moveDirection);
 

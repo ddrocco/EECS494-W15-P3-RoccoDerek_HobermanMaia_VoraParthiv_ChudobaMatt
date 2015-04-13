@@ -171,9 +171,9 @@ public class CameraControl : QInteractable {
 		
 		QArrowIcon = Instantiate (ObjectPrefabDefinitions.main.CameraArrowIcon) as GameObject;
 		QArrowIcon.transform.SetParent(QInteractionButton.transform);
-		QArrowIcon.transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+		QArrowIcon.transform.localScale = new Vector3(1.025f, 1.025f, 1.025f);
 		QArrowIcon.transform.localEulerAngles = new Vector3(0, 180, transform.eulerAngles.y);
-		QArrowIcon.transform.localPosition = Vector3.zero;
+		QArrowIcon.transform.localPosition = Vector3.back;
 		QArrowIcon.GetComponent<Image>().sprite = ButtonSpriteDefinitions.main.CameraArrow;
 	}
 }
