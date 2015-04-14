@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
 		foreach (var Device in InputManager.Devices) {
 			print (Device.Name);
-			if (Device.Name == "XBoxController") {
+			if (Device.Name == "XBox 360 Controller") {
 				debugControls = false;
 			}
 		}
