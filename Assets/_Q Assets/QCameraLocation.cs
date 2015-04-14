@@ -7,7 +7,6 @@ public class QCameraLocation : MonoBehaviour
 {
 	public float minRotation;
 	public float maxRotation;
-	public string description;
 	public float zoom;
 	public bool usable = false;
 	public bool Offline;

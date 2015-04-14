@@ -19,7 +19,6 @@ public class QCameraControl : MonoBehaviour
 	public float zoomSpeed = 50f;
 	public float zoomMin = 10f;
 	public float zoomMax = 50f;
-	public Text cameraDesc;
 
 	//[HideInInspector]
 	public static int camCount;
@@ -66,8 +65,7 @@ public class QCameraControl : MonoBehaviour
 
 		currentCam = camOverview;
 		cam.orthographic = true;
-		cameraDesc.text = "Camera 0\n" + currentCam.description;
-		
+
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
 				+ (1 << Layerdefs.laser);
@@ -231,8 +229,6 @@ public class QCameraControl : MonoBehaviour
 			UD_rotation = currentCam.transform.eulerAngles.x;
 			LR_rotation = currentCam.transform.eulerAngles.y;
 			zoom = currentCam.zoom;
-			
-			cameraDesc.text = "Camera " + currentCam.cameraNumber + "\n" + currentCam.description;
 		}
 	}
 
@@ -254,8 +250,6 @@ public class QCameraControl : MonoBehaviour
 		UD_rotation = currentCam.transform.eulerAngles.x;
 		LR_rotation = currentCam.transform.eulerAngles.y;
 		zoom = currentCam.zoom;
-
-		cameraDesc.text = "Camera " + currentCam.cameraNumber + "\n" + currentCam.description;
 	}
 
 	void ToggleControlText()
