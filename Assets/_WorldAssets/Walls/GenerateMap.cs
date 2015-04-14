@@ -10,7 +10,6 @@ public class GenerateMap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		tiles = new List<int[]>();
-<<<<<<< Updated upstream
 		tiles.Add (new int[] {0,0,2,2,2,2,2,2,2,0});
 		tiles.Add (new int[] {0,0,2,2,2,2,2,2,2,0});
 		tiles.Add (new int[] {0,0,2,2,2,2,2,2,2,0});
@@ -19,7 +18,6 @@ public class GenerateMap : MonoBehaviour {
 		tiles.Add (new int[] {0,0,2,2,0,0,0,0,0,0});
 		tiles.Add (new int[] {1,1,1,1,0,0,0,0,0,0});
 		tiles.Add (new int[] {1,1,1,1,0,0,0,0,0,0});
-=======
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
@@ -35,7 +33,6 @@ public class GenerateMap : MonoBehaviour {
 		tiles.Add (new int[] {0,0,3,2,4,4,4,2,3,0,0,0,0,0});
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0});
->>>>>>> Stashed changes
 		zDim = tiles.Count - 1;
 		xDim = tiles[0].Length - 1;
 	
