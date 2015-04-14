@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 	private float rotationYDelta = 0f;
 	private Vector3 xRotation = Vector3.zero;
 	private Vector3 yRotation = Vector3.zero;
+	private int sensitivity = 5;
 
 	// Public variables to be changed in the inspector
 	public float walkSpeed;
@@ -90,19 +91,15 @@ public class PlayerController : MonoBehaviour
 		targetSpeed = walkSpeed;
 
 		foreach (var Device in InputManager.Devices) {
-			print (Device.Name);
 			if (Device.Name == "XBox 360 Controller") {
 				debugControls = false;
 			}
 		}
 		if (debugControls)
 		{
-			print ("Using Keyboard and Mouse for Agent");
 			mouseMovement = true;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
-		} else {
-			print ("Using XBox Controller for Agent");
 		}
 	}
 	
@@ -113,6 +110,8 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		if (PauseScript.GamePaused) return;
+
 		if (mouseMovement) {
 			if (Input.GetKeyDown(KeyCode.Tab)) {
 				mouseIsLocked = !mouseIsLocked;
@@ -158,6 +157,8 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
+		if (PauseScript.GamePaused) return;
+
 		if (GameController.PlayerDead)
 		{
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -275,10 +276,10 @@ public class PlayerController : MonoBehaviour
 	void SetLookDirection()
 	{
 		// Chanage x rotation based on right stick input
-		xRotation.y = device.RightStickX.Value * rotateSpeed;
+		xRotation.y = device.RightStickX.Value * rotateSpeed * sensitivity;
 
 		// Increment y rotation by right stick input
-		rotationYDelta = device.RightStickY.Value * rotateSpeed;
+		rotationYDelta = device.RightStickY.Value * rotateSpeed * sensitivity;
 	}
 
 	void SetLookDirectionDebug()
@@ -381,5 +382,11 @@ public class PlayerController : MonoBehaviour
 				GetComponent<AudioSource>().Play();
 			}
 		}
+	}
+
+	// 1 <= val <= 10
+	public void SetLookSensitivity(int val)
+	{
+		sensitivity = val;
 	}
 }

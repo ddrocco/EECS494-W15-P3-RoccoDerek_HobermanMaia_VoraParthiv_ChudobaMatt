@@ -4,9 +4,13 @@ using System.Collections;
 using InControl;
 
 public class PauseScript : MonoBehaviour {
-//	private InputDevice device;
 	public GameObject QPauseMenu;
 	public GameObject StanPauseMenu;
+	public Slider sensitivity;
+	public Text sensitivityValText;
+
+	private InputDevice device;
+	private PlayerController player;
 
 	public bool paused {
 		get {
@@ -18,13 +22,15 @@ public class PauseScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		sensitivity = GameObject.Find("SensitivitySlider").GetComponent<Slider>();
 		QPauseMenu.GetComponent<Canvas> ().worldCamera = GameObject.Find ("QCamera").GetComponent<Camera>();
 		StanPauseMenu.GetComponent<Canvas> ().worldCamera = GameObject.Find ("PlayerCamera").GetComponent<Camera>();
-		Resume ();
+		player = FindObjectOfType<PlayerController>();
+		Resume();
 	}
 
 	void Awake() {
-	//	device = InputManager.ActiveDevice;
+		device = InputManager.ActiveDevice;
 	}
 	
 	// Update is called once per frame
@@ -36,6 +42,17 @@ public class PauseScript : MonoBehaviour {
 				Pause();
 			}
 		}
+		if (!GamePaused) return;
+
+		if (device.DPadLeft.WasPressed)
+		{
+			sensitivity.value--;
+		}
+		if (device.DPadRight.WasPressed)
+		{
+			sensitivity.value++;
+		}
+		sensitivityValText.text = sensitivity.value.ToString();
 	}
 
 	public void Pause(){
@@ -50,6 +67,7 @@ public class PauseScript : MonoBehaviour {
 		StanPauseMenu.SetActive(false);
 		Time.timeScale = 1;
 		GamePaused = false;
+		player.SetLookSensitivity((int)sensitivity.value);
 	}
 
 	public void Restart(){
