@@ -5,7 +5,7 @@ using InControl;
 public class Buttons : MonoBehaviour {
 
 	public void Play(){
-		Application.LoadLevel ("_AlphaScene");
+		Application.LoadLevel ("_BetaLevel1");
 	}
 
 	void Update(){

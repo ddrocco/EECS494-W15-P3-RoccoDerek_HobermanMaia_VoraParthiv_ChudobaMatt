@@ -18,9 +18,6 @@ public class ComputerConsole : MonoBehaviour {
 	void OtherAction(int value) {
 		if (value == 1) {
 			FindObjectOfType<QUI>().showCamera(true);
-			if (Regex.Replace(EditorApplication.currentScene, "[^0-9]", "").CompareTo("3") == 0) {
-				Lightpocalypse();
-			}
 		} else if (value == 2) {
 			GameController.SendPlayerMessage("Additional access granted", 5);
 		} else if (value == 3) {
@@ -41,10 +38,6 @@ public class ComputerConsole : MonoBehaviour {
 		if (Qcontrol.warning) {
 			Qcontrol.AlertOff();
 		}
-	}
-	
-	void Lightpocalypse() {
-		FindObjectOfType<BrokenLightParent>().Lightpocalypse();
 	}
 	
 	void EnableRenderers(int value) {
