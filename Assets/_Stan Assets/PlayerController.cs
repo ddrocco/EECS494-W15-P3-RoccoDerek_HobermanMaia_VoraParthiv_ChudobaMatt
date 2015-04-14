@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
 		xRotation.y = device.RightStickX.Value * rotateSpeed * sensitivity;
 
 		// Increment y rotation by right stick input
-		rotationYDelta = device.RightStickY.Value * rotateSpeed * sensitivity;
+		rotationYDelta = device.RightStickY.Value * rotateSpeed * sensitivity * 0.75f;
 	}
 
 	void SetLookDirectionDebug()
