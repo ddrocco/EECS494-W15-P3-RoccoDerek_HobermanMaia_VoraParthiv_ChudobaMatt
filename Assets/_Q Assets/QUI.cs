@@ -69,6 +69,7 @@ public class QUI : MonoBehaviour {
 		if(visible){
 			nosignal.enabled = false;
 			cameraDesc.enabled = true;
+			clearText();
 			GetComponent<Camera>().cullingMask = GetComponent<QCameraControl>().overviewCullingMask;
 			GetComponent<QCameraControl>().enabled = true;
 			GameObject.Find("CamOverview").GetComponent<QCameraOverview>().camActive = true;
@@ -80,6 +81,7 @@ public class QUI : MonoBehaviour {
 		} else {
 			nosignal.enabled = true;
 			cameraDesc.enabled = false;
+			setText("Tell the agent to hack the computer.");
 			GetComponent<Camera>().cullingMask = frameInvisibleMask;
 			GetComponent<QCameraControl>().enabled = false;
 			//FindObjectOfType<QPowerSystem>().Enabled(false);
