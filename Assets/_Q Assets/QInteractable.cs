@@ -68,18 +68,18 @@ public class QInteractable : MonoBehaviour {
 	
 	public void Toggle (bool toggleDisplay) {
 		if (toggleDisplay && qHasDisplayAccess) {
-			if (!displayIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, false)) {
+			if (!displayIsActive) {
 				Tag();
 				displayIsActive = true;
-			} else if (displayIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, false)) {
+			} else if (displayIsActive) {
 				UnTag();
 				displayIsActive = false;
 			}
 		} else if (!toggleDisplay && qHasFunctionAccess) {
-			if (!functionIsActive && FindObjectOfType<QPowerSystem>().AddObject(this, true)) {
+			if (!functionIsActive) {
 				functionIsActive = true;
 				Trigger();
-			} else if (functionIsActive && FindObjectOfType<QPowerSystem>().DropObject(this, true)) {
+			} else if (functionIsActive) {
 				functionIsActive = false;
 				Trigger();
 			}
