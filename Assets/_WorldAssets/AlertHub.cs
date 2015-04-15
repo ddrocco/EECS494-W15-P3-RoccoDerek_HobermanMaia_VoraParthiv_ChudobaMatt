@@ -16,6 +16,9 @@ public class AlertHub : QInteractable {
 			}
 			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
 			sourceObject.GetComponent<QInteractionUI>().AlertOn();
+			if (sourceObject.GetComponent<CameraControl>()) {
+				sourceObject.GetComponent<CameraControl>().Offline = true;
+			}
 			camControl.AlertOn();
 			SetLockdownState(true);
 		}
