@@ -69,8 +69,6 @@ public class QCameraControl : MonoBehaviour
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
 				+ (1 << Layerdefs.laser);
-
-		//DisableCameras();
 	}
 
 	public void DisableCameras()
@@ -98,17 +96,10 @@ public class QCameraControl : MonoBehaviour
 		
 		float t = Mathf.PingPong(Time.time, 1f);
 		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
-		//MapCoverControl.mapCover1.color = Color.Lerp (color0, color1, t);
-		//MapCoverControl.mapCover2.color = Color.Lerp (color0, color1, t);
-/*		if (t < 0.1f) {
-			AttemptTurningOffAlert();
-		}
-*/		
+	
 		GetCameraInput();		
 		UpdateCameraPosition();
 		SwitchToOverview();
-		ToggleControlText();
-		//UpdateSounds();
 	}
 
 	// Toggles a camera on or off to be able to be used by Q
@@ -251,29 +242,6 @@ public class QCameraControl : MonoBehaviour
 		LR_rotation = currentCam.transform.eulerAngles.y;
 		zoom = currentCam.zoom;
 	}
-
-	void ToggleControlText()
-	{
-		if (Input.GetKey(KeyCode.E))
-		{
-			if (currentCam == camOverview)
-				QUI.setControlsText("WASD: Pan\nScroll Wheel: Zoom\nLeft-click: Toggle\nRight-click: Tag");
-			else
-				QUI.setControlsText("WASD: Rotate and Zoom\nLeft-click: Return to Overview");
-		}
-		else
-		{
-			QUI.setControlsText("Hold E to View Controls");
-		}
-	}
-	
-	/*void AttemptTurningOffAlert() {
-		foreach (Foe_Movement_Handler foe in FindObjectsOfType<Foe_Movement_Handler>()) {
-			if (foe.state == Foe_Movement_Handler.alertState.investigating && !foe.isReturning) {
-				return;
-			}
-		}
-	}*/
 	
 	//Call AlertOn to cause an icon to flash red
 	public void AlertOn() {
@@ -296,18 +264,4 @@ public class QCameraControl : MonoBehaviour
 		warning = alerting = false;
 		GetComponent<AudioSource>().enabled = false;
 	}
-	
-
-	/*
-	void UpdateSounds() {
-		if (isPanning) {
-			audioSource.enabled = true;
-			if (!audioSource.isPlaying) {
-				audioSource.Play ();
-			}
-		} else {
-			audioSource.enabled = false;
-		}
-	}
-	*/
 }

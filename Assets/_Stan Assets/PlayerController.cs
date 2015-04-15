@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public GameObject interactiveObj;
 	[HideInInspector]
-	public static bool debugControls = true;
+	public static bool debugControls = false;
 	[HideInInspector]
 	public static bool mouseMovement = false;
 	
@@ -91,12 +91,16 @@ public class PlayerController : MonoBehaviour
 		targetSpeed = walkSpeed;
 
 		foreach (var Device in InputManager.Devices) {
-			if (Device.Name == "XBox 360 Controller") {
-				debugControls = false;
+			if (Device.Name.Contains("Unknown")) {
+				debugControls = true;
 			}
 		}
+		if (InputManager.Devices.Count == 0)
+			debugControls = true;
+
 		if (debugControls)
 		{
+			Debug.Log("Debug controls active");
 			mouseMovement = true;
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
@@ -279,7 +283,7 @@ public class PlayerController : MonoBehaviour
 		xRotation.y = device.RightStickX.Value * rotateSpeed * sensitivity;
 
 		// Increment y rotation by right stick input
-		rotationYDelta = device.RightStickY.Value * rotateSpeed * sensitivity;
+		rotationYDelta = device.RightStickY.Value * rotateSpeed * sensitivity * 0.75f;
 	}
 
 	void SetLookDirectionDebug()
@@ -290,8 +294,8 @@ public class PlayerController : MonoBehaviour
 			return;
 		}
 
-		xRotation.y += Input.GetAxis("Mouse X") * rotateSpeed;
-		rotationYDelta = Input.GetAxis("Mouse Y") * rotateSpeed * 2f;
+		xRotation.y += Input.GetAxis("Mouse X") * rotateSpeed * sensitivity;
+		rotationYDelta = Input.GetAxis("Mouse Y") * rotateSpeed * sensitivity * 2f;
 	}
 
 	// Moves the player on a fixed interval

@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Text.RegularExpressions;
 
@@ -8,9 +7,6 @@ public class ComputerConsole : MonoBehaviour {
 	public bool debugComputer = false;
 	
 	public void Interact() {
-		if (!debugComputer) {
-			MapCoverControl.ToggleMapGroup(mapValue, true);
-		}
 		OtherAction(mapValue);
 		EnableRenderers(mapValue);
 	}
