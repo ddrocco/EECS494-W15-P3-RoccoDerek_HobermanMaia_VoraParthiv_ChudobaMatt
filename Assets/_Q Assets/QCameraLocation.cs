@@ -23,8 +23,7 @@ public class QCameraLocation : MonoBehaviour {
 		securityCamera.transform.localEulerAngles = new Vector3(20, 0, 0);
 		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
 		if (!allowTagging) {
-			securityCamera.GetComponent<QInteractable>().objectIsTaggable = false;
-			securityCamera.GetComponent<QInteractable>().qHasDisplayAccess = false;
+			securityCamera.GetComponent<QInteractable>()
 		}
 		if (Offline) {
 			securityCamera.GetComponent<CameraControl>().Offline = true;
