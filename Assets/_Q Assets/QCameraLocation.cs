@@ -3,8 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class QCameraLocation : MonoBehaviour
-{
+public class QCameraLocation : MonoBehaviour {
 	public float minRotation;
 	public float maxRotation;
 	public float zoom;
@@ -12,6 +11,7 @@ public class QCameraLocation : MonoBehaviour
 	public bool Offline;
 	public Quaternion start, finish;
 	public bool rotate;
+	public bool allowTagging = true;
 	
 	[HideInInspector]
 	public int cameraNumber;
@@ -22,6 +22,10 @@ public class QCameraLocation : MonoBehaviour
 		securityCamera.transform.localPosition = new Vector3(0, 0, -.2f);
 		securityCamera.transform.localEulerAngles = new Vector3(20, 0, 0);
 		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
+		if (!allowTagging) {
+			securityCamera.GetComponent<QInteractable>().objectIsTaggable = false;
+			securityCamera.GetComponent<QInteractable>().qHasDisplayAccess = false;
+		}
 		if (Offline) {
 			securityCamera.GetComponent<CameraControl>().Offline = true;
 			start = finish = Quaternion.Euler(transform.rotation.eulerAngles.x,
