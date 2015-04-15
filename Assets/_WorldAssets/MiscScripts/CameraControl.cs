@@ -138,11 +138,11 @@ public class CameraControl : QInteractable {
 	}*/
 	
 	public void Interact() {
-		camControl.ToggleCamera(camLocation.cameraNumber, true);		
-		QIsWatching = true;
-		if (camControl.warning || camControl.alerting) {
+		//camControl.ToggleCamera(camLocation.cameraNumber, true);		
+		isBlinded = true;
+		/*if (camControl.warning || camControl.alerting) {
 			camControl.AlertOff();
-		}
+		}*/
 		tag = "Untagged";
 	}
 	

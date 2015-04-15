@@ -79,7 +79,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		}
 		//Cameras
 		else if (controlledObject.GetComponent<CameraControl> () != null) {
-			tooltipText.text = ">Enter Camera View";
+			if (controlledObject.GetComponent<CameraControl>().QIsWatching) {
+				tooltipText.text = ">Enter Camera View";
+			} else {
+				tooltipText.text = "Camera";
+			}
 		}
 		//Boxes
 		else if (controlledObject.GetComponent<BoxControl> () != null) {
