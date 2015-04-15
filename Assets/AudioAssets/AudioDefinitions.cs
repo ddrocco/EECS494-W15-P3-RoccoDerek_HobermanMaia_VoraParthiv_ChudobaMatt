@@ -8,7 +8,7 @@ public class AudioDefinitions : MonoBehaviour {
 		AlarmNoise, MGSAlert,
 		BoxOpening, BoxClosing,
 		TickTock, Explosion,
-		DoorLocked, DoorOpen, DoorClose,
+		DoorLocked, DoorOpen, DoorClose, DoorLocking, DoorUnlocking,
 		
 		Level5Script;
 	public List<AudioClip> CrouchFootsteps, Footsteps, RunFootsteps,

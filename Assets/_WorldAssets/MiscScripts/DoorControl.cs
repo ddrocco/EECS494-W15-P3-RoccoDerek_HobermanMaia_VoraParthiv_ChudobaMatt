@@ -13,6 +13,9 @@ public class DoorControl : QInteractable {
 	public bool expectState;
 	public DoorDirection direction;
 	
+	Animator anim;
+	AudioSource audio;
+		
 	//Lockdown (during alerts)
 	public int lockGroup = 0;
 	bool lockGroupActive = false;
@@ -63,39 +66,41 @@ public class DoorControl : QInteractable {
 	
 	public override void Start() {
 		expectState = isLocked;
+		anim = GetComponentInParent<Animator>();
+		audio = GetComponent<AudioSource>();
 		base.Start();
 	}
 	
 	public void Interact () {
 		if (isLocked) {
 			GameController.SendPlayerMessage("Locked", 2);
-			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorLocked;
-			GetComponent<AudioSource>().Play();
+			audio.clip = AudioDefinitions.main.DoorLocked;
+			audio.Play();
 			return;
 		}
 		
-		if (!GetComponentInParent<Animator>().GetBool("isOpen")) {
+		if (!anim.GetBool("isOpen")) {
 			if (transform.rotation.y == 0) { //zDoor
 				if (FindObjectOfType<PlayerController>().transform.position.x < transform.position.x) { //Open south
-					GetComponentInParent<Animator>().SetBool("openSouth", true);
+					anim.SetBool("openSouth", true);
 				} else { //Open north
-					GetComponentInParent<Animator>().SetBool("openSouth", false);
+					anim.SetBool("openSouth", false);
 				}
 			} else { //xDoor
 				if (FindObjectOfType<PlayerController>().transform.position.z < transform.position.z) { //Open east
-					GetComponentInParent<Animator>().SetBool("openEast", true);
+					anim.SetBool("openEast", true);
 				} else { //Open west
-					GetComponentInParent<Animator>().SetBool("openEast", false);
+					anim.SetBool("openEast", false);
 				}
 			}
-			GetComponentInParent<Animator>().SetBool("isOpen", true);
-			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
-			GetComponent<AudioSource>().Play();
+			anim.SetBool("isOpen", true);
+			audio.clip = AudioDefinitions.main.DoorOpen;
+			audio.Play();
 			return;
 		} else {
-			GetComponentInParent<Animator>().SetBool("isOpen", false);
-			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
-			GetComponent<AudioSource>().Play();
+			anim.SetBool("isOpen", false);
+			audio.clip = AudioDefinitions.main.DoorClose;
+			audio.Play();
 			return;
 		}
 	}
@@ -104,7 +109,7 @@ public class DoorControl : QInteractable {
 		foreach (Ray ray in raysClose) {
 			Debug.DrawRay(ray.origin, ray.direction * closeDistance);
 		}
-		if (GetComponentInParent<Animator>().GetBool("isOpen")) {
+		if (anim.GetBool("isOpen")) {
 			CloseForGuardsAndStan();
 		} else {	
 			OpenForGuards();
@@ -143,13 +148,13 @@ public class DoorControl : QInteractable {
 	void OpenDoor(bool openRight, NavMeshAgent guardNavAgent) {
 		if (!isLocked) {
 			if (direction == DoorDirection.x) {
-				GetComponentInParent<Animator>().SetBool("openEast", openRight);
+				anim.SetBool("openEast", openRight);
 			} else {	
-				GetComponentInParent<Animator>().SetBool("openSouth", !openRight);
+				anim.SetBool("openSouth", !openRight);
 			}
-			GetComponentInParent<Animator>().SetBool("isOpen", true);
-			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorOpen;
-			GetComponent<AudioSource>().Play();
+			anim.SetBool("isOpen", true);
+			audio.clip = AudioDefinitions.main.DoorOpen;
+			audio.Play();
 		} else {
 			if (timeUntilUnlocked <= 0) {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
@@ -184,9 +189,9 @@ public class DoorControl : QInteractable {
 		if (valid) {
 			return;
 		} else {
-			GetComponentInParent<Animator>().SetBool("isOpen", false);
-			GetComponent<AudioSource>().clip = AudioDefinitions.main.DoorClose;
-			GetComponent<AudioSource>().Play();
+			anim.SetBool("isOpen", false);
+			audio.clip = AudioDefinitions.main.DoorClose;
+			audio.Play();
 		}
 	}
 	
@@ -195,6 +200,15 @@ public class DoorControl : QInteractable {
 			return;
 		}
 		isLocked = !isLocked;
+		
+		if (!anim.GetBool("isOpen")) {
+			if (isLocked) {
+				audio.clip = AudioDefinitions.main.DoorLocking;
+			} else {
+				audio.clip = AudioDefinitions.main.DoorUnlocking;
+			}
+			audio.Play();
+		}
 	}
 	
 	public override Sprite GetSprite() {
