@@ -397,4 +397,5 @@ public class PlayerController : MonoBehaviour
 	{
 		sensitivity = val;
 	}
+	
 }

@@ -15,7 +15,7 @@ public class AlertHub : QInteractable {
 				extSystem.RemoveAllActiveSignals();
 			}
 			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
-			sourceObject.GetComponent<QInteractionUI>().AlertOn();
+			sourceObject.GetComponent<QInteractable>().QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //find right one!
 			if (sourceObject.GetComponent<CameraControl>()) {
 				sourceObject.GetComponent<CameraControl>().Offline = true;
 			}
@@ -31,7 +31,7 @@ public class AlertHub : QInteractable {
 		if (!isSounding) {
 			if (wasSounding) {
 				SetLockdownState(false);
-				camControl.AlertOff();
+				//camControl.AlertOff();
 				wasSounding = false;
 			}
 		} else {
