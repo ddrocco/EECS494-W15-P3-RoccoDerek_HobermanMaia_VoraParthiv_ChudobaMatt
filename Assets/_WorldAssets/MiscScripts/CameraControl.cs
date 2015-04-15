@@ -71,6 +71,7 @@ public class CameraControl : QInteractable {
 		if (QIsWatching || isBlinded) {
 			lens.material.color = Color.black; //lens off
 			color1 = color0 = green; //camera light appears greenish
+			alertLight.intensity = 4f;
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
