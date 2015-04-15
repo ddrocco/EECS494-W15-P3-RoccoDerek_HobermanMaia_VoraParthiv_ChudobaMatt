@@ -8,15 +8,9 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	public QInteractable controlledObject;
 	List<GameObject> optionlist;
 	public List<string> options;
-<<<<<<< Updated upstream
 	float displayIconDisplacement = -8f;
-	Color color0 = Color.white;
-	Color color1 = Color.white;
-=======
-	float displayIconDisplacement = 7f;
 	public Color color0 = Color.white;
 	public Color color1 = Color.white;
->>>>>>> Stashed changes
 	GameObject displayIconObject;
 	private GameObject tooltip;
 	bool buttonEnabled = true;
