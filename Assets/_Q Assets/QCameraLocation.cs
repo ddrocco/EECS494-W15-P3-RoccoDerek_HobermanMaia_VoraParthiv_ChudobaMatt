@@ -22,9 +22,6 @@ public class QCameraLocation : MonoBehaviour {
 		securityCamera.transform.localPosition = new Vector3(0, 0, -.2f);
 		securityCamera.transform.localEulerAngles = new Vector3(20, 0, 0);
 		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
-		if (!allowTagging) {
-			securityCamera.GetComponent<QInteractable>()
-		}
 		if (Offline) {
 			securityCamera.GetComponent<CameraControl>().Offline = true;
 			start = finish = Quaternion.Euler(transform.rotation.eulerAngles.x,
