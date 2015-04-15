@@ -12,6 +12,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	};	
 	public alertState state = alertState.patrolling;
 	public Vector3 currentDestination;
+	[HideInInspector]
+	public bool isTrackingPlayer = false;
 	
 	float minNodeDistance = 0.5f;
 	public float minInvestigationDistance = 1f;
@@ -147,6 +149,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 	
 	public void StartInvestigation(Vector3 destination, bool isPlayer) {
+		isTrackingPlayer = isPlayer;
 		if (!GetComponent<NavMeshAgent>().enabled) {
 			return;
 		}
@@ -169,6 +172,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 	
 	public void EndInvestigation() {
+		isTrackingPlayer = false;
 		state = alertState.returning;
 		currentDestination = originLocation;
 		//turn off alarms

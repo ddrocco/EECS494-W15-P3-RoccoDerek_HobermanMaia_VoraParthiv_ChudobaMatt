@@ -133,7 +133,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			PlayerSpotted();
 			MoveToPlayer();
 		} else if (CanHearPlayer()) {
-			if (GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.patrolling) {
+			if (!GetComponentInParent<Foe_Movement_Handler>().isTrackingPlayer) {
 				GetComponent<AudioSource>().clip = SelectRandomClip(AudioDefinitions.main.GuardHearsPlayer);
 				GetComponent<AudioSource>().Play ();
 			}
@@ -147,7 +147,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		}
 	}
 	
-	void PlayerSpotted() { //No insta-death--chase player down
+	void PlayerSpotted() {
 		isAggressive = true;
 		isDeaf = false;
 		if (timeSincePlayerSpotted >= timeUntilPlayerLost) {
