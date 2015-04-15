@@ -11,7 +11,7 @@ public class LaserAlertSystem : MonoBehaviour {
 	float timeUntilSignalClear = 10f;
 	float timeSinceSignal = 10f;
 	
-	AlertHub system;
+	public AlertHub system;
 	
 	void Start () {
 		alarmLight = GetComponent<Light>();
@@ -43,13 +43,19 @@ public class LaserAlertSystem : MonoBehaviour {
 	
 	public void SignalAlarm(Vector3 location, GameObject sourceObject = null) {
 		timeSinceSignal = 0f;
-		if (AlertHub.isSounding) {
+		if (AlertHub.heardALaser) {
 			return;
+		}
+		if (!alarmRaised) {
+			AudioSource.PlayClipAtPoint(AudioDefinitions.main.MGSAlert,
+		                            FindObjectOfType<PlayerController>().transform.position);
+			alarmRaised = true;
 		}
 		if (alarmLight != null && alarmLight.intensity == 0) {
 			lightRampingUp = true;
 		}
 		system.Signal(location, sourceObject);
+		print ("done");
 	}
 	
 	void UpdateAlarmLight() {
