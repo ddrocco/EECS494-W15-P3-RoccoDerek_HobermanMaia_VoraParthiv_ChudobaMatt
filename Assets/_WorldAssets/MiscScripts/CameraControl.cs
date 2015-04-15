@@ -113,7 +113,7 @@ public class CameraControl : QInteractable {
 			Vector3 heading = PlayerController.player.transform.position - transform.position;
 			float distance = heading.magnitude;
 			Vector3 direction = heading/distance;
-			if (distance > 4.25 && Physics.Raycast(transform.position, direction, out hit, distance)) {
+			if (distance > 4.25f && Physics.Raycast(transform.position, direction, out hit, distance)) {
 				if (hit.collider.CompareTag("Player") == true) {
 					if (!wasDetected) {
 						AudioSource.PlayClipAtPoint(AudioDefinitions.main.MGSAlert,
