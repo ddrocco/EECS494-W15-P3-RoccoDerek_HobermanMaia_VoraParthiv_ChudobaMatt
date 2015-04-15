@@ -11,9 +11,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 	public Vector3 connectingWireJoint;
 	float connectingWireJointRatio;
 	float timeToAlarm = 5f;
-	public List<AlarmSignal> signals; //static so warnings go off as long as ANY signal is present onscreen.
-	//this means that if a singal signal reaches an alert hub, that signal is where the guards will go.
-	//Guards cannot get conflicting messages, and all signals despawn once one has reached an alert hub.
+	public List<AlarmSignal> signals;
 	public bool signalsInTransit;
 	public bool alarmRaised;
 	float timeSinceSignalSent = 0f;
@@ -75,7 +73,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		connectingWireJointRatio = distance1 / (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position));
 	}
 	
-	public void SignalAlarm(Vector3 location) {
+	public void SignalAlarm(Vector3 location, GameObject sourceObject = null) {
 		if (!useAlarmSystem) {
 			return;
 		}
@@ -89,8 +87,10 @@ public class ExternalAlertSystem : MonoBehaviour {
 		                                     transform.position,
 		                                     Quaternion.identity) as GameObject;
 		alarmSignal.transform.parent = transform;
-		alarmSignal.GetComponent<AlarmSignal>().detectionLocation = location;
-		signals.Add(alarmSignal.GetComponent<AlarmSignal>());
+		AlarmSignal temp = alarmSignal.GetComponent<AlarmSignal>();
+		temp.detectionLocation = location;
+		temp.sourceObject = sourceObject;
+		signals.Add(temp);
 		timeSinceSignalSent = 0;
 	}
 	
@@ -114,6 +114,12 @@ public class ExternalAlertSystem : MonoBehaviour {
 	
 	public void RemoveActiveSignal(AlarmSignal sig) {
 		signals.Remove (sig);
+		Destroy (sig.gameObject);
+	}
+	public void RemoveAllActiveSignals() {
+		foreach (AlarmSignal sig in signals) {
+			RemoveActiveSignal(sig);
+		}
 	}
 	
 	void UpdateActiveSignals() {
@@ -139,10 +145,9 @@ public class ExternalAlertSystem : MonoBehaviour {
 			float timeRatio = 1f - signal.timeAlive / timeToAlarm;
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
-			signals.Remove (signal);
-			system.Signal(signal.detectionLocation);
+			system.Signal(signal.detectionLocation, signal.sourceObject, this);
 			alarmRaised = true;
-			Destroy (signal.gameObject);
+			RemoveActiveSignal(signal);
 		}	
 	}
 	

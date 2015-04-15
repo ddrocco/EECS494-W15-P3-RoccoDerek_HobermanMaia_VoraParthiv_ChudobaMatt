@@ -8,10 +8,14 @@ public class AlertHub : QInteractable {
 	public int lockdownGroup = 1;
 	public QCameraControl camControl;
 	
-	public void Signal(Vector3 detectionLocation) {
+	public void Signal(Vector3 detectionLocation, GameObject sourceObject,
+	                   ExternalAlertSystem extSystem = null) {
 		if (isActive) {
+			if (extSystem) {
+				extSystem.RemoveAllActiveSignals();
+			}
 			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
-			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
+			sourceObject.GetComponent<QInteractionUI>().AlertOn();
 			camControl.AlertOn();
 			SetLockdownState(true);
 		}

@@ -82,10 +82,9 @@ public class CameraControl : QInteractable {
 				camControl.WarningOn();
 				wasDetected = true;
 				color1 = Color.red;
-				//QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
 			}
 			if (!Offline) {
-				alertSystem.SignalAlarm(detectionLocation);
+				alertSystem.SignalAlarm(detectionLocation, this.gameObject);
 			}
 		} else {
 			if (wasDetected) {
