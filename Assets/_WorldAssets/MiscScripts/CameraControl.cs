@@ -71,6 +71,7 @@ public class CameraControl : QInteractable {
 		if (QIsWatching || isBlinded) {
 			lens.material.color = Color.black; //lens off
 			color1 = color0 = green; //camera light appears greenish
+			alertLight.intensity = 4f;
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
@@ -82,10 +83,9 @@ public class CameraControl : QInteractable {
 				camControl.WarningOn();
 				wasDetected = true;
 				color1 = Color.red;
-				//QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
 			}
 			if (!Offline) {
-				alertSystem.SignalAlarm(detectionLocation);
+				alertSystem.SignalAlarm(detectionLocation, this.gameObject);
 			}
 		} else {
 			if (wasDetected) {
@@ -138,11 +138,11 @@ public class CameraControl : QInteractable {
 	}*/
 	
 	public void Interact() {
-		camControl.ToggleCamera(camLocation.cameraNumber, true);		
-		QIsWatching = true;
-		if (camControl.warning || camControl.alerting) {
+		//camControl.ToggleCamera(camLocation.cameraNumber, true);		
+		isBlinded = true;
+		/*if (camControl.warning || camControl.alerting) {
 			camControl.AlertOff();
-		}
+		}*/
 		tag = "Untagged";
 	}
 	

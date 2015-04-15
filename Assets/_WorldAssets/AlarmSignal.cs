@@ -6,13 +6,15 @@ public class AlarmSignal : QInteractable {
 	public bool shouldDestroy = false;
 	
 	public Vector3 detectionLocation;
+	public GameObject sourceObject;
 	
 	public override Sprite GetSprite () {
 		return ButtonSpriteDefinitions.main.AlarmSignal;
 	}
 	
 	public override void Trigger () {
-		Destroy (this.gameObject);
+		//Destroy (this.gameObject);
+		transform.GetComponentInParent<ExternalAlertSystem>().RemoveActiveSignal(this);
 	}
 	
 	void Update() {
@@ -24,6 +26,5 @@ public class AlarmSignal : QInteractable {
 	
 	void OnDestroy () {
 		Destroy (QInteractionButton.gameObject);
-		GetComponentInParent<ExternalAlertSystem>().RemoveActiveSignal(this);
 	}
 }

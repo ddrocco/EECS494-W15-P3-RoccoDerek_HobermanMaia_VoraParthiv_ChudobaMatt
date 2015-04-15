@@ -85,7 +85,7 @@ public class QCameraControl : MonoBehaviour
 				continue;
 			}
 			control.QIsWatching = false;
-			control.disableButtonView();
+			//control.disableButtonView();
 		}
 	}
 	
@@ -136,7 +136,7 @@ public class QCameraControl : MonoBehaviour
 				cameras[camNumber - 1].usable = false;
 				CameraControl control =
 					cameras[camNumber - 1].gameObject.GetComponentInChildren<CameraControl>();
-				control.disableButtonView();
+				//control.disableButtonView();
 				camCount--;
 			}
 		}
@@ -243,7 +243,7 @@ public class QCameraControl : MonoBehaviour
 		zoom = currentCam.zoom;
 	}
 	
-	//Call AlertOn to cause an icon to flash red
+	//Call AlertOn to cause the background to flash red
 	public void AlertOn() {
 		color1 = new Color(60f/255f, 10f/255f, 10f/255f, 1f);
 		alerting = true;
@@ -251,7 +251,7 @@ public class QCameraControl : MonoBehaviour
 		GetComponent<AudioSource>().enabled = true;
 	}
 	
-	//Call AlertOn to cause an icon to flash yellow
+	//Call AlertOn to cause the background to flash yellow
 	public void WarningOn() {
 		color1 = new Color(60f/255f, 60f/255f, 0f/255f, 1f);
 		warning = true;

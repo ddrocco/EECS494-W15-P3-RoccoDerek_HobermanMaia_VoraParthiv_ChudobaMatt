@@ -9,8 +9,8 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	List<GameObject> optionlist;
 	public List<string> options;
 	float displayIconDisplacement = -8f;
-	Color color0 = Color.white;
-	Color color1 = Color.white;
+	public Color color0 = Color.white;
+	public Color color1 = Color.white;
 	GameObject displayIconObject;
 	private GameObject tooltip;
 	bool buttonEnabled = true;
@@ -78,7 +78,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		}
 		//Cameras
 		else if (controlledObject.GetComponent<CameraControl> () != null) {
-			tooltipText.text = ">Enter Camera View";
+			if (controlledObject.GetComponent<CameraControl>().QIsWatching) {
+				tooltipText.text = ">Enter Camera View";
+			} else {
+				tooltipText.text = "Camera";
+			}
 		}
 		//Boxes
 		else if (controlledObject.GetComponent<BoxControl> () != null) {
