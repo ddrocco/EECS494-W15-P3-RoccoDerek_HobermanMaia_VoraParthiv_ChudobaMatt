@@ -92,8 +92,8 @@ public class CameraControl : QInteractable {
 				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
 					camControl.AlertOff();
 					color1 = color0;
+					wasDetected = false;
 				}
-				wasDetected = false;
 			}
 		}
 	}
@@ -116,7 +116,7 @@ public class CameraControl : QInteractable {
 			Vector3 direction = heading/distance;
 			if (distance > 4.25 && Physics.Raycast(transform.position, direction, out hit, distance)) {
 				if (hit.collider.CompareTag("Player") == true) {
-					if (timeSinceSeenStan >= timeBetweenAlertNoises) {
+					if (!wasDetected) {
 						AudioSource.PlayClipAtPoint(AudioDefinitions.main.MGSAlert,
 								FindObjectOfType<PlayerController>().transform.position);
 					}

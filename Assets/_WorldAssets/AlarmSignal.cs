@@ -17,6 +17,9 @@ public class AlarmSignal : QInteractable {
 	
 	void Update() {
 		timeAlive += 3*Time.deltaTime/4f;
+		QInteractionButton.transform.position = new Vector3(transform.position.x,
+		                                                    QInteractionButton.transform.position.y,
+		                                                    transform.position.z);
 	}
 	
 	void OnDestroy () {

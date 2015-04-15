@@ -15,7 +15,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	private GameObject tooltip;
 	bool buttonEnabled = true;
 	private Image image;
-	
+		
 	void Start() {
 		image = GetComponent<Image>();
 	}
