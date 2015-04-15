@@ -8,12 +8,12 @@ public class ExternalAlertSystem : MonoBehaviour {
 	float maxIntensity = 1f;
 	
 	public bool useAlarmSystem = true;
-	Vector3 connectingWireJoint;
+	public Vector3 connectingWireJoint;
 	float connectingWireJointRatio;
 	float timeToAlarm = 5f;
-	public static List<AlarmSignal> signals; //static so warnings go off as long as ANY signal is present onscreen.
+	public List<AlarmSignal> signals; //static so warnings go off as long as ANY signal is present onscreen.
 	//this means that if a singal signal reaches an alert hub, that signal is where the guards will go.
-	//Guards cannot get comflicting messages, and all signals despawn once one has reached an alert hub.
+	//Guards cannot get conflicting messages, and all signals despawn once one has reached an alert hub.
 	public bool signalsInTransit;
 	public bool alarmRaised;
 	float timeSinceSignalSent = 0f;

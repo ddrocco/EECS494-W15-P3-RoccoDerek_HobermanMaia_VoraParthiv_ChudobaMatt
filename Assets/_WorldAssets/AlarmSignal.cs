@@ -24,6 +24,6 @@ public class AlarmSignal : QInteractable {
 	
 	void OnDestroy () {
 		Destroy (QInteractionButton.gameObject);
-		transform.GetComponentInParent<ExternalAlertSystem>().RemoveActiveSignal(this);
+		GetComponentInParent<ExternalAlertSystem>().RemoveActiveSignal(this);
 	}
 }
