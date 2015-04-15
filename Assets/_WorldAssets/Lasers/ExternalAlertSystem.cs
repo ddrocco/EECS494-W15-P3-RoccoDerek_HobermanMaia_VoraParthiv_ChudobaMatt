@@ -123,7 +123,10 @@ public class ExternalAlertSystem : MonoBehaviour {
 		Destroy (sig.gameObject);
 	}
 	public void RemoveAllActiveSignals() {
-		List<AlarmSignal> temp = signals;
+		List<AlarmSignal> temp = new List<AlarmSignal>();
+		foreach (AlarmSignal sig in signals) {
+			temp.Add (sig);
+		}
 		foreach (AlarmSignal sig in temp) {
 			RemoveActiveSignal(sig);
 		}

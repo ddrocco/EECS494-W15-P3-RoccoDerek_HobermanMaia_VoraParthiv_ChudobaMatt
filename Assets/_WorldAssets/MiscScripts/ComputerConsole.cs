@@ -45,9 +45,6 @@ public class ComputerConsole : MonoBehaviour {
 		QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
 		QCameraLocation loc = camControl.GetComponentInParent<QCameraLocation>();
 		Qcontrol.ToggleCamera(loc.cameraNumber, true);
-		if (Qcontrol.warning) {
-			Qcontrol.AlertOff();
-		}
 	}
 	
 	void EnableRenderers(int value) {

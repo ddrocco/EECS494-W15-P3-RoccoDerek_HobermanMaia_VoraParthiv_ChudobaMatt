@@ -263,5 +263,11 @@ public class QCameraControl : MonoBehaviour
 		color1 = Color.black;
 		warning = alerting = false;
 		GetComponent<AudioSource>().enabled = false;
+		foreach (QInteractable ctr in FindObjectsOfType<QInteractable>()) {
+			ctr.QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
+		}
+		foreach (CameraControl ctr in FindObjectsOfType<CameraControl>()) {
+			ctr.wasDetected = false;
+		}
 	}
 }

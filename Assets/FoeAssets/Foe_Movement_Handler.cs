@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Foe_Movement_Handler : MonoBehaviour {
+	public QCameraControl camControl;
+	
 	public enum alertState{
 		patrolling,	//Nominal, walking around
 		investigating, //Moves to a location
@@ -37,7 +39,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		foeGlanceCommand = GetComponentInChildren<Foe_Glance_Command>();
 		foeDetectionHandler = GetComponentInChildren<Foe_Detection_Handler>();
 		speed = GetComponent<NavMeshAgent>().speed;
-	
+		camControl = FindObjectOfType<QCameraControl>();
 		state = alertState.patrolling;
 		UpdateDestination();
 	}
@@ -169,6 +171,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	public void EndInvestigation() {
 		state = alertState.returning;
 		currentDestination = originLocation;
+		//turn off alarms
+		camControl.AlertOff();
 	}
 	
 	public void Interact() {

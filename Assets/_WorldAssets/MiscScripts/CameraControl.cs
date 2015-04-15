@@ -87,12 +87,11 @@ public class CameraControl : QInteractable {
 			if (!Offline) {
 				alertSystem.SignalAlarm(detectionLocation, this.gameObject);
 			}
-		} else {
+		} else { //not currently detecting, but warning/alert system was on
 			if (wasDetected) {
 				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
 					camControl.AlertOff();
-					color1 = color0;
-					wasDetected = false;
+					color0 = color1;
 				}
 			}
 		}
