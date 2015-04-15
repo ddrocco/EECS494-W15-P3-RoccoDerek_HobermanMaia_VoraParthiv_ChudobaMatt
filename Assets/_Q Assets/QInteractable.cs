@@ -49,6 +49,10 @@ public class QInteractable : MonoBehaviour {
 		QInteractionButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
 		
+		if (objectIsTaggable) {
+			QInteractionButton.GetComponent<QInteractionUI>().GenerateDisplayIcon();
+		}
+		
 		//Generate Stan-visible (3d) tag object
 		GameObject tagPrefab = GetStanVisibleTag();
 		if (tagPrefab == null) {
@@ -63,7 +67,6 @@ public class QInteractable : MonoBehaviour {
 			if (GetComponent<MeshFilter>() != null && tagView.GetComponent<MeshFilter>() != null) {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
-			QInteractionButton.GetComponent<QInteractionUI>().GenerateDisplayIcon();
 		}
 		if (group != MapGroup.One) {
 			disableButtonView();

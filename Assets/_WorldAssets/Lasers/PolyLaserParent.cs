@@ -44,6 +44,12 @@ public class PolyLaserParent : QInteractable {
 		float ratio = Mathf.Abs (movementTimer - movementDuration) / movementDuration;
 		//transform.rotation = Quaternion.LookRotation(directionCurrent);
 		for (int i = 0; i < lasers.Count; ++i) {
+			if (!qHasFunctionAccess) {
+				lasers[i].gameObject.layer = Layerdefs.invisible;
+			} else {
+				lasers[i].gameObject.layer = Layerdefs.laser;
+			}
+			
 			directionCurrents[i] = (ratio * directionStarts[i] + (1 - ratio) * directionEnds[i]);
 			RaycastHit hitInfo;
 			if (Physics.Raycast(origins[i] + transform.position, directionCurrents[i], out hitInfo, 100f, layerMask)) {

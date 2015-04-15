@@ -24,6 +24,11 @@ public class LaserBehavior : QInteractable {
 	}
 	
 	void Update() {
+		if (!qHasFunctionAccess) {
+			gameObject.layer = Layerdefs.invisible;
+		} else {
+			gameObject.layer = Layerdefs.laser;
+		}
 		movementTimer += Time.deltaTime;
 		if (movementTimer > movementDuration * 2f) {
 			movementTimer -= movementDuration * 2f;
@@ -42,8 +47,10 @@ public class LaserBehavior : QInteractable {
 			laser.SetPosition(1, hitInfo.point);
 			float distance = hitInfo.distance;
 			
-			GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
-			GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
+			if (GetComponentInChildren<ParticleSystem>() != null) {
+				GetComponentInChildren<ParticleSystem>().startLifetime = distance / 100f;
+				GetComponentInChildren<ParticleSystem>().maxParticles = (int) distance * 10;
+			}
 		} else {
 			laser.SetPosition(0, transform.position);
 			laser.SetPosition(1, transform.position + directionCurrent * 100f);
