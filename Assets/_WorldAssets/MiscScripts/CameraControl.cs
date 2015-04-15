@@ -15,11 +15,9 @@ public class CameraControl : QInteractable {
 	private Camera myCam;
 	
 	//Alert
-	float timeBetweenSignals = .75f;
-	float timeSinceLastSignal = 0f;
-	
 	float timeSinceSeenStan = float.MaxValue;
 	float timeBetweenAlertNoises = 10f;
+	private ExternalAlertSystem alertSystem;
 	
 	//Stan-Visual
 	public MeshRenderer lens;
@@ -39,6 +37,7 @@ public class CameraControl : QInteractable {
 		//Setting up detection
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+		alertSystem = GetComponentInChildren<ExternalAlertSystem>();
 		
 		//Setting up appearance
 		Transform temp1 = transform.Find("Camera");
@@ -82,18 +81,21 @@ public class CameraControl : QInteractable {
 			if (!wasDetected) {
 				camControl.WarningOn();
 				wasDetected = true;
-				color1 = Color.red; //sets 2nd color to red so light will flash
-				QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
-				//doesn't work bc camera isn't visible to Q until it's disbabled
+				color1 = Color.red;
+				//QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //Causes button to flash--DOES NOTHING
 			}
 			if (!Offline) {
-				GetComponentInChildren<ExternalAlertSystem>().SignalAlarm(detectionLocation);
+				alertSystem.SignalAlarm(detectionLocation);
 			}
-			if (timeSinceLastSignal >= timeBetweenSignals) {
-				timeSinceLastSignal = 0f;
+		} else {
+			if (wasDetected) {
+				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
+					camControl.AlertOff();
+					color1 = color0;
+				}
+				wasDetected = false;
 			}
 		}
-		timeSinceLastSignal += Time.deltaTime;
 	}
 	
 	void AlarmDisable() {
@@ -129,24 +131,18 @@ public class CameraControl : QInteractable {
 		GameController.SendPlayerMessage("Your partner has successfully turned off the camera alert...I just hope it was in time!", 5);
 	}
 	
-	void HackCamera() {
+	/*void HackCamera() {
 		CameraControl obj = GetComponent<CameraControl>();
 		obj.QIsWatching = true;
-		QCameraControl camObj = QCamera.GetComponent<QCameraControl>();
-		camObj.ToggleCamera(obj.ID, true);
-	}
+		camControl.ToggleCamera(obj.ID, true);
+	}*/
 	
 	public void Interact() {
-		// Enable camera
-		QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
-		QCameraLocation loc = GetComponentInParent<QCameraLocation>();
-		Qcontrol.ToggleCamera(loc.cameraNumber, true);
-		
+		camControl.ToggleCamera(camLocation.cameraNumber, true);		
 		QIsWatching = true;
-		if (Qcontrol.warning || Qcontrol.alerting) {
-			Qcontrol.AlertOff();
+		if (camControl.warning || camControl.alerting) {
+			camControl.AlertOff();
 		}
-		
 		tag = "Untagged";
 	}
 	

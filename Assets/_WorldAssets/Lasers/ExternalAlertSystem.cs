@@ -11,7 +11,11 @@ public class ExternalAlertSystem : MonoBehaviour {
 	Vector3 connectingWireJoint;
 	float connectingWireJointRatio;
 	float timeToAlarm = 5f;
-	List<AlarmSignal> signals;
+	public static List<AlarmSignal> signals; //static so warnings go off as long as ANY signal is present onscreen.
+	//this means that if a singal signal reaches an alert hub, that signal is where the guards will go.
+	//Guards cannot get comflicting messages, and all signals despawn once one has reached an alert hub.
+	public bool signalsInTransit;
+	public bool alarmRaised;
 	float timeSinceSignalSent = 0f;
 	
 	AlertHub system;
@@ -21,11 +25,17 @@ public class ExternalAlertSystem : MonoBehaviour {
 		signals = new List<AlarmSignal>();
 		ConnectToAlarm();
 		GetComponent<LineRenderer>().enabled = false;
+		alarmRaised = false;
 	}
 	
 	void Update () {
+		if (signals.Count > 0) {
+			signalsInTransit = true;
+		} else {
+			signalsInTransit = false;
+		}
 		timeSinceSignalSent += Time.deltaTime;
-		if (GetComponent<Light>() != null) {
+		if (alarmLight != null) {
 			UpdateAlarmLight();
 		}
 		UpdateActiveSignals();
@@ -72,7 +82,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		if (timeSinceSignalSent < 0.5f) {
 			return;
 		}
-		if (GetComponent<Light>() != null && alarmLight.intensity == 0) {
+		if (alarmLight != null && alarmLight.intensity == 0) {
 			lightRampingUp = true;
 		}
 		GameObject alarmSignal = Instantiate(ObjectPrefabDefinitions.main.AlarmSignal);
@@ -100,6 +110,10 @@ public class ExternalAlertSystem : MonoBehaviour {
 		}
 	}
 	
+	public void RemoveActiveSignal(AlarmSignal sig) {
+		signals.Remove (sig);
+	}
+	
 	void UpdateActiveSignals() {
 		if (!useAlarmSystem) {
 			return;
@@ -121,11 +135,11 @@ public class ExternalAlertSystem : MonoBehaviour {
 						+ connectingWireJoint * firstLegRatio + new Vector3(0, 5, 0);
 			}
 			float timeRatio = 1f - signal.timeAlive / timeToAlarm;
-			signal.GetComponent<ParticleSystem>().startColor = new Color(1f, timeRatio, 0f);
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
 			signals.Remove (signal);
 			system.Signal(signal.detectionLocation);
+			alarmRaised = true;
 			Destroy (signal.gameObject);
 		}	
 	}

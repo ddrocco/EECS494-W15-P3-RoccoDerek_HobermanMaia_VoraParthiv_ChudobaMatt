@@ -6,13 +6,17 @@ public class AlertHub : QInteractable {
 	public static bool isSounding = false;
 	public bool wasSounding = false;
 	public int lockdownGroup = 1;
+	private QCameraControl camControl;
+	
+	public override void Start() {
+		camControl = FindObjectOfType<QCameraControl>();
+	}
 	
 	public void Signal(Vector3 detectionLocation) {
 		if (isActive) {
-			//print ("INTRUDER DETECTED at " + detectionLocation + "!");
 			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOn();
-			FindObjectOfType<QCameraControl>().AlertOn();
+			camControl.AlertOn();
 			SetLockdownState(true);
 		}
 	}
@@ -21,7 +25,7 @@ public class AlertHub : QInteractable {
 		if (!isSounding) {
 			if (wasSounding) {
 				SetLockdownState(false);
-				FindObjectOfType<QCameraControl>().AlertOff();
+				camControl.AlertOff();
 				wasSounding = false;
 			}
 		} else {

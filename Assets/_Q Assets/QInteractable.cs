@@ -40,8 +40,11 @@ public class QInteractable : MonoBehaviour {
 		//Generate and position button
 		QInteractionButton = Instantiate (ObjectPrefabDefinitions.main.QInteractiveButton);
 		QInteractionButton.GetComponent<RectTransform> ().localPosition =
-			new Vector3 (transform.position.x + buttonoffset, InteractionCanvas.GetComponent<RectTransform> ().localPosition.y, transform.position.z + buttonoffset);
-		QInteractionButton.GetComponent<RectTransform> ().localRotation = InteractionCanvas.GetComponent<RectTransform> ().localRotation;
+			new Vector3 (transform.position.x + buttonoffset,
+			             InteractionCanvas.GetComponent<RectTransform> ().localPosition.y,
+			             transform.position.z + buttonoffset);
+		QInteractionButton.GetComponent<RectTransform> ().localRotation = 
+			InteractionCanvas.GetComponent<RectTransform> ().localRotation;
 		QInteractionButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
 		
@@ -51,7 +54,8 @@ public class QInteractable : MonoBehaviour {
 			objectIsTaggable = false;
 		}
 		if (objectIsTaggable) {
-			tagView = Instantiate(GetStanVisibleTag(), transform.position, Quaternion.identity) as GameObject;
+			tagView = Instantiate(GetStanVisibleTag(), transform.position, Quaternion.identity)
+				as GameObject;
 			tagView.transform.parent = transform;
 			tagView.transform.localScale = Vector3.one;
 			tagView.transform.localEulerAngles = Vector3.zero;

@@ -95,7 +95,7 @@ public class QCameraControl : MonoBehaviour
 		if (PauseScript.GamePaused) return;
 		
 		float t = Mathf.PingPong(Time.time, 1f);
-		GetComponent<Camera>().backgroundColor = Color.Lerp(color0, color1, t);
+		cam.backgroundColor = Color.Lerp(color0, color1, t);
 	
 		GetCameraInput();		
 		UpdateCameraPosition();

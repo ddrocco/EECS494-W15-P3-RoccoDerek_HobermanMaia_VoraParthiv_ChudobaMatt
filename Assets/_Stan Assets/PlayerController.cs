@@ -40,6 +40,8 @@ public class PlayerController : MonoBehaviour
 	// Object references
 	private InputDevice device;
 	private Camera headCamera;
+	private AudioSource audio;
+	private Rigidbody body;
 
 	// Movement variables
 	private float currentSpeed;
@@ -72,8 +74,8 @@ public class PlayerController : MonoBehaviour
 	[HideInInspector]
 	public static bool mouseMovement = false;
 	
-	List<AudioClip> footsteps;
-	List<AudioClip> runFootsteps;
+	public List<AudioClip> footsteps;
+	public List<AudioClip> runFootsteps;
 	int currentFootstep = 0;
 	
 	void Awake()
@@ -83,6 +85,8 @@ public class PlayerController : MonoBehaviour
 		if (cam == null)
 			cam = Instantiate(camPrefab, transform.position, Quaternion.identity) as GameObject;
 		headCamera = cam.GetComponent<Camera>();
+		audio = GetComponent<AudioSource>();
+		body = GetComponent<Rigidbody>();
 
 		device = InputManager.ActiveDevice;
 
@@ -131,7 +135,7 @@ public class PlayerController : MonoBehaviour
 		
 		if (GameController.PlayerDead)
 		{
-			GetComponent<Rigidbody>().velocity = Vector3.zero;
+			body.velocity = Vector3.zero;
 			return;
 		}
 		if (debugControls)
@@ -165,7 +169,7 @@ public class PlayerController : MonoBehaviour
 
 		if (GameController.PlayerDead)
 		{
-			GetComponent<Rigidbody>().velocity = Vector3.zero;
+			body.velocity = Vector3.zero;
 			return;
 		}
 
@@ -302,7 +306,7 @@ public class PlayerController : MonoBehaviour
 	void Move(float dt)
 	{
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
-		GetComponent<Rigidbody>().velocity = (moveDirection * currentSpeed * dt);
+		body.velocity = (moveDirection * currentSpeed * dt);
 		isStationary = (moveDirection == Vector3.zero);
 	}
 
@@ -368,22 +372,22 @@ public class PlayerController : MonoBehaviour
 	
 	void AdjustSoundConstants() {
 		if (state == State.walking) {
-			if (!GetComponent<AudioSource>().isPlaying) {
+			if (!audio.isPlaying) {
 				if (++currentFootstep >= footsteps.Count) {
 					currentFootstep = 0;
 				}
-				GetComponent<AudioSource>().clip = footsteps[currentFootstep];
-				GetComponent<AudioSource>().volume = 0.02f;
-				GetComponent<AudioSource>().Play();
+				audio.clip = footsteps[currentFootstep];
+				audio.volume = 0.02f;
+				audio.Play();
 			}
 		} else if (state == State.sprinting) {
-			if (!GetComponent<AudioSource>().isPlaying) {
+			if (!audio.isPlaying) {
 				if (++currentFootstep >= runFootsteps.Count) {
 					currentFootstep = 0;
 				}
-				GetComponent<AudioSource>().clip = runFootsteps[currentFootstep];
-				GetComponent<AudioSource>().volume = 1f;
-				GetComponent<AudioSource>().Play();
+				audio.clip = runFootsteps[currentFootstep];
+				audio.volume = 1f;
+				audio.Play();
 			}
 		}
 	}

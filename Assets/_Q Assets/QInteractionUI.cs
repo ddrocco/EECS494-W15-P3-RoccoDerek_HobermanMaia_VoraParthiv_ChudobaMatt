@@ -14,17 +14,23 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	GameObject displayIconObject;
 	private GameObject tooltip;
 	bool buttonEnabled = true;
+	private Image image;
+	
+	void Start() {
+		image = GetComponent<Image>();
+	}
 
 	public void GenerateDisplayIcon() {
 		displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
 		displayIconObject.transform.SetParent(transform);
-		displayIconObject.GetComponent<RectTransform>().localPosition = new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
+		displayIconObject.GetComponent<RectTransform>().localPosition =
+			new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
 	}
 	
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
-		GetComponent<Image>().color = Color.Lerp(color0, color1, t);
-		GetComponent<Image>().sprite = controlledObject.GetSprite();
+		image.color = Color.Lerp(color0, color1, t);
+		image.sprite = controlledObject.GetSprite();
 		if (displayIconObject != null) {
 			displayIconObject.GetComponent<Image>().enabled = GetComponent<Image>().enabled;
 			displayIconObject.GetComponent<Image>().sprite = controlledObject.GetDisplayStatus();
@@ -55,24 +61,10 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		tooltip = Instantiate (ObjectPrefabDefinitions.main.Tooltip) as GameObject;
 		tooltip.transform.SetParent (transform);
 		Text tooltipText = tooltip.GetComponent<Text> ();
-
-		Vector3 pos = tooltip.GetComponent<RectTransform> ().localEulerAngles;
-		pos.x = 0;
-		pos.y = 0;
-		pos.z = 0;
-		tooltip.GetComponent<RectTransform> ().localEulerAngles = pos;
-
-		pos = tooltip.GetComponent<RectTransform> ().localScale;
-		pos.x = 0.1f;
-		pos.y = 0.1f;
-		pos.z = 0.1f;
-		tooltip.GetComponent<RectTransform> ().localScale = pos;
-
-		pos = tooltip.GetComponent<RectTransform> ().anchoredPosition3D;
-		pos.x = -20f;
-		pos.y = 10f;
-		pos.z = 0;
-		tooltip.GetComponent<RectTransform> ().anchoredPosition3D = pos;
+		RectTransform recttransform = tooltip.GetComponent<RectTransform>();
+		recttransform.localEulerAngles = new Vector3(0f, 0f, 0f);
+		recttransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+		recttransform.anchoredPosition3D = new Vector3(-20f, 10f, 0f);
 
 		//Door Locks
 		if (controlledObject.GetComponent<DoorControl> () != null) {
@@ -80,7 +72,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 				tooltipText.text = ">Unlock Door";
 			else
 				tooltipText.text = ">Lock Door";
-		} 
+		}
+		//Alarm Signals
+		else if (controlledObject.GetComponent<AlarmSignal>() != null) {
+			tooltipText.text = ">Block signal";
+		}
 		//Cameras
 		else if (controlledObject.GetComponent<CameraControl> () != null) {
 			tooltipText.text = ">Enter Camera View";
