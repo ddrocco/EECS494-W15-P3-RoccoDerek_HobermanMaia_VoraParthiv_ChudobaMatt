@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
 	// Object references
 	private InputDevice device;
 	private Camera headCamera;
-	private AudioSource audio;
+	private AudioSource audioSource;
 	private Rigidbody body;
 
 	// Movement variables
@@ -85,7 +85,7 @@ public class PlayerController : MonoBehaviour
 		if (cam == null)
 			cam = Instantiate(camPrefab, transform.position, Quaternion.identity) as GameObject;
 		headCamera = cam.GetComponent<Camera>();
-		audio = GetComponent<AudioSource>();
+		audioSource = GetComponent<AudioSource>();
 		body = GetComponent<Rigidbody>();
 
 		device = InputManager.ActiveDevice;
@@ -372,22 +372,22 @@ public class PlayerController : MonoBehaviour
 	
 	void AdjustSoundConstants() {
 		if (state == State.walking) {
-			if (!audio.isPlaying) {
+			if (!audioSource.isPlaying) {
 				if (++currentFootstep >= footsteps.Count) {
 					currentFootstep = 0;
 				}
-				audio.clip = footsteps[currentFootstep];
-				audio.volume = 0.02f;
-				audio.Play();
+				audioSource.clip = footsteps[currentFootstep];
+				audioSource.volume = 0.02f;
+				audioSource.Play();
 			}
 		} else if (state == State.sprinting) {
-			if (!audio.isPlaying) {
+			if (!audioSource.isPlaying) {
 				if (++currentFootstep >= runFootsteps.Count) {
 					currentFootstep = 0;
 				}
-				audio.clip = runFootsteps[currentFootstep];
-				audio.volume = 1f;
-				audio.Play();
+				audioSource.clip = runFootsteps[currentFootstep];
+				audioSource.volume = 1f;
+				audioSource.Play();
 			}
 		}
 	}

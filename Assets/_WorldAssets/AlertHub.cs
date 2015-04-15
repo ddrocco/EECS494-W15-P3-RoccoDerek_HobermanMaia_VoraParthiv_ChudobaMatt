@@ -19,7 +19,7 @@ public class AlertHub : QInteractable {
 	
 	void Update() {
 		if (camControl == null) {
-			camControl = QCamera.GetComponent<QCameraControl>();
+			camControl = FindObjectOfType<QCameraControl>();
 		}
 		if (!isSounding) {
 			if (wasSounding) {
