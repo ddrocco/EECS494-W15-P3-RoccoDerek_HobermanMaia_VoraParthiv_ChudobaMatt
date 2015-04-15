@@ -41,7 +41,8 @@ public class LaserBehavior : QInteractable {
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, directionCurrent, out hitInfo, 100f, layerMask)) {
 			if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-				GetComponentInParent<LaserAlertSystem>().SignalAlarm(new Vector3(hitInfo.point.x, 0, hitInfo.point.z));
+				GetComponentInParent<LaserAlertSystem>().SignalAlarm(new Vector3(hitInfo.point.x, 0, hitInfo.point.z),
+				                                                     this.gameObject);
 			}
 			laser.SetPosition(0, transform.position);
 			laser.SetPosition(1, hitInfo.point);

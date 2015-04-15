@@ -4,24 +4,26 @@ using System.Collections;
 public class AlertHub : QInteractable {
 	public bool isActive = true;
 	public static bool isSounding = false;
+	public static bool heardALaser = false;
 	public bool wasSounding = false;
 	public int lockdownGroup = 1;
 	public QCameraControl camControl;
 	
 	public void Signal(Vector3 detectionLocation, GameObject sourceObject,
 	                   ExternalAlertSystem extSystem = null) {
-		if (isActive) {
 			if (extSystem) {
 				extSystem.RemoveAllActiveSignals();
 			}
 			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
 			sourceObject.GetComponent<QInteractable>().QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //find right one!
+			if (sourceObject.GetComponent<LaserBehavior>()) {
+				heardALaser = true;
+			}
 			if (sourceObject.GetComponent<CameraControl>()) {
 				sourceObject.GetComponent<CameraControl>().Offline = true;
 			}
 			camControl.AlertOn();
 			SetLockdownState(true);
-		}
 	}
 	
 	void Update() {
