@@ -28,9 +28,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	}
 	
 	void Update () {
-		float t = Mathf.PingPong(Time.time, 1);
-		image.color = Color.Lerp(color0, color1, t);
-		image.sprite = controlledObject.GetSprite();
+		if (image.enabled) {
+			float t = Mathf.PingPong(Time.time, 1);
+			image.color = Color.Lerp(color0, color1, t);
+			image.sprite = controlledObject.GetSprite();
+		}
 		if (displayIconObject != null) {
 			displayIconObject.GetComponent<Image>().enabled = GetComponent<Image>().enabled;
 			displayIconObject.GetComponent<Image>().sprite = controlledObject.GetDisplayStatus();
@@ -38,16 +40,13 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	}
 	
 	public void OnPointerClick(PointerEventData mouseData) {
-		if (!buttonEnabled) {
-			return;
-		}
-		
-		if (mouseData.button == PointerEventData.InputButton.Left) {
+		if (mouseData.button == PointerEventData.InputButton.Left && controlledObject.qHasFunctionAccess) {
 			controlledObject.Toggle(false);
 			OnPointerExit(null);
 			OnPointerEnter(null);
-		}
-		if (mouseData.button == PointerEventData.InputButton.Right) {
+		}		
+		
+		if (mouseData.button == PointerEventData.InputButton.Right && controlledObject.qHasDisplayAccess) {
 			controlledObject.Toggle(true);
 		}
 	}

@@ -14,7 +14,7 @@ public class DoorControl : QInteractable {
 	public DoorDirection direction;
 	
 	Animator anim;
-	AudioSource audio;
+	AudioSource audioSource;
 		
 	//Lockdown (during alerts)
 	public int lockGroup = 0;
@@ -67,15 +67,15 @@ public class DoorControl : QInteractable {
 	public override void Start() {
 		expectState = isLocked;
 		anim = GetComponentInParent<Animator>();
-		audio = GetComponent<AudioSource>();
+		audioSource = GetComponent<AudioSource>();
 		base.Start();
 	}
 	
 	public void Interact () {
 		if (isLocked) {
 			GameController.SendPlayerMessage("Locked", 2);
-			audio.clip = AudioDefinitions.main.DoorLocked;
-			audio.Play();
+			audioSource.clip = AudioDefinitions.main.DoorLocked;
+			audioSource.Play();
 			return;
 		}
 		
@@ -94,13 +94,13 @@ public class DoorControl : QInteractable {
 				}
 			}
 			anim.SetBool("isOpen", true);
-			audio.clip = AudioDefinitions.main.DoorOpen;
-			audio.Play();
+			audioSource.clip = AudioDefinitions.main.DoorOpen;
+			audioSource.Play();
 			return;
 		} else {
 			anim.SetBool("isOpen", false);
-			audio.clip = AudioDefinitions.main.DoorClose;
-			audio.Play();
+			audioSource.clip = AudioDefinitions.main.DoorClose;
+			audioSource.Play();
 			return;
 		}
 	}
@@ -153,8 +153,8 @@ public class DoorControl : QInteractable {
 				anim.SetBool("openSouth", !openRight);
 			}
 			anim.SetBool("isOpen", true);
-			audio.clip = AudioDefinitions.main.DoorOpen;
-			audio.Play();
+			audioSource.clip = AudioDefinitions.main.DoorOpen;
+			audioSource.Play();
 		} else {
 			if (timeUntilUnlocked <= 0) {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
@@ -190,8 +190,8 @@ public class DoorControl : QInteractable {
 			return;
 		} else {
 			anim.SetBool("isOpen", false);
-			audio.clip = AudioDefinitions.main.DoorClose;
-			audio.Play();
+			audioSource.clip = AudioDefinitions.main.DoorClose;
+			audioSource.Play();
 		}
 	}
 	
@@ -203,11 +203,11 @@ public class DoorControl : QInteractable {
 		
 		if (!anim.GetBool("isOpen")) {
 			if (isLocked) {
-				audio.clip = AudioDefinitions.main.DoorLocking;
+				audioSource.clip = AudioDefinitions.main.DoorLocking;
 			} else {
-				audio.clip = AudioDefinitions.main.DoorUnlocking;
+				audioSource.clip = AudioDefinitions.main.DoorUnlocking;
 			}
-			audio.Play();
+			audioSource.Play();
 		}
 	}
 	

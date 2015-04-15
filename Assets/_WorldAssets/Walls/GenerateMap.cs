@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GenerateMap : MonoBehaviour {
+	[HideInInspector]
 	public List<int[]> tiles;
+	[HideInInspector]
 	public List<int> pillars;
 	int xDim, zDim;
 	
@@ -11,20 +13,18 @@ public class GenerateMap : MonoBehaviour {
 	void Start () {
 		tiles = new List<int[]>();
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,0,0,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,0,0,4,4,3,2,3,0,0,0,0,0,0,0,0,0,0,0,0});
-		tiles.Add (new int[] {0,0,0,0,0,0,3,2,3,0,0,0,0,0,0,0,0,3,3,3,0});
-		tiles.Add (new int[] {0,0,0,0,0,0,3,2,2,0,0,0,0,0,0,0,0,2,2,2,0});
-		tiles.Add (new int[] {0,0,3,3,3,3,3,2,3,4,4,4,4,4,4,4,4,2,3,3,0});
-		tiles.Add (new int[] {0,0,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0});
-		tiles.Add (new int[] {0,0,3,2,1,1,1,2,4,4,4,4,4,2,4,4,2,2,0,0,0});
-		tiles.Add (new int[] {0,0,3,2,1,1,1,2,3,3,5,5,5,2,5,5,5,2,0,0,0});
-		tiles.Add (new int[] {0,0,3,2,1,1,1,2,3,3,3,4,3,2,3,3,6,2,0,0,0});
-		tiles.Add (new int[] {0,0,3,2,1,1,1,2,3,3,3,4,4,4,4,4,4,2,0,0,0});
-		tiles.Add (new int[] {0,0,3,2,4,4,4,2,3,3,3,4,4,4,4,4,4,2,3,3,0});
-		tiles.Add (new int[] {0,0,3,2,4,4,4,2,3,3,3,4,4,4,4,4,4,2,3,3,0});
-		tiles.Add (new int[] {0,0,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0});
-		tiles.Add (new int[] {0,0,3,2,3,3,3,4,3,3,3,3,3,3,3,3,4,3,3,3,0});
+		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,0,0,8,8,0,0,0,0,0,0,0,0,6,6,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,7,0,8,8,0,0,0,0,0,0,0,0,6,6,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,2,2,2,2,2,2,0,0,4,4,4,4,4,4,0,0,0});
+		tiles.Add (new int[] {0,0,0,0,2,2,2,2,2,2,0,0,4,4,4,4,4,4,0,0,0});
+		tiles.Add (new int[] {0,1,1,1,2,2,2,2,2,2,3,3,4,4,4,4,4,4,5,5,0});
+		tiles.Add (new int[] {0,1,1,1,2,2,2,2,2,2,3,3,4,4,4,4,4,4,5,5,0});
+		tiles.Add (new int[] {0,1,1,0,2,2,2,2,2,2,0,0,4,4,4,4,4,4,0,0,0});
+		tiles.Add (new int[] {0,1,1,0,2,2,2,2,2,2,0,0,4,4,4,4,4,4,0,0,0});
+		tiles.Add (new int[] {0,1,1,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,1,1,0,0,0,6,6,0,0,0,0,0,0,0,0,0,0,0,0,0});
+		tiles.Add (new int[] {0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
 		tiles.Add (new int[] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0});
 		zDim = tiles.Count - 1;
 		xDim = tiles[0].Length - 1;

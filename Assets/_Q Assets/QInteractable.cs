@@ -12,7 +12,8 @@ public enum MapGroup
 };
 
 public class QInteractable : MonoBehaviour {
-	public MapGroup group;
+	public MapGroup group = MapGroup.One;
+	public MapGroup unusableGroup = MapGroup.Never;
 	public GameObject QCamera;
 	public GameObject QInteractionButton;
 
@@ -34,7 +35,7 @@ public class QInteractable : MonoBehaviour {
 	
 	public GameObject tagView;
 	
-	public virtual void Start () {
+	public virtual void Start () {		
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
 
 		//Generate and position button
@@ -63,6 +64,9 @@ public class QInteractable : MonoBehaviour {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
 			QInteractionButton.GetComponent<QInteractionUI>().GenerateDisplayIcon();
+		}
+		if (group != MapGroup.One) {
+			disableButtonView();
 		}
 	}
 	
