@@ -5,6 +5,19 @@ using System.Text.RegularExpressions;
 public class ComputerConsole : MonoBehaviour {
 	public int mapValue;
 	public bool debugComputer = false;
+	public CameraControl nearestCam;
+	
+	void Start() {
+		CameraControl[] allCams = FindObjectsOfType<CameraControl>();
+		float minDist = 1000000f;
+		foreach (CameraControl cam in allCams) {
+			float tempDist = (cam.transform.position-transform.position).sqrMagnitude;
+			if (tempDist < minDist) {
+				minDist = tempDist;
+				nearestCam = cam;
+			}
+		}
+	}
 	
 	public void Interact() {
 		OtherAction(mapValue);
@@ -20,9 +33,7 @@ public class ComputerConsole : MonoBehaviour {
 			GameController.SendPlayerMessage("Full system access granted:\nGet to the elevator", 5);
 		} else if (value == 4) {
 			//hack this camera!
-			GameObject Parent = transform.parent.gameObject;
-			CameraControl camControl = Parent.GetComponentInChildren<CameraControl>();
-			TakeCameraControl(camControl);
+			TakeCameraControl(nearestCam);
 		}
 	}
 	

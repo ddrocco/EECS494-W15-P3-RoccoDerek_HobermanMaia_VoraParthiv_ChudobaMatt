@@ -31,6 +31,12 @@ public class ExternalAlertSystem : MonoBehaviour {
 			signalsInTransit = true;
 		} else {
 			signalsInTransit = false;
+			foreach (ExternalAlertSystem system in FindObjectsOfType<ExternalAlertSystem>()) {
+				if (system.signals.Count > 0) {
+					signalsInTransit = true;
+					break;
+				}
+			}
 		}
 		timeSinceSignalSent += Time.deltaTime;
 		if (alarmLight != null) {
