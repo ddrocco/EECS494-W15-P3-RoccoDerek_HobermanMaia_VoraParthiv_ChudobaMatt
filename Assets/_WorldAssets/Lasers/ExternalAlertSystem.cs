@@ -79,13 +79,15 @@ public class ExternalAlertSystem : MonoBehaviour {
 		if (!useAlarmSystem) {
 			return;
 		}
-		if (timeSinceSignalSent < 0.5f) {
+		if (timeSinceSignalSent < 2f) {
 			return;
 		}
 		if (alarmLight != null && alarmLight.intensity == 0) {
 			lightRampingUp = true;
 		}
-		GameObject alarmSignal = Instantiate(ObjectPrefabDefinitions.main.AlarmSignal);
+		GameObject alarmSignal = Instantiate(ObjectPrefabDefinitions.main.AlarmSignal,
+		                                     transform.position,
+		                                     Quaternion.identity) as GameObject;
 		alarmSignal.transform.parent = transform;
 		alarmSignal.GetComponent<AlarmSignal>().detectionLocation = location;
 		signals.Add(alarmSignal.GetComponent<AlarmSignal>());

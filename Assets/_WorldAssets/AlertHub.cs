@@ -6,11 +6,7 @@ public class AlertHub : QInteractable {
 	public static bool isSounding = false;
 	public bool wasSounding = false;
 	public int lockdownGroup = 1;
-	private QCameraControl camControl;
-	
-	public override void Start() {
-		camControl = FindObjectOfType<QCameraControl>();
-	}
+	public QCameraControl camControl;
 	
 	public void Signal(Vector3 detectionLocation) {
 		if (isActive) {
@@ -22,6 +18,9 @@ public class AlertHub : QInteractable {
 	}
 	
 	void Update() {
+		if (camControl == null) {
+			camControl = QCamera.GetComponent<QCameraControl>();
+		}
 		if (!isSounding) {
 			if (wasSounding) {
 				SetLockdownState(false);
