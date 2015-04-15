@@ -6,7 +6,7 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 	public Sprite
 			DisplayInvisible, DisplayVisible, nil,
 			BombDefault, BombDefused,
-			Alarm,
+			Alarm, AlarmSignal,
 			DoorUnlocked, DoorLocked,
 			Laser, PolyLaser,
 			Files,

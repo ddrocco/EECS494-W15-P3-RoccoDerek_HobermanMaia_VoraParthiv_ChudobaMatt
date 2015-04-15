@@ -8,7 +8,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	public QInteractable controlledObject;
 	List<GameObject> optionlist;
 	public List<string> options;
-	float displayIconDisplacement = 10f;
+	float displayIconDisplacement = 7f;
 	Color color0 = Color.white;
 	Color color1 = Color.white;
 	GameObject displayIconObject;
