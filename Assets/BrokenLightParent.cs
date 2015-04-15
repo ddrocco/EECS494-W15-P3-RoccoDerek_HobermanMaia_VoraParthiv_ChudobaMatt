@@ -36,6 +36,8 @@ public class BrokenLightParent : MonoBehaviour {
 	
 	public void Lightpocalypse() {
 		foreach (Light light in GetComponentsInChildren<Light>()) {
+			Renderer rend = light.transform.parent.FindChild("Light").GetComponent<Renderer>();
+			rend.enabled = false;
 			light.enabled = false;
 			GameObject sparks = Instantiate(ObjectPrefabDefinitions.main.Sparks, light.transform.position, Quaternion.identity) as GameObject;
 			sparks.transform.parent = light.transform;
