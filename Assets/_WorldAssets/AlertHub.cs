@@ -11,9 +11,6 @@ public class AlertHub : QInteractable {
 	
 	public void Signal(Vector3 detectionLocation, GameObject sourceObject,
 	                   ExternalAlertSystem extSystem = null) {
-		//print ("received alert: " + sourceObject.name);
-		//if (isActive) {
-			print ("received alert: " + sourceObject.name);
 			if (extSystem) {
 				extSystem.RemoveAllActiveSignals();
 			}
@@ -27,7 +24,6 @@ public class AlertHub : QInteractable {
 			}
 			camControl.AlertOn();
 			SetLockdownState(true);
-		//}
 	}
 	
 	void Update() {

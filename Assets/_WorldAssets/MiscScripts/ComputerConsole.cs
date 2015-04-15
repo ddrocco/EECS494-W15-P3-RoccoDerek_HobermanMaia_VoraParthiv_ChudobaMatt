@@ -9,9 +9,11 @@ public class ComputerConsole : MonoBehaviour {
 	public int mapValue;
 	public bool debugComputer = false;
 	public CameraControl nearestCam;
+	public CameraControl[] allCams;
 	
 	void Start() {
-		CameraControl[] allCams = FindObjectsOfType<CameraControl>();
+		print ("finding cameras");
+		allCams = FindObjectsOfType<CameraControl>();
 		float minDist = 1000000f;
 		foreach (CameraControl cam in allCams) {
 			float tempDist = (cam.transform.position-transform.position).sqrMagnitude;

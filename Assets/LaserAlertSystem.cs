@@ -55,7 +55,6 @@ public class LaserAlertSystem : MonoBehaviour {
 			lightRampingUp = true;
 		}
 		system.Signal(location, sourceObject);
-		print ("done");
 	}
 	
 	void UpdateAlarmLight() {
