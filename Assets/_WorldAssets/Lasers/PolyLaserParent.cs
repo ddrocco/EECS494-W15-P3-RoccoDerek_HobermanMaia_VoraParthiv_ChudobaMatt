@@ -54,7 +54,7 @@ public class PolyLaserParent : QInteractable {
 			RaycastHit hitInfo;
 			if (Physics.Raycast(origins[i] + transform.position, directionCurrents[i], out hitInfo, 100f, layerMask)) {
 				if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
-					GetComponentInParent<ExternalAlertSystem>().SignalAlarm(new Vector3(hitInfo.point.x, 0, hitInfo.point.z));
+					GetComponentInParent<LaserAlertSystem>().SignalAlarm(new Vector3(hitInfo.point.x, 0, hitInfo.point.z));
 				}
 				lasers[i].SetPosition(0, origins[i] + transform.position);
 				lasers[i].SetPosition(1, hitInfo.point);
