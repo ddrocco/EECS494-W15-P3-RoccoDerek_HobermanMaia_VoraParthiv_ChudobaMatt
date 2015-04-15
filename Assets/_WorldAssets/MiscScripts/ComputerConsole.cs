@@ -12,7 +12,6 @@ public class ComputerConsole : MonoBehaviour {
 	public CameraControl[] allCams;
 	
 	void Start() {
-		print ("finding cameras");
 		allCams = FindObjectsOfType<CameraControl>();
 		float minDist = 1000000f;
 		foreach (CameraControl cam in allCams) {
