@@ -67,8 +67,11 @@ public class GameController : MonoBehaviour
 				Application.LoadLevel(Application.loadedLevel);
 			} else if (PlayerWon){
 				PlayerWon = false;
-				if(Application.levelCount > Application.loadedLevel + 1) Application.LoadLevel(Application.loadedLevel + 1);
-				else Application.LoadLevel(0);
+				if (Application.levelCount > Application.loadedLevel + 1) {
+					Application.LoadLevel(Application.loadedLevel + 1);
+				} else {
+					Application.LoadLevel(0);
+				}
 			}
 		}
 	}
