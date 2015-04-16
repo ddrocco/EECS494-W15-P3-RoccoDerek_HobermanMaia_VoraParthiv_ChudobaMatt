@@ -71,6 +71,10 @@ public class QCameraControl : MonoBehaviour
 				+ (1 << Layerdefs.laser);
 	}
 
+	void Start() {
+		InitializeSprites();
+	}
+
 	public void DisableCameras()
 	{
 		camCount = 0;
@@ -268,6 +272,33 @@ public class QCameraControl : MonoBehaviour
 		}
 		foreach (CameraControl ctr in FindObjectsOfType<CameraControl>()) {
 			ctr.wasDetected = false;
+		}
+	}
+	
+	void InitializeSprites() {
+		int value = 1;
+		int enabledValue = 0;
+		MapGroup group = MapGroup.One;
+		
+		foreach (GenerateQRenderer renderObject in FindObjectsOfType<GenerateQRenderer>()) {
+			renderObject.Activate(enabledValue);
+		}
+		foreach (QInteractable interactableObj in FindObjectsOfType<QInteractable>()) {
+			if (interactableObj.group == group) {
+				interactableObj.enableButtonView();
+				interactableObj.QInteractionButton.GetComponent<QInteractionUI>().SetEnabled(true);
+				interactableObj.qHasFunctionAccess = true;
+				if (interactableObj.objectIsTaggable) {
+					interactableObj.qHasDisplayAccess = true;
+				}
+			} else if (interactableObj.unusableGroup == group) {
+				interactableObj.enableButtonView();
+				interactableObj.qHasFunctionAccess = false;
+				interactableObj.QInteractionButton.GetComponent<QInteractionUI>().SetEnabled(false);
+				if (interactableObj.objectIsTaggable) {
+					interactableObj.qHasDisplayAccess = true;
+				}
+			}
 		}
 	}
 }

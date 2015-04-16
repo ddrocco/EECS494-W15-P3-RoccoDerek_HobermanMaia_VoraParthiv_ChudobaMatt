@@ -231,4 +231,5 @@ public class DoorControl : QInteractable {
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 		}
 	}
+
 }

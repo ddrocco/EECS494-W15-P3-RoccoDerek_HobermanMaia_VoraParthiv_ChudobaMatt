@@ -68,9 +68,9 @@ public class QInteractable : MonoBehaviour {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
 		}
-		if (group != MapGroup.One) {
+		/*if (group != MapGroup.One) {
 			disableButtonView();
-		}
+		}*/
 	}
 	
 	public virtual GameObject GetStanVisibleTag() {
