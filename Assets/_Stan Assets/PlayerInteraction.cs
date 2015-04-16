@@ -110,7 +110,8 @@ public class PlayerInteraction : MonoBehaviour
 			}
 		} else if (hitInfo.transform.GetComponent<CameraControl>()){
 			toolTipText.text = "Blind camera";
-		} else if (hitInfo.transform.GetComponent<ComputerConsole>()) {
+		} else if (hitInfo.transform.GetComponent<ComputerConsole>() ||
+		           hitInfo.transform.GetComponent<TakeCameras>()) {
 			toolTipText.text = "Use computer";
 		} else if (hitInfo.transform.GetComponent<ElevatorControl>()) {
 			toolTipText.text = "Call elevator";
