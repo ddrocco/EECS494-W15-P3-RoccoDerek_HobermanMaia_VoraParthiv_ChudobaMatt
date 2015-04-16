@@ -3,13 +3,13 @@ using System.Collections;
 
 public class AlertHub : QInteractable {
 	public bool isActive = true;
-	public static bool isSounding = false;
-	public static bool heardALaser = false;
+	public static bool isSounding = false; //I believe this might be an issue
 	public bool wasSounding = false;
 	public int lockdownGroup = 1;
 	public QCameraControl camControl;
 	
 	public void Signal(Vector3 detectionLocation, GameObject sourceObject,
+	                   LaserAlertSystem lasers = null,
 	                   ExternalAlertSystem extSystem = null) {
 			if (extSystem) {
 				extSystem.RemoveAllActiveSignals();
@@ -17,7 +17,7 @@ public class AlertHub : QInteractable {
 			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
 			sourceObject.GetComponent<QInteractable>().QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //find right one!
 			if (sourceObject.GetComponent<LaserBehavior>()) {
-				heardALaser = true;
+				lasers.heardALaser = true;
 			}
 			if (sourceObject.GetComponent<CameraControl>()) {
 				sourceObject.GetComponent<CameraControl>().Offline = true;

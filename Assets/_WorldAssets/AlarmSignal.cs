@@ -4,7 +4,6 @@ using System.Collections;
 public class AlarmSignal : QInteractable {
 	public float timeAlive = 0;
 	public bool shouldDestroy = false;
-	
 	public Vector3 detectionLocation;
 	public GameObject sourceObject;
 	

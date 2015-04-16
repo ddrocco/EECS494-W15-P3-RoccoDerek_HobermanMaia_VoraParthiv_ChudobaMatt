@@ -10,6 +10,7 @@ public class LaserAlertSystem : MonoBehaviour {
 	public bool alarmRaised;
 	float timeUntilSignalClear = 10f;
 	float timeSinceSignal = 10f;
+	public bool heardALaser;
 	
 	public AlertHub system;
 	
@@ -43,7 +44,7 @@ public class LaserAlertSystem : MonoBehaviour {
 	
 	public void SignalAlarm(Vector3 location, GameObject sourceObject = null) {
 		timeSinceSignal = 0f;
-		if (AlertHub.heardALaser) {
+		if (heardALaser) {
 			return;
 		}
 		if (!alarmRaised) {
@@ -54,7 +55,7 @@ public class LaserAlertSystem : MonoBehaviour {
 		if (alarmLight != null && alarmLight.intensity == 0) {
 			lightRampingUp = true;
 		}
-		system.Signal(location, sourceObject);
+		system.Signal(location, sourceObject, this, null);
 	}
 	
 	void UpdateAlarmLight() {

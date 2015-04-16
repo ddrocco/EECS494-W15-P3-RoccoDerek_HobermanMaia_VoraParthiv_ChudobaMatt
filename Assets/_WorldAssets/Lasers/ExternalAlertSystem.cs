@@ -155,7 +155,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 			float timeRatio = 1f - signal.timeAlive / timeToAlarm;
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
-			system.Signal(signal.detectionLocation, signal.sourceObject, this);
+			system.Signal(signal.detectionLocation, signal.sourceObject, null, this);
 			alarmRaised = true;
 			RemoveActiveSignal(signal);
 		}	
