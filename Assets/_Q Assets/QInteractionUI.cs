@@ -72,6 +72,10 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 			else
 				tooltipText.text = ">Lock Door";
 		}
+		//Elevators
+		else if (controlledObject.GetComponent<ElevatorControl>() != null) {
+			tooltipText.text = ">Open elevator";
+		}
 		//Alarm Signals
 		else if (controlledObject.GetComponent<AlarmSignal>() != null) {
 			tooltipText.text = ">Block signal";
