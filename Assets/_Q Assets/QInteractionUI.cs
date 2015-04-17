@@ -129,6 +129,14 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
 		Destroy (tooltip);
 	}
+
+	public void OnDestroy(){
+		if (!buttonEnabled || tooltip == null) {
+			return;
+		}
+		
+		Destroy (tooltip);
+	}
 	
 	public void SetEnabled(bool newEnabledState) {
 		buttonEnabled = newEnabledState;
