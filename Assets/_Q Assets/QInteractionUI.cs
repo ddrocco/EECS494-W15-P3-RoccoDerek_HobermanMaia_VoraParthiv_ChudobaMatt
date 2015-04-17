@@ -64,7 +64,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		recttransform.localEulerAngles = new Vector3(0f, 0f, 0f);
 		recttransform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
 		recttransform.anchoredPosition3D = new Vector3(-20f, 10f, 0f);
-
+		tooltip.transform.SetParent (transform.parent);
 		//Door Locks
 		if (controlledObject.GetComponent<DoorControl> () != null) {
 			if (controlledObject.GetComponent<DoorControl> ().isLocked)
