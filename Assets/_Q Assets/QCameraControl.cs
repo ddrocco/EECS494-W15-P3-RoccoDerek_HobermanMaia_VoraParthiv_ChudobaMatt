@@ -23,10 +23,10 @@ public class QCameraControl : MonoBehaviour
 	//[HideInInspector]
 	public static int camCount;
 
-	private Camera cam;
-	private QCameraLocation currentCam;
-	private static List<QCameraLocation> cameras;
-	private QCameraOverview camOverview;
+	public Camera cam;
+	public QCameraLocation currentCam;
+	public static List<QCameraLocation> cameras;
+	public QCameraOverview camOverview;
 	
 	public int overviewCullingMask;
 	public int cameraCullingMask;
