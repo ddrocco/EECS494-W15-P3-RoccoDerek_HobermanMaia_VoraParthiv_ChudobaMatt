@@ -20,7 +20,7 @@ public class CompassScript : MonoBehaviour {
 	void Start () {
 		StanCamera = GameObject.Find ("PlayerCamera");
 		QCompass.GetComponent<Canvas> ().worldCamera = GameObject.Find ("QCamera").GetComponent<Camera>();
-		StanCompass.GetComponent<Canvas> ().worldCamera = GameObject.Find ("PlayerCamera").GetComponent<Camera>();
+		StanCompass.GetComponent<Canvas> ().worldCamera = GameObject.Find ("PlayerCanvasCamera").GetComponent<Camera>();
 		qcc = GameObject.Find ("QCamera").GetComponent<QCameraControl>();
 		QCIRT = QCompassItem.GetComponent<RectTransform> ();
 		SCIRT = StanCompassItem.GetComponent<RectTransform> ();
