@@ -48,7 +48,7 @@ public class LaserAlertSystem : MonoBehaviour {
 			return;
 		}
 		if (!alarmRaised) {
-			AudioSource.PlayClipAtPoint(AudioDefinitions.main.MGSAlert,
+			AudioSource.PlayClipAtPoint(Foe_Detection_Handler.SelectRandomClip(AudioDefinitions.main.CameraSpotsPlayer),
 		                            FindObjectOfType<PlayerController>().transform.position);
 			alarmRaised = true;
 		}

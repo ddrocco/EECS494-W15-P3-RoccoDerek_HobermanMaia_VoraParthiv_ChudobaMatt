@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using InControl;
+using UnityEditor.Events;
 
 public class GameController : MonoBehaviour
 {
@@ -65,10 +66,13 @@ public class GameController : MonoBehaviour
 			if(PlayerDead){
 				PlayerDead = false;
 				Application.LoadLevel(Application.loadedLevel);
+				//ThirdWindow 
+				//.NewLevelLoaded();
 			} else if (PlayerWon){
 				PlayerWon = false;
 				if (Application.levelCount > Application.loadedLevel + 1) {
 					Application.LoadLevel(Application.loadedLevel + 1);
+					//ThirdWindow.NewLevelLoaded();
 				} else {
 					Application.LoadLevel(0);
 				}
