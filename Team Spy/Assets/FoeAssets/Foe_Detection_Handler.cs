@@ -37,8 +37,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	void Start () {	
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
 		taser.transform.parent = transform;
-		taser.transform.localPosition = new Vector3(-0.7f, -0.5f, 0.5f);
-		taser.transform.localEulerAngles = Vector3.zero;
+		taser.transform.localPosition = new Vector3(-0.6645966f, -2f, 0.02145767f);
+		taser.transform.localEulerAngles = new Vector3(0, 10f, 0); //290.9929
 		taser.SetActive(false);
 		
 		baseSpeed = GetComponentInParent<NavMeshAgent>().speed;

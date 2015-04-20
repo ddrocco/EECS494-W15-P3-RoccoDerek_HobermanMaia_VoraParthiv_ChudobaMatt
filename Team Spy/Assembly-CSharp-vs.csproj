@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{6CCE47EC-8C9A-3AE7-1CE8-24458F716BD4}</ProjectGuid>
+	<ProjectGuid>{137C6DC5-46FF-F837-B4A6-E71D7B1E2FFF}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -47,11 +47,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AudioAssets\AudioDefinitions.cs" />
-     <Compile Include="Assets\BrokenLightParent.cs" />
-     <Compile Include="Assets\CameraLocationContainer.cs" />
-     <Compile Include="Assets\CreateMajorEntities.cs" />
-     <Compile Include="Assets\DoorMeshSupport.cs" />
-     <Compile Include="Assets\DoorSoundOnOpen.cs" />
+     <Compile Include="Assets\AudioAssets\DoorSoundOnOpen.cs" />
      <Compile Include="Assets\FoeAssets\Debug_Foe_Alert_Status.cs" />
      <Compile Include="Assets\FoeAssets\FoeAlertSystem.cs" />
      <Compile Include="Assets\FoeAssets\FoeDrawFieldOfVision.cs" />
@@ -61,11 +57,6 @@
      <Compile Include="Assets\FoeAssets\TaserKill.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Coordinator.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Route_Node.cs" />
-     <Compile Include="Assets\GoodBoxPositioning.cs" />
-     <Compile Include="Assets\GoodBoxRandomPosition.cs" />
-     <Compile Include="Assets\LaserAlertSystem.cs" />
-     <Compile Include="Assets\Lightpocalypse.cs" />
-     <Compile Include="Assets\RigInteractionToAlarm.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\Basic\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" />
@@ -172,8 +163,6 @@
      <Compile Include="Assets\SceneAssets\InControl\Source\XInput\XInputDotNetPure\GamePad.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Source\XInput\XInputDotNetPure\Utils.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Test\TestInputManager.cs" />
-     <Compile Include="Assets\TakeCameras.cs" />
-     <Compile Include="Assets\UselessDataComputer.cs" />
      <Compile Include="Assets\_Q Assets\InteractionCanvasSetup.cs" />
      <Compile Include="Assets\_Q Assets\QCameraControl.cs" />
      <Compile Include="Assets\_Q Assets\QCameraLocation.cs" />
@@ -197,10 +186,18 @@
      <Compile Include="Assets\_UIAssets\PauseMenuAssets\PauseScript.cs" />
      <Compile Include="Assets\_WorldAssets\AlarmSignal.cs" />
      <Compile Include="Assets\_WorldAssets\AlertHub.cs" />
+     <Compile Include="Assets\_WorldAssets\BrokenLightParent.cs" />
+     <Compile Include="Assets\_WorldAssets\CameraLocationContainer.cs" />
+     <Compile Include="Assets\_WorldAssets\CreateMajorEntities.cs" />
+     <Compile Include="Assets\_WorldAssets\DoorMeshSupport.cs" />
      <Compile Include="Assets\_WorldAssets\GenerateQRenderer.cs" />
+     <Compile Include="Assets\_WorldAssets\GoodBoxPositioning.cs" />
+     <Compile Include="Assets\_WorldAssets\GoodBoxRandomPosition.cs" />
+     <Compile Include="Assets\_WorldAssets\LaserAlertSystem.cs" />
      <Compile Include="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs" />
      <Compile Include="Assets\_WorldAssets\Lasers\LaserBehavior.cs" />
      <Compile Include="Assets\_WorldAssets\Lasers\PolyLaserParent.cs" />
+     <Compile Include="Assets\_WorldAssets\Lightpocalypse.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\BoxControl.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\CameraControl.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\CeilingControl.cs" />
@@ -217,7 +214,10 @@
      <Compile Include="Assets\_WorldAssets\MiscScripts\UnlockBoxes.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\maketiles.cs" />
      <Compile Include="Assets\_WorldAssets\ObjectPrefabDefinitions.cs" />
+     <Compile Include="Assets\_WorldAssets\RigInteractionToAlarm.cs" />
      <Compile Include="Assets\_WorldAssets\Room_Floor_Designation.cs" />
+     <Compile Include="Assets\_WorldAssets\TakeCameras.cs" />
+     <Compile Include="Assets\_WorldAssets\UselessDataComputer.cs" />
      <Compile Include="Assets\_WorldAssets\Walls\GenerateMap.cs" />
      <None Include="Assets\SceneAssets\InControl\README\README.txt" />
      <None Include="Assets\Standard Assets\ParticleSystems\Shaders\PriorityParticleAlpha.shader" />
@@ -232,7 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{146B1FD4-1451-3601-6189-6C34A8C7CC0B}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{83E6C591-0FD6-A9C0-030F-02562BD066EF}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
