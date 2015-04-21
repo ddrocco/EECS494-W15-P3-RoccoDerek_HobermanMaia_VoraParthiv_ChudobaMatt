@@ -13,6 +13,8 @@ public class CameraControl : QInteractable {
 	public bool wasDetected = false;
 	private Plane[] planes;
 	private Camera myCam;
+	private GameObject player;
+	public bool rotate;
 	
 	//Alert
 	float timeSinceSeenStan = float.MaxValue;
@@ -37,7 +39,9 @@ public class CameraControl : QInteractable {
 		//Setting up detection
 		myCam = GetComponentInChildren<Camera>();
 		planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+		myCam.enabled = false;
 		alertSystem = GetComponentInChildren<ExternalAlertSystem>();
+		player = PlayerController.player.gameObject;
 		
 		//Setting up appearance
 		Transform temp1 = transform.Find("Camera");
@@ -58,11 +62,12 @@ public class CameraControl : QInteractable {
 	
 	void Update () {
 		float t = Mathf.PingPong(Time.time, 1);
-		alertLight.color = Color.Lerp(color0, color1, t);
+		if (alertLight.enabled) {
+			alertLight.color = Color.Lerp(color0, color1, t);
+		}
 		if (t < 0.1f) {
 			AlarmDisable();
-		}
-		
+		}		
 		if (QArrowIcon != null) {
 			QArrowIcon.transform.localEulerAngles = new Vector3(0, 180, transform.eulerAngles.y);
 		}
@@ -70,14 +75,16 @@ public class CameraControl : QInteractable {
 		//Hacked in/broken
 		if (QIsWatching || isBlinded) {
 			lens.material.color = Color.black; //lens off
-			color1 = color0 = green; //camera light appears greenish
-			alertLight.intensity = 4f;
+			alertLight.enabled = false;
 			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
 		}
-		Vector3 detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
+		Vector3 detectionLocation = Vector3.down;
+		if (Vector3.Distance(player.transform.position, transform.position) <= 11f) { //if player in range
+			detectionLocation  = detectStan();	//(0, -1, 0) on faiure to detect
+		}
 		if (detectionLocation != Vector3.down) {
 			if (!wasDetected) {
 				camControl.WarningOn();
@@ -87,8 +94,8 @@ public class CameraControl : QInteractable {
 			if (!Offline) {
 				alertSystem.SignalAlarm(detectionLocation, this.gameObject);
 			}
-		} else { //not currently detecting, but warning/alert system was on
-			if (wasDetected) {
+		} else { //not currently detecting,
+			if (wasDetected) { //but warning/alert system was on
 				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
 					camControl.AlertOff();
 					color0 = color1;
@@ -97,6 +104,7 @@ public class CameraControl : QInteractable {
 		}
 	}
 	
+	//What the F is this??
 	void AlarmDisable() {
 		foreach (Foe_Detection_Handler foe in FindObjectsOfType<Foe_Detection_Handler>()) {
 			if (foe.GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.investigating) {
@@ -108,7 +116,12 @@ public class CameraControl : QInteractable {
 	//Uses child camera and raycast to see if Stan is in view
 	//Returns location of Stan if detected, and Vector3.down if not.
 	Vector3 detectStan () {
-		if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
+		if (rotate) {
+			myCam.enabled = true;
+			planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+			myCam.enabled = false;
+		}
+		if (GeometryUtility.TestPlanesAABB(planes, player.GetComponent<Collider>().bounds)) {
 			RaycastHit hit;
 			Vector3 heading = PlayerController.player.transform.position - transform.position;
 			float distance = heading.magnitude;

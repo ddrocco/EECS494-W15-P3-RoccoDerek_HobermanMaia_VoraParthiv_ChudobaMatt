@@ -161,6 +161,16 @@ public class PlayerController : MonoBehaviour
 		{
 			Interact();
 		}
+
+		// Stop sprinting if walking anywhere between sideways and backwards
+		if (state == State.sprinting)
+		{
+			float angle = Vector3.Angle(transform.forward, moveDirection);
+			if (angle >= 90f)
+				state = State.walking;
+		}
+		//Debug.Log("Facing: " + transform.forward);
+		//Debug.Log("Moving: " + moveDirection);
 	}
 
 	void FixedUpdate()
@@ -305,8 +315,6 @@ public class PlayerController : MonoBehaviour
 	// Moves the player on a fixed interval
 	void Move(float dt)
 	{
-		//Debug.Log("Facing: " + transform.forward);
-		//Debug.Log("Moving: " + body.velocity);
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
 		body.velocity = (moveDirection * currentSpeed * dt);
 		isStationary = (moveDirection == Vector3.zero);

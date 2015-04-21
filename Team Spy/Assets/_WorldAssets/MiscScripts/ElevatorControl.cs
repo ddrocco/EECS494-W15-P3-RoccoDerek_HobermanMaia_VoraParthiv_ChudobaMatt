@@ -4,8 +4,7 @@ using System.Collections;
 public class ElevatorControl : QInteractable {
 	public Animator anim;
 	public static bool playerGotPasscard = false;
-	public bool dispPasscard;
-	//private Transform player;
+	public bool needsPasscard;
 	
 	void Awake () {
 		anim = GetComponent<Animator>();
@@ -13,18 +12,9 @@ public class ElevatorControl : QInteractable {
 			anim = GetComponentInParent<Animator>();
 		}
 	}
-	void Update() {
-		dispPasscard = playerGotPasscard;
-	}
-	
-	/*void Start() {
-		base.Start();
-		//player = PlayerController.player.transform;
-	}
-	*/
 	
 	public void Interact () {
-		if (!playerGotPasscard) {
+		if (needsPasscard && !playerGotPasscard) {
 			GameController.SendPlayerMessage("Locked:\nFind the key", 5);
 			//gameObject.GetComponent<AudioSource>().Play();
 			return;
