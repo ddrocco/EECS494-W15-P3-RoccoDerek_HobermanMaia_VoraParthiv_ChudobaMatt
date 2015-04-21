@@ -36,54 +36,35 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	
 	[HideInInspector]
 	public bool queuedMovement;
+
+	private NavMeshAgent navAgent;
 	
 	void Start() {
 		foeGlanceCommand = GetComponentInChildren<Foe_Glance_Command>();
 		foeDetectionHandler = GetComponentInChildren<Foe_Detection_Handler>();
-		speed = GetComponent<NavMeshAgent>().speed;
+		navAgent = GetComponent<NavMeshAgent>();
+		speed = navAgent.speed;
 		camControl = FindObjectOfType<QCameraControl>();
 		state = alertState.patrolling;
 		UpdateDestination();
 	}
 
 	void FixedUpdate() {	
-		if (GetComponent<NavMeshAgent>() == null) {
+		if (navAgent == null) {
 			return;
 		}
-		
-		/*if (!GetComponent<NavMeshAgent>().hasPath) {
-			timeWithoutPath += Time.deltaTime;
-			if (timeWithoutPath > 2f) {
-				switch(state) {
-				case alertState.patrolling:
-					UpdateDestination();
-					break;
-				case alertState.investigating:
-					EndInvestigation();
-					break;
-				case alertState.returning:
-					UpdateDestination();
-					break;
-				}
-				GetComponent<NavMeshAgent>().enabled = false;
-				GetComponent<NavMeshAgent>().enabled = true;
-				timeWithoutPath = 0f;
-			}
-		} else {
-			timeWithoutPath = 0f;
-		}*/
 					
 		if (stayFrozenOnLook) {
 			if (foeGlanceCommand.isLookingAround) {
-				GetComponent<NavMeshAgent>().Stop ();
+				navAgent.Stop ();
 			} else {
 				stayFrozenOnLook = false;
-				GetComponent<NavMeshAgent>().Resume ();
+				navAgent.Resume ();
 			}
 		} else if (state == alertState.investigating && foeDetectionHandler.isAggressive) {
-			GetComponent<NavMeshAgent>().speed = speed * foeDetectionHandler.sprintMultiplier;
+			navAgent.speed = speed * foeDetectionHandler.sprintMultiplier;
 		} else {
-			GetComponent<NavMeshAgent>().speed = speed;
+			navAgent.speed = speed;
 		}
 		
 		float minDist;
@@ -141,8 +122,8 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		}
 		
 		currentDestination.y = transform.position.y;
-		if (GetComponent<NavMeshAgent>().enabled) {
-			GetComponent<NavMeshAgent>().destination = currentDestination;	
+		if (navAgent.enabled) {
+			navAgent.destination = currentDestination;	
 		} else {
 			queuedMovement = true;
 		}
@@ -150,7 +131,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	
 	public void StartInvestigation(Vector3 destination, bool isPlayer) {
 		isTrackingPlayer = isPlayer;
-		if (!GetComponent<NavMeshAgent>().enabled) {
+		if (!navAgent.enabled) {
 			return;
 		}
 		
@@ -165,7 +146,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		} else {
 			minInvestigationDistance = FoeAlertSystem.bombRange;
 		}
-		GetComponent<NavMeshAgent>().destination = destination;
+		navAgent.destination = destination;
 		state = alertState.investigating;
 		
 		foeGlanceCommand.OverrideGlanceCommand();
