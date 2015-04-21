@@ -36,6 +36,7 @@ public class QInteractable : MonoBehaviour {
 	public GameObject tagView;
 	static QInteractable taggedButton = null;
 	static GameObject qTagPrefab = null;
+	PlayerTagCompass tagCompass;
 	
 	public virtual void Start () {		
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
@@ -66,6 +67,8 @@ public class QInteractable : MonoBehaviour {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
 		}
+		
+		tagCompass = FindObjectOfType<PlayerTagCompass>();
 		/*if (group != MapGroup.One) {
 			disableButtonView();
 		}*/
@@ -108,6 +111,22 @@ public class QInteractable : MonoBehaviour {
 			return ButtonSpriteDefinitions.main.DisplayVisible;
 		}
 	}
+	
+	void LateUpdate() {
+		if (!displayIsActive) {
+			return;
+		}
+		PlayerController player = FindObjectOfType<PlayerController>();
+		Vector3 playerLookDirection = player.transform.forward;
+		playerLookDirection.y = 0;
+		Vector3 playerPos = player.transform.position;
+		playerPos.y = 0;
+		Vector3 thisPos = new Vector3(transform.position.x, 0, transform.position.z);
+		
+		Quaternion lookRotation = Quaternion.FromToRotation(thisPos-playerPos, playerLookDirection);
+		
+		tagCompass.SetDirection(lookRotation);
+	}
 		
 	public virtual void Tag() {
 		displayIsActive = true;
@@ -123,6 +142,7 @@ public class QInteractable : MonoBehaviour {
 		qTagPrefab = Instantiate(ObjectPrefabDefinitions.main.QDisplayIcon,
 				QInteractionButton.transform.position + Vector3.up,
 				QInteractionButton.transform.rotation) as GameObject;
+		FindObjectOfType<DetectTaggedObjects>().taggedObject = tagView;
 	}
 	public virtual void UnTag() {
 		if (taggedButton != this) {
@@ -134,6 +154,7 @@ public class QInteractable : MonoBehaviour {
 		}
 		tagView.GetComponent<ParticleSystemRenderer>().enabled = false;
 		taggedButton = null;
+		FindObjectOfType<DetectTaggedObjects>().taggedObject = null;
 		Destroy(qTagPrefab);
 	}
 	
