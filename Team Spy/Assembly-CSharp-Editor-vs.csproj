@@ -46,7 +46,6 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Editor\ThirdWindow.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Editor\InControlBuilder.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Editor\InControlManagerEditor.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Editor\InputManagerAssetGenerator.cs" />
