@@ -36,6 +36,9 @@ public class BrokenLightParent : MonoBehaviour {
 	
 	public void Lightpocalypse() {
 		foreach (Light light in GetComponentsInChildren<Light>()) {
+			Vector3 pos = light.transform.localPosition;
+			pos.y = 0f;
+			light.transform.localPosition = pos;
 			Renderer rend = light.transform.parent.FindChild("Light").GetComponent<Renderer>();
 			rend.enabled = false;
 			light.enabled = false;
