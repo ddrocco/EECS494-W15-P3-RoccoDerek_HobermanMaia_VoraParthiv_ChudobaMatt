@@ -59,6 +59,17 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 			else
 				tooltipText.text = ">Lock Door";
 		}
+		//Paper piles
+		else if (controlledObject.GetComponent<InformationForPlayer>() != null) {
+			tooltipText.text = "Data";
+		}
+		//Computers
+		else if (controlledObject.GetComponent<ComputerConsole>() != null) {
+			tooltipText.text = "Computer";
+		}
+		else if (controlledObject.GetComponent<UselessDataComputer>() != null) {
+			tooltipText.text = "Computer";
+		}
 		//Elevators
 		else if (controlledObject.GetComponent<ElevatorControl>() != null) {
 			tooltipText.text = "Elevator";

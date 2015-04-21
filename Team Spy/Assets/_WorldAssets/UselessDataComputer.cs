@@ -1,8 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class UselessDataComputer : MonoBehaviour {
+public class UselessDataComputer : QInteractable {
 	static int uselessDataCollected = 0;
+
+	public override void Start() {
+		base.Start();
+	}
+	
+	public override void Trigger() {
+		return;
+	}
+	
+	public override Sprite GetSprite() {
+		return ButtonSpriteDefinitions.main.Computer;
+	}
 
 	public void Interact() {
 		gameObject.tag = "Untagged";

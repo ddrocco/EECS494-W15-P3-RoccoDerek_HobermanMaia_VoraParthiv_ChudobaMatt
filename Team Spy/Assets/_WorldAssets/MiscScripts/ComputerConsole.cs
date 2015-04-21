@@ -4,14 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class ComputerConsole : MonoBehaviour {
+public class ComputerConsole : QInteractable {
 	static List<MapGroup> usedMapValues = new List<MapGroup>();
 	public int mapValue;
 	public bool debugComputer = false;
 	public CameraControl nearestCam;
 	public CameraControl[] allCams;
 	
-	void Start() {
+	public override void Start() {
 		allCams = FindObjectsOfType<CameraControl>();
 		float minDist = 1000000f;
 		foreach (CameraControl cam in allCams) {
@@ -21,11 +21,16 @@ public class ComputerConsole : MonoBehaviour {
 				nearestCam = cam;
 			}
 		}
+		base.Start();
 	}
 	
 	public void Interact() {
 		OtherAction(mapValue);
 		EnableRenderers(mapValue);
+	}
+	
+	public override void Trigger() {
+		return;
 	}
 	
 	void OtherAction(int value) {
@@ -46,6 +51,10 @@ public class ComputerConsole : MonoBehaviour {
 		QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
 		QCameraLocation loc = camControl.GetComponentInParent<QCameraLocation>();
 		Qcontrol.ToggleCamera(loc.cameraNumber, true);
+	}
+	
+	public override Sprite GetSprite() {
+		return ButtonSpriteDefinitions.main.Computer;
 	}
 	
 	void EnableRenderers(int value) {

@@ -122,6 +122,6 @@ public class BoxControl : QInteractable {
 				return ButtonSpriteDefinitions.main.BombDefault;
 			}
 		}
-		return ButtonSpriteDefinitions.main.Files;
+		return ButtonSpriteDefinitions.main.PassKey;
 	}
 }

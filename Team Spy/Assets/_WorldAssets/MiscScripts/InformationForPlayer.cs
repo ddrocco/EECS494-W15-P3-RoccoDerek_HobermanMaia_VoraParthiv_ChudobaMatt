@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class InformationForPlayer : MonoBehaviour {
+public class InformationForPlayer : QInteractable {
 	static int numCollected = 0;
 	public string message;
 	public string QMessage;
 	
 	public bool read = false;
+	
+	public override void Start() {
+		base.Start();
+	}
 	
 	public void Interact() {
 		GameController.SendPlayerMessage(message, 2);
@@ -16,5 +20,13 @@ public class InformationForPlayer : MonoBehaviour {
 			QUI.setText("Partner found document!  Total: " + numCollected);
 		}
 		//QUI.setText(QMessage);
+	}
+	
+	public override void Trigger() {
+		return;
+	}
+	
+	public override Sprite GetSprite() {
+		return ButtonSpriteDefinitions.main.Files;
 	}
 }
