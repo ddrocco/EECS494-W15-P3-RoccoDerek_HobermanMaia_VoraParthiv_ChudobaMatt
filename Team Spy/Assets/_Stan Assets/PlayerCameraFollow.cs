@@ -10,11 +10,11 @@ public class PlayerCameraFollow : MonoBehaviour
 		player = GameObject.Find("Player");
 	}
 
-	void FixedUpdate()
+	void Update()
 	{
 		// Fix camera position to player position
 		Vector3 pos = player.transform.position;
-		pos.y += player.transform.lossyScale.y;
+		pos.y += .75f;//player.transform.lossyScale.y;
 		transform.position = pos;
 
 		// Fix camera y rotation to player y rotation

@@ -26,6 +26,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public float sprintMultiplier = 5f;
 	
 	public int jurisdictionZone;
+	public Camera myCam;
 
 	int cullingMask;
 	
@@ -35,6 +36,8 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	public bool isDeaf = false;
 
 	void Start () {	
+		myCam = GetComponent<Camera>();
+		myCam.enabled = false;
 		taser = Instantiate(ObjectPrefabDefinitions.main.FoeTaser) as GameObject;
 		taser.transform.parent = transform;
 		taser.transform.localPosition = new Vector3(-0.6645966f, -2f, 0.02145767f);
@@ -77,30 +80,34 @@ public class Foe_Detection_Handler : MonoBehaviour {
 	}
 	
 	void CalculateVisualDetection() {
-		Camera myCam = GetComponent<Camera>();
-		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
-		bool detected;
-
-		if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
-			RaycastHit hit;
-			Vector3 heading = PlayerController.player.transform.position - transform.position;
-			float distance = heading.magnitude;
-			Vector3 direction = heading.normalized;
-			if (Physics.Raycast(transform.position, direction, out hit, distance, cullingMask)) {
-				if (hit.collider.CompareTag("Player") == true) {
-					detected = true;
+		if (Vector3.Distance(PlayerController.player.transform.position, transform.position) < 21f) {
+			myCam.enabled = true;
+			Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+			myCam.enabled = false;
+			bool detected;
+			if (GeometryUtility.TestPlanesAABB(planes, PlayerController.player.GetComponent<Collider>().bounds)) {
+				RaycastHit hit;
+				Vector3 heading = PlayerController.player.transform.position - transform.position;
+				float distance = heading.magnitude;
+				Vector3 direction = heading.normalized;
+				if (Physics.Raycast(transform.position, direction, out hit, distance, cullingMask)) {
+					if (hit.collider.CompareTag("Player") == true) {
+						detected = true;
+					} else {
+						detected = false;
+					}
 				} else {
 					detected = false;
 				}
 			} else {
 				detected = false;
 			}
-		} else {
-			detected = false;
-		}
-		
-		if (detected) {
-			playerSpotted = true;
+			
+			if (detected) {
+				playerSpotted = true;
+			} else {
+				playerSpotted = false;
+			}
 		} else {
 			playerSpotted = false;
 		}
