@@ -305,6 +305,8 @@ public class PlayerController : MonoBehaviour
 	// Moves the player on a fixed interval
 	void Move(float dt)
 	{
+		Debug.Log("Facing: " + transform.forward);
+		Debug.Log("Moving: " + body.velocity);
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
 		body.velocity = (moveDirection * currentSpeed * dt);
 		isStationary = (moveDirection == Vector3.zero);
