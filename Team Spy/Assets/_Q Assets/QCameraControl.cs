@@ -68,7 +68,7 @@ public class QCameraControl : MonoBehaviour
 
 		overviewCullingMask = (1 << Layerdefs.ui) + (1 << Layerdefs.q_visible) + (1 << Layerdefs.laser);
 		cameraCullingMask = FindObjectOfType<PlayerCameraFollow>().GetComponent<Camera>().cullingMask
-				+ (1 << Layerdefs.laser);
+				+ (1 << Layerdefs.laser) + (1 << Layerdefs.stan);
 	}
 
 	void Start() {
