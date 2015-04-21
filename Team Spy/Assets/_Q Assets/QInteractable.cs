@@ -116,7 +116,7 @@ public class QInteractable : MonoBehaviour {
 		if (!displayIsActive) {
 			return;
 		}
-		PlayerController player = FindObjectOfType<PlayerController>();
+		var player = FindObjectOfType<PlayerCameraFollow>();
 		Vector3 playerLookDirection = player.transform.forward;
 		playerLookDirection.y = 0;
 		Vector3 playerPos = player.transform.position;

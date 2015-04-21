@@ -52,7 +52,8 @@ public class PlayerController : MonoBehaviour
 	private float rotationY = 0f;
 	private float rotationYDelta = 0f;
 	private Vector3 xRotation = Vector3.zero;
-	private Vector3 yRotation = Vector3.zero;
+	[HideInInspector]
+	public Vector3 yRotation = Vector3.zero;
 	private int sensitivity = 5;
 
 	// Public variables to be changed in the inspector

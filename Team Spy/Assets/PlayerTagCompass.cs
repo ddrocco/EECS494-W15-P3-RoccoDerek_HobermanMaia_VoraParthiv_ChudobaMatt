@@ -6,7 +6,7 @@ public class PlayerTagCompass : MonoBehaviour {
 	bool isVisible = true;
 
 	public void SetDirection(Quaternion direction) {
-		if (!DetectTaggedObjects.tagCompassVisible) {
+		/*if (!DetectTaggedObjects.tagCompassVisible) {
 			if (isVisible) {
 				GetComponent<Image>().enabled = false;
 				isVisible = false;
@@ -16,8 +16,14 @@ public class PlayerTagCompass : MonoBehaviour {
 		if (!isVisible) {
 			GetComponent<Image>().enabled = true;
 			isVisible = true;
-		}
+		}*/
 		float angle = direction.eulerAngles.y;
+		
+		if (FindObjectOfType<PlayerController>().yRotation.x < 0f) {
+			angle = 180 - angle;
+			print ("Choo choo");
+		}
+		
 		transform.localEulerAngles = Vector3.forward * angle;
 		
 		Rect canvas = GetComponentInParent<Canvas>().pixelRect;
