@@ -2,7 +2,6 @@
 using UnityEngine.UI;
 using System.Collections;
 using InControl;
-using UnityEditor.Events;
 
 public class GameController : MonoBehaviour
 {
