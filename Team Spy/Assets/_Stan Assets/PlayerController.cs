@@ -306,7 +306,7 @@ public class PlayerController : MonoBehaviour
 	void Move(float dt)
 	{
 		Debug.Log("Facing: " + transform.forward);
-		Debug.Log("Moving: " + body.velocity);
+		Debug.Log("Moving: " + moveDirection);
 		currentSpeed = IncrementTowards(currentSpeed, targetSpeed, acceleration);
 		body.velocity = (moveDirection * currentSpeed * dt);
 		isStationary = (moveDirection == Vector3.zero);
