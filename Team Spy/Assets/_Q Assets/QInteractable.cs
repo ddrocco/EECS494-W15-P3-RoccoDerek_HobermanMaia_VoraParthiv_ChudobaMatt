@@ -34,6 +34,8 @@ public class QInteractable : MonoBehaviour {
 	//Color inactiveColor = new Color(0.2f, 0.2f, 0.2f);
 	
 	public GameObject tagView;
+	static QInteractable taggedButton = null;
+	static GameObject qTagPrefab = null;
 	
 	public virtual void Start () {		
 		InteractionCanvas = GameObject.Find ("InteractionCanvas");
@@ -48,10 +50,6 @@ public class QInteractable : MonoBehaviour {
 			InteractionCanvas.GetComponent<RectTransform> ().localRotation;
 		QInteractionButton.GetComponent<QInteractionUI> ().controlledObject = this;
 		QInteractionButton.transform.SetParent (InteractionCanvas.transform);
-		
-		if (objectIsTaggable) {
-			QInteractionButton.GetComponent<QInteractionUI>().GenerateDisplayIcon();
-		}
 		
 		//Generate Stan-visible (3d) tag object
 		GameObject tagPrefab = GetStanVisibleTag();
@@ -112,16 +110,31 @@ public class QInteractable : MonoBehaviour {
 	}
 		
 	public virtual void Tag() {
+		displayIsActive = true;
 		if (tagView.GetComponent<MeshRenderer>() != null) {
 			tagView.GetComponent<MeshRenderer>().enabled = true;
 		}
 		tagView.GetComponent<ParticleSystemRenderer>().enabled = true;
+		if (taggedButton != null) {
+			taggedButton.UnTag();
+			QUI.setText("Only one object can be tagged at a time.  Removing previous tag...");
+		}
+		taggedButton = this;
+		qTagPrefab = Instantiate(ObjectPrefabDefinitions.main.QDisplayIcon,
+				QInteractionButton.transform.position + Vector3.up,
+				QInteractionButton.transform.rotation) as GameObject;
 	}
 	public virtual void UnTag() {
+		if (taggedButton != this) {
+			return;
+		}
+		displayIsActive = false;
 		if (tagView.GetComponent<MeshRenderer>() != null) {
 			tagView.GetComponent<MeshRenderer>().enabled = false;
 		}
 		tagView.GetComponent<ParticleSystemRenderer>().enabled = false;
+		taggedButton = null;
+		Destroy(qTagPrefab);
 	}
 	
 	public void disableButtonView() {

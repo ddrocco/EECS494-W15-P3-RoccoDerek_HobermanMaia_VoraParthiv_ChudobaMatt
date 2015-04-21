@@ -8,10 +8,8 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	public QInteractable controlledObject;
 	List<GameObject> optionlist;
 	public List<string> options;
-	float displayIconDisplacement = -8f;
 	public Color color0 = Color.white;
 	public Color color1 = Color.white;
-	GameObject displayIconObject;
 	private GameObject tooltip;
 	bool buttonEnabled = true;
 	private Image image;
@@ -19,23 +17,12 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	void Start() {
 		image = GetComponent<Image>();
 	}
-
-	public void GenerateDisplayIcon() {
-		displayIconObject = Instantiate (ObjectPrefabDefinitions.main.QDisplayIcon) as GameObject;
-		displayIconObject.transform.SetParent(transform);
-		displayIconObject.GetComponent<RectTransform>().localPosition =
-			new Vector3(displayIconDisplacement, displayIconDisplacement, 0);
-	}
 	
 	void Update () {
 		if (image.enabled) {
 			float t = Mathf.PingPong(Time.time, 1);
 			image.color = Color.Lerp(color0, color1, t);
 			image.sprite = controlledObject.GetSprite();
-		}
-		if (displayIconObject != null) {
-			displayIconObject.GetComponent<Image>().enabled = GetComponent<Image>().enabled;
-			displayIconObject.GetComponent<Image>().sprite = controlledObject.GetDisplayStatus();
 		}
 	}
 	
