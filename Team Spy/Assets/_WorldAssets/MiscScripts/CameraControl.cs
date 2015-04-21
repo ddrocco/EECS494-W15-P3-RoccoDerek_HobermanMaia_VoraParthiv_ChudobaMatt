@@ -24,6 +24,7 @@ public class CameraControl : QInteractable {
 	//Stan-Visual
 	public MeshRenderer lens;
 	public Light alertLight;
+	public Color yellow = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color color1 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color green;
@@ -101,7 +102,8 @@ public class CameraControl : QInteractable {
 			if (wasDetected) { //but warning/alert system was on
 				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
 					camControl.AlertOff();
-					color0 = color1;
+					color1 = color0 = yellow;
+					wasDetected = false;
 				}
 			}
 		}

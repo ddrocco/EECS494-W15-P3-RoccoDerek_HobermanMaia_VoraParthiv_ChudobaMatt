@@ -149,6 +149,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	
 	//Call AlertOff to turn off the flashing alert
 	public void AlertOff() {
-		color1 = Color.white;
+		color1 = Color.grey;
 	}
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ExternalAlertSystem : MonoBehaviour {
-	Light alarmLight;
+	public Light alarmLight;
 	bool lightRampingUp;
 	float maxIntensity = 1f;
 	
@@ -123,6 +123,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 	public void RemoveActiveSignal(AlarmSignal sig) {
 		signals.Remove (sig);
 		Destroy (sig.gameObject);
+		//if ()
 	}
 	public void RemoveAllActiveSignals() {
 		List<AlarmSignal> temp = new List<AlarmSignal>();
