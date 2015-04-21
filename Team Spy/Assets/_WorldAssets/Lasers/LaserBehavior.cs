@@ -9,6 +9,7 @@ public class LaserBehavior : QInteractable {
 	public Vector3 directionCurrent = Vector3.up;
 	public float movementDuration = 1f;
 	public float movementTimer = 0f;
+	public bool moving = false;
 	
 	int layerMask;
 	LineRenderer laser;
@@ -20,6 +21,9 @@ public class LaserBehavior : QInteractable {
 		laser.material.color = color;
 		layerMask = (1 << Layerdefs.wall) + (1 << Layerdefs.stan) + (1 << Layerdefs.foe)
 				+ (1 << Layerdefs.floor) + (1 << Layerdefs.prop);
+		float ratio = Mathf.Abs (movementTimer - movementDuration) / movementDuration;
+		directionCurrent = (ratio * directionStart + (1 - ratio) * directionEnd);
+		transform.rotation = Quaternion.LookRotation(directionCurrent);
 		base.Start();
 	}
 	
@@ -29,15 +33,16 @@ public class LaserBehavior : QInteractable {
 		} else {
 			gameObject.layer = Layerdefs.laser;
 		}
-		movementTimer += Time.deltaTime;
-		if (movementTimer > movementDuration * 2f) {
-			movementTimer -= movementDuration * 2f;
-		}
-		float ratio = Mathf.Abs (movementTimer - movementDuration) / movementDuration;
-		directionCurrent = (ratio * directionStart + (1 - ratio) * directionEnd);
-	
-		transform.rotation = Quaternion.LookRotation(directionCurrent);
+		if (moving) {
+			movementTimer += Time.deltaTime;
+			if (movementTimer > movementDuration * 2f) {
+				movementTimer -= movementDuration * 2f;
+			}
+			float ratio = Mathf.Abs (movementTimer - movementDuration) / movementDuration;
+			directionCurrent = (ratio * directionStart + (1 - ratio) * directionEnd);
 		
+			transform.rotation = Quaternion.LookRotation(directionCurrent);
+		}
 		RaycastHit hitInfo;
 		if (Physics.Raycast(transform.position, directionCurrent, out hitInfo, 100f, layerMask)) {
 			if (hitInfo.collider.gameObject.layer == Layerdefs.stan) {
