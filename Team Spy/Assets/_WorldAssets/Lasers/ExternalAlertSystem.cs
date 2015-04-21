@@ -15,6 +15,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 	public bool signalsInTransit;
 	public bool alarmRaised;
 	float timeSinceSignalSent = 0f;
+	ExternalAlertSystem[] externalAlertSystems;
 	
 	AlertHub system;
 	
@@ -24,6 +25,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		ConnectToAlarm();
 		GetComponent<LineRenderer>().enabled = false;
 		alarmRaised = false;
+		externalAlertSystems = FindObjectsOfType<ExternalAlertSystem>();
 	}
 	
 	void Update () {
@@ -31,7 +33,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 			signalsInTransit = true;
 		} else {
 			signalsInTransit = false;
-			foreach (ExternalAlertSystem system in FindObjectsOfType<ExternalAlertSystem>()) {
+			foreach (ExternalAlertSystem system in externalAlertSystems) {
 				if (system.signals.Count > 0) {
 					signalsInTransit = true;
 					break;

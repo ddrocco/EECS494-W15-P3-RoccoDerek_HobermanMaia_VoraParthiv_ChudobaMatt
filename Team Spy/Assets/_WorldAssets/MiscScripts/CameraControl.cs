@@ -31,6 +31,7 @@ public class CameraControl : QInteractable {
 	// Camera switching
 	private QCameraControl camControl;
 	private QCameraLocation camLocation;
+	private QInteractionUI interactionUI;
 	
 	private GameObject QArrowIcon;
 	
@@ -58,6 +59,8 @@ public class CameraControl : QInteractable {
 		
 		//Setting up Q-button
 		base.Start();
+
+		interactionUI = QInteractionButton.GetComponent<QInteractionUI>();
 	}
 	
 	void Update () {
@@ -76,7 +79,7 @@ public class CameraControl : QInteractable {
 		if (QIsWatching || isBlinded) {
 			lens.material.color = Color.black; //lens off
 			alertLight.enabled = false;
-			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
+			interactionUI.AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
