@@ -1,9 +1,12 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MainMenuJuice.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/FoeAssets/Foe_Detection_Handler.cs">
     <Files>
-      <File FileName="Assets\MainMenuJuice.cs" Line="28" Column="23" />
-      <File FileName="Assets\IntroJuiceText.cs" Line="13" Column="31" />
+      <File FileName="Assets/_Stan Assets/PlayerInteraction.cs" Line="114" Column="30" />
+      <File FileName="Assets/_WorldAssets/MiscScripts/CeilingControl.cs" Line="6" Column="2" />
+      <File FileName="Assets/_WorldAssets/AlertHub.cs" Line="17" Column="20" />
+      <File FileName="Assets/FoeAssets/FoeAlertSystem.cs" Line="10" Column="16" />
+      <File FileName="Assets/FoeAssets/Foe_Detection_Handler.cs" Line="5" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
