@@ -59,10 +59,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 				tooltipText.text = "Door";
 			}
 		}
-		//Ceilings
-		else if (controlledObject.GetComponent<CeilingControl>() != null) {
-			tooltipText.text = "Ping";
-		}
 		//Paper piles
 		else if (controlledObject.GetComponent<InformationForPlayer>() != null) {
 			tooltipText.text = "Data";

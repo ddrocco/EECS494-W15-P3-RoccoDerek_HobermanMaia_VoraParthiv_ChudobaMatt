@@ -111,7 +111,7 @@ public class PlayerInteraction : MonoBehaviour
 				toolTipText.text = "Open door with the doorknob this time";
 			}
 		} else if (hitInfo.transform.GetComponent<CameraControl>()){
-			toolTipText.text = "Blind camera";
+			toolTipText.text = "Disarm camera";
 		} else if (hitInfo.transform.GetComponent<ComputerConsole>() ||
 		           hitInfo.transform.GetComponent<TakeCameras>()) {
 			toolTipText.text = "Use computer";
