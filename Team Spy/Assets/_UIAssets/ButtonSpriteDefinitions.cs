@@ -9,7 +9,7 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 			Alarm, AlarmSignal,
 			DoorUnlocked, DoorLocked,
 			Laser, PolyLaser,
-			Files, PassKey, Computer,
+			Files, PassKey, Computer, BlankIcon,
 			Elevator,
 			CameraOnAlert, CameraBlinded, CameraUnderQ, CameraArrow;
 	public List<Sprite> BombDetonationCountdown,
