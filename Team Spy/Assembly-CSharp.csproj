@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\AudioAssets\AudioDefinitions.cs" />
      <Compile Include="Assets\AudioAssets\DoorSoundOnOpen.cs" />
-     <Compile Include="Assets\DetectTaggedObjects.cs" />
      <Compile Include="Assets\FoeAssets\Debug_Foe_Alert_Status.cs" />
      <Compile Include="Assets\FoeAssets\FoeAlertSystem.cs" />
      <Compile Include="Assets\FoeAssets\FoeDrawFieldOfVision.cs" />
@@ -58,7 +57,6 @@
      <Compile Include="Assets\FoeAssets\TaserKill.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Coordinator.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Route_Node.cs" />
-     <Compile Include="Assets\PlayerTagCompass.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\Basic\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" />
@@ -180,10 +178,12 @@
      <Compile Include="Assets\_Stan Assets\PlayerCameraFollow.cs" />
      <Compile Include="Assets\_Stan Assets\PlayerController.cs" />
      <Compile Include="Assets\_Stan Assets\PlayerInteraction.cs" />
+     <Compile Include="Assets\_Stan Assets\PlayerTagCompass.cs" />
      <Compile Include="Assets\_Stan Assets\Player_Vertices.cs" />
      <Compile Include="Assets\_Stan Assets\WonGame.cs" />
      <Compile Include="Assets\_UIAssets\ButtonSpriteDefinitions.cs" />
      <Compile Include="Assets\_UIAssets\CompassAssets\CompassScript.cs" />
+     <Compile Include="Assets\_UIAssets\DetectTaggedObjects.cs" />
      <Compile Include="Assets\_UIAssets\MainMenuAssets\Buttons.cs" />
      <Compile Include="Assets\_UIAssets\PauseMenuAssets\PauseScript.cs" />
      <Compile Include="Assets\_WorldAssets\AlarmSignal.cs" />

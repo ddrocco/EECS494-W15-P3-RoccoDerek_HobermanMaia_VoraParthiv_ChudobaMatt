@@ -155,7 +155,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 				signal.transform.position = transform.position * (1f - firstLegRatio)
 						+ connectingWireJoint * firstLegRatio + new Vector3(0, 5, 0);
 			}
-			float timeRatio = 1f - signal.timeAlive / timeToAlarm;
+			//float timeRatio = 1f - signal.timeAlive / timeToAlarm;
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
 			system.Signal(signal.detectionLocation, signal.sourceObject, null, this);

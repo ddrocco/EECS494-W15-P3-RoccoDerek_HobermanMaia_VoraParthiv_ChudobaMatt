@@ -138,8 +138,8 @@ public class QCameraControl : MonoBehaviour
 			if (cameras[camNumber - 1].usable == true)
 			{
 				cameras[camNumber - 1].usable = false;
-				CameraControl control =
-					cameras[camNumber - 1].gameObject.GetComponentInChildren<CameraControl>();
+				//CameraControl control =
+					//cameras[camNumber - 1].gameObject.GetComponentInChildren<CameraControl>();
 				//control.disableButtonView();
 				camCount--;
 			}
@@ -276,7 +276,7 @@ public class QCameraControl : MonoBehaviour
 	}
 	
 	void InitializeSprites() {
-		int value = 1;
+		//int value = 1;
 		int enabledValue = 0;
 		MapGroup group = MapGroup.One;
 		

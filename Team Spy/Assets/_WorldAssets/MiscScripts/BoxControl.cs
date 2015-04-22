@@ -46,6 +46,10 @@ public class BoxControl : QInteractable {
 				ElevatorControl.playerGotPasscard = true;
 				//Change Q's tasks
 			}
+
+			message = message.Replace("NEWLINE", "\n");
+			QMessage = QMessage.Replace("NEWLINE", "\n");
+
 			GameController.SendPlayerMessage(message, 5);
 			QUI.setText(QMessage);
 		}
