@@ -55,6 +55,9 @@ public class PauseScript : MonoBehaviour {
 		{
 			sensitivity.value++;
 		}
+		if (device.Action2.WasPressed) {
+			Quit ();
+		}
 		sensitivityValText.text = sensitivity.value.ToString();
 	}
 
