@@ -50,6 +50,9 @@ public class ComputerConsole : QInteractable {
 		} else if (value == 4) {
 			//hack this camera!
 			TakeCameraControl(nearestCam);
+			if (GetComponent<DisplayForQ>() != null) {
+				GetComponent<DisplayForQ>().SendMessage();
+			}
 		}
 	}
 	

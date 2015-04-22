@@ -76,6 +76,13 @@ public class CameraControl : QInteractable {
 		
 		//Hacked in/broken
 		if (QIsWatching || isBlinded) {
+			if (wasDetected) {
+				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
+					camControl.AlertOff();
+					color1 = color0 = yellow;
+					wasDetected = false;
+				}
+			}
 			lens.material.color = Color.black; //lens off
 			alertLight.enabled = false;
 			interactionUI.AlertOff();
@@ -132,6 +139,9 @@ public class CameraControl : QInteractable {
 			if (distance > 4.25f && Physics.Raycast(transform.position, direction, out hit, distance)) {
 				if (hit.collider.CompareTag("Player") == true) {
 					if (!wasDetected) {
+						if (GetComponent<DisplayForQ>() != null) {
+							GetComponent<DisplayForQ>().SendMessage();
+						}
 						AudioSource.PlayClipAtPoint(Foe_Detection_Handler.SelectRandomClip(AudioDefinitions.main.CameraSpotsPlayer),
 								transform.position);
 					}
