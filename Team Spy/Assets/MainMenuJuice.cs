@@ -39,7 +39,7 @@ public class MainMenuJuice : MonoBehaviour {
 	
 	void SpawnText() {
 		Rect rect = canv.pixelRect;
-		Vector3 displacement = new Vector3(Random.Range(-rect.width / 2, rect.width / 2), Random.Range(-rect.height / 2, rect.height / 2), 0);
+		Vector3 displacement = new Vector3(Random.Range(-rect.width / 4, rect.width / 4), Random.Range(-rect.height / 4, rect.height / 2), 0);
 		Vector2 velocity = Random.Range (0, 5f) * Random.insideUnitCircle;
 		
 		GameObject JuicyText = Instantiate(JuiceText) as GameObject;

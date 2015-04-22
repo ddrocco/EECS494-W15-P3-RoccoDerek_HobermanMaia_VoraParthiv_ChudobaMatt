@@ -3,10 +3,11 @@ using System.Collections;
 
 public class ElevatorControl : QInteractable {
 	public Animator anim;
-	public static bool playerGotPasscard = false;
+	public static bool playerGotPasscard;
 	public bool needsPasscard;
 	
 	void Awake () {
+		playerGotPasscard = false;
 		anim = GetComponent<Animator>();
 		if (anim == null) {
 			anim = GetComponentInParent<Animator>();
