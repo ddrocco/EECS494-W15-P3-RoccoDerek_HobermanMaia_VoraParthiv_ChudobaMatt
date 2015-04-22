@@ -216,7 +216,7 @@ public class PlayerController : MonoBehaviour
 		// Cannot use mouse clicks when Q has control
 		if (!mouseMovement) return;
 
-		if (Input.GetKeyDown(KeyCode.Mouse0)) // Interact
+		if (Input.GetKeyDown(KeyCode.Mouse0) || (debugControls && Input.GetKeyDown(KeyCode.U))) // Interact
 		{
 			Interact();
 		}
