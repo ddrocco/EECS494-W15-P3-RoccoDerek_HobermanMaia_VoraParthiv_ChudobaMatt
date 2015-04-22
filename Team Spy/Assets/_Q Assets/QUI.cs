@@ -7,6 +7,7 @@ public class QUI : MonoBehaviour {
 
 	public Text nosignal;
 	public Text textoutput;
+	public Image objectivePanel;
 	public GameObject player;
 	public GameObject QCompass;
 
@@ -25,6 +26,10 @@ public class QUI : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		textoutput.text = textcontents;
+		if (textcontents == "")
+			objectivePanel.enabled = false;
+		else
+			objectivePanel.enabled = true;
 	}
 	
 	public void Interact() {

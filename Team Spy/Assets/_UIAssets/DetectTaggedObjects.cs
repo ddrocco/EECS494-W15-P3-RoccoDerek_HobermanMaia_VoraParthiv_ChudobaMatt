@@ -12,12 +12,17 @@ public class DetectTaggedObjects : MonoBehaviour {
 		}
 		Camera myCam = GetComponent<Camera>();
 		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
-		if (!GeometryUtility.TestPlanesAABB(planes, taggedObject.GetComponent<MeshFilter>().mesh.bounds)) {
+		if (taggedObject.GetComponent<MeshFilter>() == null) {
+			print ("LASER");
+			return;
+		}
+		if (GeometryUtility.TestPlanesAABB(planes, taggedObject.GetComponent<MeshFilter>().mesh.bounds)) {
 			tagCompassVisible = false;
 			print ("NOPE");
 			return;
+		} else {
+			tagCompassVisible = true;
+			print ("YEP");
 		}
-		tagCompassVisible = true;
-		print ("YEP");
 	}
 }

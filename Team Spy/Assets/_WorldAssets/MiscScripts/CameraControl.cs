@@ -17,13 +17,12 @@ public class CameraControl : QInteractable {
 	public bool rotate;
 	
 	//Alert
-	float timeSinceSeenStan = float.MaxValue;
-	float timeBetweenAlertNoises = 10f;
 	private ExternalAlertSystem alertSystem;
 	
 	//Stan-Visual
 	public MeshRenderer lens;
 	public Light alertLight;
+	public Color yellow = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color color0 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color color1 = new Color(220f/255f, 170f/255f, 30f/255f, 1);
 	public Color green;
@@ -31,6 +30,7 @@ public class CameraControl : QInteractable {
 	// Camera switching
 	private QCameraControl camControl;
 	private QCameraLocation camLocation;
+	private QInteractionUI interactionUI;
 	
 	private GameObject QArrowIcon;
 	
@@ -58,6 +58,8 @@ public class CameraControl : QInteractable {
 		
 		//Setting up Q-button
 		base.Start();
+
+		interactionUI = QInteractionButton.GetComponent<QInteractionUI>();
 	}
 	
 	void Update () {
@@ -76,7 +78,7 @@ public class CameraControl : QInteractable {
 		if (QIsWatching || isBlinded) {
 			lens.material.color = Color.black; //lens off
 			alertLight.enabled = false;
-			QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
+			interactionUI.AlertOff();
 			return;
 		} else if (!wasDetected) { //Camera is on alert but hasn't detected Stan
 			lens.material.color = Color.red; //appears red (dangerous)
@@ -98,7 +100,8 @@ public class CameraControl : QInteractable {
 			if (wasDetected) { //but warning/alert system was on
 				if (!alertSystem.signalsInTransit && !alertSystem.alarmRaised) {
 					camControl.AlertOff();
-					color0 = color1;
+					color1 = color0 = yellow;
+					wasDetected = false;
 				}
 			}
 		}
@@ -132,7 +135,6 @@ public class CameraControl : QInteractable {
 						AudioSource.PlayClipAtPoint(Foe_Detection_Handler.SelectRandomClip(AudioDefinitions.main.CameraSpotsPlayer),
 								transform.position);
 					}
-					timeSinceSeenStan = 0f;
 					return new Vector3(hit.point.x, 0, hit.point.z);
 				} else return Vector3.down;
 			} else return Vector3.down;

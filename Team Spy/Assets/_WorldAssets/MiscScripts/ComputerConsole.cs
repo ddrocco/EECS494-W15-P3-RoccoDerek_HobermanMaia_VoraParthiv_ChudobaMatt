@@ -4,14 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-public class ComputerConsole : MonoBehaviour {
+public class ComputerConsole : QInteractable {
 	static List<MapGroup> usedMapValues = new List<MapGroup>();
+	public string StanMessage;
+	public string QMessage;
 	public int mapValue;
 	public bool debugComputer = false;
 	public CameraControl nearestCam;
 	public CameraControl[] allCams;
 	
-	void Start() {
+	public override void Start() {
 		allCams = FindObjectsOfType<CameraControl>();
 		float minDist = 1000000f;
 		foreach (CameraControl cam in allCams) {
@@ -21,20 +23,30 @@ public class ComputerConsole : MonoBehaviour {
 				nearestCam = cam;
 			}
 		}
+		base.Start();
 	}
 	
 	public void Interact() {
 		OtherAction(mapValue);
 		EnableRenderers(mapValue);
+
+		StanMessage = StanMessage.Replace("NEWLINE", "\n");
+		QMessage = QMessage.Replace("NEWLINE", "\n");
+		GameController.SendPlayerMessage(StanMessage, 5f);
+		QUI.setText(QMessage);
+	}
+	
+	public override void Trigger() {
+		return;
 	}
 	
 	void OtherAction(int value) {
 		if (value == 1) {
 			FindObjectOfType<QUI>().showCamera(true);
 		} else if (value == 2) {
-			GameController.SendPlayerMessage("Additional access granted", 5);
+			GameController.SendPlayerMessage("Partial system access granted\nObjective: Find and hack another terminal", 5);
 		} else if (value == 3) {
-			GameController.SendPlayerMessage("Full system access granted:\nGet to the elevator", 5);
+			GameController.SendPlayerMessage("Full system access granted\nObjective: Find the elevator key", 5);
 		} else if (value == 4) {
 			//hack this camera!
 			TakeCameraControl(nearestCam);
@@ -46,6 +58,10 @@ public class ComputerConsole : MonoBehaviour {
 		QCameraControl Qcontrol = FindObjectOfType<QCameraControl>();
 		QCameraLocation loc = camControl.GetComponentInParent<QCameraLocation>();
 		Qcontrol.ToggleCamera(loc.cameraNumber, true);
+	}
+	
+	public override Sprite GetSprite() {
+		return ButtonSpriteDefinitions.main.Computer;
 	}
 	
 	void EnableRenderers(int value) {

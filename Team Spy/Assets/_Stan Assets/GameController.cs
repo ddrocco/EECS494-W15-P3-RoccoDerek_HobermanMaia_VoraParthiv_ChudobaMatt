@@ -5,12 +5,17 @@ using InControl;
 
 public class GameController : MonoBehaviour
 {
+	public static bool LookedAway = false;
+
+	private static bool countdown = false;
 	private InputDevice device;
-//	private string levelName = "_Final_Prototype_Map";
 	private GameObject GameOverBG;
 	private Text playerGameOverText;
 	private Text playerGameOverMessageText;
 	private Text playerMessageText;
+	private Image playerMessagePanel;
+	private RectTransform messageTextRect;
+	private RectTransform messagePanelRect;
 	private static string messageText;
 	private static float messageTime;
 
@@ -46,10 +51,14 @@ public class GameController : MonoBehaviour
 		playerGameOverText = GameObject.Find("GameOverText").GetComponent<Text>();
 		playerGameOverMessageText = GameObject.Find("GameOverMessageText").GetComponent<Text>();
 		playerMessageText = GameObject.Find("PlayerMessageText").GetComponent<Text>();
+		playerMessagePanel = GameObject.Find("MessagePanel").GetComponent<Image>();
+		messageTextRect = playerMessageText.gameObject.GetComponent<RectTransform>();
+		messagePanelRect = playerMessagePanel.gameObject.GetComponent<RectTransform>();
 
 		playerGameOverText.enabled = false;
 		playerGameOverMessageText.enabled = false;
 		playerMessageText.enabled = false;
+		playerMessagePanel.enabled = false;
 		GameOverBG.SetActive (false);
 	}
 
@@ -81,16 +90,32 @@ public class GameController : MonoBehaviour
 
 	void DisplayPlayerMessage()
 	{
+		if (LookedAway)
+		{
+			LookedAway = false;
+			countdown = true;
+		}
+
 		if (messageTime > 0)
 		{
-			messageTime -= Time.deltaTime;
+			if (countdown)
+				messageTime -= Time.deltaTime;
+
+			Vector2 temp = messageTextRect.offsetMin;
+			temp.x -= 10f;
+			temp.y -= 10f;
+			messagePanelRect.offsetMin = temp;
+
 			playerMessageText.enabled = true;
 			playerMessageText.text = messageText;
+			playerMessagePanel.enabled = true;
 		}
 		else
 		{
 			playerMessageText.text = "";
 			playerMessageText.enabled = false;
+			playerMessagePanel.enabled = false;
+			countdown = false;
 		}
 	}
 
@@ -99,6 +124,7 @@ public class GameController : MonoBehaviour
 		playerGameOverText.enabled = true;
 		playerGameOverMessageText.enabled = true;
 		playerMessageText.enabled = false;
+		playerMessagePanel.enabled = false;
 		if (_won) {
 			playerGameOverText.text = "SUCCESS";
 			playerGameOverMessageText.text = "Mission Complete! Press A to continue";
@@ -115,6 +141,7 @@ public class GameController : MonoBehaviour
 	{
 		messageText = message;
 		messageTime = time;
+		countdown = false;
 	}
 
 	private static void GameOver()

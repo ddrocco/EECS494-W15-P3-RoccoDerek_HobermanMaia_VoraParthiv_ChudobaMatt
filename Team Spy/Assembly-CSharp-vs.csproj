@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_5_0_1;UNITY_5_0;UNITY_5;UNITY_64;ENABLE_LICENSE_RENAME;ENABLE_NEW_BUGREPORTER;ENABLE_2D_PHYSICS;ENABLE_4_6_FEATURES;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_NEW_HIERARCHY;ENABLE_PHYSICS;ENABLE_PHYSICS_PHYSX3;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_AUDIOMIXER_SUSPEND;ENABLE_NONPRO;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_MONO;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -48,7 +48,6 @@
   <ItemGroup>
      <Compile Include="Assets\AudioAssets\AudioDefinitions.cs" />
      <Compile Include="Assets\AudioAssets\DoorSoundOnOpen.cs" />
-     <Compile Include="Assets\DetectTaggedObjects.cs" />
      <Compile Include="Assets\FoeAssets\Debug_Foe_Alert_Status.cs" />
      <Compile Include="Assets\FoeAssets\FoeAlertSystem.cs" />
      <Compile Include="Assets\FoeAssets\FoeDrawFieldOfVision.cs" />
@@ -58,7 +57,6 @@
      <Compile Include="Assets\FoeAssets\TaserKill.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Coordinator.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Route_Node.cs" />
-     <Compile Include="Assets\PlayerTagCompass.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\Basic\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" />
@@ -180,10 +178,12 @@
      <Compile Include="Assets\_Stan Assets\PlayerCameraFollow.cs" />
      <Compile Include="Assets\_Stan Assets\PlayerController.cs" />
      <Compile Include="Assets\_Stan Assets\PlayerInteraction.cs" />
+     <Compile Include="Assets\_Stan Assets\PlayerTagCompass.cs" />
      <Compile Include="Assets\_Stan Assets\Player_Vertices.cs" />
      <Compile Include="Assets\_Stan Assets\WonGame.cs" />
      <Compile Include="Assets\_UIAssets\ButtonSpriteDefinitions.cs" />
      <Compile Include="Assets\_UIAssets\CompassAssets\CompassScript.cs" />
+     <Compile Include="Assets\_UIAssets\DetectTaggedObjects.cs" />
      <Compile Include="Assets\_UIAssets\MainMenuAssets\Buttons.cs" />
      <Compile Include="Assets\_UIAssets\PauseMenuAssets\PauseScript.cs" />
      <Compile Include="Assets\_WorldAssets\AlarmSignal.cs" />

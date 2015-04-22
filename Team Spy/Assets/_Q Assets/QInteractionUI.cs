@@ -40,10 +40,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
 	//generate tooltip
 	public void OnPointerEnter(PointerEventData mouseData){
-		if (!buttonEnabled) {
-			return;
-		}
-
 		tooltip = Instantiate (ObjectPrefabDefinitions.main.Tooltip) as GameObject;
 		tooltip.transform.SetParent (transform);
 		Text tooltipText = tooltip.GetComponent<Text> ();
@@ -54,10 +50,29 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		tooltip.transform.SetParent (transform.parent);
 		//Door Locks
 		if (controlledObject.GetComponent<DoorControl> () != null) {
-			if (controlledObject.GetComponent<DoorControl> ().isLocked)
-				tooltipText.text = ">Unlock Door";
-			else
-				tooltipText.text = ">Lock Door";
+			if(buttonEnabled){
+				if (controlledObject.GetComponent<DoorControl> ().isLocked)
+					tooltipText.text = ">Unlock Door";
+				else
+					tooltipText.text = ">Lock Door";
+			} else {
+				tooltipText.text = "Door";
+			}
+		}
+		//Ceilings
+		else if (controlledObject.GetComponent<CeilingControl>() != null) {
+			tooltipText.text = "Ping";
+		}
+		//Paper piles
+		else if (controlledObject.GetComponent<InformationForPlayer>() != null) {
+			tooltipText.text = "Data";
+		}
+		//Computers
+		else if (controlledObject.GetComponent<ComputerConsole>() != null) {
+			tooltipText.text = "Computer";
+		}
+		else if (controlledObject.GetComponent<UselessDataComputer>() != null) {
+			tooltipText.text = "Computer";
 		}
 		//Elevators
 		else if (controlledObject.GetComponent<ElevatorControl>() != null) {
@@ -65,7 +80,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		}
 		//Alarm Signals
 		else if (controlledObject.GetComponent<AlarmSignal>() != null) {
-			tooltipText.text = ">Block signal";
+			if(buttonEnabled){
+				tooltipText.text = ">Block signal";
+			} else {
+				tooltipText.text = "Alarm Signal";
+			}
 		}
 		//Cameras
 		else if (controlledObject.GetComponent<CameraControl> () != null) {
@@ -93,10 +112,14 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		}
 		//Alarm
 		else if (controlledObject.GetComponent<AlertHub> () != null) {
-			if (controlledObject.GetComponent<AlertHub> ().isActive)
-				tooltipText.text = ">Disable Alarm";
-			else
-				tooltipText.text = ">Enable Alarm";
+			if(buttonEnabled){
+				if (controlledObject.GetComponent<AlertHub> ().isActive)
+					tooltipText.text = ">Disable Alarm";
+				else
+					tooltipText.text = ">Enable Alarm";
+			} else {
+				tooltipText.text = "Alarm System";
+			}
 		}
 		//Lasers
 		else if (controlledObject.GetComponent<LaserBehavior> () != null) {
@@ -110,7 +133,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
 	//destroy tooltip
 	public void OnPointerExit(PointerEventData mouseData){
-		if (!buttonEnabled) {
+		if (tooltip == null) {
 			return;
 		}
 
@@ -118,7 +141,7 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	}
 
 	public void OnDestroy(){
-		if (!buttonEnabled || tooltip == null) {
+		if (tooltip == null) {
 			return;
 		}
 		
@@ -149,6 +172,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	
 	//Call AlertOff to turn off the flashing alert
 	public void AlertOff() {
-		color1 = Color.white;
+		color1 = Color.grey;
 	}
 }

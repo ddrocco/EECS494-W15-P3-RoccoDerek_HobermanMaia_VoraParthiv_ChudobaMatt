@@ -3,8 +3,6 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerTagCompass : MonoBehaviour {
-	bool isVisible = true;
-
 	public void SetDirection(Quaternion direction) {
 		/*if (!DetectTaggedObjects.tagCompassVisible) {
 			if (isVisible) {
@@ -27,7 +25,7 @@ public class PlayerTagCompass : MonoBehaviour {
 		transform.localEulerAngles = Vector3.forward * angle;
 		
 		Rect canvas = GetComponentInParent<Canvas>().pixelRect;
-		float cutoff = canvas.height / canvas.width;
+		//float cutoff = canvas.height / canvas.width;
 		
 		float theta = angle / 180 * Mathf.PI;
 		

@@ -10,6 +10,12 @@ public class Buttons : MonoBehaviour {
 	public GameObject stanlevels;
 	Button[] buttonset;
 	int stanbuttonindex = 0;
+	InputDevice device;
+
+	void Awake()
+	{
+		device = InputManager.ActiveDevice;
+	}
 
 	public void Play(){
 		Application.LoadLevel (Application.loadedLevel + 1);
@@ -35,7 +41,7 @@ public class Buttons : MonoBehaviour {
 		if (InputManager.MenuWasPressed && !levelwarpstan.activeInHierarchy) Play ();
 
 		//level select
-		if (Input.GetKeyDown (KeyCode.Y) && !levelwarpstan.activeInHierarchy) {
+		if (device.Action4.WasPressed && !levelwarpstan.activeInHierarchy) {
 			levelwarpstan.SetActive (true);
 			stanbuttonindex = 0;			
 			buttonset = stanlevels.GetComponentsInChildren<Button> ();
@@ -43,23 +49,23 @@ public class Buttons : MonoBehaviour {
 
 		} else if (levelwarpstan.activeInHierarchy) { //level select is up
 			//go back
-			if (Input.GetKeyDown(KeyCode.B)){
+			if (device.Action2.WasPressed){
 				levelwarpstan.SetActive(false);
 			} 
 			//move right
-			else if (Input.GetKeyDown(KeyCode.RightArrow)){
+			else if (device.DPadRight.WasPressed){
 				if(stanbuttonindex + 1 < buttonset.Length){
 					buttonset[++stanbuttonindex].Select();
 				}
 			} 
 			//move left
-			else if (Input.GetKeyDown(KeyCode.LeftArrow)){
+			else if (device.DPadLeft.WasPressed){
 				if(stanbuttonindex - 1 >= 0){
 					buttonset[--stanbuttonindex].Select();
 				}
 			}
 			//select the level
-			else if(Input.GetKeyDown(KeyCode.A)){
+			else if(device.Action1.WasPressed){
 				LevelButton(stanbuttonindex + 1);
 			}
 		}

@@ -11,19 +11,19 @@ public class AlertHub : QInteractable {
 	public void Signal(Vector3 detectionLocation, GameObject sourceObject,
 	                   LaserAlertSystem lasers = null,
 	                   ExternalAlertSystem extSystem = null) {
-			if (extSystem) {
-				extSystem.RemoveAllActiveSignals();
-			}
-			FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
-			sourceObject.GetComponent<QInteractable>().QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //find right one!
-			if (sourceObject.GetComponent<LaserBehavior>()) {
-				lasers.heardALaser = true;
-			}
-			if (sourceObject.GetComponent<CameraControl>()) {
-				sourceObject.GetComponent<CameraControl>().Offline = true;
-			}
-			camControl.AlertOn();
-			SetLockdownState(true);
+		if (extSystem) {
+			extSystem.RemoveAllActiveSignals();
+		}
+		FoeAlertSystem.Alert(detectionLocation, isPlayer: true);
+		sourceObject.GetComponent<QInteractable>().QInteractionButton.GetComponent<QInteractionUI>().AlertOn(); //find right one!
+		if (sourceObject.GetComponent<LaserBehavior>()) {
+			lasers.heardALaser = true;
+		}
+		if (sourceObject.GetComponent<CameraControl>()) {
+			sourceObject.GetComponent<CameraControl>().Offline = true;
+		}
+		camControl.AlertOn();
+		SetLockdownState(true);
 	}
 	
 	void Update() {

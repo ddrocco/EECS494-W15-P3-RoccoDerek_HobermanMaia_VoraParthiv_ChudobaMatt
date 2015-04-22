@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ExternalAlertSystem : MonoBehaviour {
-	Light alarmLight;
+	public Light alarmLight;
 	bool lightRampingUp;
 	float maxIntensity = 1f;
 	
@@ -15,6 +15,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 	public bool signalsInTransit;
 	public bool alarmRaised;
 	float timeSinceSignalSent = 0f;
+	ExternalAlertSystem[] externalAlertSystems;
 	
 	AlertHub system;
 	
@@ -24,6 +25,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 		ConnectToAlarm();
 		GetComponent<LineRenderer>().enabled = false;
 		alarmRaised = false;
+		externalAlertSystems = FindObjectsOfType<ExternalAlertSystem>();
 	}
 	
 	void Update () {
@@ -31,7 +33,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 			signalsInTransit = true;
 		} else {
 			signalsInTransit = false;
-			foreach (ExternalAlertSystem system in FindObjectsOfType<ExternalAlertSystem>()) {
+			foreach (ExternalAlertSystem system in externalAlertSystems) {
 				if (system.signals.Count > 0) {
 					signalsInTransit = true;
 					break;
@@ -121,6 +123,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 	public void RemoveActiveSignal(AlarmSignal sig) {
 		signals.Remove (sig);
 		Destroy (sig.gameObject);
+		//if ()
 	}
 	public void RemoveAllActiveSignals() {
 		List<AlarmSignal> temp = new List<AlarmSignal>();
@@ -152,7 +155,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 				signal.transform.position = transform.position * (1f - firstLegRatio)
 						+ connectingWireJoint * firstLegRatio + new Vector3(0, 5, 0);
 			}
-			float timeRatio = 1f - signal.timeAlive / timeToAlarm;
+			//float timeRatio = 1f - signal.timeAlive / timeToAlarm;
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
 			system.Signal(signal.detectionLocation, signal.sourceObject, null, this);
