@@ -1,22 +1,28 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AudioAssets\AudioDefinitions.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SpecialMusicTrack.cs">
     <Files>
       <File FileName="Assets\_UIAssets\ButtonSpriteDefinitions.cs" Line="23" Column="1" />
-      <File FileName="Assets\_Stan Assets\PlayerController.cs" Line="219" Column="57" />
-      <File FileName="Assets\_Q Assets\QInteractable.cs" Line="74" Column="4" />
+      <File FileName="Assets\_Stan Assets\PlayerController.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Q Assets\QInteractable.cs" Line="1" Column="1" />
       <File FileName="Assets\_Stan Assets\PlayerCameraFollow.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\DoorControl.cs" Line="11" Column="38" />
-      <File FileName="Assets\AudioAssets\AudioDefinitions.cs" Line="14" Column="22" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\DoorControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\AudioAssets\AudioDefinitions.cs" Line="1" Column="1" />
       <File FileName="Assets\_WorldAssets\MiscScripts\CameraControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs" Line="26" Column="72" />
-      <File FileName="Assets\_WorldAssets\Lasers\PolyLaserParent.cs" Line="106" Column="1" />
-      <File FileName="Assets\_WorldAssets\Lasers\LaserBehavior.cs" Line="83" Column="1" />
-      <File FileName="Assets\_WorldAssets\GenerateQRenderer.cs" Line="55" Column="1" />
-      <File FileName="Assets\_Stan Assets\GameController.cs" Line="44" Column="2" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\EndGameControl.cs" Line="12" Column="31" />
-      <File FileName="Assets\_Q Assets\QInteractionUI.cs" Line="50" Column="50" />
-      <File FileName="Assets\FoeAssets\Foe_Detection_Handler.cs" Line="52" Column="3" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\Lasers\PolyLaserParent.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\Lasers\LaserBehavior.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\GenerateQRenderer.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Stan Assets\GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\EndGameControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Q Assets\QInteractionUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\FoeAssets\Foe_Detection_Handler.cs" Line="1" Column="1" />
+      <File FileName="Assets\MusicPlayer.cs" Line="37" Column="62" />
+      <File FileName="Assets\FoeAssets\Foe_Movement_Handler.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\CreateMajorEntities.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Q Assets\QUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\SpecialMusicTrack.cs" Line="6" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

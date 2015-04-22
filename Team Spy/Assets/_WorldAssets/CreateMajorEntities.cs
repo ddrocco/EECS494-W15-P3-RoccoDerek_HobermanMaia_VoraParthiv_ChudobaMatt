@@ -10,13 +10,12 @@ public class CreateMajorEntities : MonoBehaviour {
 	//public Vector3 AgentPosition, AgentRotation;
 	
 	void Awake () {
-		if (!functional) {
-			return;
+		if (functional) {
+			Instantiate(CompassPrefab);
+			Instantiate(PauseSystemPrefab);
 		}
 		//Instantiate(AgentPrefab, AgentPosition, Quaternion.Euler (AgentRotation));
 		//Instantiate(HackerPrefab);
-		Instantiate(CompassPrefab);
-		Instantiate(PauseSystemPrefab);
 		Instantiate(EventSystemPrefab);
 		if (!MusicPlayer.Exists()) {
 			Instantiate(MusicPlayerPrefab);

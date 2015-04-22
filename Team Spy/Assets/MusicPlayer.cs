@@ -16,7 +16,11 @@ public class MusicPlayer : MonoBehaviour {
 		DontDestroyOnLoad(gameObject);
 		main = this;
 		music = GetComponent<AudioSource>();
-		music.clip = AudioDefinitions.main.ExploreMusic;
+		if (FindObjectOfType<SpecialMusicTrack>() != null) {
+			music.clip = FindObjectOfType<SpecialMusicTrack>().clip;
+		} else {
+			music.clip = AudioDefinitions.main.ExploreMusic;
+		}
 		music.volume = baseVolume;
 		music.Play();
 	}
@@ -25,9 +29,21 @@ public class MusicPlayer : MonoBehaviour {
 		new List<Foe_Detection_Handler>();
 		new List<Foe_Detection_Handler>();
 		music.volume = baseVolume;
-		if (main.music.clip != AudioDefinitions.main.ExploreMusic) {
-			main.music.clip = AudioDefinitions.main.ExploreMusic;
-			main.music.Play();
+		if (level == 0) {
+			if (main.music.clip != AudioDefinitions.main.TitleMusic) {
+				main.music.clip = AudioDefinitions.main.TitleMusic;
+				main.music.Play();
+			}
+		} else if (FindObjectOfType<SpecialMusicTrack>() != null) {
+			if (main.music.clip != FindObjectOfType<SpecialMusicTrack>().clip) {
+				main.music.clip = FindObjectOfType<SpecialMusicTrack>().clip;
+				main.music.Play();
+			}
+		} else {
+			if (main.music.clip != AudioDefinitions.main.ExploreMusic) {
+				main.music.clip = AudioDefinitions.main.ExploreMusic;
+				main.music.Play();
+			}
 		}
 	}
 	

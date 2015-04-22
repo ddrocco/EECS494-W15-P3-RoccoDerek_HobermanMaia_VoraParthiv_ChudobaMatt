@@ -164,6 +164,7 @@
      <Compile Include="Assets\SceneAssets\InControl\Source\XInput\XInputDotNetPure\GamePad.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Source\XInput\XInputDotNetPure\Utils.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Test\TestInputManager.cs" />
+     <Compile Include="Assets\SpecialMusicTrack.cs" />
      <Compile Include="Assets\_Q Assets\InteractionCanvasSetup.cs" />
      <Compile Include="Assets\_Q Assets\QCameraControl.cs" />
      <Compile Include="Assets\_Q Assets\QCameraLocation.cs" />
