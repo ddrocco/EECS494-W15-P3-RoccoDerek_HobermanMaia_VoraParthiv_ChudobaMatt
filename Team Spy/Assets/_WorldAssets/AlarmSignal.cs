@@ -12,12 +12,12 @@ public class AlarmSignal : QInteractable {
 	}
 	
 	public override void Trigger () {
-		//Destroy (this.gameObject);
 		transform.GetComponentInParent<ExternalAlertSystem>().RemoveActiveSignal(this);
+		Destroy (this.gameObject);
 	}
 	
 	void Update() {
-		timeAlive += 3*Time.deltaTime/4f;
+		timeAlive += Time.deltaTime;
 		QInteractionButton.transform.position = new Vector3(transform.position.x,
 		                                                    QInteractionButton.transform.position.y,
 		                                                    transform.position.z);

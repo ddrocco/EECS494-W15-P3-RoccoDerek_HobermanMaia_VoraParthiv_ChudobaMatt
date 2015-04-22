@@ -1,11 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs">
     <Files>
-      <File FileName="Assets\MainMenuJuice.cs" Line="42" Column="131" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\OpenThings.cs" Line="42" Column="29" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\BoxControl.cs" Line="46" Column="14" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs" Line="6" Column="38" />
+      <File FileName="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs" Line="55" Column="11" />
+      <File FileName="Assets\_WorldAssets\AlarmSignal.cs" Line="30" Column="1" />
+      <File FileName="Assets\_WorldAssets\ObjectPrefabDefinitions.cs" Line="22" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

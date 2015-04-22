@@ -5,10 +5,9 @@ public class ObjectPrefabDefinitions : MonoBehaviour {
 	public GameObject Wireframe, WireframeDynamic, QRenderer,
 		Laser, PolyLaserChild,
 		TagViewSolid, TagViewLaser,
-		FoeVisionLineRenderer,
-		FoeTaser, FoeNavigator,
+		FoeTaser,
 		QInteractiveButton, QDisplayIcon, Tooltip,
-		AlarmSignal,
+		AlarmSignal, AlertConnectionSegmentPrefab,
 		SecurityCamera, CameraArrowIcon,
 		Explosion, ExplosionSmoke, Flare, Sparks,
 		XWall, ZWall, Pillar, Ceiling;

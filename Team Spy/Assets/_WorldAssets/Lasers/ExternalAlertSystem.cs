@@ -10,34 +10,49 @@ public class ExternalAlertSystem : MonoBehaviour {
 	public bool useAlarmSystem = true;
 	public Vector3 connectingWireJoint;
 	float connectingWireJointRatio;
-	float timeToAlarm = 5f;
+	float signalTimeToAlarm = 5f;
+	float probeTimeToAlarm = 1f;
 	public List<AlarmSignal> signals;
 	public bool signalsInTransit;
 	public bool alarmRaised;
 	float timeSinceSignalSent = 0f;
+	float timeBetweenSignals = 2f;
 	ExternalAlertSystem[] externalAlertSystems;
 	
 	AlertHub system;
+	ParticleSystem firstArm, secondArm;
 	
 	void Start () {
 		alarmLight = GetComponent<Light>();
 		signals = new List<AlarmSignal>();
 		ConnectToAlarm();
-		GetComponent<LineRenderer>().enabled = false;
 		alarmRaised = false;
-		externalAlertSystems = FindObjectsOfType<ExternalAlertSystem>();
 	}
 	
 	void Update () {
 		if (signals.Count > 0) {
 			signalsInTransit = true;
+			firstArm.startColor = Color.yellow;
+			secondArm.startColor = Color.yellow;
 		} else {
 			signalsInTransit = false;
+			firstArm.startColor = Color.green;
+			secondArm.startColor = Color.green;
+			if (externalAlertSystems == null) {
+				externalAlertSystems = FindObjectsOfType<ExternalAlertSystem>();
+			}
 			foreach (ExternalAlertSystem system in externalAlertSystems) {
 				if (system.signals.Count > 0) {
 					signalsInTransit = true;
 					break;
 				}
+			}
+		}
+		foreach (ExternalAlertSystem system in externalAlertSystems) {
+			if (system.alarmRaised) {
+				firstArm.startColor = Color.red;
+				secondArm.startColor = Color.red;
+				break;
 			}
 		}
 		timeSinceSignalSent += Time.deltaTime;
@@ -67,25 +82,39 @@ public class ExternalAlertSystem : MonoBehaviour {
 				system = foundSystem;
 			}
 		}
-		LineRenderer connection = GetComponent<LineRenderer>();
-		connection.SetWidth(0.4f, 0.4f);
-		connection.material = ObjectPrefabDefinitions.main.alertConnection;
-		connection.SetPosition(0,transform.position);
 		connectingWireJoint = new Vector3(transform.position.x, transform.position.y, system.transform.position.z);
-       	connection.SetPosition(1,connectingWireJoint
-        	 + 0.1f * (transform.position - connectingWireJoint).normalized);
-       	connection.SetPosition(2,connectingWireJoint
-			+ 0.1f * (system.transform.position - connectingWireJoint).normalized);
-       	connection.SetPosition(3,system.transform.position);
-		float distance1 = Vector3.Distance(transform.position, connectingWireJoint);
+       	float distance1 = Vector3.Distance(transform.position, connectingWireJoint);
 		connectingWireJointRatio = distance1 / (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position));
+		
+		GameObject firstArmObject = Instantiate(ObjectPrefabDefinitions.main.AlertConnectionSegmentPrefab) as GameObject;
+		firstArmObject.name = "Alarm System First Arm";
+		GameObject secondArmObject = Instantiate(ObjectPrefabDefinitions.main.AlertConnectionSegmentPrefab) as GameObject;
+		secondArmObject.name = "Alarm System Second Arm";
+		firstArm = firstArmObject.GetComponent<ParticleSystem>();
+		secondArm = secondArmObject.GetComponent<ParticleSystem>();
+		firstArm.transform.position = transform.position;
+		secondArm.transform.position = connectingWireJoint;
+		if (transform.position.z < connectingWireJoint.z) {
+			firstArm.transform.eulerAngles = new Vector3(0, 0, 0);
+		} else {
+			firstArm.transform.eulerAngles = new Vector3(0, 180, 0);
+		}
+		if (connectingWireJoint.x < system.transform.position.x) {
+			secondArm.transform.eulerAngles = new Vector3(0, 90, 0);
+		} else {
+			secondArm.transform.eulerAngles = new Vector3(0, 270, 0);
+		}
+		firstArm.startLifetime = probeTimeToAlarm * (connectingWireJointRatio);
+		firstArm.startSpeed = (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position)) / probeTimeToAlarm;
+		secondArm.startLifetime = probeTimeToAlarm * (1 - connectingWireJointRatio);
+		secondArm.startSpeed = (distance1 + Vector3.Distance(connectingWireJoint, system.transform.position)) / probeTimeToAlarm;
 	}
 	
 	public void SignalAlarm(Vector3 location, GameObject sourceObject = null) {
 		if (!useAlarmSystem) {
 			return;
 		}
-		if (timeSinceSignalSent < 2f) {
+		if (timeSinceSignalSent < timeBetweenSignals) {
 			return;
 		}
 		if (alarmLight != null && alarmLight.intensity == 0) {
@@ -139,23 +168,22 @@ public class ExternalAlertSystem : MonoBehaviour {
 		if (!useAlarmSystem) {
 			return;
 		}
-		float wireJointTime = timeToAlarm * connectingWireJointRatio;
+		float wireJointTime = signalTimeToAlarm * connectingWireJointRatio;
 		List<AlarmSignal> signalsToDestroy = new List<AlarmSignal>();
 		foreach (AlarmSignal signal in signals) {
 			if (signal.timeAlive > wireJointTime) {
-				float secondLegRatio = (signal.timeAlive - wireJointTime) / (timeToAlarm - wireJointTime);
+				float secondLegRatio = (signal.timeAlive - wireJointTime) / (signalTimeToAlarm - wireJointTime);
 				if (secondLegRatio > 1) {
 					signalsToDestroy.Add (signal);
 					continue;
 				}
 				signal.transform.position = connectingWireJoint * (1f - secondLegRatio)
-						+ system.transform.position * secondLegRatio + new Vector3(0, 5, 0);
+					+ system.transform.position * secondLegRatio + new Vector3(0, 5, 0);
 			} else {
 				float firstLegRatio = signal.timeAlive / wireJointTime;
 				signal.transform.position = transform.position * (1f - firstLegRatio)
-						+ connectingWireJoint * firstLegRatio + new Vector3(0, 5, 0);
+					+ connectingWireJoint * firstLegRatio + new Vector3(0, 5, 0);
 			}
-			//float timeRatio = 1f - signal.timeAlive / timeToAlarm;
 		}
 		foreach(AlarmSignal signal in signalsToDestroy) {
 			system.Signal(signal.detectionLocation, signal.sourceObject, null, this);

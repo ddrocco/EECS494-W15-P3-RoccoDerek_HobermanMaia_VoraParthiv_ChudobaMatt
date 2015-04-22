@@ -187,7 +187,6 @@ public class CameraControl : QInteractable {
 	
 	public override void enableButtonView() {
 		QInteractionButton.GetComponent<Image>().enabled = true;
-		GetComponentInChildren<LineRenderer>().enabled = true;
 		
 		QArrowIcon = Instantiate (ObjectPrefabDefinitions.main.CameraArrowIcon) as GameObject;
 		QArrowIcon.transform.SetParent(QInteractionButton.transform);
