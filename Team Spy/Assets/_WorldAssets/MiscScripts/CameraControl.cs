@@ -18,7 +18,7 @@ public class CameraControl : QInteractable {
 	
 	//Alert
 	private ExternalAlertSystem alertSystem;
-	
+
 	//Stan-Visual
 	public MeshRenderer lens;
 	public Light alertLight;
@@ -67,9 +67,6 @@ public class CameraControl : QInteractable {
 		if (alertLight.enabled) {
 			alertLight.color = Color.Lerp(color0, color1, t);
 		}
-		if (t < 0.1f) {
-			AlarmDisable();
-		}		
 		if (QArrowIcon != null) {
 			QArrowIcon.transform.localEulerAngles = new Vector3(0, 180, transform.eulerAngles.y);
 		}
@@ -110,15 +107,6 @@ public class CameraControl : QInteractable {
 					color1 = color0 = yellow;
 					wasDetected = false;
 				}
-			}
-		}
-	}
-	
-	//What the F is this??
-	void AlarmDisable() {
-		foreach (Foe_Detection_Handler foe in FindObjectsOfType<Foe_Detection_Handler>()) {
-			if (foe.GetComponentInParent<Foe_Movement_Handler>().state == Foe_Movement_Handler.alertState.investigating) {
-				
 			}
 		}
 	}

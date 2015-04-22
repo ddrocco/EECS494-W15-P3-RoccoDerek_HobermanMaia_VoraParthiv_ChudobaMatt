@@ -1,14 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_WorldAssets/MiscScripts/DoorControl.cs">
     <Files>
-      <File FileName="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs" Line="55" Column="11" />
-      <File FileName="Assets\_WorldAssets\AlarmSignal.cs" Line="30" Column="1" />
-      <File FileName="Assets\_WorldAssets\ObjectPrefabDefinitions.cs" Line="22" Column="1" />
+      <File FileName="Assets/_WorldAssets/MiscScripts/EndGameControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/DisplayForQ.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Q Assets/QCameraLocation.cs" Line="1" Column="1" />
+      <File FileName="Assets/_WorldAssets/MiscScripts/ComputerConsole.cs" Line="55" Column="5" />
+      <File FileName="Assets/_WorldAssets/MiscScripts/DoorControl.cs" Line="80" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="C:\Users\Derek\Documents\College\Semester6\EECS494\Projects\EECS494-W15-P3-RoccoDerek_HobermanMaia_VoraParthiv_ChudobaMatt\Team Spy\Assets\_Q Assets\QInteractionUI.cs" line="89" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
