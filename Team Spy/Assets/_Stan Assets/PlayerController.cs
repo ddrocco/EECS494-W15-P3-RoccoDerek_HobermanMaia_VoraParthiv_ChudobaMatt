@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
 {
 	public bool useMouseLock = true;
 	bool mouseIsLocked = true;
-	
+
 	public static PlayerController player;
 	
 	public bool isStationary = true;

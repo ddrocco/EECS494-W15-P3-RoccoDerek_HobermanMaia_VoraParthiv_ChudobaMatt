@@ -136,7 +136,6 @@ public class QInteractable : MonoBehaviour {
 		tagView.GetComponent<ParticleSystemRenderer>().enabled = true;
 		if (taggedButton != null) {
 			taggedButton.UnTag();
-			QUI.setText("Only one object can be tagged at a time.  Removing previous tag...");
 		}
 		taggedButton = this;
 		qTagPrefab = Instantiate(ObjectPrefabDefinitions.main.QDisplayIcon,
