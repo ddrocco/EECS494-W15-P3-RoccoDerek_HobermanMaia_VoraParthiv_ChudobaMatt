@@ -19,7 +19,7 @@ public class InformationForPlayer : QInteractable {
 			++numCollected;
 			QUI.setText("Partner found document!  Total: " + numCollected);
 		}
-		//QUI.setText(QMessage);
+		QUI.setText(message);
 	}
 	
 	public override void Trigger() {
