@@ -42,7 +42,7 @@ public class PlayerInteraction : MonoBehaviour
 
 	void Update()
 	{
-		ResizeReticle();
+		//ResizeReticle();
 		Interact();
 
 		if (!player.canInteract) {
