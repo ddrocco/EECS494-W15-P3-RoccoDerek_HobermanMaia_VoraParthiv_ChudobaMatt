@@ -77,9 +77,7 @@ public class ComputerConsole : QInteractable {
 			group = MapGroup.One;
 		}
 		
-		if (usedMapValues.Contains(group)) {
-			return;
-		} else {
+		if (!usedMapValues.Contains(group)) {
 			usedMapValues.Add(group);
 		}
 		

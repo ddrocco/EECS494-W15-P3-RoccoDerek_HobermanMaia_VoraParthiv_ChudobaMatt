@@ -11,6 +11,8 @@ public class AudioDefinitions : MonoBehaviour {
 		DoorLocked, DoorOpen, DoorClose, DoorLocking, DoorUnlocking,
 		ElevatorDoorOpen,
 		
+		TitleMusic, ExploreMusic, ActionMusic,
+		
 		Level5Script;
 	public List<AudioClip> CrouchFootsteps, Footsteps, RunFootsteps,
 		GuardSpotsPlayer, GuardHearsPlayer,

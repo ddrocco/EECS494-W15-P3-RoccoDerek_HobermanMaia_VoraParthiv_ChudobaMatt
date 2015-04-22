@@ -138,11 +138,13 @@ public class Foe_Detection_Handler : MonoBehaviour {
 
 		if (playerSpotted) {
 			PlayerSpotted();
+			MusicPlayer.Spotted(this);
 			MoveToPlayer();
 		} else if (CanHearPlayer()) {
 			if (!GetComponentInParent<Foe_Movement_Handler>().isTrackingPlayer) {
 				GetComponent<AudioSource>().clip = SelectRandomClip(AudioDefinitions.main.GuardHearsPlayer);
 				GetComponent<AudioSource>().Play ();
+				MusicPlayer.Heard(this);
 			}
 			MoveToPlayer();
 		} else if (isAggressive) {
@@ -180,6 +182,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 		if (timeSincePlayerSpotted > timeUntilPlayerLost) {
 			AudioSource.PlayClipAtPoint(AudioDefinitions.main.WilhelmScream, transform.position);
 			
+			MusicPlayer.Escaped(this);
 			taser.SetActive(false);
 			GetComponentInParent<Rigidbody>().isKinematic = false;
 			GetComponentInParent<Rigidbody>().useGravity = true;
