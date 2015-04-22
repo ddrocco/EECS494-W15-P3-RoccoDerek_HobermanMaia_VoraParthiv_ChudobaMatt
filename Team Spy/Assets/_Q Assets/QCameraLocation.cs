@@ -12,6 +12,8 @@ public class QCameraLocation : MonoBehaviour {
 	public Quaternion start, finish;
 	public bool rotate;
 	public bool allowTagging = true;
+	public bool toggleDisplayMessageforQ = false;
+	public Canvas QMessage;
 	
 	[HideInInspector]
 	public int cameraNumber;
@@ -23,6 +25,10 @@ public class QCameraLocation : MonoBehaviour {
 		securityCamera.transform.localEulerAngles = new Vector3(20, 0, 0);
 		securityCamera.GetComponent<CameraControl>().QIsWatching = false;
 		securityCamera.GetComponent<CameraControl>().rotate = rotate;
+		if (toggleDisplayMessageforQ) {
+			securityCamera.AddComponent<DisplayForQ>();
+			securityCamera.GetComponent<DisplayForQ>().message = QMessage;
+		}
 		if (Offline) {
 			securityCamera.GetComponent<CameraControl>().Offline = true;
 			start = finish = Quaternion.Euler(transform.rotation.eulerAngles.x,

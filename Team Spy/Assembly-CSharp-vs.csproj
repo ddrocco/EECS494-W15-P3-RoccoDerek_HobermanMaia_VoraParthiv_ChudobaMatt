@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\AudioAssets\AudioDefinitions.cs" />
      <Compile Include="Assets\AudioAssets\DoorSoundOnOpen.cs" />
+     <Compile Include="Assets\DisplayForQ.cs" />
      <Compile Include="Assets\FoeAssets\Debug_Foe_Alert_Status.cs" />
      <Compile Include="Assets\FoeAssets\FoeAlertSystem.cs" />
      <Compile Include="Assets\FoeAssets\FoeDrawFieldOfVision.cs" />
