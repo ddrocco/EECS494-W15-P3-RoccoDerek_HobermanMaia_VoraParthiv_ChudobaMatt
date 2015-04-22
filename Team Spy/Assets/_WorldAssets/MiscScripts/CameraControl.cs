@@ -130,7 +130,7 @@ public class CameraControl : QInteractable {
 				if (hit.collider.CompareTag("Player") == true) {
 					if (!wasDetected) {
 						AudioSource.PlayClipAtPoint(Foe_Detection_Handler.SelectRandomClip(AudioDefinitions.main.CameraSpotsPlayer),
-								FindObjectOfType<PlayerController>().transform.position);
+								transform.position);
 					}
 					timeSinceSeenStan = 0f;
 					return new Vector3(hit.point.x, 0, hit.point.z);

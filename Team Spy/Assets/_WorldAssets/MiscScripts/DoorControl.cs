@@ -34,6 +34,9 @@ public class DoorControl : QInteractable {
 	float timeToUnlock = 5f;
 	float timeUntilUnlocked = 5f;
 	
+	//Reduce finding / getting components
+	GameObject player;
+	
 	void Awake () {		
 		basePosition = transform.position + new Vector3(0, -0.5f, 0);
 		baseForward = transform.forward / 1.5f;
@@ -68,6 +71,7 @@ public class DoorControl : QInteractable {
 		expectState = isLocked;
 		anim = GetComponentInParent<Animator>();
 		audioSource = GetComponent<AudioSource>();
+		player = FindObjectOfType<PlayerController>().gameObject;
 		base.Start();
 	}
 	
@@ -81,13 +85,13 @@ public class DoorControl : QInteractable {
 		
 		if (!anim.GetBool("isOpen")) {
 			if (transform.rotation.y == 0) { //zDoor
-				if (FindObjectOfType<PlayerController>().transform.position.x < transform.position.x) { //Open south
+				if (player.transform.position.x < transform.position.x) { //Open south
 					anim.SetBool("openSouth", true);
 				} else { //Open north
 					anim.SetBool("openSouth", false);
 				}
 			} else { //xDoor
-				if (FindObjectOfType<PlayerController>().transform.position.z < transform.position.z) { //Open east
+				if (player.transform.position.z < transform.position.z) { //Open east
 					anim.SetBool("openEast", true);
 				} else { //Open west
 					anim.SetBool("openEast", false);

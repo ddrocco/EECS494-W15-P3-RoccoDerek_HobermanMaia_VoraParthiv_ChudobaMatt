@@ -9,6 +9,7 @@ public class AudioDefinitions : MonoBehaviour {
 		BoxOpening, BoxClosing,
 		TickTock, Explosion,
 		DoorLocked, DoorOpen, DoorClose, DoorLocking, DoorUnlocking,
+		ElevatorDoorOpen,
 		
 		Level5Script;
 	public List<AudioClip> CrouchFootsteps, Footsteps, RunFootsteps,
