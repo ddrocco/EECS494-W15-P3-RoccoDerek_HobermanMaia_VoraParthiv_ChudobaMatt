@@ -85,11 +85,13 @@ public class PlayerInteraction : MonoBehaviour
 			else
 			{
 				player.canInteract = false;
+				GameController.LookedAway = true;
 			}
 		}
 		else
 		{
 			player.canInteract = false;
+			GameController.LookedAway = true;
 		}
 	}
 	

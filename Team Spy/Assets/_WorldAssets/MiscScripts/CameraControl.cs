@@ -17,8 +17,6 @@ public class CameraControl : QInteractable {
 	public bool rotate;
 	
 	//Alert
-	float timeSinceSeenStan = float.MaxValue;
-	float timeBetweenAlertNoises = 10f;
 	private ExternalAlertSystem alertSystem;
 	
 	//Stan-Visual
@@ -137,7 +135,6 @@ public class CameraControl : QInteractable {
 						AudioSource.PlayClipAtPoint(Foe_Detection_Handler.SelectRandomClip(AudioDefinitions.main.CameraSpotsPlayer),
 								FindObjectOfType<PlayerController>().transform.position);
 					}
-					timeSinceSeenStan = 0f;
 					return new Vector3(hit.point.x, 0, hit.point.z);
 				} else return Vector3.down;
 			} else return Vector3.down;
