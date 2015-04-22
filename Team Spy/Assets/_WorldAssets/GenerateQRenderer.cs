@@ -25,12 +25,15 @@ public class GenerateQRenderer : MonoBehaviour {
 		switch (type) {
 		case QViewType.StaticGreen:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0f, 0.1f, 0f));
+			qRendererObject.transform.position += new Vector3(0, -5f, 0);
 			break;
 		case QViewType.GoodBlue:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.cyan);
-				break;
+			qRendererObject.transform.position += new Vector3(0, -5f, 0);
+			break;
 		case QViewType.BadRed:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.red);
+			qRendererObject.transform.position += new Vector3(0, -5f, 0);
 			break;
 		case QViewType.RoomGray:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0.03f, 0.03f, 0.03f));
