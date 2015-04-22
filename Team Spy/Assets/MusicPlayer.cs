@@ -12,12 +12,23 @@ public class MusicPlayer : MonoBehaviour {
 	public float chaseVolume = 0.05f;
 	public float quietVolume = 0.01f;
 	
-	void Start () {
+	void Start() {
+		DontDestroyOnLoad(gameObject);
 		main = this;
 		music = GetComponent<AudioSource>();
 		music.clip = AudioDefinitions.main.ExploreMusic;
 		music.volume = baseVolume;
 		music.Play();
+	}
+	
+	void OnLevelWasLoaded (int level) {
+		new List<Foe_Detection_Handler>();
+		new List<Foe_Detection_Handler>();
+		music.volume = baseVolume;
+		if (main.music.clip != AudioDefinitions.main.ExploreMusic) {
+			main.music.clip = AudioDefinitions.main.ExploreMusic;
+			main.music.Play();
+		}
 	}
 	
 	public static void Heard(Foe_Detection_Handler guard) {
@@ -64,5 +75,9 @@ public class MusicPlayer : MonoBehaviour {
 				main.music.Play();
 			}
 		}
+	}
+	
+	public static bool Exists() {
+		return (main != null);
 	}
 }
