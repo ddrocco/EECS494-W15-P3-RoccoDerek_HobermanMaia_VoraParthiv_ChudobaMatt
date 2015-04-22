@@ -382,6 +382,9 @@ public class PlayerController : MonoBehaviour
 	}
 	
 	void AdjustSoundConstants() {
+		if (GameController.PlayerWon) {
+			return;
+		}
 		if (state == State.walking) {
 			if (!audioSource.isPlaying) {
 				if (++currentFootstep >= footsteps.Count) {

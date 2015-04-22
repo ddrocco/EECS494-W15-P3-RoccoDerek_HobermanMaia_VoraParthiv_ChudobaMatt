@@ -80,14 +80,6 @@ public class PolyLaserParent : QInteractable {
 		return ButtonSpriteDefinitions.main.PolyLaser;
 	}
 	
-	public override Sprite GetDisplayStatus() {
-		if (displayIsActive) {
-			return GetAnimationFrame(ButtonSpriteDefinitions.main.displayTaggedAnimation);
-		} else {
-			return ButtonSpriteDefinitions.main.DisplayInvisible;
-		}
-	}
-	
 	public override void Tag() {
 		ParticleSystemRenderer[] systems = GetComponentsInChildren<ParticleSystemRenderer>();
 		foreach (ParticleSystemRenderer system in systems) {

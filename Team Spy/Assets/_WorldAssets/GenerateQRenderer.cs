@@ -33,7 +33,7 @@ public class GenerateQRenderer : MonoBehaviour {
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",Color.red);
 			break;
 		case QViewType.RoomGray:
-			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0.01f, 0.01f, 0.01f));
+			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0.03f, 0.03f, 0.03f));
 			qRendererObject.transform.position += new Vector3(0, -15f, 0);
 			break;	
 		}

@@ -69,9 +69,9 @@ public class QInteractable : MonoBehaviour {
 		}
 		
 		tagCompass = FindObjectOfType<PlayerTagCompass>();
-		/*if (group != MapGroup.One) {
+		if (group != MapGroup.One) {
 			disableButtonView();
-		}*/
+		}
 	}
 	
 	public virtual GameObject GetStanVisibleTag() {
@@ -103,13 +103,6 @@ public class QInteractable : MonoBehaviour {
 	}
 	public virtual Sprite GetSprite() {
 		return null;
-	}
-	public virtual Sprite GetDisplayStatus() {
-		if (displayIsActive) {
-			return GetAnimationFrame(ButtonSpriteDefinitions.main.displayTaggedAnimation);
-		} else {
-			return ButtonSpriteDefinitions.main.DisplayVisible;
-		}
 	}
 	
 	void LateUpdate() {

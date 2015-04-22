@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public class ButtonSpriteDefinitions : MonoBehaviour {
 	public Sprite
-			DisplayInvisible, DisplayVisible, nil,
 			BombDefault, BombDefused,
 			Alarm, AlarmSignal,
 			DoorUnlocked, DoorLocked,
 			Laser, PolyLaser,
 			Files, PassKey, Computer, BlankIcon,
+			Data,
 			Elevator,
 			CameraOnAlert, CameraBlinded, CameraUnderQ, CameraArrow;
 	public List<Sprite> BombDetonationCountdown,
