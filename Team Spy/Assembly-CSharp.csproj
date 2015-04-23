@@ -188,6 +188,7 @@
      <Compile Include="Assets\_UIAssets\ButtonSpriteDefinitions.cs" />
      <Compile Include="Assets\_UIAssets\CompassAssets\CompassScript.cs" />
      <Compile Include="Assets\_UIAssets\DetectTaggedObjects.cs" />
+     <Compile Include="Assets\_UIAssets\EndSceneAssets\PlayMovieEnd.cs" />
      <Compile Include="Assets\_UIAssets\MainMenuAssets\Buttons.cs" />
      <Compile Include="Assets\_UIAssets\MainMenuAssets\PlayMovie.cs" />
      <Compile Include="Assets\_UIAssets\PauseMenuAssets\PauseScript.cs" />
