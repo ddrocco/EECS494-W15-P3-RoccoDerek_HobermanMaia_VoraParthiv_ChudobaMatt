@@ -46,7 +46,7 @@ public class GenerateQRenderer : MonoBehaviour {
 	}
 	
 	public void Activate(int activateGroup) {
-		if (group == activateGroup) {
+		if (group == activateGroup && qRendererObject != null) {
 			qRendererObject.GetComponent<Renderer>().enabled = true;
 		}
 	}

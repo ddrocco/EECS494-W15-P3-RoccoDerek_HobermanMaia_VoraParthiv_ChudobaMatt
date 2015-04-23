@@ -90,6 +90,8 @@ public class GameController : MonoBehaviour
 
 	void DisplayPlayerMessage()
 	{
+		if (messageText == "") return;
+
 		if (LookedAway)
 		{
 			LookedAway = false;
@@ -102,8 +104,8 @@ public class GameController : MonoBehaviour
 				messageTime -= Time.deltaTime;
 
 			Vector2 temp = messageTextRect.offsetMin;
-			temp.x -= 10f;
-			temp.y -= 10f;
+			temp.x -= 35f;
+			temp.y -= 35f;
 			messagePanelRect.offsetMin = temp;
 
 			playerMessageText.enabled = true;
@@ -126,8 +128,8 @@ public class GameController : MonoBehaviour
 		playerMessageText.enabled = false;
 		playerMessagePanel.enabled = false;
 		if (_won) {
-			playerGameOverText.text = "SUCCESS";
-			playerGameOverMessageText.text = "Mission Complete! Press A to continue";
+			playerGameOverText.text = "Mission Complete";
+			playerGameOverMessageText.text = "Press A to continue";
 		} else {
 			playerGameOverText.text = "Game Over";
 			playerGameOverMessageText.text = GameOverMessage;
