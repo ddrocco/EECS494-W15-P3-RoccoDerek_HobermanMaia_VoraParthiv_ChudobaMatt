@@ -7,7 +7,7 @@ public class CameraControl : QInteractable {
 	public int ID;
 	
 	//Detection
-	public bool QIsWatching = false;
+	public bool QIsWatching;
 	public bool isBlinded = false;
 	public bool Offline = false;
 	public bool wasDetected = false;
