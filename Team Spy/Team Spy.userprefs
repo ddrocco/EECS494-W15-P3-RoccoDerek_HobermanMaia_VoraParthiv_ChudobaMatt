@@ -1,6 +1,6 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\AudioAssets\AudioDefinitions.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SceneAssets\MainMenuJuice.cs">
     <Files>
       <File FileName="Assets\FoeAssets\FoeAlertSystem.cs" Line="18" Column="6" />
       <File FileName="Assets\_WorldAssets\AlarmSignal.cs" Line="1" Column="1" />
@@ -10,8 +10,13 @@
       <File FileName="Assets\_WorldAssets\AlertHub.cs" Line="1" Column="1" />
       <File FileName="Assets\FoeAssets\Foe_Detection_Handler.cs" Line="1" Column="1" />
       <File FileName="Assets\_Q Assets\QCameraControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Q Assets\QUI.cs" Line="8" Column="23" />
-      <File FileName="Assets\AudioAssets\AudioDefinitions.cs" Line="26" Column="2" />
+      <File FileName="Assets\_Q Assets\QUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\AudioAssets\AudioDefinitions.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" Line="1" Column="1" />
+      <File FileName="Assets\FoeAssets\Foe_Movement_Handler.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\GenerateQRenderer.cs" Line="48" Column="29" />
+      <File FileName="Assets\SceneAssets\IntroJuiceText.cs" Line="1" Column="1" />
+      <File FileName="Assets\SceneAssets\MainMenuJuice.cs" Line="35" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

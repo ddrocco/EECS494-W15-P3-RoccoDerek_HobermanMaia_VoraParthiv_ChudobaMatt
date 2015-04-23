@@ -7,8 +7,8 @@ public class MainMenuJuice : MonoBehaviour {
 	public List<string> snippets = new List<string>();
 	public GameObject JuiceText;
 	Canvas canv;
-	float timer = 3;
-	float timeBetweenSpawns = 0.75f;
+	float timer;
+	const float timeBetweenSpawns = 0.75f;
 	
 	void Start() {
 		canv = GetComponent<Canvas>();
@@ -27,11 +27,13 @@ public class MainMenuJuice : MonoBehaviour {
 		snippets.Add ("for (int i = 0; i < locations; ++i)\n{\n\tcin >> master[i].x >> master[i].y;\n\tif (master[i].x < lx || master[i].x > rx || master[i].y < ly || master[i].y > ry)\n\t{\n\t\tmaster[i].out = true;\n\t\tmaster[i].in = false;\n\t\tsol_out = true;\n\t}\n\telse if (master[i].x == lx || master[i].x == rx || master[i].y == ly || master[i].y == ry)\n\t{\n\t\tmaster[i].out = true;\n\t\tmaster[i].in = true;\n\t\tsol_border = true;\n\t}\n\telse\n\t{\n\t\tmaster[i].out = false;\n\t\tmaster[i].in = true;\n\t\tsol_in = true;\n\t}\n\tvisited[i] = false;\n\tbest_distance[i] = MAX;\n}");
 		snippets.Add ("low_bound_total = 0;\nfor (int i = 0; i < locations; ++i)\n{\n\tdouble a = MAX;\n\tdouble b = MAX;\n\tfor (int j = 0; j < locations; ++j)\n\t{\n\t\tdouble c;\n\t\tif (i == j) c = MAX;\n\t\telse if (i < j)    c = dist(i,j);\n\t\telse    c = edges[j][i];\n\t\tedges[i][j] = c;\n\t\tif (c < a)\n\t\t{\n\t\t\ta = b;\n\t\t\tb = c;\n\t\t}\n\t\telse if (c < b)  b = c;\n\t}\n\tlow_bound[i] = (a + b) / 2;\n\tlow_bound_total += (a + b) / 2;\n}\nRoute* a = new Route;\nup_bound_total = MAX;\ninitialize(a);\nbranch(a);\ndelete a;");
 		snippets.Add ("void branch(Route *a)\n{\n\tif (a->visited == locations)\n\t{\n\t\ta->low_bound += edges[0][a->current] - low_bound[a->current];\n\t\tif (a->low_bound < up_bound_total)\n\t\t{\n\t\t\tup_bound_total = a->low_bound;\n\t\t\troute = a->route;\n\t\t}\n\t\treturn;\n\t}\n\tfor (int j = a->visited; j < locations; ++j)\n\t{\n\t\tint i = a->route[j];\n\t\tdouble curr_dist = edges[i][a->current];\n\t\tdouble new_low_bound = a->low_bound - low_bound[a->current] + curr_dist;\n\t\tif (new_low_bound < up_bound_total)\n\t\t{\n\t\t\tRoute* b = new Route(a);\n\t\t\tb->low_bound = new_low_bound;\n\t\t\tb->current = i;\n\t\t\tswap(b->route[b->visited],b->route[j]);\n\t\t\t++b->visited;\n\t\t\tbranch(b);\n\t\t\tdelete b;\n\t\t\t++q;\n\t\t}\n\t}\n}");
+		timer = 3;
+		Time.timeScale = 1f;
 	}
 	
 	void Update () {
 		timer += Time.deltaTime;
-		if (timer > timeBetweenSpawns) {
+		if (timer >= timeBetweenSpawns) {
 			timer -= timeBetweenSpawns;
 			SpawnText();
 		}
