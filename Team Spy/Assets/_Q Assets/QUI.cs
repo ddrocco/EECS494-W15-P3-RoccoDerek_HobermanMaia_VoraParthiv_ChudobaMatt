@@ -59,7 +59,7 @@ public class QUI : MonoBehaviour {
 			GameObject.Find("CamOverview").GetComponent<QCameraOverview>().camActive = true;
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
 			QCompass.SetActive (true);
-			GetComponent<QCameraControl>().DisableCameras();
+			//GetComponent<QCameraControl>().DisableCameras();
 		} else {
 			nosignal.enabled = true;
 			setText("Tell the agent to hack the computer.");
