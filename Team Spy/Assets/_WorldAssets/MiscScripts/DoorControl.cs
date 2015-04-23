@@ -11,6 +11,7 @@ public enum DoorDirection {
 public class DoorControl : QInteractable {
 	public bool isLocked;
 	public bool expectState;
+	public bool guardLockOnExit = false;
 	public DoorDirection direction;
 	
 	Animator anim;
@@ -164,8 +165,8 @@ public class DoorControl : QInteractable {
 		} else {
 			if (timeUntilUnlocked <= 0) {
 				QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
-				isLocked = false;
-				expectState = false;
+				isLocked = guardLockOnExit;
+				expectState = guardLockOnExit;
 				guardNavAgent.Resume ();
 			} else {
 				if (guardNavAgent.GetComponentInChildren<Foe_Detection_Handler>().timeSincePlayerSpotted >= 
