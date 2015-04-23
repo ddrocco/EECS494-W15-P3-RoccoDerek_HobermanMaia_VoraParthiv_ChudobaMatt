@@ -25,7 +25,7 @@ public class QCameraLocation : MonoBehaviour {
 		securityCamera.transform.localPosition = new Vector3(0, 0, -.2f);
 		securityCamera.transform.localEulerAngles = new Vector3(20, 0, 0);
 		thisCam = securityCamera.GetComponent<CameraControl>();
-		thisCam.QIsWatching = false;
+		thisCam.QIsWatching = usable;
 		thisCam.rotate = rotate;
 		if (toggleDisplayMessageforQ) {
 			securityCamera.AddComponent<DisplayForQ>();

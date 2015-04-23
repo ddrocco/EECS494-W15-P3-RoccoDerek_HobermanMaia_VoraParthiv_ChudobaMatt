@@ -15,3 +15,11 @@ Team\ Spy/*.booproj
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
+
+*.csproj
+
+*.csproj
+
+*.sln
+
+*.userprefs
