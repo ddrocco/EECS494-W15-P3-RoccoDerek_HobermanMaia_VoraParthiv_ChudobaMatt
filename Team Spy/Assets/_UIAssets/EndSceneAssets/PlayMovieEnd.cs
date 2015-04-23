@@ -18,10 +18,10 @@ public class PlayMovieEnd : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!movie.isPlaying
-			|| InputManager.MenuWasPressed
-			|| Input.GetKey (KeyCode.Escape) || Input.GetKey (KeyCode.Return) || Input.GetKey (KeyCode.KeypadEnter))
+		if (!movie.isPlaying || Input.anyKeyDown)
+			NextLevel ();
 
+		if (device.AnyButton.WasPressed)
 			NextLevel ();
 	}
 
