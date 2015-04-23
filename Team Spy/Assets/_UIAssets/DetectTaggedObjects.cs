@@ -2,27 +2,32 @@
 using System.Collections;
 
 public class DetectTaggedObjects : MonoBehaviour {
+	public bool tagCompassVisible = false;
 	public GameObject taggedObject = null;
-	public static bool tagCompassVisible = false;
+	public MeshFilter taggedMesh = null;
+	private Camera myCam = null;
+	
+	void Start() {
+		myCam = GetComponent<Camera>();
+	}
 	
 	void Update () {
-		if (taggedObject == null) {
+		if (taggedObject == null || taggedMesh == null) {
+			if (tagCompassVisible) {
+				FindObjectOfType<PlayerTagCompass>().isVisible = false;
+				FindObjectOfType<PlayerTagCompass>().pic.enabled = false;
+			}
 			tagCompassVisible = false;
 			return;
 		}
-		Camera myCam = GetComponent<Camera>();
-		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
-		if (taggedObject.GetComponent<MeshFilter>() == null) {
-			//laser
-			return;
-		}
-		if (GeometryUtility.TestPlanesAABB(planes, taggedObject.GetComponent<MeshFilter>().mesh.bounds)) {
+		/*Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
+		if (GeometryUtility.TestPlanesAABB(planes, taggedMesh.mesh.bounds)) {
 			tagCompassVisible = false;
-			print ("NOPE");
-			return;
 		} else {
 			tagCompassVisible = true;
-			print ("YEP");
 		}
+		return;*/
+		tagCompassVisible = true;
+		return;
 	}
 }

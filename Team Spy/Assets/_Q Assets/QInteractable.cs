@@ -72,6 +72,8 @@ public class QInteractable : MonoBehaviour {
 		if (group != MapGroup.One) {
 			disableButtonView();
 		}
+		
+		UnTag();
 	}
 	
 	public virtual GameObject GetStanVisibleTag() {
@@ -135,6 +137,7 @@ public class QInteractable : MonoBehaviour {
 				QInteractionButton.transform.position + Vector3.up,
 				QInteractionButton.transform.rotation) as GameObject;
 		FindObjectOfType<DetectTaggedObjects>().taggedObject = tagView;
+		FindObjectOfType<DetectTaggedObjects>().taggedMesh = tagView.GetComponent<MeshFilter>();
 	}
 	public virtual void UnTag() {
 		if (taggedButton != this) {
@@ -147,6 +150,7 @@ public class QInteractable : MonoBehaviour {
 		tagView.GetComponent<ParticleSystemRenderer>().enabled = false;
 		taggedButton = null;
 		FindObjectOfType<DetectTaggedObjects>().taggedObject = null;
+		FindObjectOfType<DetectTaggedObjects>().taggedMesh = null;
 		Destroy(qTagPrefab);
 	}
 	
