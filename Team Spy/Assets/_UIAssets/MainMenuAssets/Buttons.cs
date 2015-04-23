@@ -8,6 +8,12 @@ public class Buttons : MonoBehaviour {
 	public GameObject levelwarp;
 	public GameObject levelwarpstan;
 	public GameObject stanlevels;
+
+	public GameObject movie_obj;
+
+	public GameObject LCanvas;
+	public GameObject RCanvas;
+
 	Button[] buttonset;
 	int stanbuttonindex = 0;
 	InputDevice device;
@@ -18,7 +24,9 @@ public class Buttons : MonoBehaviour {
 	}
 
 	public void Play(){
-		Application.LoadLevel (Application.loadedLevel + 1);
+		movie_obj.SetActive (true);
+		RCanvas.SetActive (false);
+		LCanvas.SetActive(false);
 	}
 
 	public void LevelSelect(){
