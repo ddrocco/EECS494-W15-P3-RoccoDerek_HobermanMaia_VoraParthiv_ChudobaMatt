@@ -3,8 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerTagCompass : MonoBehaviour {
+	bool isVisible = false;
 	public void SetDirection(Quaternion direction) {
-		/*if (!DetectTaggedObjects.tagCompassVisible) {
+		if (!DetectTaggedObjects.tagCompassVisible) {
 			if (isVisible) {
 				GetComponent<Image>().enabled = false;
 				isVisible = false;
@@ -14,9 +15,10 @@ public class PlayerTagCompass : MonoBehaviour {
 		if (!isVisible) {
 			GetComponent<Image>().enabled = true;
 			isVisible = true;
-		}*/
+		}
 		float angle = direction.eulerAngles.y;
 		
+		//SWAP AT z = 90f, -90f
 		if (FindObjectOfType<PlayerController>().yRotation.x < 0f) {
 			angle = 180 - angle;
 			print ("Choo choo");
