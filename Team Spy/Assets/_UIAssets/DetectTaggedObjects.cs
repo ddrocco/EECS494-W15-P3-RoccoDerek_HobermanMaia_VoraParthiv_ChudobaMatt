@@ -13,7 +13,7 @@ public class DetectTaggedObjects : MonoBehaviour {
 		Camera myCam = GetComponent<Camera>();
 		Plane[] planes = GeometryUtility.CalculateFrustumPlanes(myCam);
 		if (taggedObject.GetComponent<MeshFilter>() == null) {
-			print ("LASER");
+			//laser
 			return;
 		}
 		if (GeometryUtility.TestPlanesAABB(planes, taggedObject.GetComponent<MeshFilter>().mesh.bounds)) {

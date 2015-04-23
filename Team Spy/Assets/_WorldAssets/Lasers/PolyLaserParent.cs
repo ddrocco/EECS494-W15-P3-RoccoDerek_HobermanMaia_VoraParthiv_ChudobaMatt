@@ -37,6 +37,7 @@ public class PolyLaserParent : QInteractable {
 	}
 	
 	void Update() {
+		qHasFunctionAccess = false;
 		movementTimer += Time.deltaTime;
 		if (movementTimer > movementDuration * 2f) {
 			movementTimer -= movementDuration * 2f;

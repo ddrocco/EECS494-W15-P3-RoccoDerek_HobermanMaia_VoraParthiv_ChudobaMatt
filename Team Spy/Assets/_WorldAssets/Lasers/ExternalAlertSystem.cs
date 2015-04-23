@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class ExternalAlertSystem : MonoBehaviour {
 	public Light alarmLight;
+	private AudioSource audiosrc;
 	bool lightRampingUp;
 	float maxIntensity = 1f;
 	
@@ -24,6 +25,7 @@ public class ExternalAlertSystem : MonoBehaviour {
 	
 	void Start () {
 		alarmLight = GetComponent<Light>();
+		audiosrc = GetComponent<AudioSource>();
 		signals = new List<AlarmSignal>();
 		ConnectToAlarm();
 		alarmRaised = false;
@@ -34,7 +36,12 @@ public class ExternalAlertSystem : MonoBehaviour {
 			signalsInTransit = true;
 			firstArm.startColor = Color.yellow;
 			secondArm.startColor = Color.yellow;
+			if (!audiosrc.isPlaying) {
+				audiosrc.loop = true;
+				audiosrc.Play();
+			}
 		} else {
+			audiosrc.loop = false;
 			signalsInTransit = false;
 			firstArm.startColor = Color.green;
 			secondArm.startColor = Color.green;

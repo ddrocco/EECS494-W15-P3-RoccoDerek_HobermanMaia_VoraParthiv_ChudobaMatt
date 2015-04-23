@@ -12,6 +12,9 @@ public class AudioDefinitions : MonoBehaviour {
 		DoorLocked, DoorOpen, DoorClose, DoorLocking, DoorUnlocking,
 		ElevatorDoorOpen,
 		
+		QValidAction, QInvalidAction, QObjectTagged, QObjectUntagged,
+		QSignalDestroyed, QSignalWarning,
+		
 		TitleMusic, ExploreMusic, ActionMusic,
 		
 		Level5Script;

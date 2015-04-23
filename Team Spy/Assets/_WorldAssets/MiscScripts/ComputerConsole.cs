@@ -26,6 +26,10 @@ public class ComputerConsole : QInteractable {
 		base.Start();
 	}
 	
+	void Update() {
+		qHasFunctionAccess = false;
+	}
+	
 	public void Interact() {
 		OtherAction(mapValue);
 		EnableRenderers(mapValue);

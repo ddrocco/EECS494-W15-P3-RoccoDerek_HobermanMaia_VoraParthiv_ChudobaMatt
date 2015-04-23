@@ -12,6 +12,7 @@ public class AlarmSignal : QInteractable {
 	}
 	
 	public override void Trigger () {
+		AudioSource.PlayClipAtPoint(AudioDefinitions.main.QSignalDestroyed, transform.position);
 		transform.GetComponentInParent<ExternalAlertSystem>().RemoveActiveSignal(this);
 		Destroy (this.gameObject);
 	}

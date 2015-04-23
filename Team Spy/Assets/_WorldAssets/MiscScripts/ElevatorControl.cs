@@ -14,6 +14,10 @@ public class ElevatorControl : QInteractable {
 		}
 	}
 	
+	void Update() {
+		qHasFunctionAccess = false;
+	}
+	
 	public void Interact () {
 		if (anim.GetBool("isOpen")) {
 			return;

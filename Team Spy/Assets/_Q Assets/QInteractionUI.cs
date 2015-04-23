@@ -13,9 +13,11 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	private GameObject tooltip;
 	bool buttonEnabled = true;
 	private Image image;
+	private AudioSource audiosrc;
 		
 	void Start() {
 		image = GetComponent<Image>();
+		audiosrc = GetComponent<AudioSource>();
 	}
 	
 	void Update () {
@@ -27,14 +29,33 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 	}
 	
 	public void OnPointerClick(PointerEventData mouseData) {
-		if (mouseData.button == PointerEventData.InputButton.Left && controlledObject.qHasFunctionAccess) {
-			controlledObject.Toggle(false);
-			OnPointerExit(null);
-			OnPointerEnter(null);
-		}		
+		if (mouseData.button == PointerEventData.InputButton.Left) {
+			if (controlledObject.qHasFunctionAccess) {
+				controlledObject.Toggle(false);
+				OnPointerExit(null);
+				OnPointerEnter(null);
+				audiosrc.clip = AudioDefinitions.main.QValidAction;
+				audiosrc.Play();
+			} else {
+				audiosrc.clip = AudioDefinitions.main.QInvalidAction;
+				audiosrc.Play();
+			}
+		}
 		
-		if (mouseData.button == PointerEventData.InputButton.Right && controlledObject.qHasDisplayAccess) {
-			controlledObject.Toggle(true);
+		if (mouseData.button == PointerEventData.InputButton.Right) {
+			if (controlledObject.qHasDisplayAccess) {
+				controlledObject.Toggle(true);
+				if (controlledObject.displayIsActive) {
+					audiosrc.clip = AudioDefinitions.main.QObjectTagged;
+					audiosrc.Play();
+				} else {
+					audiosrc.clip = AudioDefinitions.main.QObjectUntagged;
+					audiosrc.Play();
+				}
+			} else {
+				audiosrc.clip = AudioDefinitions.main.QInvalidAction;
+				audiosrc.Play();
+			}
 		}
 	}
 

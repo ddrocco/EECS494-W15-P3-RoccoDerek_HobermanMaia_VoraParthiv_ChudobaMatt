@@ -12,6 +12,10 @@ public class InformationForPlayer : QInteractable {
 		base.Start();
 	}
 	
+	void Update() {
+		qHasFunctionAccess = false;
+	}
+	
 	public void Interact() {
 		GameController.SendPlayerMessage(message, 2);
 		if (!read) {

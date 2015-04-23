@@ -28,7 +28,8 @@ public class LaserBehavior : QInteractable {
 	}
 	
 	void Update() {
-		if (!qHasFunctionAccess) {
+		qHasFunctionAccess = false;
+		if (!qHasDisplayAccess) {
 			gameObject.layer = Layerdefs.invisible;
 		} else {
 			gameObject.layer = Layerdefs.laser;

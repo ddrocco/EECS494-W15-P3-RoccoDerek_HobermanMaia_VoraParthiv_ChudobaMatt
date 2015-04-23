@@ -57,6 +57,7 @@ public class BoxControl : QInteractable {
 	
 	public void Update() {
 		if (!isBomb || !isArmed) {
+			qHasFunctionAccess = false;
 			return;
 		}
 		if (timerSet) {

@@ -8,6 +8,10 @@ public class UselessDataComputer : QInteractable {
 		base.Start();
 	}
 	
+	void Update() {
+		qHasFunctionAccess = false;
+	}
+	
 	public override void Trigger() {
 		return;
 	}
