@@ -8,6 +8,7 @@ public class AudioDefinitions : MonoBehaviour {
 		AlarmNoise,
 		BoxOpening, BoxClosing,
 		TickTock, Explosion,
+		ComputerLoad, ComputerBigLoad,
 		DoorLocked, DoorOpen, DoorClose, DoorLocking, DoorUnlocking,
 		ElevatorDoorOpen,
 		

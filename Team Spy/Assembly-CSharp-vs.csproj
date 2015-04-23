@@ -48,6 +48,8 @@
   <ItemGroup>
      <Compile Include="Assets\AudioAssets\AudioDefinitions.cs" />
      <Compile Include="Assets\AudioAssets\DoorSoundOnOpen.cs" />
+     <Compile Include="Assets\AudioAssets\MusicPlayer.cs" />
+     <Compile Include="Assets\AudioAssets\SpecialMusicTrack.cs" />
      <Compile Include="Assets\DisplayForQ.cs" />
      <Compile Include="Assets\FoeAssets\Debug_Foe_Alert_Status.cs" />
      <Compile Include="Assets\FoeAssets\FoeAlertSystem.cs" />
@@ -57,8 +59,6 @@
      <Compile Include="Assets\FoeAssets\TaserKill.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Coordinator.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Route_Node.cs" />
-     <Compile Include="Assets\SceneAssets\AudioAssets\MusicPlayer.cs" />
-     <Compile Include="Assets\SceneAssets\AudioAssets\SpecialMusicTrack.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\Basic\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" />

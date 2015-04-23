@@ -80,8 +80,19 @@ public class ComputerConsole : QInteractable {
 			group = MapGroup.One;
 		}
 		
+		AudioSource source = GetComponent<AudioSource>();
+		
 		if (!usedMapValues.Contains(group)) {
 			usedMapValues.Add(group);
+			if (!source.isPlaying) {
+				source.clip = AudioDefinitions.main.ComputerBigLoad;
+				source.Play();
+			}
+		} else {
+			if (!source.isPlaying) {
+				source.clip = AudioDefinitions.main.ComputerLoad;
+				source.Play();
+			}
 		}
 		
 		foreach (GenerateQRenderer renderObject in FindObjectsOfType<GenerateQRenderer>()) {
