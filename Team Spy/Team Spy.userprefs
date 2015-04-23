@@ -1,23 +1,32 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\SceneAssets\MainMenuJuice.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_WorldAssets\UselessDataComputer.cs">
     <Files>
       <File FileName="Assets\FoeAssets\FoeAlertSystem.cs" Line="18" Column="6" />
-      <File FileName="Assets\_WorldAssets\AlarmSignal.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\AlarmSignal.cs" Line="15" Column="91" />
       <File FileName="Assets\_WorldAssets\ObjectPrefabDefinitions.cs" Line="1" Column="1" />
       <File FileName="Assets\_WorldAssets\MiscScripts\CameraControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\AlertHub.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\Lasers\ExternalAlertSystem.cs" Line="1" Column="19" />
+      <File FileName="Assets\_WorldAssets\AlertHub.cs" Line="66" Column="10" />
       <File FileName="Assets\FoeAssets\Foe_Detection_Handler.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Q Assets\QCameraControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\_Q Assets\QUI.cs" Line="1" Column="1" />
-      <File FileName="Assets\AudioAssets\AudioDefinitions.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" Line="1" Column="1" />
+      <File FileName="Assets\_Q Assets\QCameraControl.cs" Line="295" Column="2" />
+      <File FileName="Assets\_Q Assets\QUI.cs" Line="20" Column="3" />
+      <File FileName="Assets\AudioAssets\AudioDefinitions.cs" Line="15" Column="64" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" Line="82" Column="11" />
       <File FileName="Assets\FoeAssets\Foe_Movement_Handler.cs" Line="1" Column="1" />
       <File FileName="Assets\_WorldAssets\GenerateQRenderer.cs" Line="1" Column="1" />
       <File FileName="Assets\SceneAssets\IntroJuiceText.cs" Line="1" Column="1" />
       <File FileName="Assets\SceneAssets\MainMenuJuice.cs" Line="34" Column="18" />
       <File FileName="Assets\_UIAssets\PauseMenuAssets\PauseScript.cs" Line="66" Column="33" />
+      <File FileName="Assets\_Q Assets\QInteractionUI.cs" Line="38" Column="21" />
+      <File FileName="Assets\_Q Assets\QInteractable.cs" Line="24" Column="2" />
+      <File FileName="Assets\_UIAssets\DetectTaggedObjects.cs" Line="29" Column="1" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\InformationForPlayer.cs" Line="15" Column="17" />
+      <File FileName="Assets\_WorldAssets\Lasers\LaserBehavior.cs" Line="32" Column="25" />
+      <File FileName="Assets\_WorldAssets\Lasers\PolyLaserParent.cs" Line="40" Column="30" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\BoxControl.cs" Line="133" Column="1" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs" Line="17" Column="17" />
+      <File FileName="Assets\_WorldAssets\UselessDataComputer.cs" Line="9" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

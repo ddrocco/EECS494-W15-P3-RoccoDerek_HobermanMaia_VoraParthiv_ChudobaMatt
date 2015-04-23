@@ -227,6 +227,7 @@
      <Compile Include="Assets\_WorldAssets\ObjectPrefabDefinitions.cs" />
      <Compile Include="Assets\_WorldAssets\RigInteractionToAlarm.cs" />
      <Compile Include="Assets\_WorldAssets\Room_Floor_Designation.cs" />
+     <Compile Include="Assets\_WorldAssets\SceneBuildingObjects\ChairStabilityAssistance.cs" />
      <Compile Include="Assets\_WorldAssets\TakeCameras.cs" />
      <Compile Include="Assets\_WorldAssets\UselessDataComputer.cs" />
      <Compile Include="Assets\_WorldAssets\Walls\GenerateMap.cs" />
