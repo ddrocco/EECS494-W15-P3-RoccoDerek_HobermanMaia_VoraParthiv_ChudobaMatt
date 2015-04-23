@@ -3,6 +3,7 @@ using System.Collections;
 
 public class CreateMajorEntities : MonoBehaviour {
 	public bool functional = false;
+	public bool customCompass = false;
 
 	public GameObject //AgentPrefab, HackerPrefab,
 	CompassPrefab, PauseSystemPrefab, EventSystemPrefab, MusicPlayerPrefab;
@@ -11,7 +12,9 @@ public class CreateMajorEntities : MonoBehaviour {
 	
 	void Awake () {
 		if (functional) {
-			Instantiate(CompassPrefab);
+			if (!customCompass) {
+				Instantiate(CompassPrefab);
+			}
 			Instantiate(PauseSystemPrefab);
 		}
 		//Instantiate(AgentPrefab, AgentPosition, Quaternion.Euler (AgentRotation));

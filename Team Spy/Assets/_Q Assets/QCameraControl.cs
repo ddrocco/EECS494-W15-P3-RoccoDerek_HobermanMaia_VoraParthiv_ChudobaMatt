@@ -181,15 +181,6 @@ public class QCameraControl : MonoBehaviour
 			return;
 		}
 
-		if (LR_rotation > 360f)
-		{
-			LR_rotation -= 360f;
-		}
-		if (LR_rotation < 0f)
-		{
-			LR_rotation += 360f;
-		}
-
 		if (LR_rotation > currentCam.maxRotation) LR_rotation = currentCam.maxRotation;
 		if (LR_rotation < currentCam.minRotation) LR_rotation = currentCam.minRotation;
 		
