@@ -50,16 +50,15 @@
      <Compile Include="Assets\AudioAssets\DoorSoundOnOpen.cs" />
      <Compile Include="Assets\AudioAssets\MusicPlayer.cs" />
      <Compile Include="Assets\AudioAssets\SpecialMusicTrack.cs" />
-     <Compile Include="Assets\DebugTagObjectOnStart.cs" />
      <Compile Include="Assets\FoeAssets\Debug_Foe_Alert_Status.cs" />
      <Compile Include="Assets\FoeAssets\FoeAlertSystem.cs" />
      <Compile Include="Assets\FoeAssets\Foe_Detection_Handler.cs" />
      <Compile Include="Assets\FoeAssets\Foe_Glance_Command.cs" />
      <Compile Include="Assets\FoeAssets\Foe_Movement_Handler.cs" />
+     <Compile Include="Assets\FoeAssets\GuardSpawner.cs" />
      <Compile Include="Assets\FoeAssets\TaserKill.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Coordinator.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Route_Node.cs" />
-     <Compile Include="Assets\GuardSpawner.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\Basic\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" />
@@ -206,6 +205,7 @@
      <Compile Include="Assets\_WorldAssets\MiscScripts\ChairStabilityAssistance.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\CreateMajorEntities.cs" />
+     <Compile Include="Assets\_WorldAssets\MiscScripts\DebugTagObjectOnStart.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\DoorControl.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\DoorknobControl.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs" />
