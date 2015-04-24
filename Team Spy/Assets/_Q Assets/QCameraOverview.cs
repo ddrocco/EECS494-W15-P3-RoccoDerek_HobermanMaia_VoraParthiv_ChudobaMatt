@@ -12,6 +12,7 @@ public class QCameraOverview : QCameraLocation
 
 	private Camera cam;
 	private Vector3 dir;
+	public PlayerController player;
 
 	void Awake()
 	{
@@ -34,12 +35,12 @@ public class QCameraOverview : QCameraLocation
 				maxY = obj.position.y;
 			}
 		}
+		player = FindObjectOfType<PlayerController>();
 	}
 	
 	void Update()
 	{
 		if (!camActive || PauseScript.GamePaused) return;
-
 		GetCameraInput();
 		ZoomCamera();
 	}
@@ -47,7 +48,6 @@ public class QCameraOverview : QCameraLocation
 	void FixedUpdate()
 	{
 		if (!camActive || PauseScript.GamePaused) return;
-
 		MoveCamera();
 	}
 
@@ -61,7 +61,7 @@ public class QCameraOverview : QCameraLocation
 	void MoveCamera()
 	{
 		if(Input.GetKey(KeyCode.Space)) {
-			Vector3 playerPos = FindObjectOfType<PlayerController>().transform.position;
+			Vector3 playerPos = player.transform.position;
 			transform.position = new Vector3(playerPos.x, transform.position.y, playerPos.z);
 			cam.transform.position = transform.position;
 			return;
@@ -82,8 +82,9 @@ public class QCameraOverview : QCameraLocation
 	void ZoomCamera()
 	{
 		// Cannot zoom when Stan has mouse controls
-		if (PlayerController.mouseMovement) return;
-
+		if (PlayerController.mouseMovement) {
+			return;
+		}
 		if (Input.GetAxis("Mouse ScrollWheel") < 0)
 		{
 			zoom += zoomSpeed;

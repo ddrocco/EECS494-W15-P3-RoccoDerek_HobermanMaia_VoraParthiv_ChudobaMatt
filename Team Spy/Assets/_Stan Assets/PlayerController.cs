@@ -6,7 +6,7 @@
  * Left click - interact
  * O - sprint
  * 
- */
+*/
 
 using UnityEngine;
 using System.Collections;

@@ -149,7 +149,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		if (tooltip == null) {
 			return;
 		}
-
 		Destroy (tooltip);
 	}
 
@@ -157,7 +156,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		if (tooltip == null) {
 			return;
 		}
-		
 		Destroy (tooltip);
 	}
 	

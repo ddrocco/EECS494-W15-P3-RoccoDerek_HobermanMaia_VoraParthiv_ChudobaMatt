@@ -30,9 +30,6 @@ public class QInteractable : MonoBehaviour {
 	public bool displayIsActive = false;
 	public float displayCost = 0;
 	
-	//Color activeColor = new Color(1f, 0.4f, 0.4f);
-	//Color inactiveColor = new Color(0.2f, 0.2f, 0.2f);
-	
 	public GameObject tagView;
 	static QInteractable taggedButton = null;
 	static GameObject qTagPrefab = null;
@@ -67,12 +64,10 @@ public class QInteractable : MonoBehaviour {
 				tagView.GetComponent<MeshFilter>().mesh = GetComponent<MeshFilter>().mesh;
 			}
 		}
-		
 		tagCompass = FindObjectOfType<PlayerTagCompass>();
 		if (group != MapGroup.One) {
 			disableButtonView();
 		}
-		
 		UnTag();
 	}
 	
@@ -103,6 +98,7 @@ public class QInteractable : MonoBehaviour {
 	public virtual void Trigger() {
 		
 	}
+	
 	public virtual Sprite GetSprite() {
 		return null;
 	}
@@ -139,6 +135,7 @@ public class QInteractable : MonoBehaviour {
 		FindObjectOfType<DetectTaggedObjects>().taggedObject = tagView;
 		FindObjectOfType<DetectTaggedObjects>().taggedMesh = tagView.GetComponent<MeshFilter>();
 	}
+	
 	public virtual void UnTag() {
 		if (taggedButton != this) {
 			return;
@@ -164,7 +161,6 @@ public class QInteractable : MonoBehaviour {
 	
 	public static Sprite GetAnimationFrame(List<Sprite> sprites) {
 		float switchRate = 10f;
-		
 		int time = Mathf.FloorToInt(Time.time * switchRate);
 		int index = time % sprites.Count;
 		return sprites[index];

@@ -27,7 +27,7 @@ public class PlayerTagCompass : MonoBehaviour {
 	public void SetDirection(Quaternion direction) {
 		isVisible = TagCompassVisible();
 		pic.enabled = isVisible;
-	
+
 		if (!isVisible) {
 			return;
 		}

@@ -174,7 +174,6 @@
      <Compile Include="Assets\_Q Assets\QCameraOverview.cs" />
      <Compile Include="Assets\_Q Assets\QInteractable.cs" />
      <Compile Include="Assets\_Q Assets\QInteractionUI.cs" />
-     <Compile Include="Assets\_Q Assets\QOptionButtons.cs" />
      <Compile Include="Assets\_Q Assets\QPlayerVisibilityToggle.cs" />
      <Compile Include="Assets\_Q Assets\QUI.cs" />
      <Compile Include="Assets\_Stan Assets\GameController.cs" />

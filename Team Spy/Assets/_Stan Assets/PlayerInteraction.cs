@@ -42,7 +42,6 @@ public class PlayerInteraction : MonoBehaviour
 
 	void Update()
 	{
-		//ResizeReticle();
 		Interact();
 
 		if (!player.canInteract) {
@@ -53,7 +52,6 @@ public class PlayerInteraction : MonoBehaviour
 		else if (player.canInteract) {
 			reticleRender.color = reticleInteract;
 			reticleLetter.enabled = true;
-			//ToolTips
 			GiveTip ();
 		}
 		else
@@ -63,10 +61,8 @@ public class PlayerInteraction : MonoBehaviour
 	void ResizeReticle()
 	{
 		Vector3 scale = reticle.transform.localScale;
-		
 		scale.x = 100f / (cam.pixelWidth);
 		scale.y = scale.x;
-		
 		reticle.transform.localScale = scale;
 	}
 

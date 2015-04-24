@@ -25,7 +25,6 @@ public class QUI : MonoBehaviour {
 	static float timeToClearDynamicText = 8f;
 	static Color dynamicTextColor;
 
-	// Use this for initialization
 	void Start () {
 		if (objectiveTextOutput == null) {
 			objectiveTextOutput = GameObject.Find ("ObjectiveText").GetComponent<Text>();
@@ -42,7 +41,6 @@ public class QUI : MonoBehaviour {
 		QCompass.SetActive (false);
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		objectiveTextOutput.text = objectiveTextContents;
 		foreach (TextSnippet snippet in dynamicTextList) {
@@ -113,7 +111,6 @@ public class QUI : MonoBehaviour {
 			GameObject.Find("CamOverview").GetComponent<QCameraOverview>().camActive = true;
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 1;
 			QCompass.SetActive (true);
-			//GetComponent<QCameraControl>().DisableCameras();
 		} else {
 			nosignal.enabled = true;
 			setText("Tell the agent to hack the computer.", objective: true);

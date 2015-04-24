@@ -5,14 +5,7 @@ using System.Collections.Generic;
 
 public class QCameraControl : MonoBehaviour
 {
-	//Sound things:
-	/*
-	public List<AudioClip> steps;
-	public AudioSource source;
-	public int currentStep = 0;
-	public bool isPanning = false;
-	*/
-	
+	//Positioning
 	public Vector3 pivotPoint;
 	public float UD_rotation, LR_rotation, zoom;
 	public float rotationSpeed = 200f;
@@ -20,14 +13,14 @@ public class QCameraControl : MonoBehaviour
 	public float zoomMin = 10f;
 	public float zoomMax = 50f;
 
-	//[HideInInspector]
+	//Managing cameras
 	public static int camCount;
-
 	public Camera cam;
 	public QCameraLocation currentCam;
 	public static List<QCameraLocation> cameras;
 	public QCameraOverview camOverview;
 	
+	//Cullingmasks
 	public int overviewCullingMask;
 	public int cameraCullingMask;
 
@@ -37,11 +30,9 @@ public class QCameraControl : MonoBehaviour
 	public bool warning = false;
 	public bool alerting = false;
 
-	// Use this for initialization
 	void Awake()
 	{
 		GetComponent<AudioSource>().enabled = false;
-		
 		pivotPoint = FindObjectOfType<PlayerController>().transform.position;
 		cam = GetComponent<Camera>();
 		cameras = new List<QCameraLocation>();
@@ -74,26 +65,7 @@ public class QCameraControl : MonoBehaviour
 	void Start() {
 		InitializeSprites();
 	}
-
-	public void DisableCameras()
-	{
-		camCount = 0;
-		//cameras[0].usable = true;
-		//cameras[1].usable = true;
-		
-		for (int i = 0; i < cameras.Count; ++i)
-		{
-			CameraControl control =
-				cameras[i].gameObject.GetComponentInChildren<CameraControl>();
-			if (control == null) {
-				continue;
-			}
-			control.QIsWatching = false;
-			//control.disableButtonView();
-		}
-	}
 	
-	// Update is called once per frame
 	void Update()
 	{
 		if (PauseScript.GamePaused) return;
@@ -121,7 +93,6 @@ public class QCameraControl : MonoBehaviour
 			Debug.LogError("Q Camera index out of range: ToggleCamera(int, bool)");
 			return;
 		}
-
 		if (newState)
 		{
 			if (cameras[camNumber - 1].usable == false)
@@ -132,15 +103,11 @@ public class QCameraControl : MonoBehaviour
 				control.enableButtonView();
 				camCount++;
 			}
-		}
-		else
+		} else
 		{
 			if (cameras[camNumber - 1].usable == true)
 			{
 				cameras[camNumber - 1].usable = false;
-				//CameraControl control =
-					//cameras[camNumber - 1].gameObject.GetComponentInChildren<CameraControl>();
-				//control.disableButtonView();
 				camCount--;
 			}
 		}
@@ -270,7 +237,6 @@ public class QCameraControl : MonoBehaviour
 	}
 	
 	void InitializeSprites() {
-		//int value = 1;
 		int enabledValue = 0;
 		MapGroup group = MapGroup.One;
 		

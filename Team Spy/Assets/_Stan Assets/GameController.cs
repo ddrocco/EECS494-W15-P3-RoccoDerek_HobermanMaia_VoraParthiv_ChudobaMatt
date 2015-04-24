@@ -66,7 +66,6 @@ public class GameController : MonoBehaviour
 	{
 		DisplayPlayerMessage();
 		if (!PlayerDead && !PlayerWon) return;
-
 		EnableText();
 
 		if (device.Action1.WasPressed || Input.GetKeyDown(KeyCode.Space))
@@ -74,13 +73,10 @@ public class GameController : MonoBehaviour
 			if(PlayerDead){
 				PlayerDead = false;
 				Application.LoadLevel(Application.loadedLevel);
-				//ThirdWindow 
-				//.NewLevelLoaded();
 			} else if (PlayerWon){
 				PlayerWon = false;
 				if (Application.levelCount > Application.loadedLevel + 1) {
 					Application.LoadLevel(Application.loadedLevel + 1);
-					//ThirdWindow.NewLevelLoaded();
 				} else {
 					Application.LoadLevel(0);
 				}
@@ -111,8 +107,7 @@ public class GameController : MonoBehaviour
 			playerMessageText.enabled = true;
 			playerMessageText.text = messageText;
 			playerMessagePanel.enabled = true;
-		}
-		else
+		} else
 		{
 			playerMessageText.text = "";
 			playerMessageText.enabled = false;
