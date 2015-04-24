@@ -101,6 +101,9 @@ public class ExternalAlertSystem : MonoBehaviour {
 		secondArm = secondArmObject.GetComponent<ParticleSystem>();
 		firstArm.transform.position = transform.position;
 		secondArm.transform.position = connectingWireJoint;
+		float ypos = FindObjectOfType<InteractionCanvasSetup>().transform.position.y;
+		secondArm.transform.position = new Vector3(secondArm.transform.position.x, ypos, secondArm.transform.position.z);
+		firstArm.transform.position = new Vector3(firstArm.transform.position.x, ypos, firstArm.transform.position.z);
 		if (transform.position.z < connectingWireJoint.z) {
 			firstArm.transform.eulerAngles = new Vector3(0, 0, 0);
 		} else {
