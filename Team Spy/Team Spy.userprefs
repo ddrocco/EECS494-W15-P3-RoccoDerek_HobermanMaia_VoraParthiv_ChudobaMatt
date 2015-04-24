@@ -18,8 +18,8 @@
       <File FileName="Assets\_Q Assets\QUI.cs" Line="53" Column="12" />
       <File FileName="Assets\FoeAssets\TaserKill.cs" Line="1" Column="1" />
       <File FileName="Assets\_Stan Assets\WonGame.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\BoxControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" Line="1" Column="1" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\BoxControl.cs" Line="51" Column="47" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\ComputerConsole.cs" Line="21" Column="1" />
       <File FileName="Assets\_WorldAssets\MiscScripts\EndGameControl.cs" Line="1" Column="1" />
       <File FileName="Assets\_WorldAssets\MiscScripts\FileCabinetControl.cs" Line="1" Column="1" />
       <File FileName="Assets\_WorldAssets\MiscScripts\OpenThings.cs" Line="1" Column="1" />

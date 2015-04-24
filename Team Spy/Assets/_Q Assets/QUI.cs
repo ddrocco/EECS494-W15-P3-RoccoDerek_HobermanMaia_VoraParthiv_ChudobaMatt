@@ -22,7 +22,7 @@ public class QUI : MonoBehaviour {
 
 	int frameInvisibleMask = (1 << Layerdefs.ui);
 
-	static float timeToClearDynamicText = 5f;
+	static float timeToClearDynamicText = 8f;
 	static Color dynamicTextColor;
 
 	// Use this for initialization
