@@ -22,7 +22,7 @@ public class QUI : MonoBehaviour {
 
 	int frameInvisibleMask = (1 << Layerdefs.ui);
 
-	static float timeToClearDynamicText = 8f;
+	static float timeToClearDynamicText = 5f;
 	static Color dynamicTextColor;
 
 	// Use this for initialization
@@ -51,7 +51,7 @@ public class QUI : MonoBehaviour {
 				Destroy(snippet.text.gameObject);
 				break;
 			} else {
-				snippet.text.color = dynamicTextColor * (1 - (snippet.time / timeToClearDynamicText));	
+				snippet.text.color = dynamicTextColor * (1 - Mathf.Pow(snippet.time / timeToClearDynamicText,4));	
 				snippet.time += Time.deltaTime;
 			}	
 		}
@@ -72,28 +72,16 @@ public class QUI : MonoBehaviour {
 		if (objective) {
 			objectiveTextContents = newtext;
 		} else {
-			TextSnippet newSnippet = new TextSnippet();
-			bool snippetExists = false;
-			for (int i = 0; i < dynamicTextList.Count; ++i) {
-				if (string.Compare(dynamicTextList[i].text.text, newtext) == 0) {
-					if (i == 0) {
-						dynamicTextList[0].time = 0;
-						return;
-					}
-					newSnippet = dynamicTextList[i];
-					snippetExists = true;
-					break;
+			foreach (TextSnippet snippet in dynamicTextList) {
+				if (string.Compare(snippet.text.text, newtext) == 0) {
+					snippet.time = 0;
+					return;
 				}
 			}
-			if (snippetExists) {
-				Destroy (newSnippet.text.gameObject);
-				newSnippet.text = GetNewTextObject(newtext);
-				newSnippet.time = 0f;
-			} else {
-				newSnippet.text = GetNewTextObject(newtext);
-				newSnippet.time = 0f;
-				dynamicTextList.Add (newSnippet);
-			}
+			TextSnippet newSnippet = new TextSnippet();
+			newSnippet.text = GetNewTextObject(newtext);
+			newSnippet.time = 0f;
+			dynamicTextList.Add (newSnippet);
 		}
 	}
 
@@ -139,17 +127,7 @@ public class QUI : MonoBehaviour {
 	static Text GetNewTextObject(string contents) {
 		GameObject newTextObj = Instantiate(ObjectPrefabDefinitions.main.QDynamicText) as GameObject;
 		Text text = newTextObj.GetComponent<Text>();
-		
-		List<Transform> newTransformList = new List<Transform>();
-		foreach (Transform child in dynamicTextContainer.transform) {
-			child.SetParent(QUIObject.transform);
-			newTransformList.Add(child);
-		}
 		text.transform.SetParent(dynamicTextContainer.transform);
-		foreach (Transform child in newTransformList) {
-			child.SetParent(dynamicTextContainer.transform);
-		}
-		
 		text.transform.localPosition = Vector3.zero;
 		text.transform.localEulerAngles = Vector3.zero;
 		text.transform.localScale = Vector3.one;
