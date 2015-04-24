@@ -46,7 +46,6 @@ public class QUI : MonoBehaviour {
 		foreach (TextSnippet snippet in dynamicTextList) {
 			if (snippet.text == null) {
 				dynamicTextList.Remove(snippet);
-				Destroy(snippet.text.gameObject);
 				break;
 			} else if (snippet.time > timeToClearDynamicText) {
 				dynamicTextList.Remove(snippet);
@@ -109,7 +108,6 @@ public class QUI : MonoBehaviour {
 	public void showCamera(bool visible){
 		if(visible){
 			nosignal.enabled = false;
-			clearText(objective: true);
 			GetComponent<Camera>().cullingMask = GetComponent<QCameraControl>().overviewCullingMask;
 			GetComponent<QCameraControl>().enabled = true;
 			GameObject.Find("CamOverview").GetComponent<QCameraOverview>().camActive = true;

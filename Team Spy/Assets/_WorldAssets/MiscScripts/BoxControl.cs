@@ -40,6 +40,7 @@ public class BoxControl : QInteractable {
 					return;
 				}
 				timerSet = true;
+				QUI.setText(QMessage, objective: false);
 				return;
 			} else if (holdsPasscard) {
 				ElevatorControl.playerGotPasscard = true;

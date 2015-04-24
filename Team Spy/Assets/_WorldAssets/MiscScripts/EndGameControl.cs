@@ -14,7 +14,7 @@ public class EndGameControl : MonoBehaviour {
 			GameController.GameOverMessage =
 				"Mission Success!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("Mission Success\nWell done!", objective: true);
+			QUI.setText("Mission Success!  Well done!", objective: true);
 			Time.timeScale = 0;
 			return;
 		}
