@@ -1,15 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_WorldAssets/MiscScripts/ElevatorControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_WorldAssets/LaserAlertSystem.cs">
     <Files>
-      <File FileName="Assets/FoeAssets/Foe_Detection_Handler.cs" Line="185" Column="16" />
-      <File FileName="Assets/FoeAssets/Foe_Movement_Handler.cs" Line="47" Column="3" />
-      <File FileName="Assets/AudioAssets/AudioDefinitions.cs" Line="8" Column="3" />
-      <File FileName="Assets/_Q Assets/QCameraControl.cs" Line="298" Column="2" />
-      <File FileName="Assets/_WorldAssets/TakeCameras.cs" Line="1" Column="1" />
-      <File FileName="Assets/_WorldAssets/GenerateQRenderer.cs" Line="24" Column="1" />
-      <File FileName="Assets/_WorldAssets/CameraLocationContainer.cs" Line="6" Column="1" />
       <File FileName="Assets/_WorldAssets/MiscScripts/ElevatorControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Q Assets/QInteractable.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Q Assets/QInteractionUI.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Q Assets/InteractionCanvasSetup.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Q Assets/QCameraControl.cs" Line="216" Column="52" />
+      <File FileName="Assets/_Q Assets/QCameraOverview.cs" Line="1" Column="1" />
+      <File FileName="Assets/_WorldAssets/AlertHub.cs" Line="1" Column="1" />
+      <File FileName="Assets/_WorldAssets/Lasers/ExternalAlertSystem.cs" Line="106" Column="30" />
+      <File FileName="Assets/_WorldAssets/LaserAlertSystem.cs" Line="30" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
