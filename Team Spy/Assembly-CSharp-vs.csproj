@@ -206,6 +206,7 @@
      <Compile Include="Assets\_WorldAssets\MiscScripts\CreateMajorEntities.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\DebugTagObjectOnStart.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\DoorControl.cs" />
+     <Compile Include="Assets\_WorldAssets\MiscScripts\DoorMeshSupport.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\DoorknobControl.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\ElevatorControl.cs" />
      <Compile Include="Assets\_WorldAssets\MiscScripts\EndGameControl.cs" />
