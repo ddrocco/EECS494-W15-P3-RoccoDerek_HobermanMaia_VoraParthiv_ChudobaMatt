@@ -59,6 +59,7 @@
      <Compile Include="Assets\FoeAssets\TaserKill.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Coordinator.cs" />
      <Compile Include="Assets\FoeAssets\World_Foe_Route_Node.cs" />
+     <Compile Include="Assets\GuardSpawner.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\Basic\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\CubeController.cs" />
      <Compile Include="Assets\SceneAssets\InControl\Examples\CustomProfile\KeyboardAndMouseProfile.cs" />
