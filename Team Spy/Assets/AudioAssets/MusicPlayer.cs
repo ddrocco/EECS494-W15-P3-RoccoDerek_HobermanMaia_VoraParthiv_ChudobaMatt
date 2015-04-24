@@ -51,7 +51,6 @@ public class MusicPlayer : MonoBehaviour {
 		if (!investigatingGuards.Contains(guard) && !chasingGuards.Contains(guard)) {
 			investigatingGuards.Add(guard);		
 		}
-		
 		if (chasingGuards.Count == 0) {
 			main.music.volume = main.quietVolume;
 		}

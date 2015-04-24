@@ -25,7 +25,6 @@ public class Foe_Glance_Command : MonoBehaviour {
 				prepareToLook = false;
 			}
 		}
-	
 		if (!isLookingAround) {
 			if (GetComponent<Foe_Detection_Handler>().timeSincePlayerSpotted < GetComponent<Foe_Detection_Handler>().timeUntilPlayerLost) {
 				Vector3 lookPos = new Vector3(

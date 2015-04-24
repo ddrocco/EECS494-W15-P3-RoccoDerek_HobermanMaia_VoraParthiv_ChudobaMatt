@@ -158,7 +158,6 @@ public class Foe_Movement_Handler : MonoBehaviour {
 		isTrackingPlayer = false;
 		state = alertState.returning;
 		currentDestination = originLocation;
-		//turn off alarms
 		camControl.AlertOff();
 	}
 	

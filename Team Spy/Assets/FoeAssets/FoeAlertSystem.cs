@@ -29,8 +29,5 @@ public class FoeAlertSystem : MonoBehaviour {
 		}
 		closest.movementHandler.StartInvestigation(position, isPlayer);
 		closest.isAggressive = true;
-		/*foreach (World_Foe_Coordinator coordinator in FindObjectsOfType<World_Foe_Coordinator>()) {
-			coordinator.ReleaseCommunicatingGuards();
-		}*/
 	}
 }
