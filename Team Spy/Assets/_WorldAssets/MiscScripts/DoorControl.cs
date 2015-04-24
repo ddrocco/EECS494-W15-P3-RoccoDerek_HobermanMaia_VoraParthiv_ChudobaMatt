@@ -32,8 +32,8 @@ public class DoorControl : QInteractable {
 	List<Ray> raysClose = new List<Ray>();
 	
 	//Guards unlocking
-	float timeToUnlock = 5f;
-	float timeUntilUnlocked = 5f;
+	public float timeToUnlock = 5f;
+	float timeUntilUnlocked;
 	
 	//Reduce finding / getting components
 	GameObject player;
@@ -44,6 +44,8 @@ public class DoorControl : QInteractable {
 		baseRight = transform.right;
 		cullGuards = (1 << Layerdefs.foe);
 		cullStan = (1 << Layerdefs.stan);
+		
+		timeUntilUnlocked = timeToUnlock;
 		
 		raysRight.Add(new Ray(basePosition,					baseRight * openDistance));
 		raysRight.Add(new Ray(basePosition + baseForward,	baseRight * openDistance));

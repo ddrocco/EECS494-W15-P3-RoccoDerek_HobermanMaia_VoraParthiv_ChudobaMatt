@@ -7,7 +7,6 @@ public class FoeAlertSystem : MonoBehaviour {
 	public static float bombRange = 3f;
 	
 	public static void Alert(Vector3 position, bool isPlayer) {
-		print ("called");
 		float minDist = 100000f;
 		Foe_Detection_Handler closest = null;
 		foreach (Foe_Detection_Handler foe in FindObjectsOfType<Foe_Detection_Handler>()) {
@@ -19,7 +18,7 @@ public class FoeAlertSystem : MonoBehaviour {
 				}
 			}
 		}
-		if (minDist == 100000f) {
+		if (closest == null) {
 			GuardSpawner spawner = FindObjectOfType<GuardSpawner>();
 			if (spawner == null) {
 				return;
@@ -30,8 +29,8 @@ public class FoeAlertSystem : MonoBehaviour {
 		}
 		closest.movementHandler.StartInvestigation(position, isPlayer);
 		closest.isAggressive = true;
-		foreach (World_Foe_Coordinator coordinator in FindObjectsOfType<World_Foe_Coordinator>()) {
+		/*foreach (World_Foe_Coordinator coordinator in FindObjectsOfType<World_Foe_Coordinator>()) {
 			coordinator.ReleaseCommunicatingGuards();
-		}
+		}*/
 	}
 }
