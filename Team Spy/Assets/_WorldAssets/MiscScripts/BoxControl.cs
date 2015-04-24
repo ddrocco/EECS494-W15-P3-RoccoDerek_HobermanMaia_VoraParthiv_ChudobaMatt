@@ -44,6 +44,7 @@ public class BoxControl : QInteractable {
 			}
 			else if (holdsPasscard) {
 				ElevatorControl.playerGotPasscard = true;
+				QUI.setText("Objective: Guide the spy to the elevator", objective: true);
 				//Change Q's tasks
 			}
 
