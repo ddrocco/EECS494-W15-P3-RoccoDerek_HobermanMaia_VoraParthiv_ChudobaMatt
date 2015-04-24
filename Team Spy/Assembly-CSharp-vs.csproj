@@ -177,7 +177,6 @@
      <Compile Include="Assets\_Q Assets\QInteractionUI.cs" />
      <Compile Include="Assets\_Q Assets\QOptionButtons.cs" />
      <Compile Include="Assets\_Q Assets\QPlayerVisibilityToggle.cs" />
-     <Compile Include="Assets\_Q Assets\QPowerSystem.cs" />
      <Compile Include="Assets\_Q Assets\QUI.cs" />
      <Compile Include="Assets\_Stan Assets\GameController.cs" />
      <Compile Include="Assets\_Stan Assets\N_PlayerWireframe.cs" />
@@ -185,8 +184,6 @@
      <Compile Include="Assets\_Stan Assets\PlayerController.cs" />
      <Compile Include="Assets\_Stan Assets\PlayerInteraction.cs" />
      <Compile Include="Assets\_Stan Assets\PlayerTagCompass.cs" />
-     <Compile Include="Assets\_Stan Assets\Player_Vertices.cs" />
-     <Compile Include="Assets\_Stan Assets\WonGame.cs" />
      <Compile Include="Assets\_UIAssets\ButtonSpriteDefinitions.cs" />
      <Compile Include="Assets\_UIAssets\CompassAssets\CompassScript.cs" />
      <Compile Include="Assets\_UIAssets\CreditsAssets\CreditScroll.cs" />
@@ -195,7 +192,6 @@
      <Compile Include="Assets\_UIAssets\MainMenuAssets\Buttons.cs" />
      <Compile Include="Assets\_UIAssets\MainMenuAssets\PlayMovie.cs" />
      <Compile Include="Assets\_UIAssets\PauseMenuAssets\PauseScript.cs" />
-     <Compile Include="Assets\_WorldAssets\AlarmRelay.cs" />
      <Compile Include="Assets\_WorldAssets\AlarmSignal.cs" />
      <Compile Include="Assets\_WorldAssets\AlertConnectionJoint.cs" />
      <Compile Include="Assets\_WorldAssets\AlertHub.cs" />
