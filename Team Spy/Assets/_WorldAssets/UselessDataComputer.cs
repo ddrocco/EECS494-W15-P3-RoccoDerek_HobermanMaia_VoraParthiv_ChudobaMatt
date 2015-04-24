@@ -23,25 +23,28 @@ public class UselessDataComputer : QInteractable {
 	public void Interact() {
 		gameObject.tag = "Untagged";
 		++uselessDataCollected;
+		string message = "";
 		switch(uselessDataCollected) {
 			case 1:
-				GameController.SendPlayerMessage("You got some data!  Nice work!", 7);
+				message = "You got some data!  Nice work!";
 				break;
 			case 2:
-				GameController.SendPlayerMessage("You got some more data!", 7);
+				message = "You got some more data!";
 				break;
 			case 3:
-				GameController.SendPlayerMessage("More data!  You're really cleaning up!  You deserve a medal!", 7);
+				message = "More data!  You're really cleaning up!  You deserve a medal!";
 				break;
 			case 4:
-				GameController.SendPlayerMessage("SO much data!", 7);
+				message = "SO much data!";
 				break;
 			case 5:
-				GameController.SendPlayerMessage("No one has more data than you!!!", 7);
+				message = "No one has more data than you!!!";
 				break;
 			case 6:
-				GameController.SendPlayerMessage("...You know all those monitors were connected to the same computer, right?", 7);
+				message = "...You know all those monitors were connected to the same computer, right?";
 				break;
 		}
+		GameController.SendPlayerMessage(message, 7);
+		QUI.setText(message);
 	}
 }

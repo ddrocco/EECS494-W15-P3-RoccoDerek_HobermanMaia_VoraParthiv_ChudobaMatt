@@ -11,5 +11,8 @@ public class Lightpocalypse : MonoBehaviour {
 			text.GetComponent<Text>().enabled = true;
 		}
 		stanLight.enabled = true;
+		if (GetComponent<DisplayForQ>() != null) {
+			GetComponent<DisplayForQ>().SendMessage();
+		}
 	}
 }
