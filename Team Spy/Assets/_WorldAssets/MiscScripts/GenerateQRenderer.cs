@@ -37,7 +37,8 @@ public class GenerateQRenderer : MonoBehaviour {
 			break;
 		case QViewType.RoomGray:
 			qRendererObject.GetComponent<Renderer>().material.SetColor("_Color",new Color(0.03f, 0.03f, 0.03f));
-			qRendererObject.transform.position += new Vector3(0, -15f, 0);
+			qRendererObject.transform.position =
+				new Vector3(qRendererObject.transform.position.x, -5f, qRendererObject.transform.position.z);
 			break;	
 		}
 		if (group != 0) {
