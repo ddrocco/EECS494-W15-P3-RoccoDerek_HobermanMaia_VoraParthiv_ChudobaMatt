@@ -7,7 +7,6 @@ public class FoeAlertSystem : MonoBehaviour {
 	public static float bombRange = 3f;
 	
 	public static void Alert(Vector3 position, bool isPlayer) {
-		print ("called!");
 		float minDist = 100000f;
 		Foe_Detection_Handler closest = null;
 		foreach (Foe_Detection_Handler foe in FindObjectsOfType<Foe_Detection_Handler>()) {
