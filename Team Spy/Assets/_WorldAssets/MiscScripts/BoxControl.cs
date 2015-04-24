@@ -3,9 +3,9 @@ using System.Collections;
 
 public class BoxControl : QInteractable {
 	public Animator anim;
-	public bool isBomb;	//Differentiates between documents and bombs
-	public string message; //will only contain a snippet, if anything
-	public string QMessage; //notifies Q if Stan found something like a map piece
+	public bool isBomb;
+	public string message;
+	public string QMessage;
 	
 	public bool holdsPasscard;
 	
@@ -41,11 +41,9 @@ public class BoxControl : QInteractable {
 				}
 				timerSet = true;
 				return;
-			}
-			else if (holdsPasscard) {
+			} else if (holdsPasscard) {
 				ElevatorControl.playerGotPasscard = true;
 				QUI.setText("Objective: Guide the spy to the elevator", objective: true);
-				//Change Q's tasks
 			}
 
 			message = message.Replace("NEWLINE", "\n");
@@ -62,7 +60,6 @@ public class BoxControl : QInteractable {
 			return;
 		}
 		if (timerSet) {
-			//play countdown noise
 			int previousCountdown = Mathf.CeilToInt(timeToDetonation);
 			timeToDetonation -= Time.deltaTime;
 			if (previousCountdown == 5 && Mathf.CeilToInt(timeToDetonation) == 4) {
@@ -74,7 +71,6 @@ public class BoxControl : QInteractable {
 			}
 		}
 		if (timeToDetonation <= 0) {
-		
 			gameObject.GetComponent<AudioSource>().clip = AudioDefinitions.main.Explosion;
 			gameObject.GetComponent<AudioSource>().loop = false;
 			gameObject.GetComponent<AudioSource>().Play();
@@ -105,10 +101,8 @@ public class BoxControl : QInteractable {
 	public override void Trigger() {
 		if (isBomb && isArmed) {
 			if (!timerSet) {
-				//GameController.SendPlayerMessage("Fire in the hole--your partner set off a bomb!", 5);
 				timerSet = true;
 			} else {
-				//GameController.SendPlayerMessage("Your partner has defused the bomb; you're safe--for now.", 5);
 				timerSet = false;
 				isArmed = false;
 				

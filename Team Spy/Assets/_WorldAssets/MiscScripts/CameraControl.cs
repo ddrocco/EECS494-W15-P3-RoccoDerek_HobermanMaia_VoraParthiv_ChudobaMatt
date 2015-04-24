@@ -58,7 +58,6 @@ public class CameraControl : QInteractable {
 		
 		//Setting up Q-button
 		base.Start();
-
 		interactionUI = QInteractionButton.GetComponent<QInteractionUI>();
 	}
 	
@@ -143,18 +142,8 @@ public class CameraControl : QInteractable {
 		GameController.SendPlayerMessage("Your partner has successfully turned off the camera alert...I just hope it was in time!", 5);
 	}
 	
-	/*void HackCamera() {
-		CameraControl obj = GetComponent<CameraControl>();
-		obj.QIsWatching = true;
-		camControl.ToggleCamera(obj.ID, true);
-	}*/
-	
 	public void Interact() {
-		//camControl.ToggleCamera(camLocation.cameraNumber, true);		
 		isBlinded = true;
-		/*if (camControl.warning || camControl.alerting) {
-			camControl.AlertOff();
-		}*/
 		tag = "Untagged";
 	}
 	

@@ -4,7 +4,6 @@ using System.Collections;
 public class InformationForPlayer : QInteractable {
 	public string message;
 	public string QMessage;
-	
 	public bool read = false;
 	
 	public override void Start() {

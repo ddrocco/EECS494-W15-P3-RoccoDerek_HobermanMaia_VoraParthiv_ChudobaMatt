@@ -16,7 +16,6 @@ public class CompassScript : MonoBehaviour {
 	RectTransform QCIRT;
 	RectTransform SCIRT;
 
-	// Use this for initialization
 	void Start () {
 		StanCamera = GameObject.Find ("PlayerCamera");
 		QCompass.GetComponent<Canvas> ().worldCamera = GameObject.Find ("QCamera").GetComponent<Camera>();
@@ -26,7 +25,6 @@ public class CompassScript : MonoBehaviour {
 		SCIRT = StanCompassItem.GetComponent<RectTransform> ();
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		Vector3 eulerrot = SCIRT.localRotation.eulerAngles;
 		Vector3 pcamrot = StanCamera.GetComponent<Transform> ().rotation.eulerAngles;

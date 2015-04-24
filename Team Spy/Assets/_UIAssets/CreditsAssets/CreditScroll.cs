@@ -28,7 +28,6 @@ public class CreditScroll : MonoBehaviour
 	{
 		if (Input.anyKeyDown)
 			CreditsDone();
-
 		if (device.AnyButton.WasPressed)
 			CreditsDone();
 	}

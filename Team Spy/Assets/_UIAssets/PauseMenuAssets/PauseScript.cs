@@ -22,7 +22,6 @@ public class PauseScript : MonoBehaviour {
 
 	public static bool GamePaused = false;
 
-	// Use this for initialization
 	void Start () {
 		sensitivity = GameObject.Find("SensitivitySlider").GetComponent<Slider>();
 		sensitivity.value = sensitivityValue;
@@ -36,7 +35,6 @@ public class PauseScript : MonoBehaviour {
 		device = InputManager.ActiveDevice;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		if (InputManager.MenuWasPressed || Input.GetKeyUp (KeyCode.Escape)) {
 			if(QPauseMenu.activeSelf || StanPauseMenu.activeSelf){

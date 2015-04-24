@@ -4,10 +4,10 @@ using System.Collections;
 public class EndGameControl : MonoBehaviour {
 	public GameObject QCamera;
 
-
 	void Start(){
 		QCamera = GameObject.Find ("QCamera");
 	}
+	
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "Player") {
 			GameController.PlayerWon = true;

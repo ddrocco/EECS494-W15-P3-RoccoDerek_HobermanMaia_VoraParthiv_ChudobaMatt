@@ -8,7 +8,6 @@ public class QActiveFromStart : MonoBehaviour
 	void Start()
 	{
 		FindObjectOfType<QUI>().showCamera(true);
-
 		QMessage = QMessage.Replace("NEWLINE", "\n");
 		QUI.setText(QMessage, objective: true);
 	}

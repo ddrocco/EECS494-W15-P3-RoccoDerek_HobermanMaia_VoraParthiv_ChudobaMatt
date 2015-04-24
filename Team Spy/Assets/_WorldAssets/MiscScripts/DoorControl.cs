@@ -113,11 +113,6 @@ public class DoorControl : QInteractable {
 	}
 	
 	void Update() {			
-		/*
-		foreach (Ray ray in raysClose) {
-			Debug.DrawRay(ray.origin, ray.direction * closeDistance);
-		}
-		*/
 		if (anim.GetBool("isOpen")) {
 			CloseForGuardsAndStan();
 		} else {	
@@ -194,7 +189,6 @@ public class DoorControl : QInteractable {
 				valid = true;
 			}
 		}
-		
 		if (valid) {
 			return;
 		} else {

@@ -113,12 +113,6 @@ public class PlayerInteraction : MonoBehaviour
 			toolTipText.text = "Use computer";
 		} else if (hitInfo.transform.GetComponent<ElevatorControl>()) {
 			toolTipText.text = "Call elevator";
-		} else if (hitInfo.transform.GetComponent<FileCabinetControl>()) {
-			if (hitInfo.transform.GetComponent<FileCabinetControl>().anim.GetBool("isOpen")) {
-				toolTipText.text = "Close drawer";
-			} else {
-				toolTipText.text = "Open drawer";
-			}
 		} else if (hitInfo.transform.GetComponent<BoxControl>()) {
 			if (hitInfo.transform.GetComponent<BoxControl>().anim.GetBool("isOpen")) {
 				toolTipText.text = "Close box";
