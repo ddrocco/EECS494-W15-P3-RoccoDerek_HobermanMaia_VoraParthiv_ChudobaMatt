@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class InformationForPlayer : QInteractable {
-	static int numCollected = 0;
 	public string message;
 	public string QMessage;
 	
@@ -20,8 +19,6 @@ public class InformationForPlayer : QInteractable {
 		GameController.SendPlayerMessage(message, 2);
 		if (!read) {
 			read = true;
-			++numCollected;
-			QUI.setText("Partner found document!  Total: " + numCollected, objective: false);
 		}
 		QUI.setText(message, objective: false);
 	}
