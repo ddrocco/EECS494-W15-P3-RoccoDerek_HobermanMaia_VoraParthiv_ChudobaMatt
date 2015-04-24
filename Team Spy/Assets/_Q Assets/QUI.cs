@@ -10,7 +10,7 @@ public class QUI : MonoBehaviour {
 	}
 	
 	static string objectiveTextContents;
-	static List<TextSnippet> dynamicTextList = new List<TextSnippet>();
+	static List<TextSnippet> dynamicTextList;
 
 	public Text nosignal;
 	public Text objectiveTextOutput;
@@ -22,19 +22,21 @@ public class QUI : MonoBehaviour {
 
 	int frameInvisibleMask = (1 << Layerdefs.ui);
 
-	static float timeToClearDynamicText = 8f;
+	static float timeToClearDynamicText;
 	static Color dynamicTextColor;
 
 	void Start () {
+		dynamicTextList = new List<TextSnippet>();
 		if (objectiveTextOutput == null) {
 			objectiveTextOutput = GameObject.Find ("ObjectiveText").GetComponent<Text>();
 		}
-		if (dynamicTextContainer == null) {
+		//if (dynamicTextContainer == null) {
 			dynamicTextContainer = GameObject.Find ("DynamicTextContainer");
-		}
+		//}
 		QUIObject = gameObject;
 		objectiveTextContents = objectiveTextOutput.text;
 		dynamicTextColor = Color.white;
+		timeToClearDynamicText = 8f;
 		GetComponent<Camera>().cullingMask = frameInvisibleMask;
 		GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 		QCompass = GameObject.Find ("QCompass");
