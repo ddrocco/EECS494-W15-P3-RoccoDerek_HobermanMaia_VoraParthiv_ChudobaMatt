@@ -153,6 +153,7 @@ public class Foe_Movement_Handler : MonoBehaviour {
 	}
 	
 	public void EndInvestigation() {
+		AlertHub.guardOnAlert = false;
 		MusicPlayer.Escaped(foeDetectionHandler);
 		isTrackingPlayer = false;
 		state = alertState.returning;

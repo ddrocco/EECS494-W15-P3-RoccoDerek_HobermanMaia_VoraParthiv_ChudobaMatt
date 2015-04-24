@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 public class LaserAlertSystem : MonoBehaviour {
 	Light alarmLight;
-	bool lightRampingUp = false;
+	public bool lightRampingUp = false;
 	float maxIntensity = 1f;
 	
 	public bool alarmRaised;
 	float timeUntilSignalClear = 10f;
 	float timeSinceSignal = 10f;
 	public bool heardALaser;
+	public GameObject alertedLaser = null;
 	
 	public AlertHub system;
 	
@@ -22,9 +23,19 @@ public class LaserAlertSystem : MonoBehaviour {
 	
 	void Update () {
 		timeUntilSignalClear += Time.deltaTime;
+		if (heardALaser && !AlertHub.guardOnAlert) { //de-arm
+			heardALaser = false;
+			alarmRaised = false;
+			timeSinceSignal = timeUntilSignalClear = 10f;
+			alarmLight.intensity = 0;
+			lightRampingUp = false;
+			alertedLaser.GetComponent<QInteractable>().QInteractionButton.GetComponent<QInteractionUI>().AlertOff();
+			alertedLaser = null;
+			FindObjectOfType<QCameraControl>().AlertOff();
+		}
 		if (alarmLight != null) {
 			UpdateAlarmLight();
-		}
+		}	
 	}
 	
 	void ConnectToAlarm() {
@@ -51,6 +62,7 @@ public class LaserAlertSystem : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(Foe_Detection_Handler.SelectRandomClip(AudioDefinitions.main.CameraSpotsPlayer),
 		                            FindObjectOfType<PlayerController>().transform.position);
 			alarmRaised = true;
+			alertedLaser = sourceObject;
 		}
 		if (alarmLight != null && alarmLight.intensity == 0) {
 			lightRampingUp = true;
@@ -59,6 +71,9 @@ public class LaserAlertSystem : MonoBehaviour {
 	}
 	
 	void UpdateAlarmLight() {
+		if (!alarmRaised) {
+			return;
+		}
 		if (lightRampingUp) {
 			alarmLight.intensity += 3f * Time.deltaTime;
 			if (alarmLight.intensity >= maxIntensity) {

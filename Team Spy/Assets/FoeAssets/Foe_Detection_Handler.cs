@@ -194,6 +194,7 @@ public class Foe_Detection_Handler : MonoBehaviour {
 			GetComponentInChildren<Light>().enabled = false;
 			GetComponent<Foe_Glance_Command>().enabled = false;
 			GetComponentInParent<Foe_Movement_Handler>().tag = "Untagged";
+			AlertHub.guardOnAlert = false;
 			tag = "Untagged";
 			enabled = false;
 		} else {
