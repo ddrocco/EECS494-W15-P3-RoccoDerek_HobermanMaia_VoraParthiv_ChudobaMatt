@@ -142,10 +142,6 @@ public class QInteractionUI : MonoBehaviour, IPointerClickHandler, IPointerEnter
 		else if (controlledObject.GetComponent<LaserBehavior> () != null) {
 			tooltipText.text = "Laser";
 		}
-		else if (controlledObject.GetComponent<PolyLaserParent> () != null) {
-			tooltipText.text = "Laser Group";
-		}
-
 	}
 
 	//destroy tooltip
