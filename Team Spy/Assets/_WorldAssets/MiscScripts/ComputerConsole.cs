@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 public class ComputerConsole : QInteractable {
-	static List<MapGroup> usedMapValues = new List<MapGroup>();
+	static List<MapGroup> usedMapValues;
 	public string StanMessage;
 	public string QMessage;
 	public bool useObjectiveUpdate = false;
@@ -17,6 +17,7 @@ public class ComputerConsole : QInteractable {
 	private bool hasBeenUsed = false;
 	
 	public override void Start() {
+		usedMapValues =  new List<MapGroup>();
 		allCams = FindObjectsOfType<CameraControl>();
 		float minDist = 1000000f;
 		foreach (CameraControl cam in allCams) {
