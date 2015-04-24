@@ -42,8 +42,11 @@ public class ComputerConsole : QInteractable {
 		QMessage = QMessage.Replace("NEWLINE", "\n");
 		GameController.SendPlayerMessage(StanMessage, 5f);
 		QUI.setText(QMessage, objective: false);
-		if (useObjectiveUpdate && !hasBeenUsed) {
-			QUI.setText(QObjectiveUpdate, objective: true);
+		if (!ElevatorControl.playerGotPasscard) {
+		    GameController.SendPlayerMessage(StanMessage, 5f);
+			if (useObjectiveUpdate && !hasBeenUsed) {
+				QUI.setText(QObjectiveUpdate, objective: true);
+			}
 		}
 		hasBeenUsed = true;
 	}
