@@ -45,6 +45,6 @@ public class UselessDataComputer : QInteractable {
 				break;
 		}
 		GameController.SendPlayerMessage(message, 7);
-		QUI.setText(message);
+		QUI.setText(message, objective: false);
 	}
 }
