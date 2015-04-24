@@ -1,13 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_UIAssets/DetectTaggedObjects.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\_Stan Assets\PlayerTagCompass.cs">
     <Files>
-      <File FileName="Assets/_Stan Assets/PlayerTagCompass.cs" Line="5" Column="14" />
-      <File FileName="Assets/_Q Assets/QInteractable.cs" Line="113" Column="4" />
-      <File FileName="Assets/_UIAssets/DetectTaggedObjects.cs" Line="31" Column="10" />
-      <File FileName="Assets/_Q Assets/QInteractionUI.cs" Line="48" Column="26" />
-      <File FileName="Assets/_Q Assets/QCameraControl.cs" Line="221" Column="2" />
-      <File FileName="Assets/_WorldAssets/MiscScripts/CameraControl.cs" Line="163" Column="3" />
+      <File FileName="Assets\_Stan Assets\PlayerTagCompass.cs" Line="39" Column="4" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\DoorControl.cs" Line="169" Column="34" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\CameraControl.cs" Line="187" Column="2" />
+      <File FileName="Assets\_WorldAssets\ObjectPrefabDefinitions.cs" Line="11" Column="18" />
+      <File FileName="Assets\_Q Assets\QCameraControl.cs" Line="62" Column="3" />
+      <File FileName="Assets\_Stan Assets\PlayerController.cs" Line="80" Column="28" />
+      <File FileName="Assets\_WorldAssets\MiscScripts\InformationForPlayer.cs" Line="7" Column="2" />
+      <File FileName="Assets\_UIAssets\DetectTaggedObjects.cs" Line="33" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

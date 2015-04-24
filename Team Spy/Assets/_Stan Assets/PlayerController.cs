@@ -74,6 +74,8 @@ public class PlayerController : MonoBehaviour
 	public static bool debugControls = false;
 	[HideInInspector]
 	public static bool mouseMovement = false;
+	[HideInInspector]
+	public GameObject cam;
 	
 	public List<AudioClip> footsteps;
 	public List<AudioClip> runFootsteps;
@@ -82,7 +84,7 @@ public class PlayerController : MonoBehaviour
 	void Awake()
 	{
 		player = this;
-		GameObject cam = GameObject.Find("PlayerCamera");
+		cam = GameObject.Find("PlayerCamera");
 		if (cam == null)
 			cam = Instantiate(camPrefab, transform.position, Quaternion.identity) as GameObject;
 		headCamera = cam.GetComponent<Camera>();

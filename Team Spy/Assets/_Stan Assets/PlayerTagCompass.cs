@@ -25,31 +25,52 @@ public class PlayerTagCompass : MonoBehaviour {
 	}
 	
 	public void SetDirection(Quaternion direction) {
-		print (numframes);
-		isVisible = detector.tagCompassVisible;
+		isVisible = TagCompassVisible();
 		pic.enabled = isVisible;
+	
 		if (!isVisible) {
 			return;
 		}
-		float angle = direction.eulerAngles.y;
 		
-		//SWAP AT z = 90f, -90f
-		if (player.yRotation.x < 0f) {
-			angle = 180 - angle;
-		}
+		Vector3 toTagVector = detector.taggedObject.transform.position - player.cam.transform.position;
+		Vector3 fwd = player.cam.transform.forward;
+		Vector3 up = player.cam.transform.up;
+		Vector3 right = player.cam.transform.right;
+		Debug.DrawRay(player.cam.transform.position, toTagVector, Color.blue);
+		Debug.DrawRay(player.cam.transform.position + fwd, toTagVector.normalized, Color.blue);
+		Vector3 cross = (toTagVector.normalized - (Vector3.Dot(fwd, toTagVector.normalized) * fwd)).normalized;
+		Debug.DrawRay(player.cam.transform.position + player.cam.transform.forward, cross, Color.green);
+		
+		float x = Vector3.Dot(right, cross);
+		float y = Vector3.Dot(up, cross);
+			
+		float radians = Mathf.Atan2(y, x);
+		float angle = (radians / Mathf.PI * 180f) - 90f;
 		
 		transform.localEulerAngles = Vector3.forward * angle;
 		
 		Rect canvas = thisCanvas.pixelRect;
 		//float cutoff = canvas.height / canvas.width;
-		
-		float theta = angle / 180 * Mathf.PI;
-		
-		Vector2 basePosition =  new Vector2(Mathf.Sin (-theta), Mathf.Cos (theta));
-		float magnitude = Mathf.Max(Mathf.Abs(basePosition.x), Mathf.Abs(basePosition.y));
-		Vector2 newPosition = new Vector2(canvas.width * 0.43f * basePosition.x,
-										canvas.height * 0.32f * basePosition.y) / magnitude;
-		Vector2 offset = newPosition.normalized * -50f * Mathf.PingPong(Time.time, .25f);
+				
+		Vector2 basePosition =  new Vector2(x, y);
+		float magnitude = Mathf.Max(Mathf.Abs(x), Mathf.Abs(y));
+		Vector2 newPosition = new Vector2((canvas.width * 0.5f - 50f) * x,
+										(canvas.height * 0.5f - 50f) * y) / magnitude;
+		Vector2 offset = newPosition.normalized * -100f * Mathf.PingPong(Time.time, .25f);
 		RectTrans.anchoredPosition = newPosition + offset;
+	}
+	
+	bool TagCompassVisible() {
+		if (!detector.taggedObjectValid) {
+			return false;
+		} else {
+			Vector3 stanLookDirection = player.cam.transform.forward;
+			Vector3 objectDirection = detector.taggedObject.transform.position - player.cam.transform.position;
+			if (Vector3.Angle(stanLookDirection, objectDirection) < 27.5f) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 }

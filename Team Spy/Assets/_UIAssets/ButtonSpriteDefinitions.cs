@@ -11,7 +11,9 @@ public class ButtonSpriteDefinitions : MonoBehaviour {
 			Files, PassKey, Computer, BlankIcon,
 			Data,
 			Elevator,
-			CameraOnAlert, CameraBlinded, CameraUnderQ, CameraArrow;
+			CameraOnAlert, CameraBlinded, CameraUnderQ, CameraArrow,
+			
+			StanTagArrow;
 	public List<Sprite> BombDetonationCountdown,
 			displayTaggedAnimation;
 	public static ButtonSpriteDefinitions main;
