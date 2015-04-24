@@ -8,10 +8,12 @@ public class ComputerConsole : QInteractable {
 	static List<MapGroup> usedMapValues = new List<MapGroup>();
 	public string StanMessage;
 	public string QMessage;
+	public string QObjectiveUpdate;
 	public int mapValue;
 	public bool debugComputer = false;
 	public CameraControl nearestCam;
 	public CameraControl[] allCams;
+	private bool hasBeenUsed = false;
 	
 	public override void Start() {
 		allCams = FindObjectsOfType<CameraControl>();
@@ -38,6 +40,11 @@ public class ComputerConsole : QInteractable {
 		QMessage = QMessage.Replace("NEWLINE", "\n");
 		GameController.SendPlayerMessage(StanMessage, 5f);
 		QUI.setText(QMessage, objective: false);
+		if (!hasBeenUsed && string.Compare(QObjectiveUpdate, "") != 0) {
+			QUI.setText(QObjectiveUpdate, objective: true);
+		}
+		
+		hasBeenUsed = true;
 	}
 	
 	public override void Trigger() {
