@@ -6,7 +6,7 @@ public class ObjectPrefabDefinitions : MonoBehaviour {
 		Laser, PolyLaserChild,
 		TagViewSolid, TagViewLaser,
 		Foe, FoeTaser,
-		QInteractiveButton, QDisplayIcon, Tooltip,
+		QInteractiveButton, QDisplayIcon, Tooltip, QDynamicText,
 		AlarmSignal, AlertConnectionSegmentPrefab,
 		SecurityCamera, CameraArrowIcon,
 		Explosion, ExplosionSmoke, Flare, Sparks,

@@ -27,7 +27,7 @@ public class FileCabinetControl : MonoBehaviour {
 		anim.SetBool("isOpen", !anim.GetBool("isOpen"));
 		if (anim.GetBool("isOpen") == true) {
 			GameController.SendPlayerMessage(message, 5);
-			QUI.setText(QMessage); //only if there's something important in there
+			QUI.setText(QMessage, objective: false); //only if there's something important in there
 		}
 	}
 }

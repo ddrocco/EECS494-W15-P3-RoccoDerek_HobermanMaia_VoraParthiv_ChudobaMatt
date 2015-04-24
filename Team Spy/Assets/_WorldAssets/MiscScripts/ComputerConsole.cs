@@ -37,7 +37,7 @@ public class ComputerConsole : QInteractable {
 		StanMessage = StanMessage.Replace("NEWLINE", "\n");
 		QMessage = QMessage.Replace("NEWLINE", "\n");
 		GameController.SendPlayerMessage(StanMessage, 5f);
-		QUI.setText(QMessage);
+		QUI.setText(QMessage, objective: false);
 	}
 	
 	public override void Trigger() {

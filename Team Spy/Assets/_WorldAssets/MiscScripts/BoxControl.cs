@@ -51,7 +51,7 @@ public class BoxControl : QInteractable {
 			QMessage = QMessage.Replace("NEWLINE", "\n");
 
 			GameController.SendPlayerMessage(message, 5);
-			QUI.setText(QMessage);
+			QUI.setText(QMessage, objective: false);
 		}
 	}
 	
@@ -85,7 +85,7 @@ public class BoxControl : QInteractable {
 				GameController.GameOverMessage =
 					"You set off a bomb";
 				FindObjectOfType<QUI>().showCamera(false);
-				QUI.setText("Game Over\nThe agent set off a bomb");
+				QUI.setText("Game Over\nThe agent set off a bomb", objective: true);
 			}
 			else {
 				FoeAlertSystem.Alert(transform.position, isPlayer: false);

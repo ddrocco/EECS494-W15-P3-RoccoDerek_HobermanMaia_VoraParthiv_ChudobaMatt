@@ -35,13 +35,13 @@ public class OpenThings : MonoBehaviour {
 			GameController.GameOverMessage =
 				"You won!  Congratulations!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("WELL DONE\nYour partner survived. EXCELLENT WORK.");
+			QUI.setText("WELL DONE\nYour partner survived. EXCELLENT WORK.", objective: true);
 			return;
 		}
 		if (holdsPasscard) {
 			playerGotPasscard = true;
 			GameController.SendPlayerMessage("You found the passcard! Ask your partner for your next objective.", 5);
-			QUI.appendText("Next Objective: Get to the Elevator.");
+			QUI.appendText("Next Objective: Get to the Elevator.", objective: true);
 		}
 	}
 	
@@ -58,7 +58,7 @@ public class OpenThings : MonoBehaviour {
 			GameController.GameOverMessage =
 				"You opened a box with a bomb in it - your partner should be watching out for that stuff!";
 			QCamera.GetComponent<QUI>().showCamera(false);
-			QUI.setText("Mission Failed!\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.");
+			QUI.setText("Mission Failed!\nYour partner just opened a bomb. LEARN TO DO YOUR JOB.", objective: true);
 		}
 	}
 }

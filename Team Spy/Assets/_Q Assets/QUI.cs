@@ -1,22 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class QUI : MonoBehaviour {
-	static string textcontents;
+	public class TextSnippet {
+		public Text text { get; set; }
+		public float time { get; set; }
+	}
+	
+	static string objectiveTextContents;
+	static List<TextSnippet> dynamicTextList = new List<TextSnippet>();
 
 	public Text nosignal;
-	public Text textoutput;
+	public Text objectiveTextOutput;
+	public static GameObject dynamicTextContainer;
+	public static GameObject QUIObject;
 	public Image objectivePanel;
 	public GameObject player;
 	public GameObject QCompass;
 
 	int frameInvisibleMask = (1 << Layerdefs.ui);
 
+	static float timeToClearDynamicText = 8f;
+	static Color dynamicTextColor;
 
 	// Use this for initialization
 	void Start () {
-		textcontents = textoutput.text;
+		if (objectiveTextOutput == null) {
+			objectiveTextOutput = GameObject.Find ("ObjectiveText").GetComponent<Text>();
+		}
+		if (dynamicTextContainer == null) {
+			dynamicTextContainer = GameObject.Find ("DynamicTextContainer");
+		}
+		QUIObject = gameObject;
+		objectiveTextContents = objectiveTextOutput.text;
+		dynamicTextColor = Color.white;
 		GetComponent<Camera>().cullingMask = frameInvisibleMask;
 		GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 		QCompass = GameObject.Find ("QCompass");
@@ -25,8 +44,19 @@ public class QUI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		textoutput.text = textcontents;
-		if (textcontents == "")
+		objectiveTextOutput.text = objectiveTextContents;
+		foreach (TextSnippet snippet in dynamicTextList) {
+			if (snippet.time > timeToClearDynamicText) {
+				dynamicTextList.Remove(snippet);
+				Destroy(snippet.text.gameObject);
+				break;
+			} else {
+				snippet.text.color = dynamicTextColor * (1 - (snippet.time / timeToClearDynamicText));	
+				snippet.time += Time.deltaTime;
+			}	
+		}
+		
+		if (objectiveTextContents == "")
 			objectivePanel.enabled = false;
 		else
 			objectivePanel.enabled = true;
@@ -34,26 +64,62 @@ public class QUI : MonoBehaviour {
 	
 	public void Interact() {
 		showCamera(true);
-		QUI.setText("Objective: Find the elevator key");
+		QUI.setText("Objective: Find the elevator key", objective: true);
 		GameController.SendPlayerMessage("System access granted:\nFind more terminals", 5);
 	}
 
-	public static void setText(string newtext){
-		textcontents = newtext;
+	public static void setText(string newtext, bool objective) {
+		if (objective) {
+			objectiveTextContents = newtext;
+		} else {
+			TextSnippet newSnippet = new TextSnippet();
+			bool snippetExists = false;
+			for (int i = 0; i < dynamicTextList.Count; ++i) {
+				if (string.Compare(dynamicTextList[i].text.text, newtext) == 0) {
+					if (i == 0) {
+						dynamicTextList[0].time = 0;
+						return;
+					}
+					newSnippet = dynamicTextList[i];
+					snippetExists = true;
+					break;
+				}
+			}
+			if (snippetExists) {
+				Destroy (newSnippet.text.gameObject);
+				newSnippet.text = GetNewTextObject(newtext);
+				newSnippet.time = 0f;
+			} else {
+				newSnippet.text = GetNewTextObject(newtext);
+				newSnippet.time = 0f;
+				dynamicTextList.Add (newSnippet);
+			}
+		}
 	}
 
-	public static void appendText(string newtext){
-		textcontents += "\n" + newtext;
+	public static void appendText(string newtext, bool objective) {
+		if (objective) {
+			objectiveTextContents += "\n" + newtext;
+		} else {
+			setText(newtext, objective: false);
+		}
 	}
 
-	public static void clearText(){
-		textcontents = "";
+	public static void clearText(bool objective) {
+		if (objective) {
+			objectiveTextContents = "";
+		} else {
+			foreach(TextSnippet snippet in dynamicTextList) {
+				Destroy(snippet.text.gameObject);
+			}
+			dynamicTextList = new List<TextSnippet>();
+		}
 	}
 
 	public void showCamera(bool visible){
 		if(visible){
 			nosignal.enabled = false;
-			clearText();
+			clearText(objective: true);
 			GetComponent<Camera>().cullingMask = GetComponent<QCameraControl>().overviewCullingMask;
 			GetComponent<QCameraControl>().enabled = true;
 			GameObject.Find("CamOverview").GetComponent<QCameraOverview>().camActive = true;
@@ -62,11 +128,33 @@ public class QUI : MonoBehaviour {
 			//GetComponent<QCameraControl>().DisableCameras();
 		} else {
 			nosignal.enabled = true;
-			setText("Tell the agent to hack the computer.");
+			setText("Tell the agent to hack the computer.", objective: true);
 			GetComponent<Camera>().cullingMask = frameInvisibleMask;
 			GetComponent<QCameraControl>().enabled = false;
 			GameObject.Find ("InteractionCanvas").GetComponent<CanvasGroup> ().alpha = 0;
 			QCompass.SetActive (false);
 		}
+	}
+	
+	static Text GetNewTextObject(string contents) {
+		GameObject newTextObj = Instantiate(ObjectPrefabDefinitions.main.QDynamicText) as GameObject;
+		Text text = newTextObj.GetComponent<Text>();
+		
+		List<Transform> newTransformList = new List<Transform>();
+		foreach (Transform child in dynamicTextContainer.transform) {
+			child.SetParent(QUIObject.transform);
+			newTransformList.Add(child);
+		}
+		text.transform.SetParent(dynamicTextContainer.transform);
+		foreach (Transform child in newTransformList) {
+			child.SetParent(dynamicTextContainer.transform);
+		}
+		
+		text.transform.localPosition = Vector3.zero;
+		text.transform.localEulerAngles = Vector3.zero;
+		text.transform.localScale = Vector3.one;
+		text.text = contents;
+		text.name = dynamicTextList.Count.ToString();
+		return text;
 	}
 }

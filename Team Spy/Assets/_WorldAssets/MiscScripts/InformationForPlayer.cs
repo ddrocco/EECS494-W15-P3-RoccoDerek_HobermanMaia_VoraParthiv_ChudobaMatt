@@ -21,9 +21,9 @@ public class InformationForPlayer : QInteractable {
 		if (!read) {
 			read = true;
 			++numCollected;
-			QUI.setText("Partner found document!  Total: " + numCollected);
+			QUI.setText("Partner found document!  Total: " + numCollected, objective: false);
 		}
-		QUI.setText(message);
+		QUI.setText(message, objective: false);
 	}
 	
 	public override void Trigger() {

@@ -216,7 +216,7 @@ public class QCameraControl : MonoBehaviour
 			LR_rotation = currentCam.transform.eulerAngles.y;
 			zoom = currentCam.zoom;
 			
-			GameObject.FindGameObjectWithTag("QContextInstructions").GetComponent<Text>().enabled = false;
+			GameObject.Find("ContextInstruction").GetComponent<Text>().enabled = false;
 		}
 	}
 
@@ -238,7 +238,7 @@ public class QCameraControl : MonoBehaviour
 		LR_rotation = currentCam.transform.eulerAngles.y;
 		zoom = currentCam.zoom;
 		
-		GameObject.FindGameObjectWithTag("QContextInstructions").GetComponent<Text>().enabled = true;
+		GameObject.Find("ContextInstruction").GetComponent<Text>().enabled = true;
 	}
 	
 	//Call AlertOn to cause the background to flash red

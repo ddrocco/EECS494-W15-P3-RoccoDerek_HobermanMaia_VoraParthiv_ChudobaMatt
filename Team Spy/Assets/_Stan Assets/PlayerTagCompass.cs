@@ -52,7 +52,6 @@ public class PlayerTagCompass : MonoBehaviour {
 		Rect canvas = thisCanvas.pixelRect;
 		//float cutoff = canvas.height / canvas.width;
 				
-		Vector2 basePosition =  new Vector2(x, y);
 		float magnitude = Mathf.Max(Mathf.Abs(x), Mathf.Abs(y));
 		Vector2 newPosition = new Vector2((canvas.width * 0.5f - 50f) * x,
 										(canvas.height * 0.5f - 50f) * y) / magnitude;
