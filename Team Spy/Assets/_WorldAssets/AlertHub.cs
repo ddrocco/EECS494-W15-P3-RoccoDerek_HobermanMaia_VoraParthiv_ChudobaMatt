@@ -9,6 +9,12 @@ public class AlertHub : QInteractable {
 	public QCameraControl camControl;
 	public static bool guardOnAlert = false;
 	
+	public override void Start() {
+		guardOnAlert = false;
+		isSounding = false;
+		base.Start();
+	}
+	
 	public void Signal(Vector3 detectionLocation, GameObject sourceObject,
 	                   LaserAlertSystem lasers = null,
 	                   ExternalAlertSystem extSystem = null) {
