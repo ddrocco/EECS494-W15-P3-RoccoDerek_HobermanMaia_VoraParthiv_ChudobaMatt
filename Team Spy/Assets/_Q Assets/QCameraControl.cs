@@ -215,17 +215,18 @@ public class QCameraControl : MonoBehaviour
 			UD_rotation = currentCam.transform.eulerAngles.x;
 			LR_rotation = currentCam.transform.eulerAngles.y;
 			zoom = currentCam.zoom;
+			
+			GameObject.FindGameObjectWithTag("QContextInstructions").GetComponent<Text>().enabled = false;
 		}
 	}
 
 	public void ChangeCamera(int camNumber)
 	{
-		if (cameras.Count >= camNumber && cameras[camNumber - 1].usable)
-		{
+		if (cameras.Count >= camNumber && cameras[camNumber - 1].usable) {
 			currentCam = cameras[camNumber - 1];
-		}
-		else
+		} else {
 			return;
+		}
 
 		cam.orthographic = false;
 		camOverview.camActive = false;
@@ -236,6 +237,8 @@ public class QCameraControl : MonoBehaviour
 		UD_rotation = currentCam.transform.eulerAngles.x;
 		LR_rotation = currentCam.transform.eulerAngles.y;
 		zoom = currentCam.zoom;
+		
+		GameObject.FindGameObjectWithTag("QContextInstructions").GetComponent<Text>().enabled = true;
 	}
 	
 	//Call AlertOn to cause the background to flash red
