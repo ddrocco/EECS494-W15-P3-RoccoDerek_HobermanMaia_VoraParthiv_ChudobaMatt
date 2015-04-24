@@ -28,6 +28,12 @@ public class MusicPlayer : MonoBehaviour {
 	void OnLevelWasLoaded (int level) {
 		new List<Foe_Detection_Handler>();
 		new List<Foe_Detection_Handler>();
+		if (music == null) {
+			music = GetComponent<AudioSource>();
+		}
+		if (main == null) {
+			main = this;
+		}
 		music.volume = baseVolume;
 		if (level == 0) {
 			if (main.music.clip != AudioDefinitions.main.TitleMusic) {
