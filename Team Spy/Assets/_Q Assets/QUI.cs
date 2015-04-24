@@ -44,7 +44,11 @@ public class QUI : MonoBehaviour {
 	void Update () {
 		objectiveTextOutput.text = objectiveTextContents;
 		foreach (TextSnippet snippet in dynamicTextList) {
-			if (snippet.time > timeToClearDynamicText) {
+			if (snippet.text == null) {
+				dynamicTextList.Remove(snippet);
+				Destroy(snippet.text.gameObject);
+				break;
+			} else if (snippet.time > timeToClearDynamicText) {
 				dynamicTextList.Remove(snippet);
 				Destroy(snippet.text.gameObject);
 				break;

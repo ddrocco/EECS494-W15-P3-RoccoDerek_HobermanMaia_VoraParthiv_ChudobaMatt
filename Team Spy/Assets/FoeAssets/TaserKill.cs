@@ -19,6 +19,6 @@ public class TaserKill : MonoBehaviour {
 	void KillPlayer() {
 		GameController.PlayerDead = true;
 		GameController.GameOverMessage = "Tasers hurt\nPress A to restart the level";
-		QUI.setText("Your agent was tased\nPress A to restart the level", objective: true);
+		QUI.setText("Your agent was tased!  Press A to restart the level", objective: true);
 	}
 }
